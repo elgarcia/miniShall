@@ -6,12 +6,12 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/10 14:58:30 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:56:29 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../libft/libft.h"
+#include <stdio.h>
 
 static void	extend_echo(char **argv, int i)
 {
