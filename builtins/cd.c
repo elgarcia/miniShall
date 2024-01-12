@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/11 17:08:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/12 14:47:19 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 
 t_env_lst *find_env_node(t_env_lst *env_lst, char *key)
 {
-    int key_len = ft_strlen(key);
-    t_env_lst *tmp = env_lst;
+    int key_len;
+    t_env_lst *tmp;
 
+	tmp = env_lst;
+	key_len = ft_strlen(key);
     while (tmp != NULL && ft_strncmp(tmp->name, key, key_len) != 0)
     {
         tmp = tmp->next;
@@ -51,8 +53,11 @@ void update_pwd_variables(t_paths *paths, char *new_pwd)
 
 char *join_paths(const char *path1, const char *path2)
 {
-    char *result = ft_strjoin(path1, "/");
-    char *tmp = ft_strjoin(result, path2);
+    char *result;
+	char *tmp;
+
+	result = ft_strjoin(path1, "/");
+    tmp = ft_strjoin(result, path2);
     free(result);
     return tmp;
 }
