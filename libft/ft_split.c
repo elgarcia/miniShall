@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:39:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2023/09/17 21:27:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/13 19:34:09 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,83 +25,106 @@
 *	cadena.													  *
 *															  *	
 \*************************************************************/
-static int	count_words(char const *s, char c)
-{
-	int	counter;
-	int	counter_letters;
-	int	i;
 
-	counter = 0;
-	i = 0;
-	counter_letters = 0;
-	while (s[i] != '\0')
+static void	check_word(const char **s1)
+{
+	if (**s1 == 39)
 	{
-		while (s[i] == c)
-			i++;
-		while (s[i] != c && s[i])
+		while (*(++(*s1)) != 39)
 		{
-			counter_letters++;
-			i++;
-			if (s[i] == '\0' || s[i] == c)
-				counter++;
 		}
 	}
-	if (counter_letters > 0 && counter == 0)
-		return (1);
-	return (counter);
+	(*s1)++;
 }
 
-static char	**free_maker(char **split, int i)
-{
-	while (i >= 0)
-	{
-		free(split[i]);
-		--i;
-	}
-	free(split);
-	return (NULL);
-}
-
-static int	len_word(char const *s, char c)
+static int	word_count(const char *s1, char delimiter)
 {
 	int	counter;
+	int	aux;
 
+	aux = 0;
 	counter = 0;
-	while (*s == c)
-		s++;
-	while (*s != c && *s)
+	if (!s1)
+		return (0);
+	while (*s1)
 	{
-		counter++;
-		s++;
+		while (*s1 == delimiter && *s1)
+		{
+			s1++;
+			aux = 1;
+		}
+		while (*s1 != delimiter && *s1)
+		{
+			check_word(&s1);
+			aux = 2;
+		}
+		if (aux == 2)
+			counter++;
 	}
 	return (counter);
+}
+
+static char	*move_str(char *s1, char c, int	*index)
+{
+	int	i;
+
+	i = *index;
+	while ((*s1 == c || *s1 == 39) && *s1)
+	{
+		if (*s1 == 39)
+			break ;
+		s1++;
+	}
+	while (s1[i] != c && s1[i])
+	{
+		if (s1[i] == 39)
+		{
+			s1++;
+			while (s1[i] != 39 && s1[i])
+				i++;
+			break ;
+		}
+		i++;
+	}
+	*index = i;
+	return (s1);
+}
+
+static void	free_split(char **sp, int sp_size)
+{
+	while (sp_size-- > 0)
+	{
+		free(sp[sp_size]);
+	}
+	free(sp);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**strs;
-	int		i;
 	int		j;
+	int		i;
+	char	*aux;
+	char	**aux_matrix;
 
-	if (!s)
-		return (NULL);
-	strs = (char **)malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!strs)
-		return (NULL);
 	i = 0;
 	j = 0;
-	while (i < count_words(s, c))
+	aux = (char *)s;
+	aux_matrix = malloc((word_count(s, c) + 1) * sizeof(char *));
+	if (!aux_matrix)
+		return (NULL);
+	while (j < word_count(s, c))
 	{
-		while (s[j] == c && s[j] != '\0')
-			j++;
-		strs[i] = ft_substr(s, j, len_word(&s[j], c));
-		if (!strs[i])
-			return (free_maker(strs, i));
-		j += len_word(&s[j], c);
-		i++;
+		aux = move_str(aux, c, &i);
+		aux_matrix[j] = ft_substr(aux, 0, i);
+		if (!aux_matrix[j++])
+			return (free_split(aux_matrix, j), NULL);
+		aux += i;
+		if (*aux == 39)
+			aux++;
+		i = 0;
 	}
-	strs[i] = 0;
-	return (strs);
+	aux_matrix[j] = 0;
+	return (aux_matrix);
 }
 /*
 #include <stdio.h>
