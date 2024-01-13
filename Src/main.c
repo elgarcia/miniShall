@@ -5,7 +5,6 @@ int	main(int argc, char **envp)
 	t_shell	*new;
 	char	*line;
 
-	(void)envp;
 	if (argc == 1)
 	{
 		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
@@ -14,7 +13,7 @@ int	main(int argc, char **envp)
 			line = readline("minishall$ ");
 			if (line[0] != 0)
 			{
-				if (input_parser(line, new) == -1)
+				if (input_parser(line, new, envp) == -1)
 					exit(EXIT_FAILURE);
 				add_history(line);
 			}

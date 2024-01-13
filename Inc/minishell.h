@@ -7,7 +7,12 @@
 # include "../libft/libft.h"
 # include "structures.h"
 
-/* Parser.c */
-int	input_parser(char *line, t_shell *new);
+/* parser.c */
+int		input_parser(char *line, t_shell *new, char **envp);
+int		check_process(t_shell *new, char **envp);
+
+/* utils.c*/
+void	ft_free(char **arg, int size);
+int		ft_word_count(const char *s1, char delimiter);
 
 #endif
