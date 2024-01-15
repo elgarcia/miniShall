@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:55:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 10:31:03 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "built_ins.h"
+#include "../Inc/built_ins.h"
 #define PATH_MAX 1024
 
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
@@ -61,7 +61,7 @@ char	*join_paths(const char *path1, const char *path2)
 	return (tmp);
 }
 
-void	cd_command(t_paths *paths, char *dir)
+void	ft_cd(t_paths *paths, char *dir)
 {
 	char	*new_dir;
 	char	*current_dir;

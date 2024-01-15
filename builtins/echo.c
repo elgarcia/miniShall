@@ -6,12 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/12 14:56:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 11:19:04 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../libft/libft.h"
-#include <stdio.h>
+#include "../Inc/built_ins.h"
 
 static void	extend_echo(char **argv, int i)
 {
@@ -30,12 +29,12 @@ int	ft_echo(char **argv, int argc)
 	int	j;
 	int	flag;
 
-	i = 1;
+	i = 2; // ahora funciona con el argv[2], al tener el minishell cambiarlo a 1 o 0
 	flag = 0;
-	while (argv[i] && argv[i][0] == '1' && argv[i][1] == '2')
+	while (argv[i] && argv[i][0] == '-' && argv[i][1] == 'n')
 	{
 		j = 1;
-		while (argv[i][j] == '2')
+		while (argv[i][j] == 'n')
 			j++;
 		if (argv[i][j] == '\0')
 			flag = 1;
@@ -46,14 +45,5 @@ int	ft_echo(char **argv, int argc)
 	extend_echo(argv, i);
 	if (flag == 0)
 		write(1, "\n", 1);
-	return (0);
-}
-
-int	main(int argc, char **argv)
-{
-	if (argc > 1)
-	{
-		ft_echo(argv, argc);
-	}
 	return (0);
 }
