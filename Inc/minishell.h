@@ -15,4 +15,18 @@ int		check_process(t_shell *new, char **envp);
 void	ft_free(char **arg, int size);
 int		ft_word_count(const char *s1, char delimiter);
 
+// ENVP LIST
+void					fill_init_env_list(t_paths *paths, char **envp);
+t_env_lst				*add_env_node(t_env_lst *head, \
+						char *name, char *value);
+void					ft_lstdelone_env(t_env_lst *lst);
+void					ft_lstclear_env(t_env_lst **lst);
+void					print_env_list(t_env_lst *head);
+
+// BUILTINS
+void					ft_env(t_paths *paths);
+void					ft_cd(t_paths *paths, char *dir);
+int						ft_pwd(void);
+int						ft_echo(char **argv, int argc);
+void					ft_export(t_paths *paths, char **argv);
 #endif

@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 11:19:04 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:01:27 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/built_ins.h"
+#include "../Inc/minishell.h"
 
 static void	extend_echo(char **argv, int i)
 {

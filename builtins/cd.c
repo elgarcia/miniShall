@@ -6,12 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 10:31:03 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:00:45 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/built_ins.h"
-#define PATH_MAX 1024
+#include "../Inc/minishell.h"
 
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
 {

@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 10:25:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:24:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/built_ins.h"
+#include "../Inc/minishell.h"
 
 t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value)
 {
