@@ -1,6 +1,6 @@
 #include "../Inc/minishell.h"
 
-int	check_process(t_shell *new, char **envp)
+int	check_process(t_shell *new)
 {
 	t_process	*aux;
 	char		**sp_aux;
@@ -8,16 +8,61 @@ int	check_process(t_shell *new, char **envp)
 	aux = new->lst_process;
 	while (aux)
 	{
-		sp_aux = ft_split(aux->process, ' ');
-		if (access(sp_aux[0], F_OK | X_OK) != 0)
-			return (ft_free(sp_aux, ft_word_count(sp_aux, ' ')), -1);
-		ft_free(sp_aux, ft_word_count(sp_aux, ' '));
+		if (aux->type == PIPE || aux->type == -1)
+		{
+			sp_aux = ft_split(aux->process, ' ');
+			if (access(sp_aux[0], F_OK | X_OK) != 0)
+				return (ft_free(sp_aux, ft_word_count(aux->process, ' ')), -1);
+			ft_free(sp_aux, ft_word_count(aux->process, ' '));
+		}
 		aux = aux->next;
 	}
 	return (0);
 }
+void	check_redaux(char *in, t_process *aux, int *i)
+{
+	(void)aux;
+	if (!ft_strncmp(in, "<", 1))
+	{
+		aux->type = IRD;
+		*i += 1;
+		//input redirect
+	}
+	else if (!ft_strncmp(in, ">", 1))
+	{
+		aux->type = ORD;
+		*i += 1;
+		//output redirecct
+	}
+}
 
-int	input_parser(char *line, t_shell *new, char **envp)
+void	check_red(char *in, char *in2, t_process *aux, int *i)
+{
+	if (!ft_strncmp(in, "|", 1))
+	{
+		aux->type = PIPE;
+		aux = aux->next;
+		aux = (t_process *)ft_calloc(1, sizeof(t_process));
+		aux->process = NULL;
+		aux->type = -1;
+	}
+	else if (!ft_strncmp(in, ">", 1) && (in2 && !ft_strncmp(in2, ">", 1)))
+	{
+		aux->type = APND;
+		*i += 2;
+		//append
+	}
+	else if (!ft_strncmp(in, "<", 1) && (in2 && !ft_strncmp(in2, "<", 1)))
+	{
+		aux->type = HD;
+		*i += 2;
+		//heredoc
+	}
+	else
+		check_redaux(in, aux, i);
+}
+
+int	input_parser(char *line, t_shell *new)
 {
 	int			i;
 	t_process	*aux;
@@ -29,16 +74,16 @@ int	input_parser(char *line, t_shell *new, char **envp)
 		return (-1);
 	while (!new->input[i])
 	{
-		if (i == 0 || !ft_strncmp(new->input[i], "|", 1))
+		if (i == 0)
 		{
-			if (i != 0)
-				aux = aux->next;
 			aux = (t_process *)ft_calloc(1, sizeof(t_process));
-			i++;
+			aux->process = NULL;
+			aux->type = -1;
 		}
+		check_red(new->input[i], new->input[i + 1], aux, &i);
 		if (new->input[i])
-			aux = ft_strjoin(aux, new->input[i]);
+			aux->process = ft_strjoinup(&aux->process, new->input[i]);
 		i++;
 	}
-	return (check_process(new, envp));
+	return (check_process(new));
 }

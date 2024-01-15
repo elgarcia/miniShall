@@ -1,6 +1,6 @@
 NAME = minishell
 
-SOURCE = Src/main.c
+SOURCE = Src/main.c Src/parser.c Src/utils.c
 INCLUDE = Inc/minishell.h
 
 LIBFT_LIB =  libft/libft.a
