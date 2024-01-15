@@ -4,6 +4,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
 # include "structures.h"
 
@@ -19,5 +20,12 @@ int		ft_word_count(const char *s1, char delimiter);
 void	*free_null(char **s);
 char	*ft_strjoinup(char **s1, char *s2);
 void	*free_null(char **s);
+
+/* executor.c */
+void	exec_process(t_shell *all, char **envp);
+
+/* pr_checker.c */
+int     check_builtins(t_process *prcs);
+int     check_command(t_process *prcs, char ***exec_args, char **envp);
 
 #endif

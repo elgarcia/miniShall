@@ -17,6 +17,8 @@ typedef struct s_process
 typedef struct s_shell
 {
 	t_process	*lst_process;
+	int			n_process;
+	char		**exec_args;
 	char		**input;
 }				t_shell;
 

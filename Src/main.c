@@ -9,6 +9,8 @@ int	main(int argc, char **envp)
 	if (argc == 1)
 	{
 		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
+		new->n_process = 0;
+		new->input = NULL;
 		while (42)
 		{
 			line = readline("minishall$ ");
@@ -19,7 +21,7 @@ int	main(int argc, char **envp)
 				if (input_parser(line, new) == -1)
 					exit(EXIT_FAILURE);
 				add_history(line);
-				// executor(new);
+				exec_process(new, envp);
 			}
 			
 			printf("%s\n", line);
