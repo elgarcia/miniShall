@@ -10,7 +10,7 @@
 
 /* parser.c */
 int		input_parser(char *line, t_shell *new); //split del input
-int		check_process(t_shell *new); //comprueba que los procesos sean validos
+// int		check_process(t_shell *new); //comprueba que los procesos sean validos
 void	check_redaux(char *in, t_process *aux, int *i); //red checks
 void	check_red(char *in, char *in2, t_process *aux, int *i); //red checks
 
@@ -25,7 +25,18 @@ void	*free_null(char **s);
 void	exec_process(t_shell *all, char **envp);
 
 /* pr_checker.c */
-int     check_builtins(t_process *prcs);
-int     check_command(t_process *prcs, char ***exec_args, char **envp);
+int		check_builtins(t_process *prcs);
+int		check_command(t_process *prcs, char ***exec_args, char **envp);
+
+/* command_aux.c */
+int		search_path(char **env_1, char	**actual_path, \
+	char *command, char ***exec_args);
+int		init_execargs(char ***ex_argc, char *command);
+
+/* commands.c */
+int		check_cmd(char *command, char ***exec_args);
+int		prepare_command(char *process, char ***exec_args, char **envp);
+int		assign_path(char ***exec_args, char *command, char **envp);
+void	double_free(char **aux, char **actual_path);
 
 #endif

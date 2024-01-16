@@ -7,7 +7,7 @@ INCLUDE = Inc/minishell.h
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 READLINE = -lreadline
 
 OBJS = $(SOURCE:.c=.o)

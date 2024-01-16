@@ -1,6 +1,6 @@
 #include "../Inc/minishell.h"
 
-static check_builtins_aux(t_process *prcs, char **aux)
+static int check_builtins_aux(t_process *prcs, char **aux)
 {
 	if (!ft_strncmp(aux[0], "export", 6))
 	{
@@ -62,19 +62,17 @@ char	*get_ifile(char *process)
 int	check_command(t_process *prcs, char ***exec_args, char **envp)
 {
 	char 	**aux;
-	int		fd;
+	// int		fd;
 
 	aux = ft_split(prcs->process, ' ');
-	if (ft_word_count(prcs->process, ' ') <= 1)
-	{
-		printf("Not enough arguments\n"); //caso no argumentos en comando
-	}
-	fd = open(get_ifile(prcs->process), O_RDONLY);
+	ft_free(aux, ft_word_count(prcs->process, ' '));
+	/* fd = open(get_ifile(prcs->process), O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error to open file");
 		return (-1);
-	}
-	if (prepare_command(prcs->process, exec_args, envp))
+	} */
+	if (prepare_command(prcs->process, exec_args, envp) == -1)
+		return (-1);
 	return (0);
 }

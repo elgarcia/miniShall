@@ -40,10 +40,10 @@ int	assign_path(char ***exec_args, char *command, char **envp)
 		else
 			ft_free(aux2, ft_word_count(envp[i], '='));
 	}
-	return (ft_free(aux2, ft_word_count(envp[i], ':')), -1);
+	return (-1);
 }
 
-int	check_command(char *command, char ***exec_args)
+int	check_cmd(char *command, char ***exec_args)
 {
 	if (command[0] == '/')
 	{
@@ -55,9 +55,9 @@ int	check_command(char *command, char ***exec_args)
 			return (0);
 		}
 		else
-			return (ft_printf("%s: command not found\n", command), -1);
+			return (printf("%s: command not found\n", command), -1);
 	}
-	else if (ft_strnstr(command, ".sh", ft_strlen(command)))
+	else if (!ft_strncmp(command + ft_strlen(command) - 3, ".sh", 3))
 	{
 		if (access(command, F_OK | X_OK) == 0)
 		{
@@ -67,7 +67,7 @@ int	check_command(char *command, char ***exec_args)
 			return (0);
 		}
 		else
-			return (ft_printf("%s: command not found\n", command), -1);
+			return (printf("%s: command not found\n", command), -1);
 	}
 	return (1);
 }
@@ -91,7 +91,7 @@ int	prepare_command(char *process, char ***exec_args, char **envp)
 	*exec_args = (char **)ft_calloc(aux, sizeof(char *));
 	if (!*exec_args)
 		return (ft_free(cmd_split, ft_word_count(process, ' ')), -1);
-	aux = check_command(cmd_split[0], exec_args);
+	aux = check_cmd(cmd_split[0], exec_args);
 	if (aux == 1)
 	{
 		if (assign_path(exec_args, cmd_split[0], envp) == -1)

@@ -1,6 +1,6 @@
 #include "../Inc/minishell.h"
 
-int	check_process(t_shell *new)
+/* int	check_process(t_shell *new)
 {
 	t_process	*aux;
 	char		**sp_aux;
@@ -18,7 +18,7 @@ int	check_process(t_shell *new)
 		aux = aux->next;
 	}
 	return (0);
-}
+} */
 void	check_redaux(char *in, t_process *aux, int *i)
 {
 	(void)aux;
@@ -72,7 +72,7 @@ int	input_parser(char *line, t_shell *new)
 	new->input = ft_split(line, ' ');
 	if (!new->input)
 		return (-1);
-	while (!new->input[i])
+	while (new->input[i])
 	{
 		if (i == 0)
 		{
@@ -81,10 +81,12 @@ int	input_parser(char *line, t_shell *new)
 			aux->type = -1;
 			new->n_process += 1;
 		}
+		if (new->lst_process == NULL)
+			new->lst_process = aux;
 		check_red(new->input[i], new->input[i + 1], aux, &i);
 		if (new->input[i])
 			aux->process = ft_strjoinup(&aux->process, new->input[i]);
 		i++;
 	}
-	return (check_process(new));
+	return (0);
 }

@@ -10,7 +10,7 @@ void	exec_process(t_shell *all, char **envp)
 	{
 		while (aux)
 		{
-
+			aux = aux->next;
 		}
 	}
 	else
