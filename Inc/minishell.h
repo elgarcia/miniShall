@@ -21,6 +21,7 @@ t_env_lst				*add_env_node(t_env_lst *head, \
 						char *name, char *value);
 void					ft_lstdelone_env(t_env_lst *lst);
 void					ft_lstclear_env(t_env_lst **lst);
+void					delete_env_value(t_env_lst *lst, char *key);
 void					print_env_list(t_env_lst *head);
 
 // BUILTINS

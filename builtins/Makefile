@@ -6,7 +6,7 @@
 #    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 10:43:27 by bautrodr          #+#    #+#              #
-#    Updated: 2024/01/15 13:33:55 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/01/16 11:29:33 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRCS = cd.c \
 	   env_utils.c \
 	   pwd.c \
 	   export.c \
+	   utils.c \
 	   main.c
 INCLUDE_LIBFT = ../libft/libft.a
 LIBFT_DIR = ../libft
