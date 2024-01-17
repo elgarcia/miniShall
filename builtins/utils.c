@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 11:23:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/16 14:43:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/17 12:02:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	delete_env_value(t_env_lst *lst, char *key)
 	}
 	current = current->next;
 }
-
+/*
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*new;
@@ -54,4 +54,4 @@ int	main(int argc, char **argv, char **envp)
 	free(new->paths);
 	free(new);
 	return (0);
-}
+}*/
