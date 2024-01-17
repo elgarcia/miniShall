@@ -17,6 +17,7 @@ int		ft_word_count(const char *s1, char delimiter);
 
 // ENVP LIST
 void					fill_init_env_list(t_paths *paths, char **envp);
+t_env_lst				*find_env_node(t_env_lst *env_lst, char *key);
 t_env_lst				*add_env_node(t_env_lst *head, \
 						char *name, char *value);
 void					ft_lstdelone_env(t_env_lst *lst);
