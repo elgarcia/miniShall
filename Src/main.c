@@ -17,7 +17,10 @@ void	exe_command(t_paths *paths, char **argv, int argc)
 void	execute(t_paths *paths, char *line, int argc)
 {
 	char	**argv;
+	int		i;
 
+	i = -1;
+	argv = ft_split(line, ' ');
 	if (ft_strncmp(line, "cd", 2) == 0)
 	{
 		ft_cd(paths, "~");
@@ -28,9 +31,13 @@ void	execute(t_paths *paths, char *line, int argc)
 	else if (ft_strncmp(line, "env", 3) == 0)
 		ft_env(paths);
 	else if (ft_strncmp(line, "export", 6) == 0)
+		ft_export(paths, argv, 0);
+	else if(ft_strncmp(line, "echo", 4) == 0)
+		ft_echo(argv, argc);
+	if (argv)
 	{
-		argv = ft_split(line, ' ');
-		ft_export(paths, argv);
+		while (argv[++i])
+			free(argv[i]);
 		free(argv);
 	}
 }
@@ -79,7 +86,6 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
-		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
 		new->paths = malloc(sizeof(t_paths));
 		new->paths->pwd = ft_strdup(getenv("PWD"));
 		new->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
@@ -97,8 +103,8 @@ int	main(int argc, char **argv, char **envp)
 				execute(new->paths, line, argc);
 			}
 			if (!ft_strncmp(line, "exit", 4))
-				exit(EXIT_SUCCESS);
-			// printf("%s\n", line);
+				ft_exit(new);
+			//printf("%s\n", line);
 			printf("\n");
 		}
 	}

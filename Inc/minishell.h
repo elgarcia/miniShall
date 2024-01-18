@@ -31,4 +31,5 @@ void					ft_cd(t_paths *paths, char *dir);
 int						ft_pwd(void);
 int						ft_echo(char **argv, int argc);
 void					ft_export(t_paths *paths, char **argv, int i);
+void					ft_exit(t_shell *shell);
 #endif
