@@ -1,47 +1,5 @@
 #include "../Inc/minishell.h"
 
-void	exe_command(t_paths *paths, char **argv, int argc)
-{
-	if (ft_strncmp(argv[1], "cd", 3) == 0)
-		ft_cd(paths, argv[2]);
-	else if (ft_strncmp(argv[1], "echo", 5) == 0)
-		ft_echo(argv, argc);
-	else if (ft_strncmp(argv[1], "pwd", 4) == 0)
-		ft_pwd();
-	else if (ft_strncmp(argv[1], "env", 4) == 0)
-		ft_env(paths);
-	// else if (ft_strncmp(argv[1], "export", 7) == 0)
-	//	ft_export(paths, argv);
-}
-
-void	execute(t_paths *paths, char *line, int argc)
-{
-	char	**argv;
-	int		i;
-
-	i = -1;
-	argv = ft_split(line, ' ');
-	if (ft_strncmp(line, "cd", 2) == 0)
-	{
-		ft_cd(paths, "~");
-		print_env_list(paths->env_lst);
-	}
-	else if (ft_strncmp(line, "pwd", 3) == 0)
-		ft_pwd();
-	else if (ft_strncmp(line, "env", 3) == 0)
-		ft_env(paths);
-	else if (ft_strncmp(line, "export", 6) == 0)
-		ft_export(paths, argv, 0);
-	else if(ft_strncmp(line, "echo", 4) == 0)
-		ft_echo(argv, argc);
-	if (argv)
-	{
-		while (argv[++i])
-			free(argv[i]);
-		free(argv);
-	}
-}
-
 t_env_lst	*duplicate_env_node(const t_env_lst *node)
 {
 	t_env_lst	*new_node;
@@ -83,27 +41,23 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*new;
 	char	*line;
 
-	(void)envp;
+	(void)argv;
 	if (argc == 1)
 	{
 		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
-<<<<<<< HEAD
 		new->n_process = 0;
 		new->input = NULL;
-=======
 		new->paths = malloc(sizeof(t_paths));
 		new->paths->pwd = ft_strdup(getenv("PWD"));
 		new->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
 		new->paths->home = ft_strdup(getenv("HOME"));
 		fill_init_env_list(new->paths, envp);
 		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
->>>>>>> master
 		while (42)
 		{
 			line = readline("minishall$ ");
 			if (line[0] != 0)
 			{
-<<<<<<< HEAD
 				if (!ft_strncmp(line, "exit", 4))
 					exit(EXIT_SUCCESS);
 				if (input_parser(line, new) == -1)
@@ -111,19 +65,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(line);
 				exec_process(new, envp);
 			}
-			
 			printf("%s\n", line);
-=======
-				// if (input_parser(line, new, envp) == -1)
-				//	exit(EXIT_FAILURE);
-				// add_history(line);
-				execute(new->paths, line, argc);
-			}
-			if (!ft_strncmp(line, "exit", 4))
-				ft_exit(new);
-			//printf("%s\n", line);
-			printf("\n");
->>>>>>> master
 		}
 	}
 	else

@@ -1,7 +1,6 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 
-<<<<<<< HEAD
 # define PIPE 0
 # define ORD 1
 # define IRD 2
@@ -12,19 +11,10 @@ typedef struct s_env_lst
 {
 	char				*name;
 	char				*value;
-	struct s_env_lst	*next;
-}						t_env_lst;
-
-=======
-typedef struct s_env_lst
-{
-	char				*name;
-	char				*value;
 	int					equal;
 	struct s_env_lst	*next;
 }						t_env_lst;
 
->>>>>>> master
 typedef struct s_paths
 {
 	char				*home;

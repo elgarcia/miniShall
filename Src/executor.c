@@ -15,7 +15,7 @@ void	exec_process(t_shell *all, char **envp)
 	}
 	else
 	{
-		if (check_builtins(all->lst_process))
+		if (check_builtins(&all->lst_process, all))
 			return ;
 		if (check_command(all->lst_process, &all->exec_args, envp))
 			return ;

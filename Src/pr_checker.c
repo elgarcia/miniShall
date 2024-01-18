@@ -1,48 +1,62 @@
 #include "../Inc/minishell.h"
 
-static int check_builtins_aux(t_process *prcs, char **aux)
+void	free_prcs(t_process **pr, t_shell *all)
+{
+	free(*pr);
+	all->n_process -= 1;
+	*pr = NULL;
+}
+
+static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all)
 {
 	if (!ft_strncmp(aux[0], "export", 6))
 	{
-		//ft_export
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		ft_export(all->paths, aux, 0);
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 5))
 	{
 		//ft_unset
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 3))
 	{
-		//ft_env
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		ft_env(all->paths);
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
-	return (ft_free(aux, ft_word_count(prcs->process, ' ')), 0);
+	return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 0);
 }
 
-int	check_builtins(t_process *prcs)
+int	check_builtins(t_process **prcs, t_shell *all)
 {
 	char **aux;
 
-	aux = ft_split(prcs->process, ' ');
+	aux = ft_split((*prcs)->process, ' ');
 	if (!ft_strncmp(aux[0], "echo", 4))
 	{
-		//ft_echo
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		ft_echo(aux);
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 2))
 	{
-		//ft_cd
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		ft_cd(all->paths, "~");
+		print_env_list(all->paths->env_lst);
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 3))
 	{
-		//ft_pwd
-		return (ft_free(aux, ft_word_count(prcs->process, ' ')), 1);
+		ft_pwd();
+		free_prcs(prcs, all);
+		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
 	}
 	else
-		return (check_builtins_aux(prcs, aux));
-	return (ft_free(aux, ft_word_count(prcs->process, ' ')), 0);
+		return (check_builtins_aux(prcs, aux, all));
+	return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 0);
 }
 
 char	*get_ifile(char *process)
