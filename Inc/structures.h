@@ -5,6 +5,7 @@ typedef struct s_env_lst
 {
 	char				*name;
 	char				*value;
+	int					equal;
 	struct s_env_lst	*next;
 }						t_env_lst;
 

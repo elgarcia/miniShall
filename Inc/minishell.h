@@ -19,7 +19,7 @@ int		ft_word_count(const char *s1, char delimiter);
 void					fill_init_env_list(t_paths *paths, char **envp);
 t_env_lst				*find_env_node(t_env_lst *env_lst, char *key);
 t_env_lst				*add_env_node(t_env_lst *head, \
-						char *name, char *value);
+						char *name, char *value, int equal);
 void					ft_lstdelone_env(t_env_lst *lst);
 void					ft_lstclear_env(t_env_lst **lst);
 void					delete_env_value(t_env_lst *lst, char *key);
@@ -30,5 +30,5 @@ void					ft_env(t_paths *paths);
 void					ft_cd(t_paths *paths, char *dir);
 int						ft_pwd(void);
 int						ft_echo(char **argv, int argc);
-void					ft_export(t_paths *paths, char **argv);
+void					ft_export(t_paths *paths, char **argv, int i);
 #endif

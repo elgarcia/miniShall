@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/17 17:14:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:13:20 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	print_export(t_env_lst *env_lst, int declare_x)
 {
 	t_env_lst	*current;
 
-	sort_env_list(&env_lst);
+	//sort_env_list(&env_lst);
 	current = env_lst;
 	while (current != NULL)
 	{
@@ -70,47 +70,51 @@ void	print_export(t_env_lst *env_lst, int declare_x)
 			printf("declare -x %s", current->name);
 		else
 			printf("%s", current->name);
-		if (current->value[0] != '\0')
-			printf("=\"%s\"\n", current->value);
-		else
-			printf("\n");
+		if (current->name && current->equal == 1 && current->value[0] == '\0')
+			printf("=\"\"");
+		else if (current->value[0] != '\0')
+			printf("=\"%s\"", current->value);
+		printf("\n");
 		current = current->next;
 	}
 }
 
-void	extract_name_value(char *arg, char **name, char **value)
+int	extract_name_value(char *arg, char **name, char **value)
 {
 	char	*equals_sign;
+	int		equal;
 
-	equals_sign = strchr(arg, '=');
+	equal = 0;
+	equals_sign = ft_strchr(arg, '=');
 	if (equals_sign != NULL)
 	{
 		*name = ft_substr(arg, 0, equals_sign - arg);
 		*value = ft_strdup(equals_sign + 1);
+		equal = 1;
 	}
 	else
 	{
 		*name = ft_strdup(arg);
 		*value = ft_strdup("");
 	}
+	return (equal);
 }
 
-void	ft_export(t_paths *paths, char **argv) //aca funciona bien
+void	ft_export(t_paths *paths, char **argv, int i) //aca funciona bien
 {
 	char		*name;
 	char		*value;
-	int			i;
+	int			equal;
 	t_env_lst	*existing_node_export;
 	t_env_lst	*existing_node_env;
 
-	i = 1;
 	if (!argv[1])
 		print_export(paths->export_env_lst, 1);
 	else
 	{
 		while (argv[i])
 		{
-			extract_name_value(argv[i], &name, &value);
+			equal = extract_name_value(argv[i], &name, &value);
 			if (name[0] != '\0')
 			{
 				existing_node_export = find_env_node(paths->export_env_lst,
@@ -120,15 +124,17 @@ void	ft_export(t_paths *paths, char **argv) //aca funciona bien
 					if (value[0] != '\0')
 					{
 						free(existing_node_export->value);
-						existing_node_export->value = strdup(value);
+						existing_node_export->value = ft_strdup(value);
 					}
+					else
+						existing_node_export->equal = 1;
 				}
 				else
 				{
-					add_env_node((paths->export_env_lst), name, value);
+					add_env_node((paths->export_env_lst), name, value, equal);
 					existing_node_env = find_env_node(paths->env_lst, name);
 					if (existing_node_env == NULL && value[0] != '\0')
-						add_env_node((paths->env_lst), name, value);
+						add_env_node((paths->env_lst), name, value, equal);
 				}
 			}
 			free(name);
