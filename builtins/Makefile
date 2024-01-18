@@ -6,33 +6,33 @@
 #    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/15 10:43:27 by bautrodr          #+#    #+#              #
-#    Updated: 2024/01/15 10:55:02 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/01/18 16:35:19 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = built_ins
+NAME = built_ins.a
 
 SRCS = cd.c \
 	   echo.c \
 	   env.c \
 	   env_utils.c \
 	   pwd.c \
-	   main.c
+	   export.c \
+	   utils.c
 INCLUDE_LIBFT = ../libft/libft.a
 LIBFT_DIR = ../libft
 OBJS = $(SRCS:.c=.o)
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -o a.out
 
 all: $(NAME)
 
-.c.o:
-	$(CC) -c $< -o $@
+%.o:%.c Makefile
+	$(CC) $(FLAGS) -I ./ -c $< -o $@
 
-$(NAME): $(OBJS) Makefile ../Inc/built_ins.h $(LIBFT_DIR)/libft.h
+$(NAME): $(OBJS) Makefile ../Inc/minishell.h ../Inc/structures.h $(LIBFT_DIR)/libft.h
 	make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -L$(LIBFT_DIR) -lft
-
+	ar rcs $(NAME) $(OBJS)
 clean:
 	make -C $(LIBFT_DIR) clean
 	rm -f $(OBJS)

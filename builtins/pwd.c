@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:14:06 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 10:36:26 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/15 12:01:37 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/built_ins.h"
+#include "../Inc/minishell.h"
 
 int	find_pwd(char **envp)
 {

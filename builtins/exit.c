@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 12:01:04 by bautrodr         ###   ########.fr       */
+/*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/18 16:15:59 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	ft_env(t_paths *paths)
+void	ft_exit(t_shell *shell)
 {
-	print_env_list(paths->env_lst);
+	free(shell->paths->pwd);
+	free(shell->paths->old_pwd);
+	free(shell->paths->home);
+	ft_lstclear_env(&shell->paths->env_lst);
+	ft_lstclear_env(&shell->paths->export_env_lst);
+	free(shell->paths);
+	free(shell);
+	exit(EXIT_SUCCESS);
 }

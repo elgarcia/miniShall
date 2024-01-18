@@ -6,13 +6,13 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 10:25:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:05:53 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/built_ins.h"
+#include "../Inc/minishell.h"
 
-t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value)
+t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value, int equal)
 {
 	t_env_lst	*new_node;
 	t_env_lst	*current;
@@ -24,7 +24,14 @@ t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value)
 		exit(EXIT_FAILURE);
 	}
 	new_node->name = ft_strdup(name);
-	new_node->value = ft_strdup(value);
+	if (!value)
+		new_node->value = ft_strdup("");
+	else
+		new_node->value = ft_strdup(value);
+	if (equal == 1)
+		new_node->equal = 1;
+	else
+		new_node->equal = 0;
 	new_node->next = NULL;
 	if (head == NULL)
 		return (new_node);
@@ -47,10 +54,10 @@ void	fill_init_env_list(t_paths *paths, char **envp)
 	while (envp[i])
 	{
 		name = ft_substr(envp[i], 0, ft_strlen(envp[i])
-				- ft_strlen(ft_strchr(envp[i], '=') + 1));
+				- ft_strlen(ft_strchr(envp[i], '=')));
 		value = ft_substr(envp[i], ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')) + 1, ft_strlen(envp[i]));
-		head = add_env_node(head, name, value);
+		head = add_env_node(head, name, value, 0);
 		free(name);
 		free(value);
 		i++;
@@ -65,7 +72,7 @@ void	print_env_list(t_env_lst *head)
 	current = head;
 	while (current)
 	{
-		printf("%s", current->name);
+		printf("%s=", current->name);
 		printf("%s\n", current->value);
 		current = current->next;
 	}
