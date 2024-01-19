@@ -20,6 +20,8 @@ void					fill_init_env_list(t_paths *paths, char **envp);
 t_env_lst				*find_env_node(t_env_lst *env_lst, char *key);
 t_env_lst				*add_env_node(t_env_lst *head, \
 						char *name, char *value, int equal);
+t_env_lst				*duplicate_lst(const t_env_lst *head);
+t_env_lst				*duplicate_env_node(const t_env_lst *node);
 void					ft_lstdelone_env(t_env_lst *lst);
 void					ft_lstclear_env(t_env_lst **lst);
 void					delete_env_value(t_env_lst *lst, char *key);
