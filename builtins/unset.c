@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:04:34 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 13:23:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/19 18:06:24 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	remove_env_var(t_env_lst *env_lst, char *name)
 {
-	t_env_lst *current;
+	t_env_lst	*current;
 
 	current = env_lst;
 	while (current != NULL)
