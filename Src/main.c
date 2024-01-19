@@ -1,5 +1,10 @@
 #include "../Inc/minishell.h"
 
+#define RED_TEXT    "\033[1;31m"
+#define GREEN_TEXT  "\033[1;32m"
+#define YELLOW_TEXT "\033[1;33m"
+#define RESET_TEXT  "\033[0m"
+
 void	free_split(char **argv)
 {
 	int		i;
@@ -56,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 			exit(EXIT_FAILURE);
 		while (42)
 		{
-			line = readline("minishall$ ");
+			line = readline(GREEN_TEXT"minishall$ "RESET_TEXT);
 			if (line[0] != 0)
 			{
 				// if (input_parser(line, new, envp) == -1)
