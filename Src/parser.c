@@ -1,24 +1,5 @@
 #include "../Inc/minishell.h"
 
-/* int	check_process(t_shell *new)
-{
-	t_process	*aux;
-	char		**sp_aux;
-
-	aux = new->lst_process;
-	while (aux)
-	{
-		if (aux->type == PIPE || aux->type == -1)
-		{
-			sp_aux = ft_split(aux->process, ' ');
-			if (access(sp_aux[0], F_OK | X_OK) != 0)
-				return (ft_free(sp_aux, ft_word_count(aux->process, ' ')), -1);
-			ft_free(sp_aux, ft_word_count(aux->process, ' '));
-		}
-		aux = aux->next;
-	}
-	return (0);
-} */
 void	check_redaux(char *in, t_process *aux, int *i)
 {
 	(void)aux;
@@ -88,5 +69,5 @@ int	input_parser(char *line, t_shell *new)
 			aux->process = ft_strjoinup(&aux->process, new->input[i]);
 		i++;
 	}
-	return (0);
+	return (ft_free(new->input, ft_word_count(line, ' ')), 0);
 }

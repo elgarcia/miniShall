@@ -7,56 +7,56 @@ void	free_prcs(t_process **pr, t_shell *all)
 	*pr = NULL;
 }
 
-static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all)
+static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int len)
 {
 	if (!ft_strncmp(aux[0], "export", 6))
 	{
 		ft_export(all->paths, aux, 0);
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 5))
 	{
 		//ft_unset
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 3))
 	{
 		ft_env(all->paths);
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
-	return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 0);
+	return (ft_free(aux, len), 0);
 }
 
 int	check_builtins(t_process **prcs, t_shell *all)
 {
-	char **aux;
+	char	**aux;
+	int		len;
 
 	aux = ft_split((*prcs)->process, ' ');
+	len = ft_word_count((*prcs)->process, ' ');
 	if (!ft_strncmp(aux[0], "echo", 4))
 	{
 		ft_echo(aux);
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 2))
 	{
 		ft_cd(all->paths, "~");
 		print_env_list(all->paths->env_lst);
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 3))
 	{
 		ft_pwd();
 		free_prcs(prcs, all);
-		return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 1);
+		return (ft_free(aux, len), 1);
 	}
-	else
-		return (check_builtins_aux(prcs, aux, all));
-	return (ft_free(aux, ft_word_count((*prcs)->process, ' ')), 0);
+	return (check_builtins_aux(prcs, aux, all, len));
 }
 
 char	*get_ifile(char *process)
