@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/18 16:05:53 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:27:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,18 +106,3 @@ void	ft_lstclear_env(t_env_lst **lst)
 	}
 	*lst = NULL;
 }
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_paths paths;
-
-	fill_init_env_list(&paths, envp);
-	//printf("linea 39 = %s\n", envp[39]);
-	//printf("largo line 39 hasta el = %ld\n", ft_strlen(ft_strchr(envp[39],
-				'=')));
-	printf("Lista de entornos:\n");
-	print_env_list(paths.env_lst);
-	ft_lstclear_env(&paths.env_lst);
-
-	return (0);
-}*/

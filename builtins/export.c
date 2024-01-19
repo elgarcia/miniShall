@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/18 14:13:20 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:01:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,16 @@ t_env_lst	*insert_sorted(t_env_lst *head, char *name, char *value)
 		perror("Error al asignar memoria para el nuevo nodo");
 		exit(EXIT_FAILURE);
 	}
-	new_node->name = strdup(name);
-	new_node->value = strdup(value);
+	new_node->name = ft_strdup(name);
+	new_node->value = ft_strdup(value);
 	new_node->next = NULL;
-	if (!head || strcmp(name, head->name) < 0)
+	if (!head || ft_strcmp(name, head->name)< 0)
 	{
 		new_node->next = head;
 		return (new_node);
 	}
 	current = head;
-	while (current->next && strcmp(name, current->next->name) > 0)
+	while (current->next && ft_strcmp(name, current->next->name) > 0)
 		current = current->next;
 	new_node->next = current->next;
 	current->next = new_node;
@@ -100,7 +100,7 @@ int	extract_name_value(char *arg, char **name, char **value)
 	return (equal);
 }
 
-void	ft_export(t_paths *paths, char **argv, int i) //aca funciona bien
+void	ft_export(t_paths *paths, char **argv, int i)
 {
 	char		*name;
 	char		*value;

@@ -14,6 +14,7 @@ int		check_process(t_shell *new, char **envp);
 /* utils.c*/
 void	ft_free(char **arg, int size);
 int		ft_word_count(const char *s1, char delimiter);
+int		ft_strcmp(char *s1, char *s2);
 
 // ENVP LIST
 void					fill_init_env_list(t_paths *paths, char **envp);
@@ -27,11 +28,21 @@ void					ft_lstclear_env(t_env_lst **lst);
 void					delete_env_value(t_env_lst *lst, char *key);
 void					print_env_list(t_env_lst *head);
 
+// CD UTILS
+char					*resolve_parent_references(char *current_dir, \
+						char *target);
+char					*resolve_single_component(char *current_path, \
+						char *component);
+void					update_pwd_variables(t_paths *paths, char *new_pwd);
+int						arg_counter(char **argv);
+char					*get_previous_dir(char *str);
+char					*join_paths(const char *path1, const char *path2);
 // BUILTINS
 void					ft_env(t_paths *paths);
-void					ft_cd(t_paths *paths, char *dir);
-int						ft_pwd(void);
+void					ft_cd(t_paths *paths, char **dir);
+int						ft_pwd(t_paths *paths);
 int						ft_echo(char **argv, int argc);
 void					ft_export(t_paths *paths, char **argv, int i);
 void					ft_exit(t_shell *shell);
+void					ft_unset(t_paths *paths, char *name);
 #endif

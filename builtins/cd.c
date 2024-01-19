@@ -6,48 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 12:00:45 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:31:08 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
-t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
-{
-	int			key_len;
-	t_env_lst	*tmp;
-
-	tmp = env_lst;
-	key_len = ft_strlen(key);
-	while (tmp != NULL && ft_strncmp(tmp->name, key, key_len) != 0)
-	{
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-void	update_pwd_variables(t_paths *paths, char *new_pwd)
-{
-	t_env_lst	*pwd_node;
-	t_env_lst	*old_pwd_node;
-
-	pwd_node = find_env_node(paths->env_lst, "PWD");
-	if (pwd_node)
-	{
-		free(pwd_node->value);
-		pwd_node->value = ft_strdup(new_pwd);
-	}
-	old_pwd_node = find_env_node(paths->env_lst, "OLDPWD");
-	if (old_pwd_node)
-	{
-		free(old_pwd_node->value);
-		old_pwd_node->value = ft_strdup(paths->pwd);
-	}
-	free(paths->old_pwd);
-	paths->old_pwd = ft_strdup(paths->pwd);
-	free(paths->pwd);
-	paths->pwd = ft_strdup(new_pwd);
-}
 
 char	*join_paths(const char *path1, const char *path2)
 {
@@ -60,51 +23,68 @@ char	*join_paths(const char *path1, const char *path2)
 	return (tmp);
 }
 
-void	ft_cd(t_paths *paths, char *dir)
+char	*get_previous_dir(char *str)
 {
-	char	*new_dir;
-	char	*current_dir;
+	int		i;
+	char	*new;
+	char	*aux;
 
-	if (dir == NULL || ft_strncmp(dir, "~", 1) == 0)
-		new_dir = ft_strdup(paths->home);
-	else if (dir[0] == '/')
-		new_dir = ft_strdup(dir);
+	aux = ft_strrchr(str, '/');
+	i = (aux - str);
+	new = ft_substr(str, 0, i);
+	if (!new)
+		return (NULL);
+	return (new);
+}
+
+char	*get_full_path(char *current_dir, char *target)
+{
+	return (join_paths(current_dir, target));
+}
+
+char	*resolve_cd_argument(t_paths *paths, char *arg)
+{
+	char	*current_dir;
+	char	*resolved_path;
+
+	if (!arg || !ft_strcmp(arg, "~"))
+		return (ft_strdup(paths->home));
+	else if (!ft_strcmp(arg, "/"))
+		return (ft_strdup(arg));
+	else if (!ft_strcmp(arg, ".."))
+		return (get_previous_dir(paths->pwd));
+	else if (!ft_strcmp(arg, "."))
+		return (NULL);
+	else if (!ft_strcmp(arg, "-"))
+		return (ft_strdup(paths->old_pwd));
 	else
 	{
 		current_dir = getcwd(NULL, 0);
-		new_dir = join_paths(current_dir, dir);
+		resolved_path = resolve_parent_references(current_dir, arg);
 		free(current_dir);
+		if (!resolved_path)
+			return (NULL);
+		return (resolved_path);
 	}
+}
+
+void	ft_cd(t_paths *paths, char **dir)
+{
+	char	*new_dir;
+	int		argc;
+
+	argc = arg_counter(dir);
+	if (argc > 2)
+	{
+		ft_putendl_fd("cd: Too many arguments", 2);
+		return ;
+	}
+	new_dir = resolve_cd_argument(paths, dir[1]);
+	if (!new_dir)
+		return ;
 	if (chdir(new_dir) != 0)
 		perror("cd");
 	else
 		update_pwd_variables(paths, new_dir);
 	free(new_dir);
 }
-
-void	clear_all_env(t_paths *paths)
-{
-	ft_lstclear_env(&paths->env_lst);
-	if (paths->pwd)
-		free(paths->pwd);
-	if (paths->old_pwd)
-		free(paths->old_pwd);
-}
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_paths	paths;
-
-	paths.pwd = ft_strdup(getenv("PWD"));
-	paths.old_pwd = ft_strdup(getenv("OLDPWD"));
-	paths.home = getenv("HOME");
-	fill_init_env_list(&paths, envp);
-	printf("Lista de entornos:\n");
-	// print_env_list(paths.env_lst);
-	cd_command(&paths, argv[1]);
-	printf("\n\n\n\n\n");
-	printf("Lista de entornos luego de cambiar:\n");
-	print_env_list(paths.env_lst);
-	clear_all_env(&paths);
-	return (0);
-}*/
