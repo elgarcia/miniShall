@@ -26,7 +26,8 @@ void		exec_process(t_shell *all, char **envp);
 
 /* pr_checker.c */
 int			check_builtins(t_process **prcs, t_shell *all);
-int			check_command(t_process *prcs, char ***exec_args, char **envp);
+int			check_command(t_shell *all, t_process **prcs, char ***exec_args, \
+			char **envp);
 void		free_prcs(t_process **pr, t_shell *all);
 
 /* command_aux.c */

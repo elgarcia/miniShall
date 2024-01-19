@@ -66,7 +66,11 @@ int	input_parser(char *line, t_shell *new)
 			new->lst_process = aux;
 		check_red(new->input[i], new->input[i + 1], aux, &i);
 		if (new->input[i])
+		{
+			if (i > 0)
+				aux->process = ft_strjoinup(&aux->process, " ");
 			aux->process = ft_strjoinup(&aux->process, new->input[i]);
+		}
 		i++;
 	}
 	return (ft_free(new->input, ft_word_count(line, ' ')), 0);

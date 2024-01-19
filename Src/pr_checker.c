@@ -73,20 +73,29 @@ char	*get_ifile(char *process)
 	return (NULL);
 }
 
-int	check_command(t_process *prcs, char ***exec_args, char **envp)
+int	check_command(t_shell *all, t_process **prcs, char ***exec_args, \
+char **envp)
 {
 	char 	**aux;
 	// int		fd;
 
-	aux = ft_split(prcs->process, ' ');
-	ft_free(aux, ft_word_count(prcs->process, ' '));
+	aux = ft_split((*prcs)->process, ' ');
+	ft_free(aux, ft_word_count((*prcs)->process, ' '));
 	/* fd = open(get_ifile(prcs->process), O_RDONLY);
 	if (fd == -1)
 	{
 		perror("Error to open file");
 		return (-1);
 	} */
-	if (prepare_command(prcs->process, exec_args, envp) == -1)
+	if (prepare_command((*prcs)->process, exec_args, envp) == -1)
+	{
+		free_prcs(prcs, all);
 		return (-1);
+	}
+	else
+	{
+		free_prcs(prcs, all);
+		return (1);
+	}
 	return (0);
 }

@@ -65,7 +65,6 @@ int	main(int argc, char **argv, char **envp)
 				add_history(line);
 				exec_process(new, envp);
 			}
-			printf("%s\n", line);
 		}
 	}
 	else
