@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:26:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 17:30:47 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/20 12:10:00 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
 {
-	int			key_len;
+	int			name_len;
 	t_env_lst	*tmp;
 
 	tmp = env_lst;
-	key_len = ft_strlen(key);
-	while (tmp != NULL && ft_strncmp(tmp->name, key, key_len) != 0)
+	name_len = ft_strlen(env_lst->name);
+	while (tmp != NULL && ft_strncmp(tmp->name, key, name_len) != 0)
 	{
 		tmp = tmp->next;
 	}

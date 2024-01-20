@@ -27,13 +27,14 @@ int	execute(t_paths *paths, char *line, int argc)
 	else if (ft_strncmp(line, "env", 3) == 0)
 		ft_env(paths);
 	else if (ft_strncmp(line, "export", 6) == 0)
-		ft_export(paths, argv, 0);
+		ft_export(paths, argv, 1);
 	else if(ft_strncmp(line, "echo", 4) == 0)
 		ft_echo(argv, argc);
 	else if (ft_strncmp(line, "unset", 5) == 0)
-		ft_unset(paths, line);
+		ft_unset(paths, argv);
 	if (argv)
 		free_split(argv);
+	return (0);
 }
 
 static int	init_struct(t_shell *new, char **envp)

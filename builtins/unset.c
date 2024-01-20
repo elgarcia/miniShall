@@ -6,34 +6,48 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:04:34 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 18:06:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/20 12:45:52 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	remove_env_var(t_env_lst *env_lst, char *name)
+void free_env_node(t_env_lst *node)
 {
-	t_env_lst	*current;
-
-	current = env_lst;
-	while (current != NULL)
-	{
-		if (!ft_strcmp(current->name, name))
-		{
-			env_lst = current->next;
-			free(current->name);
-			if (current->value)
-				free(current->value);
-			free(current);
-			break ;
-		}
-		current = current->next;
-	}
+    free(node->name);
+    free(node->value);
+    free(node);
 }
 
-void	ft_unset(t_paths *paths, char *name)
+void remove_node(t_env_lst **head, char *name)
 {
-	remove_env_var(paths->env_lst, name);
-	remove_env_var(paths->export_env_lst, name);
+    t_env_lst *current = *head;
+    t_env_lst *prev = NULL;
+
+    while (current != NULL)
+    {
+        if (ft_strcmp(current->name, name) == 0)
+        {
+            if (prev != NULL)
+                prev->next = current->next;
+            else
+                *head = current->next;
+            free_env_node(current);
+            return;
+        }
+        prev = current;
+        current = current->next;
+    }
+}
+
+void ft_unset(t_paths *paths, char **argv)
+{
+    int i = 1;
+
+    while (argv[i] != NULL)
+    {
+        remove_node(&(paths->export_env_lst), argv[i]);
+        remove_node(&(paths->env_lst), argv[i]);
+        i++;
+    }
 }
