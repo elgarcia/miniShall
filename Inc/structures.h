@@ -36,6 +36,8 @@ typedef struct s_shell
 {
 	t_process	*lst_process;
 	int			n_process;
+	int			**pipes;
+	pid_t		*sons;
 	char		**exec_args;
 	char		**input;
 	t_paths		*paths;

@@ -12,7 +12,7 @@
 int			input_parser(char *line, t_shell *new); //split del input
 // int		check_process(t_shell *new); //comprueba que los procesos sean validos
 void		check_redaux(char *in, t_process *aux, int *i); //red checks
-void		check_red(char *in, char *in2, t_process *aux, int *i); //red checks
+void		check_red(char *in, char *in2, t_process **aux, int *i); //red checks
 
 /* utils.c*/
 void		ft_free(char **arg, int size);
@@ -40,6 +40,10 @@ int			check_cmd(char *command, char ***exec_args);
 int			prepare_command(char *process, char ***exec_args, char **envp);
 int			assign_path(char ***exec_args, char *command, char **envp);
 void		double_free(char **aux, char **actual_path);
+
+/* pipes.c */
+void		init_pipex(int *pipe_fd, pid_t *pid);
+void		open_file(t_shell *all, int *fd, int *pipe_fd);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);

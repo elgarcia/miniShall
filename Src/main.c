@@ -63,6 +63,8 @@ int	main(int argc, char **argv, char **envp)
 				if (input_parser(line, new) == -1)
 					exit(EXIT_FAILURE);
 				add_history(line);
+				new->sons = (pid_t *)ft_calloc(new->n_process, sizeof(pid_t));
+				new->pipes = (int **)ft_calloc(new->n_process, sizeof(int *));
 				exec_process(new, envp);
 			}
 		}
