@@ -6,6 +6,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include <stdio.h>
+# include <signal.h>
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new, char **envp);
@@ -45,6 +46,7 @@ void		add_export_node(t_paths *paths, char *name, char *value, int equal);
 void		add_env_variable(t_paths *paths, char *name, char *value,
 				int equal);
 int			extract_name_value(char *arg, char **name, char **value);
+
 // BUILTINS
 void		ft_env(t_paths *paths);
 void		ft_cd(t_paths *paths, char **dir);
@@ -53,4 +55,7 @@ int			ft_echo(char **argv, int argc);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
+
+// SIGNAL
+void		handle_signal(int signo);
 #endif

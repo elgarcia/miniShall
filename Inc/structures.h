@@ -1,5 +1,6 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+# include <signal.h>
 
 typedef struct s_env_lst
 {
