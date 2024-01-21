@@ -1,9 +1,6 @@
 #include "../Inc/minishell.h"
-
-#define RED_TEXT    "\033[1;31m"
-#define GREEN_TEXT  "\033[1;32m"
-#define YELLOW_TEXT "\033[1;33m"
-#define RESET_TEXT  "\033[0m"
+#include <sys/types.h>
+#include <sys/wait.h>
 
 void	free_split(char **argv)
 {
@@ -20,21 +17,21 @@ int	execute(t_shell *shell, char *line, int argc)
 	char	**argv;
 	
 	argv = ft_split(line, ' ');
-	if (ft_strncmp(line, "cd", 2) == 0)
+	if (ft_strncmp(line, "cd", 3) == 0)
 		ft_cd(shell->paths, argv);
-	else if (ft_strncmp(line, "pwd", 3) == 0)
+	else if (ft_strncmp(line, "pwd", 4) == 0)
 		ft_pwd(shell->paths);
-	else if (ft_strncmp(line, "env", 3) == 0)
+	else if (ft_strncmp(line, "env", 4) == 0)
 		ft_env(shell->paths);
-	else if (ft_strncmp(line, "export", 6) == 0)
+	else if (ft_strncmp(line, "export", 7) == 0)
 		ft_export(shell->paths, argv, 1);
-	else if(ft_strncmp(line, "echo", 4) == 0)
+	else if(ft_strncmp(line, "echo", 5) == 0)
 		ft_echo(argv, argc);
-	else if (ft_strncmp(line, "unset", 5) == 0)
+	else if (ft_strncmp(line, "unset", 6) == 0)
 		ft_unset(shell->paths, argv);
 	if (argv)
 		free_split(argv);
-	if (!ft_strncmp(line, "exit", 4))
+	if (!ft_strncmp(line, "exit", 5))
 	{
 		free(line);
 		ft_exit(shell);
@@ -57,9 +54,7 @@ static int	init_struct(t_shell *new, char **envp)
 	new->paths->home = ft_strdup(getenv("HOME"));
 	fill_init_env_list(new->paths, envp);
 	new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
-	if (sigaction(SIGINT, &sa, NULL) == -1)
-		ft_exit(new);
-	if (sigaction(SIGQUIT, &sa, NULL) == -1)
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == -1)
 		ft_exit(new);
 	return (0);
 }
