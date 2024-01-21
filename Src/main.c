@@ -66,7 +66,7 @@ int	main(int argc, char **argv, char **envp)
 				exec_process(new);
 				free_pikes(&new);
 			}
-			free_null(&line);
+			// free_null(&line);
 		}
 	}
 	else

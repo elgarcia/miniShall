@@ -76,6 +76,7 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 {
 	int		aux;
 	char	**cmd_split;
+	int		path_rt;
 
 	if (init_cmd(&aux, &cmd_split, process) == -1)
 		return (-1);
@@ -85,9 +86,12 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 	aux = check_cmd(cmd_split[0], exec_args);
 	if (aux == 1)
 	{
-		if (assign_path(exec_args, cmd_split[0], envp) == -1)
-			return (ft_free(cmd_split, ft_word_count(process, ' ')), \
-				free(*exec_args), -1);
+		path_rt = assign_path(exec_args, cmd_split[0], envp);
+		if (path_rt == -1 || path_rt == -2)
+		{
+			ft_free(cmd_split, ft_word_count(process, ' '));
+			return (free(*exec_args), -1);
+		}
 	}
 	if (aux == -1 || init_execargs(exec_args, process) == -1)
 		return (ft_free(cmd_split, ft_word_count(process, ' ')), -1);

@@ -43,7 +43,7 @@ void	exec_process(t_shell *all)
 			if (test == 0)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
-				wait(NULL);
+				waitpid(test, NULL, 0);
 		}
 	}
 }

@@ -23,16 +23,13 @@ void	free_pipes(t_shell *all, int ***pipes, int n_pipes)
 	int	i;
 
 	i = 0;
-	while (i < n_pipes)
+	if (dup2(all->original_fileno, STDIN_FILENO) == -1)
 	{
-		if (dup2(all->original_fileno, STDIN_FILENO) == -1)
-		{
-			perror("New file dup2 error");
-			exit(EXIT_FAILURE);
-		}
-		free((*pipes)[i]);
-		i++;
+		perror("New file dup2 error");
+		exit(EXIT_FAILURE);
 	}
+	while (i < n_pipes)
+		free((*pipes)[i++]);
 	free(*pipes);
 }
 
