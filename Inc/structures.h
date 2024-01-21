@@ -28,6 +28,7 @@ typedef struct s_paths
 typedef struct s_process
 {
 	char				*process;
+	int					n_process;
 	int					type;
 	struct s_process	*next;
 }						t_process;
@@ -37,7 +38,8 @@ typedef struct s_shell
 	t_process	*lst_process;
 	int			n_process;
 	int			**pipes;
-	int			original_fileno;
+	int			og_infile;
+	int			og_outfile;
 	pid_t		*sons;
 	char		**exec_args;
 	char		**input;

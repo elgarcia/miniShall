@@ -85,7 +85,7 @@ int i)
 	int	ret_val;
 
 	if (all->n_process > 1)
-		treat_fork(all->pipes[i], (*prcs)->process, exec_args, all->paths->env_lst);
+		treat_fork(i, *prcs, exec_args, all);
 	else
 	{
 		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst, all->pipes[i]);

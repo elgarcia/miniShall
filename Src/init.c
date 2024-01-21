@@ -9,7 +9,8 @@ void	init_minishell(t_shell **all)
 	(*all)->paths->pwd = ft_strdup(getenv("PWD"));
 	(*all)->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
 	(*all)->paths->home = ft_strdup(getenv("HOME"));
-	(*all)->original_fileno = dup(STDIN_FILENO);
+	(*all)->og_infile = dup(STDIN_FILENO);
+	(*all)->og_outfile = dup(STDOUT_FILENO);
 }
 
 void	init_pikes(t_shell **all)
@@ -23,7 +24,7 @@ void	free_pipes(t_shell *all, int ***pipes, int n_pipes)
 	int	i;
 
 	i = 0;
-	if (dup2(all->original_fileno, STDIN_FILENO) == -1)
+	if (dup2(all->og_infile, STDIN_FILENO) == -1)
 	{
 		perror("New file dup2 error");
 		exit(EXIT_FAILURE);

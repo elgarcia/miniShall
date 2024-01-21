@@ -4,8 +4,10 @@ void	exec_process(t_shell *all)
 {
 	t_process	*aux;
 	int			i;
+	int			j;
 
 	i = 0;
+	j = 0;
 	all->exec_args = NULL;
 	aux = all->lst_process;
 	if (all->n_process > 1)
@@ -13,23 +15,19 @@ void	exec_process(t_shell *all)
 		while (aux)
 		{
 			if (check_builtins(&aux, all))
-				;
-			else if (check_command(all, &aux, &all->exec_args, i))
+				return ;
+			init_pipex(&all->pipes[i], &all->sons[i]);
+			if (!check_command(all, &aux, &all->exec_args, i))
 			{
 				//checkear pipes para abrir pipes
-				while (i < all->n_process)
-				{
-					init_pipex(&all->pipes[i], &all->sons[i]);
-					if (all->sons[i] == 0)
-						execve(all->exec_args[0], all->exec_args, all->paths->envp);
-					else
-						wait(NULL);
-				}
-				while (wait(NULL) > 0)
-					;
+				if (all->sons[i] == 0)
+					execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			}
 			aux = aux->next;
+			i++;
 		}
+		while (j < i)
+			waitpid(all->sons[j], NULL, 0);
 	}
 	else
 	{

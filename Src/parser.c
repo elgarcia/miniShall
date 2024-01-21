@@ -23,6 +23,7 @@ void	check_red(char *in, char *in2, t_process **aux, int *i)
 	{
 		(*aux)->type = PIPE;
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
+		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
 		(*aux)->process = NULL;
 		(*aux)->type = -1;
@@ -60,6 +61,7 @@ int	input_parser(char *line, t_shell *new)
 		{
 			aux = (t_process *)ft_calloc(1, sizeof(t_process));
 			aux->process = NULL;
+			aux->n_process = 0;
 			aux->type = -1;
 		}
 		if (new->lst_process == NULL)

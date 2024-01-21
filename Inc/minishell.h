@@ -44,7 +44,7 @@ void		double_free(char **aux, char **actual_path);
 /* pipes.c */
 void		init_pipex(int **pipe_fd, pid_t *pid);
 int			open_file(char *file, int *fd, int *pipe_fd);
-int			treat_fork(int *pipes, char *argv, char ***exec_args, t_env_lst *envp);
+int			treat_fork(int i, t_process *argv, char ***exec_args, t_shell *all);
 int			treat_single(char *argv, char ***exec_args, t_env_lst *envp, int *pipe);
 
 /* init.c */
