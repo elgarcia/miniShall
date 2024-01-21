@@ -19,16 +19,16 @@ void		ft_free(char **arg, int size);
 int			ft_word_count(const char *s1, char delimiter);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
-void		*free_null(char **s);
 
 /* executor.c */
-void		exec_process(t_shell *all, char **envp);
+void		exec_process(t_shell *all);
 
 /* pr_checker.c */
 int			check_builtins(t_process **prcs, t_shell *all);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args, \
-			char **envp);
+			int i);
 void		free_prcs(t_process **pr, t_shell *all);
+char		*get_ifile(char *process);
 
 /* command_aux.c */
 int			search_path(char **env_1, char	**actual_path, \
@@ -37,13 +37,21 @@ int			init_execargs(char ***ex_argc, char *command);
 
 /* commands.c */
 int			check_cmd(char *command, char ***exec_args);
-int			prepare_command(char *process, char ***exec_args, char **envp);
-int			assign_path(char ***exec_args, char *command, char **envp);
+int			prepare_command(char *process, char ***exec_args, t_env_lst *envp);
+int			assign_path(char ***exec_args, char *command, t_env_lst *envp);
 void		double_free(char **aux, char **actual_path);
 
 /* pipes.c */
-void		init_pipex(int *pipe_fd, pid_t *pid);
-void		open_file(t_shell *all, int *fd, int *pipe_fd);
+void		init_pipex(int **pipe_fd, pid_t *pid);
+void		open_file(char *file, int *fd, int *pipe_fd);
+void		treat_fork(int *pipes, char *argv, char ***exec_args, t_env_lst *envp);
+int			treat_single(char *argv, char ***exec_args, t_env_lst *envp, int *pipe);
+
+/* init.c */
+void		init_minishell(t_shell **all);
+void		init_pikes(t_shell **all);
+void		free_pikes(t_shell **all);
+void		free_pipes(t_shell *all, int ***pipes, int n_pipes);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);

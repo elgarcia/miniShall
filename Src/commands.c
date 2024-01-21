@@ -1,13 +1,10 @@
 #include "../Inc/minishell.h"
 
-static int	reassign_path(char ***aux2, char *envp)
+static int	reassign_path(char ***aux2, t_env_lst *envp)
 {
 	char	*aux;
 
-	aux = ft_strdup((*aux2)[1]);
-	ft_free(*aux2, ft_word_count(envp, '='));
-	if (!aux)
-		return (-1);
+	aux = ft_strdup(envp->value);
 	*aux2 = ft_split(aux, ':');
 	if (!*aux2)
 		return (-1);
@@ -15,30 +12,24 @@ static int	reassign_path(char ***aux2, char *envp)
 	return (0);
 }
 
-int	assign_path(char ***exec_args, char *command, char **envp)
+int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 {
 	char	*aux_path;
+	t_env_lst *aux;
 	char	**aux2;
 	int		flag;
-	int		i;
 
-	i = -1;
-	while (envp[++i])
+	aux = envp;
+	while (aux)
 	{
-		aux2 = ft_split(envp[i], '=');
-		if (!aux2)
-			return (-1);
-		if (!ft_strncmp(aux2[0], "PATH", ft_strlen(envp[i])))
+		if (!ft_strncmp(aux->name, "PATH", 4))
 		{
-			if (reassign_path(&aux2, envp[i]) == -1)
+			if (reassign_path(&aux2, aux) == -1)
 				return (-1);
 			flag = search_path(aux2, &aux_path, command, exec_args);
-			if (flag == 0 || flag == -1)
-				return (ft_free(aux2, ft_word_count(envp[i], ':')), flag);
-			break ;
+			return (ft_free(aux2, ft_word_count(aux->value, ':')), flag);
 		}
-		else
-			ft_free(aux2, ft_word_count(envp[i], '='));
+		aux = aux->next;
 	}
 	return (-1);
 }
@@ -81,7 +72,7 @@ static int	init_cmd(int *aux, char ***cmd_split, char *process)
 	return (0);
 }
 
-int	prepare_command(char *process, char ***exec_args, char **envp)
+int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 {
 	int		aux;
 	char	**cmd_split;
@@ -90,7 +81,7 @@ int	prepare_command(char *process, char ***exec_args, char **envp)
 		return (-1);
 	*exec_args = (char **)ft_calloc(aux, sizeof(char *));
 	if (!*exec_args)
-		return (ft_free(cmd_split, ft_word_count(process, ' ')), -1);
+		return (ft_free(cmd_split, aux), -1);
 	aux = check_cmd(cmd_split[0], exec_args);
 	if (aux == 1)
 	{

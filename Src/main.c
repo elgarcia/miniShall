@@ -1,4 +1,5 @@
 #include "../Inc/minishell.h"
+#include <errno.h>
 
 t_env_lst	*duplicate_env_node(const t_env_lst *node)
 {
@@ -44,18 +45,16 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
-		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
-		new->n_process = 0;
-		new->input = NULL;
-		new->paths = malloc(sizeof(t_paths));
-		new->paths->pwd = ft_strdup(getenv("PWD"));
-		new->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
-		new->paths->home = ft_strdup(getenv("HOME"));
+		init_minishell(&new);
 		fill_init_env_list(new->paths, envp);
 		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
 		while (42)
 		{
 			line = readline("minishall$ ");
+			if (line == NULL) {
+    			fprintf(stderr, "readline error: %s\n", strerror(errno));
+    			exit(EXIT_FAILURE);
+			}
 			if (line[0] != 0)
 			{
 				if (!ft_strncmp(line, "exit", 4))
@@ -63,10 +62,11 @@ int	main(int argc, char **argv, char **envp)
 				if (input_parser(line, new) == -1)
 					exit(EXIT_FAILURE);
 				add_history(line);
-				new->sons = (pid_t *)ft_calloc(new->n_process, sizeof(pid_t));
-				new->pipes = (int **)ft_calloc(new->n_process, sizeof(int *));
-				exec_process(new, envp);
+				init_pikes(&new);
+				exec_process(new);
+				free_pikes(&new);
 			}
+			free_null(&line);
 		}
 	}
 	else

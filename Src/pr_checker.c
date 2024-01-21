@@ -62,6 +62,7 @@ int	check_builtins(t_process **prcs, t_shell *all)
 char	*get_ifile(char *process)
 {
 	char	**aux;
+	char	*ret;
 	int		i;
 
 	aux = ft_split(process, ' ');
@@ -69,33 +70,27 @@ char	*get_ifile(char *process)
 	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
 		i++;
 	if (aux[i])
-		return (aux[i]);
+	{
+		ret = ft_strdup(aux[i]);
+		ft_free(aux, ft_word_count(process, ' '));
+		return (ret);
+	}
+	ft_free(aux, ft_word_count(process, ' '));
 	return (NULL);
 }
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args, \
-char **envp)
+int i)
 {
-	char 	**aux;
-	// int		fd;
+	int	ret_val;
 
-	aux = ft_split((*prcs)->process, ' ');
-	ft_free(aux, ft_word_count((*prcs)->process, ' '));
-	/* fd = open(get_ifile(prcs->process), O_RDONLY);
-	if (fd == -1)
-	{
-		perror("Error to open file");
-		return (-1);
-	} */
-	if (prepare_command((*prcs)->process, exec_args, envp) == -1)
-	{
-		free_prcs(prcs, all);
-		return (-1);
-	}
+	if (all->n_process > 1)
+		treat_fork(all->pipes[i], (*prcs)->process, exec_args, all->paths->env_lst);
 	else
 	{
+		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst, all->pipes[i]);
 		free_prcs(prcs, all);
-		return (1);
+		return (ret_val);
 	}
 	return (0);
 }
