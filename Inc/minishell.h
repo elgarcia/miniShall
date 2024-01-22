@@ -3,15 +3,16 @@
 
 # include "../libft/libft.h"
 # include "structures.h"
+# include <stdio.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <stdio.h>
 # include <signal.h>
 
 #define RED_TEXT    "\033[1;31m"
 #define GREEN_TEXT  "\033[1;32m"
 #define YELLOW_TEXT "\033[1;33m"
 #define RESET_TEXT  "\033[0m"
+#define BLUE_TEXT	"\e[0;34m"
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new, char **envp);
@@ -56,7 +57,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 void		ft_env(t_paths *paths);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
-int			ft_echo(char **argv, int argc);
+int			ft_echo(char **argv);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);

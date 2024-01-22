@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 18:06:04 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/22 09:55:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	extend_echo(char **argv, int i)
 	}
 }
 
-int	ft_echo(char **argv, int argc)
+int	ft_echo(char **argv)
 {
 	int	i;
 	int	j;
