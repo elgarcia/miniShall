@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/22 17:37:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:51:25 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,29 +68,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 		return (resolved_path);
 	}
 }
-/*
-int	check_valid_path(char *path)
-{
-	struct stat	st;
 
-	if (stat(path, &st) == -1)
-		perror("cd");
-	else
-	{
-		if (S_ISDIR(st.st_mode) != 0)
-		{
-			if (access(path, X_OK) == -1)
-			{
-				perror("cd");
-				return (0);
-			}
-			else
-				return (1);
-		}
-	}
-	return (0);
-}
-*/
 void	ft_cd(t_paths *paths, char **dir)
 {
 	char	*new_dir;
