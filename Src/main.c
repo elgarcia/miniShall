@@ -1,4 +1,5 @@
 #include "../Inc/minishell.h"
+<<<<<<< HEAD
 #include <sys/types.h>
 #include <sys/wait.h>
 
@@ -40,6 +41,9 @@ int	execute(t_shell *shell, char *line)
 		free_split(argv);
 	return (0);
 }
+=======
+#include <errno.h>
+>>>>>>> elias
 
 void	change_shell(t_shell *shell)
 {
@@ -76,6 +80,7 @@ int	main(int argc, char **argv, char **envp)
 	t_shell	*new;
 	char	*line;
 
+<<<<<<< HEAD
 	if (argc == 1 && argv[0])
 	{
 		new = (t_shell *)ft_calloc(1, sizeof(t_shell));
@@ -97,6 +102,33 @@ int	main(int argc, char **argv, char **envp)
 				execute(new, line);
 				free(line);
 			}
+=======
+	(void)argv;
+	if (argc == 1)
+	{
+		init_minishell(&new);
+		fill_init_env_list(new->paths, envp);
+		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
+		while (42)
+		{
+			line = readline("minishall$ ");
+			if (line == NULL) {
+    			fprintf(stderr, "readline error: %s\n", strerror(errno));
+    			exit(EXIT_FAILURE);
+			}
+			if (line[0] != 0)
+			{
+				if (!ft_strncmp(line, "exit", 4))
+					exit(EXIT_SUCCESS);
+				if (input_parser(line, new) == -1)
+					exit(EXIT_FAILURE);
+				add_history(line);
+				init_pikes(&new);
+				exec_process(new);
+				free_pikes(&new);
+			}
+			// free_null(&line);
+>>>>>>> elias
 		}
 	}
 	else

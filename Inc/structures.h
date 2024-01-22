@@ -2,6 +2,12 @@
 # define STRUCTURES_H
 # include <signal.h>
 
+# define PIPE 0
+# define ORD 1
+# define IRD 2
+# define APND 3
+# define HD 4
+
 typedef struct s_env_lst
 {
 	char				*name;
@@ -23,12 +29,20 @@ typedef struct s_paths
 typedef struct s_process
 {
 	char				*process;
-	struct s_sprocess	*next;
+	int					n_process;
+	int					type;
+	struct s_process	*next;
 }						t_process;
 
 typedef struct s_shell
 {
 	t_process	*lst_process;
+	int			n_process;
+	int			**pipes;
+	int			og_infile;
+	int			og_outfile;
+	pid_t		*sons;
+	char		**exec_args;
 	char		**input;
 	t_paths		*paths;
 }				t_shell;
