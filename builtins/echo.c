@@ -24,7 +24,44 @@ static void	extend_echo(char **argv, int i)
 	}
 }
 
-int	ft_echo(char **argv)
+
+int ft_echo(char **args)
+{
+    int i = 1;
+    int new_line = 1;
+
+    while (args[i] && args[i][0] == '-' && args[i][1] == 'n' && !args[i][2]) {
+        new_line = 0;
+        i++;
+    }
+
+    while (args[i]) {
+        if (args[i][0] == '\'' || args[i][0] == '\"') {
+            char quote_char = args[i][0];
+            printf("%s", args[i] + 1);
+            i++;
+            while (args[i] && args[i][0] != quote_char) {
+                printf(" %s", args[i]);
+                i++;
+            }
+            if (args[i] && args[i][0] == quote_char)
+                printf("%s", args[i] + 1);
+        } else {
+            printf("%s", args[i]);
+        }
+
+        i++;
+        if (args[i])
+            printf(" ");
+    }
+
+    if (new_line)
+        printf("\n");
+
+    return 0;
+}
+
+int ft_echo(char **argv)
 {
 	int	i;
 	int	j;
