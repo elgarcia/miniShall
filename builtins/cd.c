@@ -6,11 +6,12 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 17:31:08 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:37:15 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
+#include <sys/stat.h>
 
 char	*join_paths(const char *path1, const char *path2)
 {
@@ -32,8 +33,8 @@ char	*get_previous_dir(char *str)
 	aux = ft_strrchr(str, '/');
 	i = (aux - str);
 	new = ft_substr(str, 0, i);
-	if (!new)
-		return (NULL);
+	if (!new[0])
+		new = ft_strdup("/");
 	return (new);
 }
 
@@ -67,7 +68,29 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 		return (resolved_path);
 	}
 }
+/*
+int	check_valid_path(char *path)
+{
+	struct stat	st;
 
+	if (stat(path, &st) == -1)
+		perror("cd");
+	else
+	{
+		if (S_ISDIR(st.st_mode) != 0)
+		{
+			if (access(path, X_OK) == -1)
+			{
+				perror("cd");
+				return (0);
+			}
+			else
+				return (1);
+		}
+	}
+	return (0);
+}
+*/
 void	ft_cd(t_paths *paths, char **dir)
 {
 	char	*new_dir;
@@ -80,6 +103,8 @@ void	ft_cd(t_paths *paths, char **dir)
 		return ;
 	}
 	new_dir = resolve_cd_argument(paths, dir[1]);
+//	if (check_valid_path(new_dir) == 0)
+//		return ;
 	if (!new_dir)
 		return ;
 	if (chdir(new_dir) != 0)
