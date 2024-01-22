@@ -9,19 +9,19 @@ void	free_prcs(t_process **pr, t_shell *all)
 
 static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int len)
 {
-	if (!ft_strncmp(aux[0], "export", 6))
+	if (!ft_strncmp(aux[0], "export", 7))
 	{
-		ft_export(all->paths, aux, 0);
+		ft_export(all->paths, aux, 1);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "unset", 5))
+	if (!ft_strncmp(aux[0], "unset", 6))
 	{
-		//ft_unset
+		ft_unset(all->paths, aux);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "env", 3))
+	if (!ft_strncmp(aux[0], "env", 4))
 	{
 		ft_env(all->paths);
 		free_prcs(prcs, all);
@@ -37,22 +37,21 @@ int	check_builtins(t_process **prcs, t_shell *all)
 
 	aux = ft_split((*prcs)->process, ' ');
 	len = ft_word_count((*prcs)->process, ' ');
-	if (!ft_strncmp(aux[0], "echo", 4))
+	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(aux);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
-	else if (!ft_strncmp(aux[0], "cd", 2))
+	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
-		ft_cd(all->paths, "~");
-		print_env_list(all->paths->env_lst);
+		ft_cd(all->paths, aux);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
-	else if (!ft_strncmp(aux[0], "pwd", 3))
+	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
-		ft_pwd();
+		ft_pwd(all->paths);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
