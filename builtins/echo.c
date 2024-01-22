@@ -24,9 +24,11 @@ static void	extend_echo(char **argv, int i)
 	}
 }
 
+int is_quote(char c) {
+    return (c == '\'' || c == '\"');
+}
 
-int ft_echo(char **args)
-{
+int ft_echo(char **args) {
     int i = 1;
     int new_line = 1;
 
@@ -36,12 +38,16 @@ int ft_echo(char **args)
     }
 
     while (args[i]) {
-        if (args[i][0] == '\'' || args[i][0] == '\"') {
+        if (is_quote(args[i][0])) {
             char quote_char = args[i][0];
             printf("%s", args[i] + 1);
             i++;
             while (args[i] && args[i][0] != quote_char) {
-                printf(" %s", args[i]);
+                if (is_quote(args[i][0])) {
+                    printf(" %c%s%c", quote_char, args[i] + 1, quote_char);
+                } else {
+                    printf(" %s", args[i]);
+                }
                 i++;
             }
             if (args[i] && args[i][0] == quote_char)
@@ -60,6 +66,7 @@ int ft_echo(char **args)
 
     return 0;
 }
+
 
 int ft_echo(char **argv)
 {
