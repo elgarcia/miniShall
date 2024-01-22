@@ -3,11 +3,11 @@
 
 # include <stdio.h>
 # include <fcntl.h>
+# include <signal.h>
 # include "../libft/libft.h"
 # include "structures.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include <signal.h>
 
 #define RED_TEXT    "\033[1;31m"
 #define GREEN_TEXT  "\033[1;32m"

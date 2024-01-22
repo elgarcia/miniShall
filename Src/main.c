@@ -54,7 +54,7 @@ int	main(int argc, char **argv, char **envp)
 			}
 			if (line[0] != 0)
 			{
-				if (!ft_strncmp(line, "exit", 4))
+				if (!ft_strncmp(line, "exit", 5))
 					ft_exit(new);
 				if (input_parser(line, new) == -1)
 					exit(EXIT_FAILURE);

@@ -2,6 +2,11 @@
 
 void	init_minishell(t_shell **all)
 {
+//	struct sigaction	sa;
+
+	//sa.sa_handler = handle_signal;
+//	sigemptyset(&sa.sa_mask);
+	//sa.sa_flags = 0;
     (*all) = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	(*all)->n_process = 0;
 	(*all)->input = NULL;
@@ -11,6 +16,9 @@ void	init_minishell(t_shell **all)
 	(*all)->paths->home = ft_strdup(getenv("HOME"));
 	(*all)->og_infile = dup(STDIN_FILENO);
 	(*all)->og_outfile = dup(STDOUT_FILENO);
+	//if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == 
+		//	-1)
+	//	ft_exit(*all);
 }
 
 void	init_pikes(t_shell **all)
