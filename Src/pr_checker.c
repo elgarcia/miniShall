@@ -35,11 +35,11 @@ int	check_builtins(t_process **prcs, t_shell *all)
 	char	**aux;
 	int		len;
 
-	aux = ft_split((*prcs)->process, ' ');
+	aux = ft_split((*prcs)->process, ' '); // rompe aca si le pasamos echo "'hello'"
 	len = ft_word_count((*prcs)->process, ' ');
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		ft_echo(aux);
+		ft_echo(all->paths, aux);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}

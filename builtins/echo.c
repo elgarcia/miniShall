@@ -6,89 +6,99 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/22 16:07:05 by bautrodr         ###   ########.fr       */
-/*   Updated: 2024/01/18 20:07:13 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/01/23 11:06:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-static void	extend_echo(char **argv, int i)
+void		print_exit_status(t_paths *paths)
+{
+	ft_putnbr_fd(paths->last_exit_status, 1);
+}
+
+int			remove_char(char *str, char c)
+{
+	int		new;
+	int		i;
+
+	new = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != c)
+			str[new++] = str[i];
+		i++;
+	}
+	str[new] = 0;
+	return (0);
+}
+
+void		ft_echo_envv(char **argv, t_paths *paths, int i)
+{
+	char	*value;
+	t_env_lst	*tmp;
+
+	if (argv[1][0] == '$' && argv[1][1] == '?')
+	{
+		print_exit_status(paths);
+		return ;
+	}
+	tmp = find_env_node(paths->env_lst, argv[i]+1);
+	if (!tmp)
+		return ;
+	value = tmp->value;
+	ft_putstr_fd(value, 0);
+}
+
+int			check_option_n(char *token)
+{
+	int	i;
+
+	if (ft_strncmp(token, "-n", 2) != 0)
+		return (0);
+	i = 2;
+	while (token[i])
+	{
+		if (token[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 {
 	while (argv[i])
 	{
-		ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1] && argv[i][0])
-			write(1, " ", 1);
+		if (argv[i][0] == '\'')
+			*flag = remove_char(argv[i], '\'');
+		if (argv[i][0] == '$' && *flag != 1)
+			ft_echo_envv(argv, paths, i);
+		else
+			ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1] != NULL)
+			ft_putchar_fd(' ', 1);
 		i++;
 	}
 }
 
-int is_quote(char c) {
-    return (c == '\'' || c == '\"');
-}
-
-int ft_echo(char **args) {
-    int i = 1;
-    int new_line = 1;
-
-    while (args[i] && args[i][0] == '-' && args[i][1] == 'n' && !args[i][2]) {
-        new_line = 0;
-        i++;
-    }
-
-    while (args[i]) {
-        if (is_quote(args[i][0])) {
-            char quote_char = args[i][0];
-            printf("%s", args[i] + 1);
-            i++;
-            while (args[i] && args[i][0] != quote_char) {
-                if (is_quote(args[i][0])) {
-                    printf(" %c%s%c", quote_char, args[i] + 1, quote_char);
-                } else {
-                    printf(" %s", args[i]);
-                }
-                i++;
-            }
-            if (args[i] && args[i][0] == quote_char)
-                printf("%s", args[i] + 1);
-        } else {
-            printf("%s", args[i]);
-        }
-
-        i++;
-        if (args[i])
-            printf(" ");
-    }
-
-    if (new_line)
-        printf("\n");
-
-    return 0;
-}
-
-
-int ft_echo(char **argv)
+int	ft_echo(t_paths *paths, char **argv)
 {
 	int	i;
-	int	j;
 	int	flag;
 
 	i = 1;
 	flag = 0;
-	while (argv[i] && argv[i][0] == '-' && argv[i][1] == 'n')
+	paths->last_exit_status = 0;
+	while (argv[i] && check_option_n(argv[i]))
 	{
-		j = 1;
-		while (argv[i][j] == 'n')
-			j++;
-		if (argv[i][j] == '\0')
-			flag = 1;
-		else
-			break ;
+		flag = 1;
 		i++;
 	}
-	extend_echo(argv, i);
-	if (flag == 0)
-		write(1, "\n", 1);
+	extend_echo(paths, argv, i, &flag);
+	if (flag != 1)
+		ft_putchar_fd('\n', 1);
+	ft_putchar_fd('\n', 1);
 	return (0);
 }

@@ -1,7 +1,5 @@
 #include "../Inc/minishell.h"
 
-extern int g_pid;
-
 void	init_pipex(int **pipe_fd, pid_t *pid)
 {
     *pipe_fd = (int *)ft_calloc(2, sizeof(int));
@@ -12,7 +10,6 @@ void	init_pipex(int **pipe_fd, pid_t *pid)
 	}
 	if (pid)
 	{
-		g_pid = *pid;
 		*pid = fork();
 		if (*pid < 0)
 		{

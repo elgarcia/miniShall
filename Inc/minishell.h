@@ -98,7 +98,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 void		ft_env(t_paths *paths);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
-int			ft_echo(char **argv);
+int			ft_echo(t_paths *paths, char **argv);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);

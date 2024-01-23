@@ -14,6 +14,7 @@ void	init_minishell(t_shell **all)
 	(*all)->paths->pwd = ft_strdup(getenv("PWD"));
 	(*all)->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
 	(*all)->paths->home = ft_strdup(getenv("HOME"));
+	(*all)->paths->last_exit_status = 0;
 	(*all)->og_infile = dup(STDIN_FILENO);
 	(*all)->og_outfile = dup(STDOUT_FILENO);
 	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == 
