@@ -18,6 +18,7 @@ void	init_pipex(int **pipe_fd, pid_t *pid)
 		}
 	}
 }
+
 int	open_file(char *file, int *fd, int *pipe_fd)
 {
 	char *aux;

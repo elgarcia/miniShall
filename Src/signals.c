@@ -1,35 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 15:14:06 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/19 13:44:22 by bautrodr         ###   ########.fr       */
+/*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 15:13:08 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-int	find_pwd(char **envp)
-{
-	int	i;
+extern int g_pid;
 
-	i = 0;
-	while (ft_strncmp(envp[i], "PWD=", 4) != 0)
-		i++;
-	return (i);
+void	readline_newline(void)
+{
+	write(1, "\n", 1);
+	rl_replace_line("", 1);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-int	ft_pwd2(char **envp)
+void	proc_handle_signal(int signo)
 {
-	ft_putendl_fd(envp[find_pwd(envp)] + 4, 1);
-	return (0);
+	kill(g_pid, signo);
+	write(1, "\n", 1);
+	rl_replace_line("", 1);
+	rl_on_new_line();
 }
 
-int	ft_pwd(t_paths *paths)
+void	handle_signal(int signo)
 {
-	ft_putendl_fd(paths->pwd, 0);
-	return (0);
+	if ((signo == SIGINT) && g_pid != 0)
+	{
+		proc_handle_signal(signo);
+		g_pid = 0;
+	}
+	else
+	{
+		if (signo == SIGINT)
+			readline_newline();
+	}
 }

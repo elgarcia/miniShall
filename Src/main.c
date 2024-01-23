@@ -1,42 +1,38 @@
 #include "../Inc/minishell.h"
 #include <errno.h>
 
-t_env_lst	*duplicate_env_node(const t_env_lst *node)
+int	g_pid = 0;
+
+void	change_shell(t_shell *shell)
 {
-	t_env_lst	*new_node;
-
-	new_node = malloc(sizeof(t_env_lst));
-	if (!new_node)
-	{
-		perror("Error al asignar memoria para el nuevo nodo");
-		exit(EXIT_FAILURE);
-	}
-	new_node->name = strdup(node->name);
-	new_node->value = strdup(node->value);
-	new_node->next = NULL;
-	return (new_node);
+	char	*tmp;
+	tmp = ft_strjoin(shell->paths->pwd, "/minishall");
+	add_export_node(shell->paths, "SHELL", tmp, 1);
+	free(tmp);
 }
-
-t_env_lst	*duplicate_lst(const t_env_lst *head)
+/*
+static int	init_struct(t_shell *new, char **envp)
 {
-	t_env_lst	*new_head;
-	t_env_lst	*current;
+	struct sigaction	sa;
 
-	if (!head)
-	{
-		return (NULL);
-	}
-	new_head = duplicate_env_node(head);
-	current = new_head;
-	while (head->next)
-	{
-		head = head->next;
-		current->next = duplicate_env_node(head);
-		current = current->next;
-	}
-	return (new_head);
+	new->paths = malloc(sizeof(t_paths));
+	if (!new->paths)
+		return (-1);
+	sa.sa_handler = handle_signal;
+	sigemptyset(&sa.sa_mask);
+	sa.sa_flags = 0;
+	new->paths->pwd = ft_strdup(getenv("PWD"));
+	new->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
+	new->paths->home = ft_strdup(getenv("HOME"));
+	fill_init_env_list(new->paths, envp);
+	new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
+	change_shell(new);
+	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) ==
+		-1)
+		ft_exit(new);
+	return (0);
 }
-
+*/
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*new;
@@ -48,28 +44,30 @@ int	main(int argc, char **argv, char **envp)
 		init_minishell(&new);
 		fill_init_env_list(new->paths, envp);
 		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
+		change_shell(new);
 		while (42)
 		{
-			line = readline("minishall$ ");
+			line = readline(GREEN_TEXT "minishall$ "RESET_TEXT);
+		//	printf("line -> %s\n", line); // quitar esto despues;
 			if (line == NULL) {
     			fprintf(stderr, "readline error: %s\n", strerror(errno));
     			exit(EXIT_FAILURE);
 			}
 			if (line[0] != 0)
 			{
-				if (!ft_strncmp(line, "exit", 4))
-					exit(EXIT_SUCCESS);
+				if (!ft_strncmp(line, "exit", 5))
+					ft_exit(new);
 				if (input_parser(line, new) == -1)
 					exit(EXIT_FAILURE);
 				add_history(line);
 				init_pikes(&new);
-				exec_process(new);
+				exec_process(new, line);
 				free_pikes(&new);
 			}
 			// free_null(&line);
 		}
 	}
 	else
-		printf("Too much arguments\n");
+		printf("Too many arguments\n");
 	return (0);
 }

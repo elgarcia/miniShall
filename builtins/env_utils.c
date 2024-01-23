@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/18 16:05:53 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/20 11:13:16 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@ t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value, int equal)
 
 	new_node = malloc(sizeof(t_env_lst));
 	if (!new_node)
-	{
-		perror("Error al asignar memoria para el nuevo nodo");
 		exit(EXIT_FAILURE);
-	}
 	new_node->name = ft_strdup(name);
 	if (!value)
 		new_node->value = ft_strdup("");
@@ -30,8 +27,6 @@ t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value, int equal)
 		new_node->value = ft_strdup(value);
 	if (equal == 1)
 		new_node->equal = 1;
-	else
-		new_node->equal = 0;
 	new_node->next = NULL;
 	if (head == NULL)
 		return (new_node);
@@ -58,6 +53,7 @@ void	fill_init_env_list(t_paths *paths, char **envp)
 		value = ft_substr(envp[i], ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')) + 1, ft_strlen(envp[i]));
 		head = add_env_node(head, name, value, 0);
+		head->equal = 0;
 		free(name);
 		free(value);
 		i++;
@@ -106,18 +102,3 @@ void	ft_lstclear_env(t_env_lst **lst)
 	}
 	*lst = NULL;
 }
-/*
-int	main(int argc, char **argv, char **envp)
-{
-	t_paths paths;
-
-	fill_init_env_list(&paths, envp);
-	//printf("linea 39 = %s\n", envp[39]);
-	//printf("largo line 39 hasta el = %ld\n", ft_strlen(ft_strchr(envp[39],
-				'=')));
-	printf("Lista de entornos:\n");
-	print_env_list(paths.env_lst);
-	ft_lstclear_env(&paths.env_lst);
-
-	return (0);
-}*/

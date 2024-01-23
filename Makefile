@@ -1,8 +1,9 @@
 NAME = minishell
 
 SOURCE = Src/main.c Src/parser.c Src/utils.c Src/executor.c Src/pr_checker.c Src/commands.c \
-Src/command_aux.c Src/pipes.c Src/init.c builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c \
-builtins/exit.c builtins/export.c builtins/pwd.c builtins/utils.c 
+Src/command_aux.c Src/pipes.c Src/init.c Src/signals.c builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c \
+builtins/exit.c builtins/export.c builtins/pwd.c builtins/utils.c builtins/cd_utils.c builtins/unset.c \
+builtins/export_utils.c builtins/sort_env.c builtins/echo_split.c
 INCLUDE = Inc/minishell.h
 
 LIBFT_LIB =  libft/libft.a

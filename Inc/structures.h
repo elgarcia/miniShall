@@ -1,5 +1,6 @@
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
+# include <signal.h>
 
 # define PIPE 0
 # define ORD 1
@@ -21,6 +22,7 @@ typedef struct s_paths
 	char				*pwd;
 	char				*old_pwd;
 	char				**envp;
+	int					last_exit_status;
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
 }						t_paths;
