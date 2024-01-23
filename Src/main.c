@@ -1,8 +1,6 @@
 #include "../Inc/minishell.h"
 #include <errno.h>
 
-int	g_pid = 0;
-
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
@@ -47,11 +45,11 @@ int	main(int argc, char **argv, char **envp)
 		change_shell(new);
 		while (42)
 		{
+			set_signals(0);
 			line = readline(GREEN_TEXT "minishall$ "RESET_TEXT);
-		//	printf("line -> %s\n", line); // quitar esto despues;
 			if (line == NULL) {
-    			fprintf(stderr, "readline error: %s\n", strerror(errno));
-    			exit(EXIT_FAILURE);
+				printf("Exit\n");
+				ft_exit(new);
 			}
 			if (line[0] != 0)
 			{
@@ -62,6 +60,7 @@ int	main(int argc, char **argv, char **envp)
 				add_history(line);
 				init_pikes(&new);
 				exec_process(new, line);
+				free(line);
 				free_pikes(&new);
 			}
 			// free_null(&line);

@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   print_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 21:57:04 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 22:34:41 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 22:48:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "includes/ft_printf.h"
 
-void	ft_env(t_paths *paths, char **argv)
+int	print_str(const char *str, int i, int fd)
 {
-	int	argc;
-
-	argc = arg_counter(argv);
-	if (argc > 1)
+	if (str == NULL)
 	{
-		g_exit_status = 127;
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		return ;
+		if (write(fd, "(null)", 6) == -1)
+			return (-1);
+		i += 6;
+		return (i);
 	}
-	print_env_list(paths->env_lst);
-	g_exit_status = 0;
+	while (*str)
+	{
+		i = ft_putchar(*str, i, fd);
+		if (i == -1)
+			return (-1);
+		str++;
+	}
+	return (i);
 }

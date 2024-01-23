@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:04:34 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/20 12:45:52 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 22:02:25 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void ft_unset(t_paths *paths, char **argv)
         remove_node(&(paths->env_lst), argv[i]);
         i++;
     }
+	g_exit_status = 0;
 }

@@ -6,15 +6,15 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 19:25:38 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:49:11 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	print_exit_status(t_paths *paths)
+void	print_exit_status(void)
 {
-	ft_putnbr_fd(paths->last_exit_status, 1);
+	ft_putnbr_fd(g_exit_status, 1);
 }
 
 int	quotes_counter(char *str)
@@ -71,7 +71,7 @@ void	ft_echo_envv(char **argv, t_paths *paths, int i)
 
 	if (argv[1][0] == '$' && argv[1][1] == '?')
 	{
-		print_exit_status(paths);
+		print_exit_status();
 		return ;
 	}
 	tmp = find_env_node(paths->env_lst, argv[i]+1);
@@ -134,6 +134,6 @@ int	ft_echo(t_paths *paths, char **argv)
 	extend_echo(paths, argv, i, &flag);
 	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
-	paths->last_exit_status = flag;
+	g_exit_status = flag;
 	return (0);
 }

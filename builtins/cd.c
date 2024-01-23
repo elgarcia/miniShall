@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 18:13:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 21:46:36 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,26 +69,26 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 	}
 }
 
-void	handle_too_many_arguments(t_paths *paths)
+void	handle_too_many_arguments(void)
 {
 	ft_putendl_fd("cd: Too many arguments", 2);
-	paths->last_exit_status = 1;
+	g_exit_status = 1;
 }
 
-void	handle_cd_error(t_paths *paths)
+void	handle_cd_error(void)
 {
-	paths->last_exit_status = 1;
+	g_exit_status = 1;
 	perror("cd");
 }
 
 void	update_directory(t_paths *paths, char *new_dir)
 {
 	if (chdir(new_dir) != 0)
-		handle_cd_error(paths);
+		handle_cd_error();
 	else
 	{
 		update_pwd_variables(paths, new_dir);
-		paths->last_exit_status = 0;
+		g_exit_status = 0;
 	}
 }
 
@@ -100,12 +100,12 @@ void	ft_cd(t_paths *paths, char **dir)
 	argc = arg_counter(dir);
 	if (argc > 2)
 	{
-		handle_too_many_arguments(paths);
+		handle_too_many_arguments();
 		return ;
 	}
 	new_dir = resolve_cd_argument(paths, dir[1]);
 	if (!new_dir || chdir(new_dir) != 0)
-		handle_cd_error(paths);
+		handle_cd_error();
 	else
 		update_directory(paths, new_dir);
 	free(new_dir);

@@ -109,4 +109,5 @@ char		**echo_split(char const *s, char c);
 
 // SIGNAL
 void		handle_signal(int signo);
+void		set_signals(int mode);
 #endif
