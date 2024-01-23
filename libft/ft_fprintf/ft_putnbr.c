@@ -1,32 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_str.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 22:34:41 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 22:48:14 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 22:36:03 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 23:03:49 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "ft_fprintf.h"
 
-int	print_str(const char *str, int i, int fd)
+int	ft_putnbr(int nb, int i, int fd)
 {
-	if (str == NULL)
+	if (i == -1)
+		return (-1);
+	if (nb <= -2147483648)
 	{
-		if (write(fd, "(null)", 6) == -1)
-			return (-1);
-		i += 6;
-		return (i);
+		i = ft_putchar('-', i, fd);
+		i = ft_putchar('2', i, fd);
+		i = ft_putnbr(147483648, i, fd);
 	}
-	while (*str)
+	else if (nb < 0)
 	{
-		i = ft_putchar(*str, i, fd);
-		if (i == -1)
-			return (-1);
-		str++;
+		i = ft_putchar('-', i, fd);
+		i = ft_putnbr(-nb, i, fd);
 	}
+	else if (nb > 9)
+	{
+		i = ft_putnbr(nb / 10, i, fd);
+		i = ft_putnbr(nb % 10, i, fd);
+	}
+	else
+		i = ft_putchar(nb + '0', i, fd);
 	return (i);
 }

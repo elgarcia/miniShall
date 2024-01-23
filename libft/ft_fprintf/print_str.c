@@ -1,25 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unsigned_int.c                                     :+:      :+:    :+:   */
+/*   print_str.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 22:32:48 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 22:45:01 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 22:34:41 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 23:04:32 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "ft_fprintf.h"
 
-int	unsigned_int(unsigned int nb, int i, int fd)
+int	print_str(const char *str, int i, int fd)
 {
-	if (nb > 9)
+	if (str == NULL)
 	{
-		i = ft_putnbr(nb / 10, i, fd);
-		i = ft_putnbr(nb % 10, i, fd);
+		if (write(fd, "(null)", 6) == -1)
+			return (-1);
+		i += 6;
+		return (i);
 	}
-	else
-		i = ft_putchar(nb + '0', i, fd);
+	while (*str)
+	{
+		i = ft_putchar(*str, i, fd);
+		if (i == -1)
+			return (-1);
+		str++;
+	}
 	return (i);
 }

@@ -6,7 +6,7 @@
 #    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 10:11:46 by bautrodr          #+#    #+#              #
-#    Updated: 2023/09/21 15:58:43 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/01/23 23:16:22 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,8 @@ SRCS = ft_calloc.c \
 	   ft_putchar_fd.c \
 	   ft_putstr_fd.c \
 	   ft_putendl_fd.c \
-	   ft_putnbr_fd.c
+	   ft_putnbr_fd.c \
+	   ft_fprintf/ft_putchar.c ft_fprintf/check_format.c ft_fprintf/print_address.c ft_fprintf/to_hex.c ft_fprintf/ft_fprintf.c ft_fprintf/ft_putnbr.c ft_fprintf/print_str.c ft_fprintf/unsigned_int.c
 
 SRCS_BONUS = ft_lstnew.c \
 		ft_lstadd_front.c \
@@ -55,6 +56,7 @@ SRCS_BONUS = ft_lstnew.c \
 		ft_lstclear.c \
 		ft_lstiter.c \
 		ft_lstmap.c
+
 
 FLAGS = -Wall -Wextra -Werror -MMD 
 OBJS = $(SRCS:.c=.o)

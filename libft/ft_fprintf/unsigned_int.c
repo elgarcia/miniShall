@@ -1,33 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   unsigned_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 22:36:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 22:42:55 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 22:32:48 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 23:04:40 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/ft_printf.h"
+#include "ft_fprintf.h"
 
-int	ft_putnbr(int nb, int i, int fd)
+int	unsigned_int(unsigned int nb, int i, int fd)
 {
-	if (i == -1)
-		return (-1);
-	if (nb <= -2147483648)
-	{
-		i = ft_putchar('-', i, fd);
-		i = ft_putchar('2', i, fd);
-		i = ft_putnbr(147483648, i, fd);
-	}
-	else if (nb < 0)
-	{
-		i = ft_putchar('-', i, fd);
-		i = ft_putnbr(-nb, i, fd);
-	}
-	else if (nb > 9)
+	if (nb > 9)
 	{
 		i = ft_putnbr(nb / 10, i, fd);
 		i = ft_putnbr(nb % 10, i, fd);
