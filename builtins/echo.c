@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 17:54:00 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:25:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,33 @@ void	print_exit_status(t_paths *paths)
 int	quotes_counter(char *str)
 {
 	int	i;
-	int	quotes;
+	int	single_quotes;
+	int	double_quotes;
 
 	i = 0;
-	quotes = 0;
+	single_quotes = 0;
+	double_quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'' || str[i] == '\"')
-			quotes++;
+		if (str[i] == '\'') 
+			single_quotes++;
+		else if (str[i] == '\"')
+			double_quotes++;
 		i++;
 	}
-	return (quotes);
+	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+		return (1);
+	return (0);
 }
 
 int	remove_char(char *str, char c)
 {
 	int		new;
 	int		i;
-	int		quotes;
 
 	new = 0;
 	i = 0;
-	quotes = quotes_counter(str);
-	if (quotes % 2 == 0)
+	if (!quotes_counter(str))
 	{
 		while (str[i])
 		{
@@ -117,18 +121,19 @@ int	ft_echo(t_paths *paths, char **argv)
 {
 	int	i;
 	int	flag;
+	int	n_flag;
 
 	i = 1;
 	flag = 0;
+	n_flag = 0;
 	while (argv[i] && check_option_n(argv[i]))
 	{
-		flag = 1;
+		n_flag = 1;
 		i++;
 	}
 	extend_echo(paths, argv, i, &flag);
-	if (flag == 0)
+	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
-	ft_putchar_fd('\n', 1);
 	paths->last_exit_status = flag;
 	return (0);
 }

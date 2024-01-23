@@ -88,6 +88,8 @@ int i)
 	else
 	{
 		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst, all->pipes[i]);
+		if (ret_val == -1)
+			all->paths->last_exit_status = 127;
 		free_prcs(prcs, all);
 		return (ret_val);
 	}
