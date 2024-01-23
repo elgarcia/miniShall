@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:39:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 18:46:37 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:52:34 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ char	**ft_split(char const *s, char c)
 	return (aux_matrix);
 }
 
-#include <stdio.h>
+/* #include <stdio.h>
 int	main(int argc, char **argv)
 {
 	(void)argc;
@@ -152,4 +152,4 @@ int	main(int argc, char **argv)
     }
 
     return 0;
-}
+} */

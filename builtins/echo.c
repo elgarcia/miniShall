@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 17:54:00 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:58:41 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ int	ft_echo(t_paths *paths, char **argv)
 	}
 	extend_echo(paths, argv, i, &flag);
 	if (flag == 0)
-		ft_putchar_fd('\n', 1);
+		// ft_putchar_fd('\n', 1);
 	ft_putchar_fd('\n', 1);
 	paths->last_exit_status = flag;
 	return (0);

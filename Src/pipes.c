@@ -31,18 +31,18 @@ int	open_file(char *file, int *fd, int *pipe_fd)
 	{
 		perror("Failed to open output file");
 		close(pipe_fd[0]);
-		close(pipe_fd[1]);
 		free(aux);
 		return (-1);//error 1(?)
 	}
 	if (dup2(*fd, STDIN_FILENO) == -1)
 	{
 		perror("New file dup2 error");
-		close(pipe_fd[1]);
+		close(pipe_fd[0]);
 		close(*fd);
 		return (-1);
 	}
 	free(aux);
+	close(*fd);
 	return (0);
 }
 //acortar
@@ -61,37 +61,28 @@ int	treat_fork(int i, t_process *argv, char ***exec_args, t_shell *all)
 	if (argv->n_process == 0)
 	{
 		open_rt = open_file(argv->process, &input_fd, all->pipes[i]);
-		dup2(all->pipes[i][0], STDIN_FILENO);
+		dup2(all->pipes[i][1], STDOUT_FILENO);
 		close(all->pipes[i][0]);
 		close(all->pipes[i][1]);
-		close(input_fd);
 		if (open_rt == -1)
 			return (-1);
 	}
 	else
 	{
-		if (dup2(all->pipes[i][0], all->pipes[i - 1][1]) == -1)
+		if (dup2(all->pipes[i - 1][1], all->pipes[i][0]) == -1)
 		{
 			perror("New file dup2 error");
-			close(all->pipes[i - 1][0]);
-			close(all->pipes[i - 1][1]);
+			close(all->pipes[i][0]);
+			close(all->pipes[i][1]);
 			return (-1);
 		}
 	}
-	if (argv->n_process != all->n_process - 1)
+	if (argv->n_process == all->n_process - 1)
 	{
-		if (dup2(all->pipes[i][1], STDOUT_FILENO) == -1)
+		if (dup2(all->pipes[i][1], all->og_outfile) == -1)
 		{
 			close(all->pipes[i][1]);
-			perror("Child dup2 error");
-			return (-1);
-		}
-	}
-	else
-	{
-		if (dup2(all->og_outfile, all->pipes[i][1]) == -1)
-		{
-			close(all->pipes[i][1]);
+			close(all->pipes[i][0]);
 			perror("Child dup2 error");
 			return (-1);
 		}

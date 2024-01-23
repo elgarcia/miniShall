@@ -16,9 +16,7 @@
 #define BLUE_TEXT	"\e[0;34m"
 
 /* parser.c */
-int			check_process(t_shell *new, char **envp);
 int			input_parser(char *line, t_shell *new); //split del input
-// int		check_process(t_shell *new); //comprueba que los procesos sean validos
 void		check_redaux(char *in, t_process *aux, int *i); //red checks
 void		check_red(char *in, char *in2, t_process **aux, int *i); //red checks
 

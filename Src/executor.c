@@ -28,7 +28,7 @@ void	exec_process(t_shell *all, char *line)
 			aux = aux->next;
 			i++;
 		}
-		while (j < i)
+		while (j != i)
 			waitpid(all->sons[j], NULL, 0);
 	}
 	else
