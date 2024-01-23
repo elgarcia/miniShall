@@ -1,6 +1,8 @@
 #include "../Inc/minishell.h"
 
-void	exec_process(t_shell *all)
+extern int g_pid;
+
+void	exec_process(t_shell *all, char *line)
 {
 	t_process	*aux;
 	int			i;
@@ -14,7 +16,7 @@ void	exec_process(t_shell *all)
 	{
 		while (aux)
 		{
-			if (check_builtins(&aux, all))
+			if (check_builtins(&aux, all, line))
 				return ;
 			init_pipex(&all->pipes[i], &all->sons[i]);
 			if (!check_command(all, &aux, &all->exec_args, i))
@@ -31,17 +33,19 @@ void	exec_process(t_shell *all)
 	}
 	else
 	{
-		if (check_builtins(&all->lst_process, all))
+		if (check_builtins(&all->lst_process, all, line))
 			return ;
 		init_pipex(&all->pipes[i], NULL);
 		if (!check_command(all, &all->lst_process, &all->exec_args, i))
 		{
 			pid_t test = fork();
 
+			g_pid = test;
 			if (test == 0)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
 				waitpid(test, NULL, 0);
 		}
+		g_pid = 0;
 	}
 }

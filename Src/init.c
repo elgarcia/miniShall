@@ -17,8 +17,8 @@ void	init_minishell(t_shell **all)
 	(*all)->paths->last_exit_status = 0;
 	(*all)->og_infile = dup(STDIN_FILENO);
 	(*all)->og_outfile = dup(STDOUT_FILENO);
-	if (sigaction(SIGINT, &sa, NULL) == -1 || sigaction(SIGQUIT, &sa, NULL) == 
-			-1)
+	signal(SIGQUIT, SIG_IGN);
+	if (sigaction(SIGINT, &sa, NULL) == -1)
 		ft_exit(*all);
 }
 

@@ -30,10 +30,10 @@ void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
 
 /* executor.c */
-void		exec_process(t_shell *all);
+void		exec_process(t_shell *all, char *line);
 
 /* pr_checker.c */
-int			check_builtins(t_process **prcs, t_shell *all);
+int			check_builtins(t_process **prcs, t_shell *all, char *line);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args, \
 			int i);
 void		free_prcs(t_process **pr, t_shell *all);
@@ -102,6 +102,7 @@ int			ft_echo(t_paths *paths, char **argv);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
+char		**echo_split(char const *s, char c);
 
 // SIGNAL
 void		handle_signal(int signo);

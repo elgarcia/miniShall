@@ -48,6 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		while (42)
 		{
 			line = readline(GREEN_TEXT "minishall$ "RESET_TEXT);
+		//	printf("line -> %s\n", line); // quitar esto despues;
 			if (line == NULL) {
     			fprintf(stderr, "readline error: %s\n", strerror(errno));
     			exit(EXIT_FAILURE);
@@ -60,7 +61,7 @@ int	main(int argc, char **argv, char **envp)
 					exit(EXIT_FAILURE);
 				add_history(line);
 				init_pikes(&new);
-				exec_process(new);
+				exec_process(new, line);
 				free_pikes(&new);
 			}
 			// free_null(&line);

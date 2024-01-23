@@ -30,13 +30,13 @@ static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int le
 	return (ft_free(aux, len), 0);
 }
 
-int	check_builtins(t_process **prcs, t_shell *all)
+int	check_builtins(t_process **prcs, t_shell *all, char *line)
 {
 	char	**aux;
 	int		len;
 
-	aux = ft_split((*prcs)->process, ' '); // rompe aca si le pasamos echo "'hello'"
-	len = ft_word_count((*prcs)->process, ' ');
+	aux = echo_split(line, ' ');
+	len = ft_word_count(line, ' ');
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);
