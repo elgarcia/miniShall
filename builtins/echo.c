@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 16:44:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 17:54:00 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,22 @@ void	print_exit_status(t_paths *paths)
 	ft_putnbr_fd(paths->last_exit_status, 1);
 }
 
+int	quotes_counter(char *str)
+{
+	int	i;
+	int	quotes;
+
+	i = 0;
+	quotes = 0;
+	while (str[i])
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			quotes++;
+		i++;
+	}
+	return (quotes);
+}
+
 int	remove_char(char *str, char c)
 {
 	int		new;
@@ -25,14 +41,7 @@ int	remove_char(char *str, char c)
 
 	new = 0;
 	i = 0;
-	quotes = 0;
-	while (str[i])
-	{
-		if (str[i] == c)
-			quotes++;
-		i++;
-	}
-	i = 0;
+	quotes = quotes_counter(str);
 	if (quotes % 2 == 0)
 	{
 		while (str[i])
@@ -45,10 +54,10 @@ int	remove_char(char *str, char c)
 	}
 	else
 	{
-		printf("double quotes opened\n");
-		return (-1);
+		printf("ERROR! quotes opened\n");
+		return (1);
 	}
-	return (1);
+	return (0);
 }
 
 void	ft_echo_envv(char **argv, t_paths *paths, int i)
@@ -92,7 +101,7 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 			*flag = remove_char(argv[i], '\'');
 		else if (argv[i][0] == '\"')
 			*flag = remove_char(argv[i], '\"');
-		if (*flag == -1)
+		if (*flag == 1)
 			return ;
 		if (argv[i][0] == '$' && *flag != 1)
 			ft_echo_envv(argv, paths, i);
@@ -111,16 +120,15 @@ int	ft_echo(t_paths *paths, char **argv)
 
 	i = 1;
 	flag = 0;
-	//printf("argv-> %s\n", argv[1]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
 		flag = 1;
 		i++;
 	}
 	extend_echo(paths, argv, i, &flag);
-	if (flag != 1)
+	if (flag == 0)
 		ft_putchar_fd('\n', 1);
 	ft_putchar_fd('\n', 1);
-	paths->last_exit_status = 0;
+	paths->last_exit_status = flag;
 	return (0);
 }

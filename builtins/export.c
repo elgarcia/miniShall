@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/20 12:32:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:38:19 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,13 @@ void	print_export(t_env_lst *env_lst, int declare_x)
 	}
 }
 
-int	check_var(char *argv)
+int	check_var(t_paths *paths, char *argv)
 {
 	if (argv && !ft_isalpha(argv[0]))
-		return (printf("export: `%s': not a valid identifier", argv));
+	{
+		paths->last_exit_status = 1;
+		return (printf("export: `%s': not a valid identifier\n", argv));
+	}
 	return (0);
 }
 
@@ -45,7 +48,7 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 	char	*value;
 	int		equal;
 
-	while (argv[i] && !check_var(argv[i]))
+	while (argv[i] && !check_var(paths, argv[i]))
 	{
 		equal = extract_name_value(argv[i], &name, &value);
 		if (name[0] != '\0')
@@ -61,7 +64,10 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 void	ft_export(t_paths *paths, char **argv, int i)
 {
 	if (!argv[1])
+	{
 		print_export(paths->export_env_lst, 1);
+		paths->last_exit_status = 0;
+	}
 	else
 		handle_export_variables(paths, argv, i);
 }
