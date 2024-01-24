@@ -45,18 +45,19 @@ int	treat_fork(t_process *argv, char ***exec_args, t_shell *all)
 
 	input_fd = -1;
 	if (prepare_command(argv->process, exec_args, all->paths->env_lst) == -1)
-	{
 		return (-1); //exit(127);
-	}
-	dup2(all->pipes[1], STDOUT_FILENO);
 	if (argv->n_process == 0)
 	{
 		open_rt = open_file(argv->process, &input_fd);
 		if (open_rt == -1)
 			return (-1);
 	}
-	if (argv->n_process == all->n_process - 1)
+	else
 		dup2(all->pipes[0], STDIN_FILENO);
+	if (argv->n_process == all->n_process - 1)
+		dup2(STDOUT_FILENO, all->pipes[1]);
+	else
+		dup2(all->pipes[1], STDOUT_FILENO);
 	return (0);
 }
 

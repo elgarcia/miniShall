@@ -83,18 +83,15 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	int	ret_val;
 
 	ret_val = 0;
-	pipe(all->pipes);
 	if (all->n_process > 1)
 	{
 		ret_val = treat_fork(*prcs, exec_args, all);
-		close_pipes(all);
 		if (ret_val == -1)
 			return (-1);
 	}
 	else
 	{
 		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst);
-		close_pipes(all);
 		free_prcs(prcs, all);
 		return (ret_val);
 	}

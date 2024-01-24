@@ -19,6 +19,7 @@ void	exec_process(t_shell *all, char *line)
 	j = 0;
 	all->exec_args = NULL;
 	aux = all->lst_process;
+	pipe(all->pipes);
 	if (all->n_process > 1)
 	{
 		while (aux)
@@ -30,6 +31,11 @@ void	exec_process(t_shell *all, char *line)
 			{
 				if (all->sons[i] == 0)
 					execve(all->exec_args[0], all->exec_args, all->paths->envp);
+				else
+				{
+					dup2(all->og_infile, STDIN_FILENO);
+					dup2(all->og_outfile, STDOUT_FILENO);
+				}
 			}
 			aux = aux->next;
 			i++;
@@ -40,6 +46,7 @@ void	exec_process(t_shell *all, char *line)
 	}
 	else
 	{
+		close_pipes(all);
 		if (check_builtins(&all->lst_process, all, line))
 			return ;
 		init_pipex(&all->sons[i]);
@@ -49,7 +56,9 @@ void	exec_process(t_shell *all, char *line)
 			if (all->sons[i] == 0)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
+			{
 				waitpid(all->sons[i], NULL, 0);
+			}
 		}
 		g_pid = 0;
 	}
