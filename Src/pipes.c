@@ -46,40 +46,17 @@ int	treat_fork(t_process *argv, char ***exec_args, t_shell *all)
 	input_fd = -1;
 	if (prepare_command(argv->process, exec_args, all->paths->env_lst) == -1)
 	{
-		close(all->pipes[1]);
-		close(input_fd);
 		return (-1); //exit(127);
 	}
-	dup2(all->og_infile, STDIN_FILENO);
+	dup2(all->pipes[1], STDOUT_FILENO);
 	if (argv->n_process == 0)
 	{
 		open_rt = open_file(argv->process, &input_fd);
-		dup2(STDIN_FILENO, all->pipes[0]);
-		// dup2(all->pipes[i][1], STDOUT_FILENO);
 		if (open_rt == -1)
 			return (-1);
 	}
-	else
-	{
-		dup2(all->pipes[1], STDIN_FILENO);
-		if (dup2(STDIN_FILENO, all->pipes[0]) == -1)
-		{
-			perror("New file dup2 error");
-			close(all->pipes[0]);
-			close(all->pipes[1]);
-			return (-1);
-		}
-	}
 	if (argv->n_process == all->n_process - 1)
-	{
-		if (dup2(STDOUT_FILENO, all->pipes[1]) == -1)
-		{
-			close(all->pipes[1]);
-			close(all->pipes[0]);
-			perror("Child dup2 error");
-			return (-1);
-		}
-	}
+		dup2(all->pipes[0], STDIN_FILENO);
 	return (0);
 }
 

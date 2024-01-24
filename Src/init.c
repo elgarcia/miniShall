@@ -26,11 +26,6 @@ void	init_pikes(t_shell **all)
 {
 	(*all)->sons = (pid_t *)ft_calloc((*all)->n_process, sizeof(pid_t));
 	(*all)->pipes = (int *)ft_calloc(2, sizeof(int));
-	if (pipe((*all)->pipes) == -1)
-	{
-		perror("Pipe creation failed!");
-		exit(EXIT_FAILURE);
-	}
 }
 
 void	free_pikes(t_shell **all)
