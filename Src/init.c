@@ -25,26 +25,16 @@ void	init_minishell(t_shell **all)
 void	init_pikes(t_shell **all)
 {
 	(*all)->sons = (pid_t *)ft_calloc((*all)->n_process, sizeof(pid_t));
-	(*all)->pipes = (int **)ft_calloc((*all)->n_process, sizeof(int *));
-}
-
-void	free_pipes(t_shell *all, int ***pipes, int n_pipes)
-{
-	int	i;
-
-	i = 0;
-	if (dup2(all->og_infile, STDIN_FILENO) == -1)
+	(*all)->pipes = (int *)ft_calloc(2, sizeof(int));
+	if (pipe((*all)->pipes) == -1)
 	{
-		perror("New file dup2 error");
+		perror("Pipe creation failed!");
 		exit(EXIT_FAILURE);
 	}
-	while (i < n_pipes)
-		free((*pipes)[i++]);
-	free(*pipes);
 }
 
 void	free_pikes(t_shell **all)
 {
 	free((*all)->sons);
-	free_pipes(*all, &(*all)->pipes, (*all)->n_process);
+	free((*all)->pipes);
 }

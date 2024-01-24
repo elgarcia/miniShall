@@ -2,6 +2,13 @@
 
 extern int g_pid;
 
+void	close_pipes(t_shell *all)
+{
+	close(all->pipes[0]);
+	close(all->pipes[1]);
+	dup2(all->og_infile, STDIN_FILENO);
+	dup2(all->og_outfile, STDOUT_FILENO);
+}
 void	exec_process(t_shell *all, char *line)
 {
 	t_process	*aux;
@@ -18,33 +25,31 @@ void	exec_process(t_shell *all, char *line)
 		{
 			if (check_builtins(&aux, all, line))
 				return ;
-			init_pipex(&all->pipes[i], &all->sons[i]);
-			if (!check_command(all, &aux, &all->exec_args, i))
+			init_pipex(&all->sons[i]);
+			if (!check_command(all, &aux, &all->exec_args))
 			{
-				//checkear pipes para abrir pipes
 				if (all->sons[i] == 0)
 					execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			}
 			aux = aux->next;
 			i++;
 		}
+		close_pipes(all);
 		while (j != i)
-			waitpid(all->sons[j], NULL, 0);
+			waitpid(all->sons[j++], NULL, 0);
 	}
 	else
 	{
 		if (check_builtins(&all->lst_process, all, line))
 			return ;
-		init_pipex(&all->pipes[i], NULL);
-		if (!check_command(all, &all->lst_process, &all->exec_args, i))
+		init_pipex(&all->sons[i]);
+		if (!check_command(all, &all->lst_process, &all->exec_args))
 		{
-			pid_t test = fork();
-
-			g_pid = test;
-			if (test == 0)
+			g_pid = all->sons[i];
+			if (all->sons[i] == 0)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
-				waitpid(test, NULL, 0);
+				waitpid(all->sons[i], NULL, 0);
 		}
 		g_pid = 0;
 	}
