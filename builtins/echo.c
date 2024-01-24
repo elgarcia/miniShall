@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 21:49:11 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/24 13:44:31 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	print_exit_status(void)
 {
-	ft_putnbr_fd(g_exit_status, 1);
+	ft_fprintf(1, "%d", g_exit_status);
 }
 
 int	quotes_counter(char *str)
@@ -58,7 +58,7 @@ int	remove_char(char *str, char c)
 	}
 	else
 	{
-		printf("ERROR! quotes opened\n");
+		ft_fprintf(2, "Syntax Error!");
 		return (1);
 	}
 	return (0);
@@ -107,7 +107,7 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 			*flag = remove_char(argv[i], '\"');
 		if (*flag == 1)
 			return ;
-		if (argv[i][0] == '$' && *flag != 1)
+		if (argv[i][0] == '$' && *flag != 1) // arreglar caso echo $TEST$TEST$TEST=lol$TEST
 			ft_echo_envv(argv, paths, i);
 		else
 			ft_putstr_fd(argv[i], 1);

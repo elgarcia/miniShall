@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 21:46:36 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/24 09:25:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 
 void	handle_too_many_arguments(void)
 {
-	ft_putendl_fd("cd: Too many arguments", 2);
+	ft_fprintf(2, "cd: Too many arguments");
 	g_exit_status = 1;
 }
 

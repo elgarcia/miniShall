@@ -46,7 +46,7 @@ int	check_cmd(char *command, char ***exec_args)
 			return (0);
 		}
 		else
-			return (printf("%s: command not found\n", command), -1);
+			return (ft_fprintf(2, "%s: command not found\n", command), -1);
 	}
 	else if (!ft_strncmp(command + ft_strlen(command) - 3, ".sh", 3))
 	{
@@ -58,7 +58,7 @@ int	check_cmd(char *command, char ***exec_args)
 			return (0);
 		}
 		else
-			return (printf("%s: command not found\n", command), -1);
+			return (ft_fprintf(2, "%s: command not found\n", command), -1);
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 11:37:07 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/15 12:46:19 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/01/24 09:25:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,5 @@ char			*ft_strtrim(char const *s1, char const *set);
 char			**ft_split(char const *s, char c);
 char			*ft_itoa(int n);
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
+int				ft_fprintf(int fd, char const *format, ...);
 #endif

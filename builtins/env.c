@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 21:57:04 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/24 09:30:51 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,7 @@ void	ft_env(t_paths *paths, char **argv)
 	if (argc > 1)
 	{
 		g_exit_status = 127;
-		ft_putstr_fd("env: ", 2);
-		ft_putstr_fd(argv[1], 2);
-		ft_putendl_fd(": No such file or directory", 2);
+		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
 		return ;
 	}
 	print_env_list(paths->env_lst);
