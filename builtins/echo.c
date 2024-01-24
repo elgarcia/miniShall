@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 13:44:31 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:16:08 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	quotes_counter(char *str)
 	double_quotes = 0;
 	while (str[i])
 	{
-		if (str[i] == '\'') 
+		if (str[i] == '\'')
 			single_quotes++;
 		else if (str[i] == '\"')
 			double_quotes++;
@@ -41,8 +41,8 @@ int	quotes_counter(char *str)
 
 int	remove_char(char *str, char c)
 {
-	int		new;
-	int		i;
+	int	new;
+	int	i;
 
 	new = 0;
 	i = 0;
@@ -51,7 +51,7 @@ int	remove_char(char *str, char c)
 		while (str[i])
 		{
 			if (str[i] && str[i] != c)
-				str[new++] = str[i];
+				str[new ++] = str[i];
 			i++;
 		}
 		str[new] = 0;
@@ -66,7 +66,7 @@ int	remove_char(char *str, char c)
 
 void	ft_echo_envv(char **argv, t_paths *paths, int i)
 {
-	char	*value;
+	char		*value;
 	t_env_lst	*tmp;
 
 	if (argv[1][0] == '$' && argv[1][1] == '?')
@@ -74,7 +74,7 @@ void	ft_echo_envv(char **argv, t_paths *paths, int i)
 		print_exit_status();
 		return ;
 	}
-	tmp = find_env_node(paths->env_lst, argv[i]+1);
+	tmp = find_env_node(paths->env_lst, argv[i] + 1);
 	if (!tmp)
 		return ;
 	value = tmp->value;
@@ -107,7 +107,8 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 			*flag = remove_char(argv[i], '\"');
 		if (*flag == 1)
 			return ;
-		if (argv[i][0] == '$' && *flag != 1) // arreglar caso echo $TEST$TEST$TEST=lol$TEST
+		if (argv[i][0] == '$' && *flag != 1)
+			// arreglar caso echo $TEST$TEST$TEST=lol$TEST
 			ft_echo_envv(argv, paths, i);
 		else
 			ft_putstr_fd(argv[i], 1);

@@ -29,36 +29,7 @@ static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int le
 	}
 	return (ft_free(aux, len), 0);
 }
-/*
-int	count_quotes(char **argv, int j)
-{
-	int	i;
-	int	counter_d;
-	int	counter_s;
-	int	total;
 
-	counter_d = 0;
-	counter_s = 0;
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '\'')
-				counter_s++;
-			if (argv[i][j] == '\"')
-				counter_d++;
-			j++;
-		}
-		i++;
-	}
-	total = counter_d + counter_s;
-	if (total % 2 == 0)
-		return (0);
-	return (1);
-}
-*/
 int	check_builtins(t_process **prcs, t_shell *all, char *line)
 {
 	char	**aux;
@@ -66,8 +37,6 @@ int	check_builtins(t_process **prcs, t_shell *all, char *line)
 
 	aux = echo_split(line, ' ');
 	len = ft_word_count(line, ' ');
-	//if (count_quotes(aux, 0))
-	//	return (ft_free(aux, len), 1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);
