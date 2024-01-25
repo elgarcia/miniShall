@@ -50,7 +50,7 @@ int			assign_path(char ***exec_args, char *command, t_env_lst *envp);
 void		double_free(char **aux, char **actual_path);
 
 /* pipes.c */
-void		init_pipex(pid_t *pid);
+void		init_pipex(t_shell *all, t_process *prc, pid_t *pid);
 int			open_file(char *file, int *fd);
 int			treat_fork(t_process *argv, char ***exec_args, t_shell *all);
 int			treat_single(char *argv, char ***exec_args, t_env_lst *envp);

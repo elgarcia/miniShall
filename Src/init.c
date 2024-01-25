@@ -26,6 +26,8 @@ void	init_pikes(t_shell **all)
 {
 	(*all)->sons = (pid_t *)ft_calloc((*all)->n_process, sizeof(pid_t));
 	(*all)->pipes = (int *)ft_calloc(2, sizeof(int));
+	(*all)->fd_in = -1;
+	(*all)->fd_out = -1;
 }
 
 void	free_pikes(t_shell **all)
