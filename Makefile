@@ -24,7 +24,7 @@ OBJS = $(SOURCE:.c=.o)
 
 %.o: %.c Makefile $(INCLUDE)
 	@echo "$(YELLOW)$(BOLD)Compiling $(RESET)$(CYAN)$<$(RESET)"
-	@${CC} -c ${CFLAGS} -I $(INCLUDE) $< -o $@
+	@${CC} -c ${CFLAGS} -I /$(INCLUDE) $< -o $@
 
 all:  sub_make $(NAME)
 

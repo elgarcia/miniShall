@@ -4,6 +4,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "structures.h"
 # include <readline/history.h>
@@ -115,7 +116,7 @@ int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
 // HISTORY
-void	add_to_history(const char *line, const char *history_file);
+void	add_to_history(const char *line);
 
 // SIGNAL
 void		handle_signal(int signo);

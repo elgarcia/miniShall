@@ -1,0 +1,71 @@
+1: echo
+2: ls
+3: cd -
+4: if [1] dklfngskjdf;jnskdfndkf;gnjskfdgdfjsk;gnkjdsfngfdsngjksdfngsdfjnjdfskjgnsdfkgn;dsfngkjfsdnjgnksjdfnkjgnskdfj;gsndf;kgndfjgk;dnf;gksdfng;ksdjfng;skdjfnglkjsdfgn
+5: lasd
+6: sdf
+7: sd
+8: 23
+9: 423
+10: 42412
+11: 41
+12: 2342
+13: 45
+14: 
+15: gh
+16: dfgd
+17: 
+18: 
+19: 
+20: 
+21: 
+22: dfgdfgsd
+23: fg
+24: 
+25: sg
+26: sd
+27: f
+28: sfg
+29: sdf
+30: sdf
+31: gsd
+32: fg
+33: sdfg
+34: sdfg
+35: sd
+36: gdf
+37: gs
+38: dfg
+39: dsfg
+40: ds
+41: fg
+42: sdfg
+43: sdf
+44: gsd
+45: fg
+46: sdfg
+47: sdf
+48: gs
+49: dfg
+50: sdf
+51: gs
+52: dfg
+53: sdfg
+54: sdf
+55: gsd
+56: fg
+57: sdfg
+58: sdfg
+59: sdf
+60: gsd
+61: fg
+62: sdfg
+63: sdf
+64: sdfg
+65: sdfg
+66: sdfg
+67: sdfg
+68: sdfg
+69: sdfg
+70: sdfg
+71: sdfg
