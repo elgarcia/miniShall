@@ -86,7 +86,7 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 
 	ret_val = 0;
 	ret_val = prepare_command((*prcs)->process, exec_args, all->paths->env_lst);
-	if (ret_val == -1)
+	if (ret_val == -1 || ret_val == -2)
 		g_exit_status = 127;
 	return (ret_val);
 }

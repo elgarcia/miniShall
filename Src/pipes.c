@@ -30,6 +30,8 @@ int	open_file(char *file, int *fd)
 	aux = get_ifile(file);
 	if (!aux)
 		return (0);
+	if (access(aux, F_OK | R_OK) == -1)
+		return (free(aux), -1);
 	*fd = open(aux, O_RDONLY);
 	if (*fd == -1)
 	{
