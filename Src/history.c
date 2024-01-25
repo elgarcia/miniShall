@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 17:55:38 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/25 18:36:31 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	find_last_command_num(int fd)
 	return (last_num);
 }
 
-void	add_to_history(const char *line, const char *history_file)
+void	add_to_history(const char *history_file)
 {
 	int		fd;
 	int		num;

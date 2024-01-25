@@ -19,7 +19,7 @@ void	extend(t_shell *new, char *line)
 	}
 	if (line[0] != 0)
 	{
-		add_to_history(line, ".history");
+		add_to_history(".history");
 		if (!ft_strncmp(line, "exit", 5))
 			ft_exit(new);
 		if (input_parser(line, new) != -1)

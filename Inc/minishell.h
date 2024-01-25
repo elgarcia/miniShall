@@ -33,9 +33,9 @@ void		exec_process(t_shell *all, char *line);
 void		close_pipes(t_shell *all);
 
 /* pr_checker.c */
-int			check_builtins(t_process **prcs, t_shell *all, char *line);
+int			check_builtins(t_shell *all, char *line);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
-void		free_prcs(t_process **pr, t_shell *all);
+void		free_prcs(t_shell *all);
 char		*get_ifile(char *process);
 
 /* command_aux.c */
@@ -52,8 +52,6 @@ void		double_free(char **aux, char **actual_path);
 /* pipes.c */
 void		init_pipex(t_shell *all, t_process *prc, pid_t *pid);
 int			open_file(char *file, int *fd);
-int			treat_fork(t_process *argv, char ***exec_args, t_shell *all);
-int			treat_single(char *argv, char ***exec_args, t_env_lst *envp);
 
 /* init.c */
 void		init_minishell(t_shell **all);
@@ -113,7 +111,7 @@ int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
 // HISTORY
-void	add_to_history(const char *line, const char *history_file);
+void	add_to_history(const char *history_file);
 
 // SIGNAL
 void		handle_signal(int signo);

@@ -4,6 +4,7 @@ void	init_minishell(t_shell **all)
 {
     (*all) = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	(*all)->n_process = 0;
+	(*all)->lst_process = NULL;
 	(*all)->input = NULL;
 	(*all)->paths = malloc(sizeof(t_paths));
 	(*all)->paths->pwd = ft_strdup(getenv("PWD"));
