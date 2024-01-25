@@ -114,6 +114,9 @@ void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
+// HISTORY
+void	add_to_history(const char *line, const char *history_file);
+
 // SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);

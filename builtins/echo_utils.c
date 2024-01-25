@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:24:28 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 12:25:14 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:22:23 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	handle_variable(char **token, t_paths *paths)
 	t_env_lst	*tmp;
 
 	start = ++(*token);
-	while (**token && (isalnum(**token) || **token == '_'))
+	while (**token && (ft_isalnum(**token) || **token == '_'))
 		(*token)++;
 	len = *token - start;
 	var_name = malloc(len + 1);
