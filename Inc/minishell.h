@@ -86,6 +86,9 @@ void		update_pwd_variables(t_paths *paths, char *new_pwd);
 int			arg_counter(char **argv);
 char		*get_previous_dir(char *str);
 char		*join_paths(const char *path1, const char *path2);
+char		*get_full_path(char *current_dir, char *target);
+char		*get_previous_dir(char *str);
+char		*join_paths(const char *path1, const char *path2);
 
 // EXPORT UTILS
 
@@ -106,6 +109,10 @@ void		ft_unset(t_paths *paths, char **argv);
 // BUILTINS UTILS
 int			arg_counter(char **argv);
 char		**echo_split(char const *s, char c);
+void		handle_variable(char **token, t_paths *paths);
+void		handle_exit_status(char **token);
+int			remove_char(char *str, char c);
+int			quotes_counter(char *str);
 
 // SIGNAL
 void		handle_signal(int signo);

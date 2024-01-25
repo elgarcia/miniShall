@@ -6,79 +6,29 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 17:16:08 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:26:46 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	print_exit_status(void)
+void	ft_expand_variable(char *variable_name, t_paths *paths)
 {
-	ft_fprintf(1, "%d", g_exit_status);
-}
+	char	*token;
 
-int	quotes_counter(char *str)
-{
-	int	i;
-	int	single_quotes;
-	int	double_quotes;
-
-	i = 0;
-	single_quotes = 0;
-	double_quotes = 0;
-	while (str[i])
+	token = variable_name;
+	while (*token)
 	{
-		if (str[i] == '\'')
-			single_quotes++;
-		else if (str[i] == '\"')
-			double_quotes++;
-		i++;
-	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-		return (1);
-	return (0);
-}
-
-int	remove_char(char *str, char c)
-{
-	int	new;
-	int	i;
-
-	new = 0;
-	i = 0;
-	if (!quotes_counter(str))
-	{
-		while (str[i])
+		if (*token == '$' && *(token + 1) != '\0')
 		{
-			if (str[i] && str[i] != c)
-				str[new ++] = str[i];
-			i++;
+			if (*(token + 1) == '?')
+				handle_exit_status(&token);
+			else
+				handle_variable(&token, paths);
 		}
-		str[new] = 0;
+		else
+			ft_putchar_fd(*token++, 1);
 	}
-	else
-	{
-		ft_fprintf(2, "Syntax Error!");
-		return (1);
-	}
-	return (0);
-}
-
-void	ft_echo_envv(char **argv, t_paths *paths, int i)
-{
-	char		*value;
-	t_env_lst	*tmp;
-
-	if (argv[1][0] == '$' && argv[1][1] == '?')
-	{
-		print_exit_status();
-		return ;
-	}
-	tmp = find_env_node(paths->env_lst, argv[i] + 1);
-	if (!tmp)
-		return ;
-	value = tmp->value;
-	ft_putstr_fd(value, 0);
 }
 
 int	check_option_n(char *token)
@@ -97,21 +47,28 @@ int	check_option_n(char *token)
 	return (1);
 }
 
+int	is_variable(char *token)
+{
+	return (token[0] == '$' && token[1] != '\0');
+}
+
 void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 {
+	char	*variable_name;
+
 	while (argv[i])
 	{
-		if (argv[i][0] == '\'')
-			*flag = remove_char(argv[i], '\'');
-		else if (argv[i][0] == '\"')
-			*flag = remove_char(argv[i], '\"');
-		if (*flag == 1)
-			return ;
-		if (argv[i][0] == '$' && *flag != 1)
-			// arreglar caso echo $TEST$TEST$TEST=lol$TEST
-			ft_echo_envv(argv, paths, i);
+		if (argv[i][0] == '\'' || argv[i][0] == '\"')
+			*flag = remove_char(argv[i], argv[i][0]);
+		else if (is_variable(argv[i]) && *flag != 1)
+		{
+			variable_name = argv[i];
+			ft_expand_variable(variable_name, paths);
+		}
 		else
 			ft_putstr_fd(argv[i], 1);
+		if (*flag == 1)
+			return ;
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', 1);
 		i++;

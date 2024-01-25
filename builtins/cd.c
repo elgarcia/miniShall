@@ -6,42 +6,12 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 09:25:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:29:04 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 #include <sys/stat.h>
-
-char	*join_paths(const char *path1, const char *path2)
-{
-	char	*result;
-	char	*tmp;
-
-	result = ft_strjoin(path1, "/");
-	tmp = ft_strjoin(result, path2);
-	free(result);
-	return (tmp);
-}
-
-char	*get_previous_dir(char *str)
-{
-	int		i;
-	char	*new;
-	char	*aux;
-
-	aux = ft_strrchr(str, '/');
-	i = (aux - str);
-	new = ft_substr(str, 0, i);
-	if (!new[0])
-		new = ft_strdup("/");
-	return (new);
-}
-
-char	*get_full_path(char *current_dir, char *target)
-{
-	return (join_paths(current_dir, target));
-}
 
 char	*resolve_cd_argument(t_paths *paths, char *arg)
 {
