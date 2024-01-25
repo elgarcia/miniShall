@@ -6,11 +6,19 @@
 #    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 10:11:46 by bautrodr          #+#    #+#              #
-#    Updated: 2023/09/21 15:58:43 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/01/25 09:30:52 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+RESET = \033[0m
+BOLD = \033[1m
+RED = \033[91m
+GREEN = \033[92m
+YELLOW = \033[93m
+CYAN = \033[96m
+
 NAME = libft.a
+
 SRCS = ft_calloc.c \
 	   ft_isdigit.c \
 	   ft_memcpy.c \
@@ -44,7 +52,15 @@ SRCS = ft_calloc.c \
 	   ft_putchar_fd.c \
 	   ft_putstr_fd.c \
 	   ft_putendl_fd.c \
-	   ft_putnbr_fd.c
+	   ft_putnbr_fd.c \
+	   ft_fprintf/ft_putchar.c \
+	   ft_fprintf/check_format.c \
+	   ft_fprintf/print_address.c \
+	   ft_fprintf/to_hex.c \
+	   ft_fprintf/ft_fprintf.c \
+	   ft_fprintf/ft_putnbr.c \
+	   ft_fprintf/print_str.c \
+	   ft_fprintf/unsigned_int.c
 
 SRCS_BONUS = ft_lstnew.c \
 		ft_lstadd_front.c \
@@ -56,32 +72,36 @@ SRCS_BONUS = ft_lstnew.c \
 		ft_lstiter.c \
 		ft_lstmap.c
 
+
 FLAGS = -Wall -Wextra -Werror -MMD 
 OBJS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 DEPS = $(SRCS:.c=.d)
 DEPS_BONUS = $(SRCS_BONUS:.c=.d)
 BONUS = .bonus
-all: $(NAME)
 CC = gcc
 
+all: $(NAME)
+
 %.o:%.c Makefile
-	$(CC) $(FLAGS) -I ./ -c $< -o $@
+	@$(CC) $(FLAGS) -I ./ -c $< -o $@
+	@echo "$(GREEN)$(BOLD)Compiling$(RESET)$(CYAN) $<$(RESET)"
 
 $(NAME): $(OBJS)
-	ar rcs $(NAME) $(OBJS)
+	@ar rcs $(NAME) $(OBJS)
+	@echo "$(YELLOW)Libft.a $(RESET)$(CYAN)$(BOLD)created$(RESET)"
 
 bonus: $(BONUS)
 	
 $(BONUS): $(OBJS) $(OBJS_BONUS)
-	ar rcs $(NAME) $(OBJS) $(OBJS_BONUS)
+	@ar rcs $(NAME) $(OBJS) $(OBJS_BONUS)
 	touch $@
 
 clean:
-	rm -f $(OBJS) $(OBJS_BONUS) $(DEPS) $(DEPS_BONUS)
+	@rm -f $(OBJS) $(OBJS_BONUS) $(DEPS) $(DEPS_BONUS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
 

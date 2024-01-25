@@ -57,13 +57,12 @@ void	exec_process(t_shell *all, char *line)
 		init_pipex(all, aux, &all->sons[i]);
 		if (!check_command(all, &all->lst_process, &all->exec_args))
 		{
-			g_pid = all->sons[i];
+			set_signals(1);
 			if (all->sons[i] == 0)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
 				waitpid(all->sons[i], NULL, 0);
 		}
 		close_pipes(all);
-		g_pid = 0;
 	}
 }

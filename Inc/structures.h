@@ -8,6 +8,8 @@
 # define APND 3
 # define HD 4
 
+int	g_exit_status;
+
 typedef struct s_env_lst
 {
 	char				*name;
@@ -22,7 +24,6 @@ typedef struct s_paths
 	char				*pwd;
 	char				*old_pwd;
 	char				**envp;
-	int					last_exit_status;
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
 }						t_paths;

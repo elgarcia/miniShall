@@ -92,6 +92,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	else
 	{
 		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst);
+		if (ret_val == -1)
+			g_exit_status = 127;
 		free_prcs(prcs, all);
 		return (ret_val);
 	}

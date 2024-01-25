@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   unsigned_int.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 09:30:51 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 22:32:48 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 23:04:40 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "ft_fprintf.h"
 
-void	ft_env(t_paths *paths, char **argv)
+int	unsigned_int(unsigned int nb, int i, int fd)
 {
-	int	argc;
-
-	argc = arg_counter(argv);
-	if (argc > 1)
+	if (nb > 9)
 	{
-		g_exit_status = 127;
-		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
-		return ;
+		i = ft_putnbr(nb / 10, i, fd);
+		i = ft_putnbr(nb % 10, i, fd);
 	}
-	print_env_list(paths->env_lst);
-	g_exit_status = 0;
+	else
+		i = ft_putchar(nb + '0', i, fd);
+	return (i);
 }

@@ -45,11 +45,42 @@ void	check_red(char *in, char *in2, t_process **aux, int *i)
 		check_redaux(in, *aux, i);
 }
 
+int	count_quotes(char **argv, int j)
+{
+	int	i;
+	int	counter_d;
+	int	counter_s;
+
+	counter_d = 0;
+	counter_s = 0;
+	i = 1;
+	while (argv[i])
+	{
+		j = 0;
+		while (argv[i][j])
+		{
+			if (argv[i][j] == '\'')
+				counter_s++;
+			if (argv[i][j] == '\"')
+				counter_d++;
+			j++;
+		}
+		i++;
+	}
+	if (counter_d % 2 == 0 || counter_s % 2 == 0)
+		return (0);
+	return (1);
+}
+
 int	input_parser(char *line, t_shell *new)
 {
 	int			i;
 	t_process	*aux;
+	char		**split;
 
+	split = echo_split(line, ' ');
+	if (count_quotes(split, 0))
+		return (-1);
 	aux = new->lst_process;
 	i = 0;
 	new->input = ft_split(line, ' ');

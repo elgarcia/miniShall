@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   ft_fprintf.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 09:30:51 by bautrodr         ###   ########.fr       */
+/*   Created: 2023/09/24 20:27:38 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/01/23 23:03:23 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "ft_fprintf.h"
 
-void	ft_env(t_paths *paths, char **argv)
+int	ft_fprintf(int fd, char const *format, ...)
 {
-	int	argc;
+	int		i;
+	int		j;
+	va_list	args;
 
-	argc = arg_counter(argv);
-	if (argc > 1)
+	i = 0;
+	j = -1;
+	va_start(args, format);
+	while (format[++j])
 	{
-		g_exit_status = 127;
-		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
-		return ;
+		if (format[j] == '%')
+		{
+			j++;
+			if (ft_strchr("cspdiuxX%", format[j]))
+				i = check_format(args, format, i, j, fd);
+		}
+		else
+			i = ft_putchar(format[j], i, fd);
+		if (i == -1)
+			return (-1);
 	}
-	print_env_list(paths->env_lst);
-	g_exit_status = 0;
+	va_end(args);
+	return (i);
 }
