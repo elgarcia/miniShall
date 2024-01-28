@@ -9,6 +9,7 @@
 # include "structures.h"
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "get_next_line/get_next_line.h"
 
 #define RED_TEXT    "\033[1;31m"
 #define GREEN_TEXT  "\033[1;32m"
@@ -117,6 +118,7 @@ int			quotes_counter(char *str);
 
 // HISTORY
 void	add_to_history(const char *line);
+void	print_history(void);
 
 // SIGNAL
 void		handle_signal(int signo);
