@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 20:39:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/26 09:52:35 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,25 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+
+void	print_history(void)
+{
+	int	fd;
+	char	*line;
+	
+	fd = open("/Users/tuta/tuta/coding/miniShall/history", O_RDONLY);
+	if (fd == -1)
+		ft_fprintf(2, "Error: Could not read history file");
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
+}
 
 int	open_history_file(const char *filename, int flags, int mode)
 {
@@ -106,33 +125,12 @@ void	add_to_history(const char *line)
 	int		current_index;
 	char	*formatted_line;
 
-	history_fd = open_history_file(".history", O_WRONLY | O_APPEND | O_CREAT,
-			S_IRUSR | S_IWUSR);
-	temp_fd = open_history_file(".history", O_RDONLY, S_IRUSR | S_IWUSR);
+	history_fd = open_history_file("/Users/tuta/tuta/coding/miniShall/history", O_WRONLY | O_APPEND | O_CREAT, 0666);
+	temp_fd = open_history_file("/Users/tuta/tuta/coding/miniShall/history", O_RDONLY, 0666);
 	current_index = calculate_current_index(temp_fd);
 	formatted_line = format_line(line, current_index);
 	add_line_to_history(history_fd, formatted_line);
 	free(formatted_line);
 	close_file(temp_fd);
 	close_file(history_fd);
-}
-
-int	main(void)
-{
-	char	user_input[256];
-	size_t	length;
-
-	while (1)
-	{
-		printf("Enter a command (or 'exit' to quit): ");
-		fgets(user_input, sizeof(user_input), stdin);
-		length = strlen(user_input);
-		if (user_input[length - 1] == '\n')
-			user_input[length - 1] = '\0';
-		if (strcmp(user_input, "exit") == 0)
-			break ;
-		add_to_history(user_input);
-	}
-	printf("Exiting program.\n");
-	return (0);
 }
