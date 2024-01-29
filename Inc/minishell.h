@@ -108,6 +108,9 @@ void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
 
+// PROMPT
+char		*get_prompt(t_shell *shell);
+
 // BUILTINS UTILS
 int			arg_counter(char **argv);
 char		**echo_split(char const *s, char c);

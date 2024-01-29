@@ -10,6 +10,36 @@ void	change_shell(t_shell *shell)
 	free(tmp);
 }
 
+char	*ft_strchrt(char *s, char c, int times)
+{
+	int	i;
+
+	i = 0;
+	while (*s != '\0')
+	{
+		if (*s == c)
+		{
+			i++;
+			if (i == times)
+				return (s);
+		}
+		s++;
+	}
+	return (NULL);
+}
+
+char	*get_prompt(t_shell *shell)
+{
+	char	*prompt;
+	char	*tmp;
+
+	tmp = ft_strchrt(shell->paths->pwd, '/', 3);
+	if (!tmp)
+		tmp = "/";
+	prompt = ft_strjoin("~", tmp);
+	return (prompt);
+}
+
 void	extend(t_shell *new, char *line)
 {
 	if (line == NULL)
@@ -39,12 +69,13 @@ void	extend(t_shell *new, char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
+		t_shell *new;
+		char *line;
+		char *prompt;
+
 	(void)argv;
 	if (argc == 1)
 	{
-		t_shell	*new;
-		char	*line;
-
 		init_minishell(&new);
 		new->paths->envp = envp;
 		fill_init_env_list(new->paths, envp);
@@ -53,10 +84,13 @@ int	main(int argc, char **argv, char **envp)
 		while (42)
 		{
 			set_signals(0);
-			line = readline(GREEN_TEXT "minishall$ " RESET_TEXT);
+			prompt = get_prompt(new);
+			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
+			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
 			extend(new, line);
 			free(line);
 		}
 	}
-	else		ft_fprintf(2, "Too many arguments\n");
+	else
+		ft_fprintf(2, "Too many arguments\n");
 }
