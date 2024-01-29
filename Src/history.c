@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/26 09:52:35 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/29 10:26:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 #include <string.h>
 #include <unistd.h>
 
-void	print_history(void)
+void	print_history(t_shell *shell)
 {
-	int	fd;
+	int		fd;
 	char	*line;
 	
-	fd = open("/Users/tuta/tuta/coding/miniShall/history", O_RDONLY);
+	fd = open(shell->history_path, O_RDONLY);
 	if (fd == -1)
 		ft_fprintf(2, "Error: Could not read history file");
 	line = get_next_line(fd);
@@ -118,15 +118,15 @@ void	add_line_to_history(int history_fd, char *formatted_line)
 	}
 }
 
-void	add_to_history(const char *line)
+void	add_to_history(t_shell *shell, const char *line)
 {
 	int		history_fd;
 	int		temp_fd;
 	int		current_index;
 	char	*formatted_line;
 
-	history_fd = open_history_file("/Users/tuta/tuta/coding/miniShall/history", O_WRONLY | O_APPEND | O_CREAT, 0666);
-	temp_fd = open_history_file("/Users/tuta/tuta/coding/miniShall/history", O_RDONLY, 0666);
+	history_fd = open_history_file(shell->history_path, O_WRONLY | O_APPEND | O_CREAT, 0666);
+	temp_fd = open_history_file(shell->history_path, O_RDONLY, 0666);
 	current_index = calculate_current_index(temp_fd);
 	formatted_line = format_line(line, current_index);
 	add_line_to_history(history_fd, formatted_line);

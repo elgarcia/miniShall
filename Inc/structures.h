@@ -46,6 +46,7 @@ typedef struct s_shell
 	pid_t		*sons;
 	char		**exec_args;
 	char		**input;
+	char		*history_path;
 	t_paths		*paths;
 }				t_shell;
 

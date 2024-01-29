@@ -46,7 +46,8 @@ clean:
 fclean: clean
 	@echo "$(YELLOW)$(BOLD)Cleaning trash...$(RESET)"
 	@make fclean -C libft $(SILENCE)
-	@rm $(NAME)
+	@rm -f $(NAME)
+	@rm -f ".history"
 	@echo "$(RED)$(BOLD)Trash removed!$(RESET)"
 
 re:     fclean all

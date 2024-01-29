@@ -117,8 +117,8 @@ int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
 // HISTORY
-void	add_to_history(const char *line);
-void	print_history(void);
+void	add_to_history(t_shell *shell, const char *line);
+void	print_history(t_shell *shell);
 
 // SIGNAL
 void		handle_signal(int signo);

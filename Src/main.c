@@ -19,7 +19,7 @@ void	extend(t_shell *new, char *line)
 	}
 	if (line[0] != 0)
 	{
-		add_to_history(line);
+		add_to_history(new, line);
 		if (!ft_strncmp(line, "exit", 5))
 			ft_exit(new);
 		if (input_parser(line, new) != -1)
@@ -27,7 +27,6 @@ void	extend(t_shell *new, char *line)
 			add_history(line);
 			init_pikes(&new);
 			exec_process(new, line);
-			free(line);
 			free_pikes(&new);
 		}
 		else
@@ -47,6 +46,7 @@ int	main(int argc, char **argv, char **envp)
 		char	*line;
 
 		init_minishell(&new);
+		new->paths->envp = envp;
 		fill_init_env_list(new->paths, envp);
 		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
 		change_shell(new);
@@ -55,8 +55,8 @@ int	main(int argc, char **argv, char **envp)
 			set_signals(0);
 			line = readline(GREEN_TEXT "minishall$ " RESET_TEXT);
 			extend(new, line);
+			free(line);
 		}
-		// free_null(&line);
 	}
 	else		ft_fprintf(2, "Too many arguments\n");
 }

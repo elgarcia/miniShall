@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 16:29:51 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:31:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,16 +59,17 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 	while (argv[i])
 	{
 		if (argv[i][0] == '\'' || argv[i][0] == '\"')
-			*flag = remove_char(argv[i], argv[i][0]);
-		else if (is_variable(argv[i]) && *flag != 1)
+		{
+			if (remove_char(argv[i], argv[i][0]) == 1)
+				return ;
+		}
+		if (is_variable(argv[i]) && *flag != 1)
 		{
 			variable_name = argv[i];
 			ft_expand_variable(variable_name, paths);
 		}
 		else
 			ft_putstr_fd(argv[i], 1);
-		if (*flag == 1)
-			return ;
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', 1);
 		i++;

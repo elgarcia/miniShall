@@ -29,7 +29,7 @@ static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int le
 	}
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
-		print_history();
+		print_history(all);
 		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
