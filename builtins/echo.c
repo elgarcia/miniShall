@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/29 16:31:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:34:33 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,16 @@ void	ft_expand_variable(char *variable_name, t_paths *paths)
 	token = variable_name;
 	while (*token)
 	{
-		if (*token == '$' && *(token + 1) != '\0')
-		{
-			if (*(token + 1) == '?')
-				handle_exit_status(&token);
+			if (*token == '$' && *(token + 1) != '\0')
+			{
+						if (*(token + 1) == '?')
+							handle_exit_status(&token);
+						else
+							handle_variable(&token, paths);
+					}
 			else
-				handle_variable(&token, paths);
+				ft_putchar_fd(*token++, 1);
 		}
-		else
-			ft_putchar_fd(*token++, 1);
-	}
 }
 
 int	check_option_n(char *token)
@@ -40,10 +40,10 @@ int	check_option_n(char *token)
 	i = 2;
 	while (token[i])
 	{
-		if (token[i] != 'n')
-			return (0);
-		i++;
-	}
+			if (token[i] != 'n')
+				return (0);
+			i++;
+		}
 	return (1);
 }
 
@@ -58,22 +58,22 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 
 	while (argv[i])
 	{
-		if (argv[i][0] == '\'' || argv[i][0] == '\"')
-		{
-			if (remove_char(argv[i], argv[i][0]) == 1)
-				return ;
+			if (argv[i][0] == '\'' || argv[i][0] == '\"')
+			{
+						if (remove_char(argv[i], argv[i][0]) == 1)
+							return ;
+					}
+			if (is_variable(argv[i]) && *flag != 1)
+			{
+						variable_name = argv[i];
+						ft_expand_variable(variable_name, paths);
+					}
+			else
+				ft_putstr_fd(argv[i], 1);
+			if (argv[i + 1] != NULL)
+				ft_putchar_fd(' ', 1);
+			i++;
 		}
-		if (is_variable(argv[i]) && *flag != 1)
-		{
-			variable_name = argv[i];
-			ft_expand_variable(variable_name, paths);
-		}
-		else
-			ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1] != NULL)
-			ft_putchar_fd(' ', 1);
-		i++;
-	}
 }
 
 int	ft_echo(t_paths *paths, char **argv)
@@ -85,10 +85,12 @@ int	ft_echo(t_paths *paths, char **argv)
 	i = 1;
 	flag = 0;
 	n_flag = 0;
+	for (int j=0; argv[j]; j++)
+		printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
-		n_flag = 1;
-		i++;
+			n_flag = 1;
+			i++;
 	}
 	extend_echo(paths, argv, i, &flag);
 	if (n_flag == 0)

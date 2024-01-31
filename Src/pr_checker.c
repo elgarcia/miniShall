@@ -42,7 +42,7 @@ int	check_builtins(t_process **prcs, t_shell *all, char *line)
 	int		len;
 
 	aux = echo_split(line, ' ');
-	len = ft_word_count(line, ' ');
+	len = arg_counter(aux);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);

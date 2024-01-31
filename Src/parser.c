@@ -80,7 +80,8 @@ int	input_parser(char *line, t_shell *new)
 
 	split = echo_split(line, ' ');
 	if (count_quotes(split, 0))
-		return (-1);
+		return (ft_free(split, arg_counter(split)), -1);
+	ft_free(split, arg_counter(split));
 	aux = new->lst_process;
 	i = 0;
 	new->input = ft_split(line, ' ');

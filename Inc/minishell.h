@@ -110,10 +110,11 @@ void		ft_unset(t_paths *paths, char **argv);
 
 // PROMPT
 char		*get_prompt(t_shell *shell);
+char	*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**echo_split(char const *s, char c);
+char		**echo_split(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
