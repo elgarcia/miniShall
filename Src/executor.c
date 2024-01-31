@@ -22,10 +22,11 @@ void	exec_process(t_shell *all, char *line)
 		if (check_builtins(all, line))
 			return (free_prcs(all));
 		init_pipex(all, aux, &all->sons[i]);
-		if (!check_command(all, &aux, &all->exec_args))
+		set_signals(1);
+		if (all->sons[i] == 0)
 		{
-			set_signals(1);
-			if (all->sons[i] == 0)
+			//Check process type (|, <, >, <<, >>)
+			if (!check_command(all, &aux, &all->exec_args))
 			{
 				close(all->pipes[0]);
 				if (all->n_process > 1)
@@ -33,11 +34,13 @@ void	exec_process(t_shell *all, char *line)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			}
 			else
-			{
-				close(all->pipes[1]);
-				if (all->n_process > 1)
-					dup2(all->pipes[0], STDIN_FILENO);
-			}
+				exit(EXIT_FAILURE);
+		}
+		else
+		{
+			close(all->pipes[1]);
+			if (all->n_process > 1)
+				dup2(all->pipes[0], STDIN_FILENO);
 		}
 		close_pipes(all);
 		aux = aux->next;
@@ -47,8 +50,5 @@ void	exec_process(t_shell *all, char *line)
 			waitpid(all->sons[j++], NULL, 0);
 	dup2(all->og_infile, STDIN_FILENO);
 	dup2(all->og_outfile, STDOUT_FILENO);
-	all->fd_in = -1;
-	/* while (j != i)
-		waitpid(all->sons[j++], NULL, 0); */
 	free_prcs(all);
 }
