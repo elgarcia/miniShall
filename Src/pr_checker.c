@@ -35,7 +35,6 @@ static int check_builtins_aux(char **aux, t_shell *all, int len)
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
 		print_history(all);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	return (ft_free(aux, len), 0);

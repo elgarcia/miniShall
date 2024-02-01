@@ -24,17 +24,13 @@ void	exec_process(t_shell *all, char *line)
 		if (all->sons[i] == 0)
 		{
 			//Check process type (|, <, >, <<, >>)
+			close(all->pipes[0]);
+			if (all->n_process > 1)
+				dup2(all->pipes[1], STDOUT_FILENO);
 			if (check_builtins(all, line))
-			{
 				exit(EXIT_SUCCESS);
-			}
 			else if (!check_command(all, &aux, &all->exec_args))
-			{
-				close(all->pipes[0]);
-				if (all->n_process > 1)
-					dup2(all->pipes[1], STDOUT_FILENO);
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
-			}
 			else
 				exit(EXIT_FAILURE);
 		}

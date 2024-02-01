@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/01 20:41:21 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/01 21:03:04 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,24 +56,24 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 {
 	char	*variable_name;
 
-	while (argv[i])
+	while (argv[i] && ft_strcmp(argv[i], "|"))
 	{
-			if (argv[i][0] == '\'' || argv[i][0] == '\"')
-			{
-						if (remove_char(argv[i], argv[i][0]) == 1)
-							return ;
-			}
-			if (is_variable(argv[i]) && *flag != 1)
-			{
-						variable_name = argv[i];
-						ft_expand_variable(variable_name, paths);
-					}
-			else
-				ft_putstr_fd(argv[i], 1);
-			if (argv[i + 1] != NULL)
-				ft_putchar_fd(' ', 1);
-			i++;
+		if (argv[i][0] == '\'' || argv[i][0] == '\"')
+		{
+			if (remove_char(argv[i], argv[i][0]) == 1)
+				return ;
 		}
+		if (is_variable(argv[i]) && *flag != 1)
+		{
+			variable_name = argv[i];
+			ft_expand_variable(variable_name, paths);
+		}
+		else
+			ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1] != NULL)
+			ft_putchar_fd(' ', 1);
+		i++;
+	}
 }
 
 int	ft_echo(t_paths *paths, char **argv)
