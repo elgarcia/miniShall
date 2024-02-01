@@ -19,14 +19,16 @@ void	exec_process(t_shell *all, char *line)
 	aux = all->lst_process;
 	while (aux)
 	{
-		if (check_builtins(all, line))
-			return (free_prcs(all));
 		init_pipex(all, aux, &all->sons[i]);
 		set_signals(1);
 		if (all->sons[i] == 0)
 		{
 			//Check process type (|, <, >, <<, >>)
-			if (!check_command(all, &aux, &all->exec_args))
+			if (check_builtins(all, line))
+			{
+				exit(EXIT_SUCCESS);
+			}
+			else if (!check_command(all, &aux, &all->exec_args))
 			{
 				close(all->pipes[0]);
 				if (all->n_process > 1)
