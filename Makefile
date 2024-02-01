@@ -11,7 +11,7 @@ SOURCE = Src/main.c Src/parser.c Src/utils.c Src/executor.c Src/pr_checker.c Src
 Src/command_aux.c Src/pipes.c Src/init.c Src/signals.c builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c \
 builtins/exit.c builtins/export.c builtins/pwd.c builtins/utils.c builtins/cd_utils.c builtins/cd_utils2.c builtins/unset.c \
 builtins/export_utils.c builtins/sort_env.c builtins/echo_split.c builtins/echo_utils.c Src/history.c \
-get_next_line/get_next_line.c get_next_line/get_next_line_utils.c
+get_next_line/get_next_line.c get_next_line/get_next_line_utils.c Src/g_exit_status.c
 
 INCLUDE = Inc/minishell.h
 

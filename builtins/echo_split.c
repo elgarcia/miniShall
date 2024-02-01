@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/31 15:40:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:01:31 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Inc/minishell.h"
+#include "../Inc/minishell.h"
 
 typedef struct s_split
 {
@@ -36,12 +36,10 @@ static char	**free_maker(char **split, int i)
 static int	count_words(char const *s, char c)
 {
 	int	counter;
-	int	in_quotes;
 	int	i;
 	char	type;
 
 	counter = 0;
-	in_quotes = 0;
 	i = 0;
 	if (s[i] == '\"' || s[i] == '\'')
 	{
@@ -55,7 +53,7 @@ static int	count_words(char const *s, char c)
 				counter++;
 				while (s[i] != type)
 					i++;
-				break ;
+			//	break ;
 			}
 		}
 	}
@@ -73,7 +71,7 @@ static int	count_words(char const *s, char c)
 			}
 		}
 	}
-	printf ("count words -> %d\n", counter);
+	//printf ("count words -> %d\n", counter);
 	return (counter);
 }
 
@@ -103,11 +101,11 @@ static int	quoted_len(char *s, char c)
 	while (*s == ' ')
 		s++;
 	aux = ft_strchrt(s, c, quote_count(s, c));
-	printf("aux -> %s\n", aux);
+	//printf("aux -> %s\n", aux);
 	if (!aux)
 		return (0);
 	len = ft_strlen(cpy) - ft_strlen(aux) + 1;
-	printf("len -> %d\n", len);
+	//printf("len -> %d\n", len);
 	return (len);
 }
 
@@ -191,13 +189,13 @@ char	**echo_split(char *s, char c)
 	params.strs = strs;
 	while (params.i < count_words(s, c))
 	{
+		while (s[params.j] == ' ')
+			params.j++;
 		while ((s[params.j] == c || params.in_quotes) && s[params.j] != '\0')
 		{
 			if (s[params.j] == '\"' || s[params.j] == '\'')
 				params.in_quotes = !params.in_quotes;
 			params.j++;
-			if (s[params.j] == ' ')
-				params.i++;
 		}
 		add_word(&params);
 		if (!strs)

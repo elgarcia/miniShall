@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/31 15:34:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:09:12 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 			{
 						if (remove_char(argv[i], argv[i][0]) == 1)
 							return ;
-					}
+			}
 			if (is_variable(argv[i]) && *flag != 1)
 			{
 						variable_name = argv[i];
@@ -85,8 +85,8 @@ int	ft_echo(t_paths *paths, char **argv)
 	i = 1;
 	flag = 0;
 	n_flag = 0;
-	for (int j=0; argv[j]; j++)
-		printf("argv[%d]-> |%s|\n", j, argv[j]);
+	//for (int j=0; argv[j]; j++)
+	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
 			n_flag = 1;

@@ -1,7 +1,5 @@
 #include "../Inc/minishell.h"
 
-extern int g_pid;
-
 void	exec_process(t_shell *all, char *line)
 {
 	t_process	*aux;

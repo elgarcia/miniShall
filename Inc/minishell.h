@@ -9,7 +9,7 @@
 # include "structures.h"
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "get_next_line/get_next_line.h"
+# include "../get_next_line/get_next_line.h"
 
 #define RED_TEXT    "\033[1;31m"
 #define GREEN_TEXT  "\033[1;32m"
@@ -127,4 +127,7 @@ void	print_history(t_shell *shell);
 // SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);
+
+// G_EXIT_STATUS
+void		change_status(int new_status);
 #endif

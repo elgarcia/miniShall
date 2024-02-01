@@ -1,6 +1,8 @@
 #include "../Inc/minishell.h"
 #include <errno.h>
 
+int g_exit_status = 0;
+
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
