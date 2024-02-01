@@ -6,52 +6,131 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 18:36:31 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/01 20:42:11 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
 
-int	find_last_command_num(int fd)
-{
-	int		last_num;
-	ssize_t	len;
-	char	*aux;
-	size_t	aux_len;
-	char	*line;
-	char tmp[11]; 
-
-	last_num = 0;
-	len = read(fd, tmp, 10);
-	if (len > 0)
-	{
-		tmp[len] = '\0';
-		aux = ft_strchr(tmp, ':');
-		if (aux)
-		{
-			aux_len = ft_strlen(aux) - 1;
-			line = ft_substr(aux, 0, aux_len);
-			last_num = ft_atoi(line);
-			free(line);
-		}
-	}
-	return (last_num);
-}
-
-void	add_to_history(const char *history_file)
+void	print_history(t_shell *shell)
 {
 	int		fd;
-	int		num;
-	char	command[256];
+	char	*line;
+	
+	fd = open(shell->history_path, O_RDONLY);
+	if (fd == -1)
+		ft_fprintf(2, "Error: Could not read history file");
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
+		printf("%s", line);
+		free(line);
+		line = get_next_line(fd);
+	}
+	free(line);
+	close(fd);
+}
 
-	command[0] = '\0';
-	fd = open(history_file, O_RDWR | O_CREAT, 0666);
+int	open_history_file(const char *filename, int flags, int mode)
+{
+	int	fd;
+
+	fd = open(filename, flags, mode);
 	if (fd == -1)
 	{
-		perror("Error al abrir o crear el archivo de historial");
+		perror("Error opening file");
 		exit(EXIT_FAILURE);
 	}
-	num = find_last_command_num(fd) + 1;
-	g_exit_status = 0;
-	close(fd);
+	return (fd);
+}
+
+void	close_file(int fd)
+{
+	if (close(fd) == -1)
+	{
+		perror("Error closing file");
+		exit(EXIT_FAILURE);
+	}
+}
+
+int	calculate_current_index(int temp_fd)
+{
+	int		current_index;
+	char	buffer[1024];
+	ssize_t	bytes_read;
+	ssize_t	i;
+
+	i = 0;
+	current_index = 1;
+	while ((bytes_read = read(temp_fd, buffer, sizeof(buffer))) > 0)
+	{
+		while (i < bytes_read)
+		{
+			if (buffer[i] == '\n')
+				current_index++;
+			i++;
+		}
+	}
+	return (current_index);
+}
+
+void	error_exit(void)
+{
+	perror("Memory allocation error");
+	exit(EXIT_FAILURE);
+}
+
+char	*format_line(const char *line, int current_index)
+{
+	char	*index_str;
+	char	*formatted_line;
+	char	*temp;
+
+	index_str = ft_itoa(current_index);
+	formatted_line = ft_strjoin(index_str, ": ");
+	free(index_str);
+	if (formatted_line == NULL)
+		error_exit();
+	temp = ft_strjoin(formatted_line, line);
+	free(formatted_line);
+	if (temp == NULL)
+		error_exit();
+	formatted_line = ft_strjoin(temp, "\n");
+	free(temp);
+	if (formatted_line == NULL)
+		error_exit();
+	return (formatted_line);
+}
+
+void	add_line_to_history(int history_fd, char *formatted_line)
+{
+	if (ft_fprintf(history_fd, "%s", formatted_line) < 0)
+	{
+		perror("Error writing to history file");
+		free(formatted_line);
+		close_file(history_fd);
+		exit(EXIT_FAILURE);
+	}
+}
+
+void	add_to_history(t_shell *shell, const char *line)
+{
+	int		history_fd;
+	int		temp_fd;
+	int		current_index;
+	char	*formatted_line;
+
+	history_fd = open_history_file(shell->history_path, O_WRONLY | O_APPEND | O_CREAT, 0666);
+	temp_fd = open_history_file(shell->history_path, O_RDONLY, 0666);
+	current_index = calculate_current_index(temp_fd);
+	formatted_line = format_line(line, current_index);
+	add_line_to_history(history_fd, formatted_line);
+	free(formatted_line);
+	close_file(temp_fd);
+	close_file(history_fd);
 }

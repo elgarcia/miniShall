@@ -10,6 +10,7 @@ void	init_minishell(t_shell **all)
 	(*all)->paths->pwd = ft_strdup(getenv("PWD"));
 	(*all)->paths->old_pwd = ft_strdup(getenv("OLDPWD"));
 	(*all)->paths->home = ft_strdup(getenv("HOME"));
+	(*all)->history_path = ft_strjoin((*all)->paths->pwd, "/.history");
 	(*all)->og_infile = dup(STDIN_FILENO);
 	(*all)->og_outfile = dup(STDOUT_FILENO);
 	g_exit_status = 0;

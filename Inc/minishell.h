@@ -4,11 +4,13 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <signal.h>
+# include <sys/wait.h>
 # include "../libft/libft.h"
 # include "structures.h"
 # include <sys/wait.h>
 # include <readline/history.h>
 # include <readline/readline.h>
+# include "../get_next_line/get_next_line.h"
 
 #define RED_TEXT    "\033[1;31m"
 #define GREEN_TEXT  "\033[1;32m"
@@ -102,18 +104,26 @@ void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
 
+// PROMPT
+char		*get_prompt(t_shell *shell);
+char	*ft_strchrt(char *s, char c, int times);
+
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**echo_split(char const *s, char c);
+char		**echo_split(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
 // HISTORY
-void	add_to_history(const char *history_file);
+void	add_to_history(t_shell *shell, const char *line);
+void	print_history(t_shell *shell);
 
 // SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);
+
+// G_EXIT_STATUS
+void		change_status(int new_status);
 #endif

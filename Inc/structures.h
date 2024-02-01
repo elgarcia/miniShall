@@ -8,7 +8,7 @@
 # define APND 3
 # define HD 4
 
-int	g_exit_status;
+extern int	g_exit_status;
 
 typedef struct s_env_lst
 {
@@ -48,6 +48,7 @@ typedef struct s_shell
 	pid_t		*sons;
 	char		**exec_args;
 	char		**input;
+	char		*history_path;
 	t_paths		*paths;
 }				t_shell;
 

@@ -32,6 +32,12 @@ static int check_builtins_aux(char **aux, t_shell *all, int len)
 		ft_env(all->paths, aux);
 		return (ft_free(aux, len), 1);
 	}
+	if (!ft_strncmp(aux[0], "history", 8))
+	{
+		print_history(all);
+		free_prcs(prcs, all);
+		return (ft_free(aux, len), 1);
+	}
 	return (ft_free(aux, len), 0);
 }
 
@@ -41,7 +47,9 @@ int	check_builtins(t_shell *all, char *line)
 	int		len;
 
 	aux = echo_split(line, ' ');
-	len = ft_word_count(line, ' ');
+	len = arg_counter(aux);
+	if (!aux[0])
+		return 1;
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);

@@ -6,21 +6,37 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 12:29:04 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:52:17 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 #include <sys/stat.h>
 
+char	*new_path(t_paths *paths, char *arg)
+{
+	char	*result;
+	char	*tmp;
+
+	if (!arg || !ft_strcmp(arg, "~"))
+		return (ft_strdup(paths->home));
+	else if (!ft_strncmp(arg, "~/", 2))
+	{
+		tmp = ft_strchr(arg, '/');
+		result = ft_strjoin(paths->home, tmp);
+		return (result);
+	}
+	return (NULL);
+}
+
 char	*resolve_cd_argument(t_paths *paths, char *arg)
 {
 	char	*current_dir;
 	char	*resolved_path;
 
-	if (!arg || !ft_strcmp(arg, "~"))
-		return (ft_strdup(paths->home));
-	else if (!ft_strcmp(arg, "/"))
+	if (!arg || !ft_strncmp(arg, "~", 1))
+		return (new_path(paths, arg));
+	else if (!ft_strncmp(arg, "/", 1))
 		return (ft_strdup(arg));
 	else if (!ft_strcmp(arg, ".."))
 		return (get_previous_dir(paths->pwd));
