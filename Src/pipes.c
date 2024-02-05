@@ -26,7 +26,7 @@ int	is_builting(t_process *prc)
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
-	if (prc->n_process == 0 && !is_builting(prc))
+	if (prc->n_process == 0)
 		open_file(prc->process, &all->fd_in);
 	if (prc->next || !ft_strncmp(prc->process, "cat", 4))
 	{
@@ -36,7 +36,7 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 			exit(EXIT_FAILURE);
 		}
 	}
-	if (prc->next || !is_builting(prc))
+	if (pid)
 	{
 		*pid = fork();
 		if (*pid < 0)
