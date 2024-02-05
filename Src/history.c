@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/01 20:42:11 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:50:40 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_history(t_shell *shell)
 {
 	int		fd;
 	char	*line;
-	
+
 	fd = open(shell->history_path, O_RDONLY);
 	if (fd == -1)
 		ft_fprintf(2, "Error: Could not read history file");
@@ -36,28 +36,6 @@ void	print_history(t_shell *shell)
 	close(fd);
 }
 
-int	open_history_file(const char *filename, int flags, int mode)
-{
-	int	fd;
-
-	fd = open(filename, flags, mode);
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		exit(EXIT_FAILURE);
-	}
-	return (fd);
-}
-
-void	close_file(int fd)
-{
-	if (close(fd) == -1)
-	{
-		perror("Error closing file");
-		exit(EXIT_FAILURE);
-	}
-}
-
 int	calculate_current_index(int temp_fd)
 {
 	int		current_index;
@@ -67,8 +45,11 @@ int	calculate_current_index(int temp_fd)
 
 	i = 0;
 	current_index = 1;
-	while ((bytes_read = read(temp_fd, buffer, sizeof(buffer))) > 0)
+	while (1)
 	{
+		bytes_read = read(temp_fd, buffer, sizeof(buffer));
+		if (bytes_read <= 0)
+			break ;
 		while (i < bytes_read)
 		{
 			if (buffer[i] == '\n')
@@ -77,12 +58,6 @@ int	calculate_current_index(int temp_fd)
 		}
 	}
 	return (current_index);
-}
-
-void	error_exit(void)
-{
-	perror("Memory allocation error");
-	exit(EXIT_FAILURE);
 }
 
 char	*format_line(const char *line, int current_index)
@@ -125,7 +100,8 @@ void	add_to_history(t_shell *shell, const char *line)
 	int		current_index;
 	char	*formatted_line;
 
-	history_fd = open_history_file(shell->history_path, O_WRONLY | O_APPEND | O_CREAT, 0666);
+	history_fd = open_history_file(shell->history_path,
+			O_WRONLY | O_APPEND | O_CREAT, 0666);
 	temp_fd = open_history_file(shell->history_path, O_RDONLY, 0666);
 	current_index = calculate_current_index(temp_fd);
 	formatted_line = format_line(line, current_index);

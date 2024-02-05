@@ -120,7 +120,9 @@ int			quotes_counter(char *str);
 // HISTORY
 void	add_to_history(t_shell *shell, const char *line);
 void	print_history(t_shell *shell);
-
+void	close_file(int fd);
+void	error_exit(void);
+int		open_history_file(const char *filename, int flags, int mode);
 // SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);

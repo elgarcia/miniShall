@@ -1,20 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 15:14:06 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 17:47:01 by bautrodr         ###   ########.fr       */
+/*   Created: 2024/02/05 14:46:27 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/02/05 14:49:37 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-int	ft_pwd(t_paths *paths)
+void	error_exit(void)
 {
-	ft_putendl_fd(paths->pwd, 1);
-	g_exit_status = 0;
-	return (0);
+	perror("Memory allocation error");
+	exit(EXIT_FAILURE);
+}
+
+int	open_history_file(const char *filename, int flags, int mode)
+{
+	int	fd;
+
+	fd = open(filename, flags, mode);
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		exit(EXIT_FAILURE);
+	}
+	return (fd);
+}
+
+void	close_file(int fd)
+{
+	if (close(fd) == -1)
+	{
+		perror("Error closing file");
+		exit(EXIT_FAILURE);
+	}
 }
