@@ -40,7 +40,9 @@ typedef struct s_shell
 {
 	t_process	*lst_process;
 	int			n_process;
-	int			**pipes;
+	int			*pipes;
+	int			fd_in;
+	int			fd_out;
 	int			og_infile;
 	int			og_outfile;
 	pid_t		*sons;

@@ -1,42 +1,46 @@
 #include "../Inc/minishell.h"
 
-void	free_prcs(t_process **pr, t_shell *all)
+void	free_prcs(t_shell *all)
 {
-	free(*pr);
-	all->n_process -= 1;
-	*pr = NULL;
+	t_process *aux;
+
+	aux = all->lst_process;
+	while (aux)
+	{
+		aux = aux->next;
+		free(all->lst_process);
+		all->lst_process = aux;
+	}
+	all->n_process = 0;
+	all->lst_process = NULL;
 }
 
-static int check_builtins_aux(t_process **prcs, char **aux, t_shell *all, int len)
+static int check_builtins_aux(char **aux, t_shell *all, int len)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
 		ft_export(all->paths, aux, 1);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 6))
 	{
 		ft_unset(all->paths, aux);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 4))
 	{
 		ft_env(all->paths, aux);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
 		print_history(all);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	return (ft_free(aux, len), 0);
 }
 
-int	check_builtins(t_process **prcs, t_shell *all, char *line)
+int	check_builtins(t_shell *all, char *line)
 {
 	char	**aux;
 	int		len;
@@ -48,22 +52,19 @@ int	check_builtins(t_process **prcs, t_shell *all, char *line)
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
 		ft_cd(all->paths, aux);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
 		ft_pwd(all->paths);
-		free_prcs(prcs, all);
 		return (ft_free(aux, len), 1);
 	}
-	return (check_builtins_aux(prcs, aux, all, len));
+	return (check_builtins_aux(aux, all, len));
 }
 
 char	*get_ifile(char *process)
@@ -86,20 +87,13 @@ char	*get_ifile(char *process)
 	return (NULL);
 }
 
-int	check_command(t_shell *all, t_process **prcs, char ***exec_args, \
-int i)
+int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
 	int	ret_val;
 
-	if (all->n_process > 1)
-		treat_fork(i, *prcs, exec_args, all);
-	else
-	{
-		ret_val = treat_single((*prcs)->process, exec_args, all->paths->env_lst, all->pipes[i]);
-		if (ret_val == -1)
-			g_exit_status = 127;
-		free_prcs(prcs, all);
-		return (ret_val);
-	}
-	return (0);
+	ret_val = 0;
+	ret_val = prepare_command((*prcs)->process, exec_args, all->paths->env_lst);
+	if (ret_val == -1 || ret_val == -2)
+		g_exit_status = 127;
+	return (ret_val);
 }

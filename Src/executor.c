@@ -1,5 +1,12 @@
 #include "../Inc/minishell.h"
 
+extern int g_pid;
+
+void	close_pipes(t_shell *all)
+{
+	close(all->pipes[0]);
+	close(all->pipes[1]);
+}
 void	exec_process(t_shell *all, char *line)
 {
 	t_process	*aux;
@@ -10,38 +17,36 @@ void	exec_process(t_shell *all, char *line)
 	j = 0;
 	all->exec_args = NULL;
 	aux = all->lst_process;
-	if (all->n_process > 1)
+	while (aux)
 	{
-		while (aux)
+		init_pipex(all, aux, &all->sons[i]);
+		set_signals(1);
+		if (all->sons[i] == 0)
 		{
-			if (check_builtins(&aux, all, line))
-				return ;
-			init_pipex(&all->pipes[i], &all->sons[i]);
-			if (!check_command(all, &aux, &all->exec_args, i))
-			{
-				//checkear pipes para abrir pipes
-				if (all->sons[i] == 0)
-					execve(all->exec_args[0], all->exec_args, all->paths->envp);
-			}
-			aux = aux->next;
-			i++;
-		}
-		while (j < i)
-			waitpid(all->sons[j], NULL, 0);
-	}
-	else
-	{
-		if (check_builtins(&all->lst_process, all, line))
-			return ;
-		init_pipex(&all->pipes[i], NULL);
-		if (!check_command(all, &all->lst_process, &all->exec_args, i))
-		{
-			set_signals(1);
-			pid_t test = fork();
-			if (test == 0)
+			//Check process type (|, <, >, <<, >>)
+			close(all->pipes[0]);
+			if (all->n_process > 1)
+				dup2(all->pipes[1], STDOUT_FILENO);
+			if (check_builtins(all, line))
+				exit(EXIT_SUCCESS);
+			else if (!check_command(all, &aux, &all->exec_args))
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
-				waitpid(test, NULL, 0);
+				exit(EXIT_FAILURE);
 		}
+		else
+		{
+			close(all->pipes[1]);
+			if (all->n_process > 1)
+				dup2(all->pipes[0], STDIN_FILENO);
+		}
+		close_pipes(all);
+		aux = aux->next;
+		i++;
 	}
+	while (j != i)
+			waitpid(all->sons[j++], NULL, 0);
+	dup2(all->og_infile, STDIN_FILENO);
+	dup2(all->og_outfile, STDOUT_FILENO);
+	free_prcs(all);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 16:39:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 17:09:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:52:34 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static char	*move_str(char *s1, char c, int	*index)
 			break ;
 		s1++;
 	}
-	while (s1[i] != c && s1[i])
+	while (s1[i] && s1[i] != c)
 	{
 		if (s1[i] == 39)
 		{
@@ -126,14 +126,14 @@ char	**ft_split(char const *s, char c)
 	aux_matrix[j] = 0;
 	return (aux_matrix);
 }
-/*
-#include <stdio.h>
-int	main(void)
+
+/* #include <stdio.h>
+int	main(int argc, char **argv)
 {
-  char *cadena = "    Hola    como  estas   ";
+	(void)argc;
     char delimitador = ' ';
 
-    char **subcadenas = ft_split(cadena, delimitador);
+    char **subcadenas = ft_split(argv[1], delimitador);
 
     if (subcadenas) {
         int i = 0;
@@ -152,4 +152,4 @@ int	main(void)
     }
 
     return 0;
-}*/
+} */

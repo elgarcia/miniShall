@@ -93,6 +93,7 @@ int	input_parser(char *line, t_shell *new)
 		{
 			aux = (t_process *)ft_calloc(1, sizeof(t_process));
 			aux->process = NULL;
+			aux->next = NULL;
 			aux->n_process = 0;
 			aux->type = -1;
 		}
