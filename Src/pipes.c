@@ -5,8 +5,8 @@ int	is_builting(t_process *prc)
 	char 	**aux;
 	int		len;
 
-	len = ft_word_count(prc, ' ');
-	aux = ft_split(prc, ' ');
+	len = ft_word_count(prc->process, ' ');
+	aux = ft_split(prc->process, ' ');
 	if (!ft_strncmp(aux[0], "export", 7))
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "unset", 6))

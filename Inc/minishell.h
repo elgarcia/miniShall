@@ -54,6 +54,7 @@ void		double_free(char **aux, char **actual_path);
 /* pipes.c */
 void		init_pipex(t_shell *all, t_process *prc, pid_t *pid);
 int			open_file(char *file, int *fd);
+int			is_builting(t_process *prc);
 
 /* init.c */
 void		init_minishell(t_shell **all);
