@@ -33,12 +33,13 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* executor.c */
 void		exec_process(t_shell *all, char *line);
 void		close_pipes(t_shell *all);
+void		exec_type(t_shell *all, t_process *aux);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, char *line);
-int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
+int			check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd);
 void		free_prcs(t_shell *all);
-char		*get_ifile(char *process);
+char		*get_ifile(char *process, int inout);
 
 /* command_aux.c */
 int			search_path(char **env_1, char	**actual_path, \

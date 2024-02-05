@@ -67,14 +67,14 @@ int	check_builtins(t_shell *all, char *line)
 	return (check_builtins_aux(aux, all, len));
 }
 
-char	*get_ifile(char *process)
+char	*get_ifile(char *process, int inout)
 {
 	char	**aux;
 	char	*ret;
 	int		i;
 
 	aux = ft_split(process, ' ');
-	i = 1;
+	i = inout;
 	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
 		i++;
 	if (aux[i])
@@ -87,12 +87,21 @@ char	*get_ifile(char *process)
 	return (NULL);
 }
 
-int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
+int	check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd)
 {
 	int	ret_val;
+	char **split;
 
+	split = NULL;
 	ret_val = 0;
-	ret_val = prepare_command((*prcs)->process, exec_args, all->paths->env_lst);
+	if (rd == ORD)
+	{
+		split = ft_split((*prcs)->process, ' ');
+		ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);
+		ft_free(split, arg_counter(split));
+	}
+	else
+		ret_val = prepare_command((*prcs)->process, exec_args, all->paths->env_lst);
 	if (ret_val == -1 || ret_val == -2)
 		g_exit_status = 127;
 	return (ret_val);

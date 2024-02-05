@@ -26,9 +26,9 @@ int	is_builting(t_process *prc)
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
-	if (prc->n_process == 0)
+	if (prc->n_process == 0 && !is_builting(prc))
 		open_file(prc->process, &all->fd_in);
-	if (prc->next || !ft_strncmp(prc->process, "cat", 4))
+	if (prc->next || (!ft_strncmp(prc->process, "cat", 4) && ft_strlen(prc->process) != 4))
 	{
 		if (pipe(all->pipes) == -1)
 		{
@@ -49,10 +49,12 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 
 int	open_file(char *file, int *fd)
 {
-	char *aux;
-	
-	aux = get_ifile(file);
-	if (!aux)
+	char 	*aux;
+	char	**aux2;
+
+	aux2 = ft_split(file, ' ');
+	aux = get_ifile(file, 1);
+	if (!aux || arg_counter(aux2) <= 2)
 		return (0);
 	if (access(aux, F_OK | R_OK) == -1)
 		return (free(aux), -1);
