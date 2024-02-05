@@ -28,7 +28,10 @@ void	exec_process(t_shell *all, char *line)
 			if (all->n_process > 1)
 				dup2(all->pipes[1], STDOUT_FILENO);
 			if (check_builtins(all, line))
-				exit(EXIT_SUCCESS);
+			{
+				if (all->n_process > 1)
+					exit(EXIT_SUCCESS);
+			}
 			else if (!check_command(all, &aux, &all->exec_args))
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else

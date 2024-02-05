@@ -5,8 +5,8 @@ int	is_builting(t_process *prc)
 	char 	**aux;
 	int		len;
 
-	len = ft_word_count(prc, ' ');
-	aux = ft_split(prc, ' ');
+	len = ft_word_count(prc->process, ' ');
+	aux = ft_split(prc->process, ' ');
 	if (!ft_strncmp(aux[0], "export", 7))
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "unset", 6))
@@ -28,7 +28,7 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
 	if (prc->n_process == 0 && !is_builting(prc))
 		open_file(prc->process, &all->fd_in);
-	if (prc->next)
+	if (prc->next || !ft_strncmp(prc->process, "cat", 4))
 	{
 		if (pipe(all->pipes) == -1)
 		{
@@ -36,7 +36,7 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 			exit(EXIT_FAILURE);
 		}
 	}
-	if (pid)
+	if (prc->next || !is_builting(prc))
 	{
 		*pid = fork();
 		if (*pid < 0)

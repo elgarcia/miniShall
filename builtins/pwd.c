@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 15:14:06 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 22:00:01 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/05 17:47:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_pwd(t_paths *paths)
 {
-	ft_putendl_fd(paths->pwd, 0);
+	ft_putendl_fd(paths->pwd, 1);
 	g_exit_status = 0;
 	return (0);
 }
