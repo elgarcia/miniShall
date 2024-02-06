@@ -75,7 +75,7 @@ char	*get_ifile(char *process, int inout)
 
 	aux = ft_split(process, ' ');
 	i = inout;
-	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
+	while (aux[i] && !ft_strncmp(aux[i], "-", 2))
 		i++;
 	if (aux[i])
 	{

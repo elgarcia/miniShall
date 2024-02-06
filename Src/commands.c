@@ -53,29 +53,12 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 
 int	check_cmd(char *command, char ***exec_args)
 {
-	if (command[0] == '/')
+	if (access(command, F_OK | X_OK) == 0)
 	{
-		if (access(command, F_OK | X_OK) == 0)
-		{
-			(*exec_args)[0] = ft_strdup(command);
-			if (!(*exec_args)[0])
-				return (ft_free(*exec_args, 1), -1);
-			return (0);
-		}
-		else
-			return (ft_fprintf(2, "%s: command not found\n", command), -1);
-	}
-	else if (!ft_strncmp(command + ft_strlen(command) - 3, ".sh", 3))
-	{
-		if (access(command, F_OK | X_OK) == 0)
-		{
-			(*exec_args)[0] = ft_strdup(command);
-			if (!(*exec_args)[0])
-				return (ft_free(*exec_args, 1), -1);
-			return (0);
-		}
-		else
-			return (ft_fprintf(2, "%s: command not found\n", command), -1);
+		(*exec_args)[0] = ft_strdup(command);
+		if (!(*exec_args)[0])
+			return (ft_free(*exec_args, 1), -1);
+		return (0);
 	}
 	return (1);
 }

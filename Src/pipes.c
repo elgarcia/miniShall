@@ -36,9 +36,13 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 			exit(EXIT_FAILURE);
 		}
 	}
-	if (pid)
+	if (prc->next || !is_builting(prc))
 	{
+		// int hola = 1;
 		*pid = fork();
+		/* printf("%i\n", *pid);
+		while (hola == 1)
+		{} */
 		if (*pid < 0)
 		{
 			perror("Fork failed!");
@@ -50,11 +54,9 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 int	open_file(char *file, int *fd)
 {
 	char 	*aux;
-	char	**aux2;
 
-	aux2 = ft_split(file, ' ');
 	aux = get_ifile(file, 1);
-	if (!aux || arg_counter(aux2) < 2)
+	if (!aux)
 		return (0);
 	if (access(aux, F_OK | R_OK) == -1)
 		return (free(aux), -1);

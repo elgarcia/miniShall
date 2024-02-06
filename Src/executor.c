@@ -13,7 +13,6 @@ void	exec_type(t_shell *all, t_process *aux)
 	char	**split;
 
 	split = ft_split(aux->process, ' ');
-	close(all->pipes[0]);
 	if (aux->type == ORD)
 	{
 		all->fd_out = open(get_ifile(aux->process, arg_counter(split) - 1), O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
@@ -24,9 +23,10 @@ void	exec_type(t_shell *all, t_process *aux)
 	}
 	else
 	{
-		// if (all->n_process > 1)
+		if (all->n_process > 1)
 			dup2(all->pipes[1], STDOUT_FILENO);
 	}
+	ft_free(split, arg_counter(split));
 }
 
 void	exec_process(t_shell *all, char *line)
@@ -48,7 +48,10 @@ void	exec_process(t_shell *all, char *line)
 			//Check process type (|, <, >, <<, >>)
 			exec_type(all, aux);
 			if (check_builtins(all, line))
-				exit(EXIT_SUCCESS);
+			{
+				if (all->n_process > 1)
+					exit(EXIT_SUCCESS);
+			}
 			else if (!check_command(all, &aux, &all->exec_args, aux->type))
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			else
