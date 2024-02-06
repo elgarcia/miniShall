@@ -1,29 +1,5 @@
 #include "../Inc/minishell.h"
 
-int	is_builting(t_process *prc)
-{
-	char 	**aux;
-	int		len;
-
-	len = ft_word_count(prc->process, ' ');
-	aux = ft_split(prc->process, ' ');
-	if (!ft_strncmp(aux[0], "export", 7))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "unset", 6))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "env", 4))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "history", 8))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "echo", 5))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "cd", 3))
-		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "pwd", 4))
-		return (ft_free(aux, len), 1);
-	return (ft_free(aux, len), 0);
-}
-
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
 	if (prc->n_process == 0 && !is_builting(prc))

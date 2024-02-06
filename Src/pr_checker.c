@@ -94,7 +94,7 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd)
 
 	split = NULL;
 	ret_val = 0;
-	if (rd == ORD)
+	if (is_rd(rd))
 	{
 		split = ft_split((*prcs)->process, ' ');
 		ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);

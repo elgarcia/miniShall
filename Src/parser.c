@@ -17,7 +17,7 @@ void	check_redaux(char *in, t_process *aux, int *i)
 	}
 }
 
-void	check_red(char *in, char *in2, t_process **aux, int *i)
+void	check_red(char *in, t_process **aux, int *i)
 {
 	if (!ft_strncmp(in, "|", 1))
 	{
@@ -29,16 +29,16 @@ void	check_red(char *in, char *in2, t_process **aux, int *i)
 		(*aux)->type = -1;
 		*i += 1;
 	}
-	else if (!ft_strncmp(in, ">", 1) && (in2 && !ft_strncmp(in2, ">", 1)))
+	else if (!ft_strncmp(in, ">>", 1))
 	{
 		(*aux)->type = APND;
-		*i += 2;
+		*i += 1;
 		//append
 	}
-	else if (!ft_strncmp(in, "<", 1) && (in2 && !ft_strncmp(in2, "<", 1)))
+	else if (!ft_strncmp(in, "<<", 1))
 	{
 		(*aux)->type = HD;
-		*i += 2;
+		*i += 1;
 		//heredoc
 	}
 	else
@@ -99,7 +99,7 @@ int	input_parser(char *line, t_shell *new)
 		}
 		if (new->lst_process == NULL)
 			new->lst_process = aux;
-		check_red(new->input[i], new->input[i + 1], &aux, &i);
+		check_red(new->input[i], &aux, &i);
 		if (new->input[i])
 		{
 			if (aux->process != NULL)

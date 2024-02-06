@@ -8,6 +8,12 @@ void	close_pipes(t_shell *all)
 	all->fd_out = -1;
 }
 
+void	close_fds(t_shell *all)
+{
+	close(all->fd_out);
+	close(all->fd_in);
+}
+
 void	exec_type(t_shell *all, t_process *aux)
 {
 	char	**split;
@@ -19,7 +25,20 @@ void	exec_type(t_shell *all, t_process *aux)
 		if (all->fd_out == -1)
 			exit(EXIT_FAILURE);
 		dup2(all->fd_out, STDOUT_FILENO);
-		close(all->fd_out);
+	}
+	else if (aux->type == IRD)
+	{
+		all->fd_in = open(get_ifile(aux->process, arg_counter(split) - 1), O_RDONLY);
+		if (all->fd_in == -1)
+			exit(EXIT_FAILURE);
+		dup2(all->fd_in, STDIN_FILENO);
+	}
+	else if (aux->type == APND)
+	{
+		all->fd_out = open(get_ifile(aux->process, arg_counter(split) - 1), O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
+		if (all->fd_out == -1)
+			exit(EXIT_FAILURE);
+		dup2(all->fd_out, STDOUT_FILENO);
 	}
 	else
 	{

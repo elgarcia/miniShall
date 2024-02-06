@@ -21,7 +21,7 @@
 /* parser.c */
 int			input_parser(char *line, t_shell *new); //split del input
 void		check_redaux(char *in, t_process *aux, int *i); //red checks
-void		check_red(char *in, char *in2, t_process **aux, int *i); //red checks
+void		check_red(char *in, t_process **aux, int *i); //red checks
 
 /* utils.c*/
 void		ft_free(char **arg, int size);
@@ -61,6 +61,10 @@ int			is_builting(t_process *prc);
 void		init_minishell(t_shell **all);
 void		init_pikes(t_shell **all);
 void		free_pikes(t_shell **all);
+
+/* auxiliar_functions.c */
+int			is_builting(t_process *prc);
+int			is_rd(int inout);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);
