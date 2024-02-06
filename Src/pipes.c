@@ -54,7 +54,7 @@ int	open_file(char *file, int *fd)
 
 	aux2 = ft_split(file, ' ');
 	aux = get_ifile(file, 1);
-	if (!aux || arg_counter(aux2) <= 2)
+	if (!aux || arg_counter(aux2) < 2)
 		return (0);
 	if (access(aux, F_OK | R_OK) == -1)
 		return (free(aux), -1);
