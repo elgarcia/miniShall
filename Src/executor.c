@@ -1,7 +1,5 @@
 #include "../Inc/minishell.h"
 
-extern int g_pid;
-
 void	close_pipes(t_shell *all)
 {
 	dup2(all->og_infile, STDIN_FILENO);
