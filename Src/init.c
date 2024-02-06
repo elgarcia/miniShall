@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 20:01:39 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 20:02:16 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 
 void	init_minishell(t_shell **all)
 {
-    (*all) = (t_shell *)ft_calloc(1, sizeof(t_shell));
+	(*all) = (t_shell *)ft_calloc(1, sizeof(t_shell));
 	(*all)->n_process = 0;
 	(*all)->lst_process = NULL;
 	(*all)->input = NULL;

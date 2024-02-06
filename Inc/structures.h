@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   structures.h                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 20:06:53 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef STRUCTURES_H
 # define STRUCTURES_H
 # include <signal.h>
@@ -9,6 +21,16 @@
 # define HD 4
 
 extern int	g_exit_status;
+
+typedef struct s_split
+{
+	char	*s;
+	char	c;
+	char	**strs;
+	int		i;
+	int		j;
+	int		in_quotes;
+}			t_split;
 
 typedef struct s_env_lst
 {

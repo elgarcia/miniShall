@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 20:06:56 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 #include <errno.h>
 
-int g_exit_status = 0;
+int	g_exit_status = 0;
 
 void	change_shell(t_shell *shell)
 {
@@ -71,9 +83,9 @@ void	extend(t_shell *new, char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
-		t_shell *new;
-		char *line;
-		char *prompt;
+	t_shell *new;
+	char *line;
+	char *prompt;
 
 	(void)argv;
 	if (argc == 1)

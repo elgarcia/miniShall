@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pr_checker.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 20:07:37 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 
 void	free_prcs(t_shell *all)
 {
-	t_process *aux;
+	t_process	*aux;
 
 	aux = all->lst_process;
 	while (aux)
@@ -15,7 +27,7 @@ void	free_prcs(t_shell *all)
 	all->lst_process = NULL;
 }
 
-static int check_builtins_aux(char **aux, t_shell *all, int len)
+static int	check_builtins_aux(char **aux, t_shell *all, int len)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
@@ -48,7 +60,7 @@ int	check_builtins(t_shell *all, char *line)
 	aux = echo_split(line, ' ');
 	len = arg_counter(aux);
 	if (!aux[0])
-		return 1;
+		return (1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(all->paths, aux);
@@ -89,8 +101,8 @@ char	*get_ifile(char *process, int inout)
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd)
 {
-	int	ret_val;
-	char **split;
+	int		ret_val;
+	char	**split;
 
 	split = NULL;
 	ret_val = 0;
@@ -101,7 +113,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd)
 		ft_free(split, arg_counter(split));
 	}
 	else
-		ret_val = prepare_command((*prcs)->process, exec_args, all->paths->env_lst);
+		ret_val = prepare_command((*prcs)->process, \
+		exec_args, all->paths->env_lst);
 	if (ret_val == -1 || ret_val == -2)
 		g_exit_status = 127;
 	return (ret_val);

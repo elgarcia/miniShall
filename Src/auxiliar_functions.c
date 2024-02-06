@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 17:44:36 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/06 20:01:21 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	is_builting(t_process *prc)
 {
-	char 	**aux;
+	char	**aux;
 	int		len;
 
 	len = ft_word_count(prc->process, ' ');
@@ -36,9 +36,9 @@ int	is_builting(t_process *prc)
 	return (ft_free(aux, len), 0);
 }
 
-int is_rd(int inout)
+int	is_rd(int inout)
 {
-    if (inout < 0 || inout > 4)
-        return (0);
-    return (1);
+	if (inout < 0 || inout > 4)
+		return (0);
+	return (1);
 }

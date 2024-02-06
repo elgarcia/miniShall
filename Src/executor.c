@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   executor.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 20:03:53 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 
 void	close_pipes(t_shell *all)
@@ -64,7 +76,6 @@ void	exec_process(t_shell *all, char *line)
 		set_signals(1);
 		if (all->sons[i] == 0)
 		{
-			//Check process type (|, <, >, <<, >>)
 			exec_type(all, aux);
 			if (check_builtins(all, line))
 			{
@@ -86,7 +97,7 @@ void	exec_process(t_shell *all, char *line)
 		i++;
 	}
 	while (j != i)
-			waitpid(all->sons[j++], NULL, 0);
+		waitpid(all->sons[j++], NULL, 0);
 	close_pipes(all);
 	free_prcs(all);
 }

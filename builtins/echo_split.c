@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   echo_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 09:59:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:50:46 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
-typedef struct s_split
-{
-	char	*s;
-	char	c;
-	char	**strs;
-	int		i;
-	int		j;
-	int		in_quotes;
-}			t_split;
 
 static char	**free_maker(char **split, int i)
 {
@@ -35,8 +25,8 @@ static char	**free_maker(char **split, int i)
 
 static int	count_words(char const *s, char c)
 {
-	int	counter;
-	int	i;
+	int		counter;
+	int		i;
 	char	type;
 
 	counter = 0;
@@ -53,7 +43,6 @@ static int	count_words(char const *s, char c)
 				counter++;
 				while (s[i] != type)
 					i++;
-			//	break ;
 			}
 		}
 	}
@@ -71,7 +60,6 @@ static int	count_words(char const *s, char c)
 			}
 		}
 	}
-	//printf ("count words -> %d\n", counter);
 	return (counter);
 }
 
@@ -101,11 +89,9 @@ static int	quoted_len(char *s, char c)
 	while (*s == ' ')
 		s++;
 	aux = ft_strchrt(s, c, quote_count(s, c));
-	//printf("aux -> %s\n", aux);
 	if (!aux)
 		return (0);
 	len = ft_strlen(cpy) - ft_strlen(aux) + 1;
-	//printf("len -> %d\n", len);
 	return (len);
 }
 

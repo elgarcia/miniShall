@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 16:51:39 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/06 19:49:06 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ int	ft_echo(t_paths *paths, char **argv)
 	i = 1;
 	flag = 0;
 	n_flag = 0;
-	//for (int j=0; argv[j]; j++)
-	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
 		n_flag = 1;

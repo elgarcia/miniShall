@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   commands.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 19:58:27 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 
 int	search_path(char **env_1, char	**actual_path, \
@@ -30,10 +42,10 @@ int	search_path(char **env_1, char	**actual_path, \
 
 int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 {
-	char	*aux_path;
-	t_env_lst *aux;
-	char	**aux2;
-	int		flag;
+	char		*aux_path;
+	t_env_lst	*aux;
+	char		**aux2;
+	int			flag;
 
 	aux = envp;
 	while (aux)

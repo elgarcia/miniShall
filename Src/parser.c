@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 19:57:19 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../Inc/minishell.h"
 
 void	check_redaux(char *in, t_process *aux, int *i)
@@ -7,13 +19,11 @@ void	check_redaux(char *in, t_process *aux, int *i)
 	{
 		aux->type = IRD;
 		*i += 1;
-		//input redirect
 	}
 	else if (!ft_strncmp(in, ">", 1))
 	{
 		aux->type = ORD;
 		*i += 1;
-		//output redirecct
 	}
 }
 
@@ -33,13 +43,11 @@ void	check_red(char *in, t_process **aux, int *i)
 	{
 		(*aux)->type = APND;
 		*i += 1;
-		//append
 	}
 	else if (!ft_strncmp(in, "<<", 1))
 	{
 		(*aux)->type = HD;
 		*i += 1;
-		//heredoc
 	}
 	else
 		check_redaux(in, *aux, i);

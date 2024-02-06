@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/06 19:55:07 by eliagarc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
@@ -12,11 +24,11 @@
 # include <readline/readline.h>
 # include "../get_next_line/get_next_line.h"
 
-#define RED_TEXT    "\033[1;31m"
-#define GREEN_TEXT  "\033[1;32m"
-#define YELLOW_TEXT "\033[1;33m"
-#define RESET_TEXT  "\033[0m"
-#define BLUE_TEXT	"\e[0;34m"
+# define RED_TEXT    "\033[1;31m"
+# define GREEN_TEXT  "\033[1;32m"
+# define YELLOW_TEXT "\033[1;33m"
+# define RESET_TEXT  "\033[0m"
+# define BLUE_TEXT	"\e[0;34m"
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new); //split del input
@@ -37,7 +49,8 @@ void		exec_type(t_shell *all, t_process *aux);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, char *line);
-int			check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd);
+int			check_command(t_shell *all, t_process **prcs, \
+			char ***exec_args, int rd);
 void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
 
@@ -112,7 +125,7 @@ void		ft_unset(t_paths *paths, char **argv);
 
 // PROMPT
 char		*get_prompt(t_shell *shell);
-char	*ft_strchrt(char *s, char c, int times);
+char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
@@ -123,11 +136,11 @@ int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 
 // HISTORY
-void	add_to_history(t_shell *shell, const char *line);
-void	print_history(t_shell *shell);
-void	close_file(int fd);
-void	error_exit(void);
-int		open_history_file(const char *filename, int flags, int mode);
+void		add_to_history(t_shell *shell, const char *line);
+void		print_history(t_shell *shell);
+void		close_file(int fd);
+void		error_exit(void);
+int			open_history_file(const char *filename, int flags, int mode);
 // SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);
