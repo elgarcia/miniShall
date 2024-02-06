@@ -87,7 +87,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			set_signals(0);
 			prompt = get_prompt(new);
-			//printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
+			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
 			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
 			extend(new, line);
 			free(prompt);
