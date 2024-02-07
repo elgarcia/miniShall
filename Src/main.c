@@ -6,12 +6,12 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 20:06:56 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:50:17 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-#include <errno.h>
+
 
 int	g_exit_status = 0;
 

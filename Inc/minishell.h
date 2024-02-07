@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 19:55:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:50:23 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 # include "../get_next_line/get_next_line.h"
+# include <errno.h>
 
 # define RED_TEXT    "\033[1;31m"
 # define GREEN_TEXT  "\033[1;32m"

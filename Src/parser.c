@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 19:57:19 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:43:30 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 void	check_redaux(char *in, t_process *aux, int *i)
 {
 	(void)aux;
-	if (!ft_strncmp(in, "<", 1))
+	if (!ft_strncmp(in, "<", 2))
 	{
 		aux->type = IRD;
 		*i += 1;
 	}
-	else if (!ft_strncmp(in, ">", 1))
+	else if (!ft_strncmp(in, ">", 2))
 	{
 		aux->type = ORD;
 		*i += 1;
@@ -29,7 +29,7 @@ void	check_redaux(char *in, t_process *aux, int *i)
 
 void	check_red(char *in, t_process **aux, int *i)
 {
-	if (!ft_strncmp(in, "|", 1))
+	if (!ft_strncmp(in, "|", 2))
 	{
 		(*aux)->type = PIPE;
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
@@ -39,12 +39,12 @@ void	check_red(char *in, t_process **aux, int *i)
 		(*aux)->type = -1;
 		*i += 1;
 	}
-	else if (!ft_strncmp(in, ">>", 1))
+	else if (!ft_strncmp(in, ">>", 3))
 	{
 		(*aux)->type = APND;
 		*i += 1;
 	}
-	else if (!ft_strncmp(in, "<<", 1))
+	else if (!ft_strncmp(in, "<<", 3))
 	{
 		(*aux)->type = HD;
 		*i += 1;

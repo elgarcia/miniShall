@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 20:03:53 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/07 16:50:03 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,25 +29,30 @@ void	close_fds(t_shell *all)
 void	exec_type(t_shell *all, t_process *aux)
 {
 	char	**split;
+	char	*file;
 
 	split = ft_split(aux->process, ' ');
+	file = get_ifile(aux->process, arg_counter(split) - 1);
 	if (aux->type == ORD)
 	{
-		all->fd_out = open(get_ifile(aux->process, arg_counter(split) - 1), O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
+		all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
 		if (all->fd_out == -1)
 			exit(EXIT_FAILURE);
 		dup2(all->fd_out, STDOUT_FILENO);
 	}
 	else if (aux->type == IRD)
 	{
-		all->fd_in = open(get_ifile(aux->process, arg_counter(split) - 1), O_RDONLY);
+		all->fd_in = open(file, O_RDONLY);
 		if (all->fd_in == -1)
+		{
+			printf("%s: %s\n", file, strerror(errno));
 			exit(EXIT_FAILURE);
+		}
 		dup2(all->fd_in, STDIN_FILENO);
 	}
 	else if (aux->type == APND)
 	{
-		all->fd_out = open(get_ifile(aux->process, arg_counter(split) - 1), O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
+		all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
 		if (all->fd_out == -1)
 			exit(EXIT_FAILURE);
 		dup2(all->fd_out, STDOUT_FILENO);
@@ -58,6 +63,7 @@ void	exec_type(t_shell *all, t_process *aux)
 			dup2(all->pipes[1], STDOUT_FILENO);
 	}
 	ft_free(split, arg_counter(split));
+	free(file);
 }
 
 void	exec_process(t_shell *all, char *line)
