@@ -1,4 +1,5 @@
 #include "../Inc/minishell.h"
+#include <sys/wait.h>
 
 void	close_pipes(t_shell *all)
 {
@@ -46,7 +47,11 @@ void	exec_process(t_shell *all, char *line)
 		i++;
 	}
 	while (j != i)
-			waitpid(all->sons[j++], NULL, 0);
+	{
+		waitpid(all->sons[j++], &g_exit_status, 0);
+		if (WIFEXITED(g_exit_status))    // get exit status from not-builtins
+			g_exit_status = WEXITSTATUS(g_exit_status);
+	}
 	dup2(all->og_infile, STDIN_FILENO);
 	dup2(all->og_outfile, STDOUT_FILENO);
 	free_prcs(all);

@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/06 13:42:46 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/07 12:40:00 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 	else if (!ft_strcmp(arg, ".."))
 		return (get_previous_dir(paths->pwd));
 	else if (!ft_strcmp(arg, "."))
-		return (NULL);
+		return (getcwd(NULL, 0));
 	else if (!ft_strcmp(arg, "-"))
 		return (ft_strdup(paths->old_pwd));
 	else

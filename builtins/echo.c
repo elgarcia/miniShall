@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 16:51:39 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:07:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,13 @@ int	is_variable(char *token)
 	return (token[0] == '$' && token[1] != '\0');
 }
 
-void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
+void	extend_echo(t_paths *paths, char **argv, int i)
 {
 	while (argv[i] && ft_strcmp(argv[i], "|"))
 	{
 		if (argv[i][0] == '\'' && argv[i][1] == '$')
 		{
+			remove_char(argv[i], argv[i][0]);
 			ft_putstr_fd(argv[i], 1);
 			return ;
 		}
@@ -68,7 +69,7 @@ void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 				if (remove_char(argv[i], argv[i][0]) == 1)
 					return ;
 			}
-			if (is_variable(argv[i]) && *flag != 1)
+			if (is_variable(argv[i]))
 			{
 				ft_expand_variable(argv[i], paths);
 				return ;
@@ -97,7 +98,7 @@ int	ft_echo(t_paths *paths, char **argv)
 		n_flag = 1;
 		i++;
 	}
-	extend_echo(paths, argv, i, &flag);
+	extend_echo(paths, argv, i);
 	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
 	g_exit_status = flag;
