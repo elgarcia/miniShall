@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 20:01:21 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:33:11 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,18 @@ int	is_rd(int inout)
 	if (inout < 0 || inout > 4)
 		return (0);
 	return (1);
+}
+
+void	close_pipes(t_shell *all)
+{
+	dup2(all->og_infile, STDIN_FILENO);
+	dup2(all->og_outfile, STDOUT_FILENO);
+	all->fd_in = -1;
+	all->fd_out = -1;
+}
+
+void	close_fds(t_shell *all)
+{
+	close(all->fd_out);
+	close(all->fd_in);
 }

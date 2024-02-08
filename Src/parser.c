@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/07 16:43:30 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:22:02 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,10 @@ int	input_parser(char *line, t_shell *new)
 			else
 				new->n_process += 1;
 			aux->process = ft_strjoinup(&aux->process, new->input[i]);
+			i++;
 		}
-		i++;
+		else
+			break;
 	}
 	return (ft_free(new->input, ft_word_count(line, ' ')), 0);
 }

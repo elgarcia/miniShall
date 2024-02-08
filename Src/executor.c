@@ -6,51 +6,67 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/07 16:50:03 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/08 20:51:14 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
-void	close_pipes(t_shell *all)
+/*revisar*/
+void	here_doc(t_process *aux)
 {
-	dup2(all->og_infile, STDIN_FILENO);
-	dup2(all->og_outfile, STDOUT_FILENO);
-	all->fd_in = -1;
-	all->fd_out = -1;
+	char	*line;
+
+	line = get_next_line(STDIN_FILENO);
+	while(line)
+	{
+		if (line == get_ifile(aux->process, 1))
+		{
+			free(line);
+			exit(EXIT_SUCCESS);
+		}
+		free(line);
+		line = get_next_line(STDIN_FILENO);
+	}
 }
 
-void	close_fds(t_shell *all)
+static void	exec_type_aux(t_shell *all, t_process *aux, char *file, int split)
 {
-	close(all->fd_out);
-	close(all->fd_in);
+	if (aux->type == ORD || aux->type == IRD)
+	{
+		if ((split - 1) == 0)
+			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
+		if (aux->type == ORD)
+		{
+			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
+			if (all->fd_out == -1)
+				exit(EXIT_FAILURE);
+			dup2(all->fd_out, STDOUT_FILENO);
+		}
+		else
+		{
+			all->fd_in = open(file, O_RDONLY);
+			if (all->fd_in == -1)
+				return (printf("%s: %s\n", file, strerror(errno)), exit(EXIT_FAILURE));
+			dup2(all->fd_in, STDIN_FILENO);	
+		}
+	}
+	if (aux->type == HD)
+	{
+		here_doc(aux);
+	}
+	free(file);
 }
 
 void	exec_type(t_shell *all, t_process *aux)
 {
-	char	**split;
+	int		split;
 	char	*file;
 
-	split = ft_split(aux->process, ' ');
-	file = get_ifile(aux->process, arg_counter(split) - 1);
-	if (aux->type == ORD)
-	{
-		all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
-		if (all->fd_out == -1)
-			exit(EXIT_FAILURE);
-		dup2(all->fd_out, STDOUT_FILENO);
-	}
-	else if (aux->type == IRD)
-	{
-		all->fd_in = open(file, O_RDONLY);
-		if (all->fd_in == -1)
-		{
-			printf("%s: %s\n", file, strerror(errno));
-			exit(EXIT_FAILURE);
-		}
-		dup2(all->fd_in, STDIN_FILENO);
-	}
-	else if (aux->type == APND)
+	split = ft_word_count(aux->process, ' ');
+	file = get_ifile(aux->process, split - 1);
+	if (!file)
+		exit(EXIT_FAILURE);
+	if (aux->type == APND)
 	{
 		all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
 		if (all->fd_out == -1)
@@ -62,8 +78,7 @@ void	exec_type(t_shell *all, t_process *aux)
 		if (all->n_process > 1)
 			dup2(all->pipes[1], STDOUT_FILENO);
 	}
-	ft_free(split, arg_counter(split));
-	free(file);
+	exec_type_aux(all, aux, file, split);
 }
 
 void	exec_process(t_shell *all, char *line)
