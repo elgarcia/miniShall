@@ -24,12 +24,13 @@ READLINE = -lreadline
 OBJS = $(SOURCE:.c=.o)
 
 %.o: %.c Makefile $(INCLUDE)
-	@echo "$(YELLOW)$(BOLD)Compiling $(RESET)$(CYAN)$<$(RESET)"
+	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -c ${CFLAGS} -I /$(INCLUDE) $< -o $@
 
 all:  sub_make $(NAME)
 
 $(NAME): ${OBJS} $(INCLUDE) Inc/structures.h Makefile
+	@echo ""
 	@echo "$(YELLOW)Creating executable...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME) $(READLINE)
 	@echo "$(CYAN)$(BOLD)$(NAME)$(RESET) $(GREEN)$(BOLD)created!$(RESET)"

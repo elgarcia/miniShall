@@ -6,7 +6,7 @@
 #    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/06 10:11:46 by bautrodr          #+#    #+#              #
-#    Updated: 2024/01/25 09:30:52 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/02/08 14:58:23 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,11 +84,12 @@ CC = gcc
 all: $(NAME)
 
 %.o:%.c Makefile
+	@printf "\033[0;33mGenerating libft objects... %-33.33s\r" $@
 	@$(CC) $(FLAGS) -I ./ -c $< -o $@
-	@echo "$(GREEN)$(BOLD)Compiling$(RESET)$(CYAN) $<$(RESET)"
 
 $(NAME): $(OBJS)
 	@ar rcs $(NAME) $(OBJS)
+	@echo ""
 	@echo "$(YELLOW)Libft.a $(RESET)$(CYAN)$(BOLD)created$(RESET)"
 
 bonus: $(BONUS)
