@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 20:06:53 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 16:24:32 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,19 @@ typedef struct s_paths
 	t_env_lst			*export_env_lst;
 }						t_paths;
 
+typedef struct s_redir
+{
+	int					type;
+	int					pos;
+	struct s_redir		*next;
+}						t_redir;
+
 typedef struct s_process
 {
 	char				*process;
 	int					n_process;
-	int					type;
+	int					n_redis;
+	t_redir				*rd;
 	struct s_process	*next;
 }						t_process;
 

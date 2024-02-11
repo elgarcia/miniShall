@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/08 20:50:50 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:59:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new); //split del input
-void		check_redaux(char *in, t_process *aux, int *i); //red checks
-void		check_red(char *in, t_process **aux, int *i); //red checks
+void		check_redaux(char *in, t_process **aux, int *i, t_redir **red_aux); //red checks
+void		check_red(char *in, t_process **aux, int *i, t_redir **red_aux); //red checks
+void		new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux);
 
 /* utils.c*/
 void		ft_free(char **arg, int size);
@@ -46,13 +47,13 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* executor.c */
 void		exec_process(t_shell *all, char *line);
 void		close_pipes(t_shell *all);
-void		exec_type(t_shell *all, t_process *aux);
-void		here_doc(t_process *aux);
+void		exec_type(t_shell *all, t_process *aux, int split);
+void		here_doc(t_process *aux, int rd);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, char *line);
 int			check_command(t_shell *all, t_process **prcs, \
-			char ***exec_args, int rd);
+			char ***exec_args);
 void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
 

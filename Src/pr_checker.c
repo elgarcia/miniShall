@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/08 20:23:38 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:00:17 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,14 +99,14 @@ char	*get_ifile(char *process, int inout)
 	return (NULL);
 }
 
-int	check_command(t_shell *all, t_process **prcs, char ***exec_args, int rd)
+int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
 	int		ret_val;
 	char	**split;
 
 	split = NULL;
 	ret_val = 0;
-	if (is_rd(rd))
+	if ((*prcs)->rd)
 	{
 		split = ft_split((*prcs)->process, ' ');
 		ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);

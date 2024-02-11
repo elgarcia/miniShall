@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/08 20:25:27 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 18:01:24 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,12 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 	if (prc->next || !is_builting(prc))
 	{
 		*pid = fork();
+		/* int a = 2;
+		printf("%d\n", *pid);
+		while (a == 2)
+		{
+			;
+		} */
 		if (*pid < 0)
 		{
 			perror("Fork failed!");
@@ -47,7 +53,7 @@ int	open_file(char *file, int *fd)
 	*fd = open(aux, O_RDONLY);
 	if (*fd == -1)
 	{
-		perror("Failed to open output file");
+		perror("Failed to open input file");
 		free(aux);
 		return (-1);
 	}

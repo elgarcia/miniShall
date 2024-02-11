@@ -6,54 +6,70 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/08 20:22:02 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 17:48:56 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	check_redaux(char *in, t_process *aux, int *i)
+void	check_redaux(char *in, t_process **aux, int *i, t_redir **red_aux)
 {
-	(void)aux;
+	if (!ft_strncmp(in, "<<", 3))
+	{
+		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux)->type = HD;
+		(*red_aux)->pos = *i - (*aux)->n_redis;
+		(*red_aux)->next = NULL;
+		*i += 1;
+	}
 	if (!ft_strncmp(in, "<", 2))
 	{
-		aux->type = IRD;
+		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux)->type = IRD;
+		(*red_aux)->pos = *i - (*aux)->n_redis;
+		(*red_aux)->next = NULL;
 		*i += 1;
 	}
 	else if (!ft_strncmp(in, ">", 2))
 	{
-		aux->type = ORD;
+		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux)->type = ORD;
+		(*red_aux)->pos = *i - (*aux)->n_redis;
+		(*red_aux)->next = NULL;
 		*i += 1;
 	}
 }
 
-void	check_red(char *in, t_process **aux, int *i)
+void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
 {
+	if ((*red_aux))
+		(*red_aux) = (*red_aux)->next;
 	if (!ft_strncmp(in, "|", 2))
 	{
-		(*aux)->type = PIPE;
+		(*aux)->rd = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*aux)->rd->type = PIPE;
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
 		(*aux)->process = NULL;
-		(*aux)->type = -1;
+		(*aux)->next = NULL;
+		(*aux)->n_redis = *i + 1;
+		(*aux)->rd = NULL;
 		*i += 1;
 	}
 	else if (!ft_strncmp(in, ">>", 3))
 	{
-		(*aux)->type = APND;
-		*i += 1;
-	}
-	else if (!ft_strncmp(in, "<<", 3))
-	{
-		(*aux)->type = HD;
+		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux)->type = APND;
+		(*red_aux)->pos = *i - (*aux)->n_redis;
+		(*red_aux)->next = NULL;
 		*i += 1;
 	}
 	else
-		check_redaux(in, *aux, i);
+		check_redaux(in, aux, i, red_aux);
 }
 
-int	count_quotes(char **argv, int j)
+int		count_quotes(char **argv, int j)
 {
 	int	i;
 	int	counter_d;
@@ -80,10 +96,24 @@ int	count_quotes(char **argv, int j)
 	return (1);
 }
 
+void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
+{
+	*aux = (t_process *)ft_calloc(1, sizeof(t_process));
+	(*aux)->process = NULL;
+	(*aux)->next = NULL;
+	(*aux)->n_process = n_proc;
+	(*aux)->n_redis = 0;
+	(*aux)->rd = NULL;
+	*red_aux = (*aux)->rd;
+	if (all->lst_process == NULL)
+		all->lst_process = *aux;
+}
+
 int	input_parser(char *line, t_shell *new)
 {
 	int			i;
 	t_process	*aux;
+	t_redir		*red_aux;
 	char		**split;
 
 	split = echo_split(line, ' ');
@@ -98,16 +128,8 @@ int	input_parser(char *line, t_shell *new)
 	while (new->input[i])
 	{
 		if (i == 0)
-		{
-			aux = (t_process *)ft_calloc(1, sizeof(t_process));
-			aux->process = NULL;
-			aux->next = NULL;
-			aux->n_process = 0;
-			aux->type = -1;
-		}
-		if (new->lst_process == NULL)
-			new->lst_process = aux;
-		check_red(new->input[i], &aux, &i);
+			new_proc(&aux, new, 0, &red_aux);
+		check_red(new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
 		{
 			if (aux->process != NULL)
