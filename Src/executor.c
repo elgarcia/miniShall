@@ -6,24 +6,24 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 17:59:33 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 20:34:32 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	here_doc(t_process *aux, int rd)
+void	here_doc(t_shell *all, t_process *aux, int rd)
 {
 	char	*line;
 	char	*outword;
 
 	outword = get_ifile(aux->process, rd);
 	outword = ft_strjoin(outword, "\n");
-	line = get_next_line(STDIN_FILENO);
+	line = get_next_line(all->og_infile);
 	while(ft_strcmp(outword, line))
 	{
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = get_next_line(all->og_infile);
 	}
 	free(outword);
 	if (aux->rd->pos == 1)
@@ -38,7 +38,6 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
 		if (i->type == ORD)
 		{
-			printf("%d\n", i->pos);
 			all->fd_out = open(get_ifile(aux->process, i->pos), O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
 			if (all->fd_out == -1)
 				exit(EXIT_FAILURE);
@@ -74,7 +73,7 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 			dup2(all->fd_out, STDOUT_FILENO);
 		}
 		else if (i->type == HD)
-			here_doc(aux, i->pos);
+			here_doc(all, aux, i->pos);
 		else
 			exec_type_aux(all, aux, i, split);
 		i = i->next;

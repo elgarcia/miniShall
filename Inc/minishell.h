@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 17:59:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 20:33:03 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 void		exec_process(t_shell *all, char *line);
 void		close_pipes(t_shell *all);
 void		exec_type(t_shell *all, t_process *aux, int split);
-void		here_doc(t_process *aux, int rd);
+void		here_doc(t_shell *all, t_process *aux, int rd);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, char *line);

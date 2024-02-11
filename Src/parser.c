@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 17:48:56 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/11 19:33:03 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
 	}
 	else
 		check_redaux(in, aux, i, red_aux);
+	if (!(*aux)->rd && (*red_aux))
+		(*aux)->rd = (*red_aux);
 }
 
 int		count_quotes(char **argv, int j)
