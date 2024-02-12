@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 19:33:03 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 22:29:48 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,59 +16,83 @@ void	check_redaux(char *in, t_process **aux, int *i, t_redir **red_aux)
 {
 	if (!ft_strncmp(in, "<<", 3))
 	{
-		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		if ((*red_aux))
+		{
+			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+			(*red_aux) = (*red_aux)->next;
+		}
+		else
+			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
 		(*red_aux)->type = HD;
 		(*red_aux)->pos = *i - (*aux)->n_redis;
 		(*red_aux)->next = NULL;
+		(*aux)->n_redis += 1;
 		*i += 1;
 	}
 	if (!ft_strncmp(in, "<", 2))
 	{
-		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		if ((*red_aux))
+		{
+			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+			(*red_aux) = (*red_aux)->next;
+		}
+		else
+			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
 		(*red_aux)->type = IRD;
 		(*red_aux)->pos = *i - (*aux)->n_redis;
 		(*red_aux)->next = NULL;
+		(*aux)->n_redis += 1;
 		*i += 1;
 	}
 	else if (!ft_strncmp(in, ">", 2))
 	{
-		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		if ((*red_aux))
+		{
+			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+			(*red_aux) = (*red_aux)->next;
+		}
+		else
+			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
 		(*red_aux)->type = ORD;
 		(*red_aux)->pos = *i - (*aux)->n_redis;
 		(*red_aux)->next = NULL;
+		(*aux)->n_redis += 1;
 		*i += 1;
 	}
 }
 
 void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
 {
-	if ((*red_aux))
-		(*red_aux) = (*red_aux)->next;
 	if (!ft_strncmp(in, "|", 2))
 	{
-		(*aux)->rd = (t_redir *)ft_calloc(1, sizeof(t_redir));
-		(*aux)->rd->type = PIPE;
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
-		(*aux)->process = NULL;
-		(*aux)->next = NULL;
-		(*aux)->n_redis = *i + 1;
 		(*aux)->rd = NULL;
+		(*aux)->process = NULL;
+		(*aux)->n_redis = *i;
+		(*aux)->next = NULL;
 		*i += 1;
 	}
 	else if (!ft_strncmp(in, ">>", 3))
 	{
-		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		if ((*red_aux))
+		{
+			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+			(*red_aux) = (*red_aux)->next;
+		}
+		else
+			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
 		(*red_aux)->type = APND;
 		(*red_aux)->pos = *i - (*aux)->n_redis;
 		(*red_aux)->next = NULL;
+		(*aux)->n_redis += 1;
 		*i += 1;
 	}
 	else
 		check_redaux(in, aux, i, red_aux);
-	if (!(*aux)->rd && (*red_aux))
-		(*aux)->rd = (*red_aux);
+	if (!(*aux)->rd && (*red_aux) && (*aux)->process)
+		(*aux)->rd = *red_aux;
 }
 
 int		count_quotes(char **argv, int j)

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 20:34:32 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 22:25:13 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,11 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 			all->fd_in = open(get_ifile(aux->process, i->pos), O_RDONLY);
 			if (all->fd_in == -1)
 				return (printf("%s: %s\n", get_ifile(aux->process, i->pos), strerror(errno)), exit(EXIT_FAILURE));
-			dup2(all->fd_in, STDIN_FILENO);	
+			dup2(all->fd_in, STDIN_FILENO);
 		}
 	}
-	else
-	{
-		if (all->n_process > 1)
-			dup2(all->pipes[1], STDOUT_FILENO);
-	}
+	if (all->n_process > 1)
+		dup2(all->pipes[1], STDOUT_FILENO);
 }
 
 void	exec_type(t_shell *all, t_process *aux, int split)
@@ -96,9 +93,8 @@ void	exec_process(t_shell *all, char *line)
 		set_signals(1);
 		if (all->sons[i] == 0)
 		{
-			if (check_builtins(all, line))
+			if (check_builtins(all, line, aux))
 			{
-				exec_type(all, aux, ft_word_count(aux->process, ' '));
 				if (all->n_process > 1)
 					exit(EXIT_SUCCESS);
 			}

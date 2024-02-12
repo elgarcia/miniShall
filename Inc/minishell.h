@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 19:19:40 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 21:34:35 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void		exec_type(t_shell *all, t_process *aux, int split);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 
 /* pr_checker.c */
-int			check_builtins(t_shell *all, char *line);
+int			check_builtins(t_shell *all, char *line, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, \
 			char ***exec_args);
 void		free_prcs(t_shell *all);

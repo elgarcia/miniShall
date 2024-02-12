@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 18:00:17 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 21:37:53 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,56 +27,61 @@ void	free_prcs(t_shell *all)
 	all->lst_process = NULL;
 }
 
-static int	check_builtins_aux(char **aux, t_shell *all, int len)
+static int	check_builtins_aux(char **aux, t_shell *all, int len, t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_export(all->paths, aux, 1);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 6))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_unset(all->paths, aux);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 4))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_env(all->paths, aux);
 		return (ft_free(aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		print_history(all);
 		return (ft_free(aux, len), 1);
 	}
 	return (ft_free(aux, len), 0);
 }
 
-int	check_builtins(t_shell *all, char *line)
+int	check_builtins(t_shell *all, char *line, t_process *prc)
 {
 	char	**aux;
-	int		len;
 
 	aux = echo_split(line, ' ');
-	len = arg_counter(aux);
 	if (!aux[0])
 		return (1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_echo(all->paths, aux);
-		return (ft_free(aux, len), 1);
+		return (ft_free(aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_cd(all->paths, aux);
-		return (ft_free(aux, len), 1);
+		return (ft_free(aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_pwd(all->paths);
-		return (ft_free(aux, len), 1);
+		return (ft_free(aux, arg_counter(aux)), 1);
 	}
-	return (check_builtins_aux(aux, all, len));
+	return (check_builtins_aux(aux, all, arg_counter(aux), prc));
 }
 
 char	*get_ifile(char *process, int inout)
