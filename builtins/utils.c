@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 11:23:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/07 13:40:13 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/12 21:30:45 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	arg_counter(char **argv)
 	int	i;
 
 	i = 0;
+	if (!argv[0])
+		return (0);
 	while (argv[i])
 		i++;
 	return (i);

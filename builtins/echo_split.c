@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 09:59:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/12 21:27:52 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,47 +33,96 @@ static char	**free_maker(char **split, int i)
 	return (NULL);
 }
 
+static int process_quotes(char const *s, int *i)
+{
+	char type = s[*i];
+	int quote_count = 0;
+	while (s[*i] == type && s[*i])
+	{
+		(*i)++;
+		quote_count++;
+	}
+	while (quote_count)
+	{
+		if (s[*i] == type)
+			quote_count--;
+		(*i)++;
+	}
+	return *i;
+}
+
+static int count_words(char const *s, char c)
+{
+	int counter = 1;
+	int i = 0;
+	while (s[i])
+	{
+		if (s[i] == '\"' || s[i] == '\'')
+		{
+			i = process_quotes(s, &i);
+			if (s[i] && (s[i] == '\'' || s[i] == '\"'))
+				counter++;
+		}
+		else
+		{
+			while (s[i] && s[i] != c)
+				i++;
+			while (s[i] && s[i] == c)
+				i++;
+			if (s[i] != c && s[i])
+				counter++;
+		}
+	}
+	printf("counter -> %d\n", counter);
+	return counter;
+}
+
+/*
 static int	count_words(char const *s, char c)
 {
 	int	counter;
 	int	i;
 	char	type;
+	int		quote_count;
 
-	counter = 0;
+	counter = 1;
 	i = 0;
-	if (s[i] == '\"' || s[i] == '\'')
+	quote_count = 0;
+	while (s[i])
 	{
-		type = s[i];
-		while (s[i] != '\0')
+		if (s[i] == '\"' || s[i] == '\'')
 		{
-			while (s[i] == type)
-				i++;
-			if (s[i] != type && s[i])
+			type = s[i];
+			while (s[i] == type && s[i])
 			{
+				i++;
+				quote_count++;
+			}
+			//printf("quote count -> %d\n", quote_count);
+			while (quote_count)
+			{
+				if (s[i] == type)
+					quote_count--;
+				i++;
+			}
+			//printf("quote count -> %d\n", quote_count);
+			if (s[i] && s[i] == type)
 				counter++;
-				while (s[i] != type)
-					i++;
-			//	break ;
-			}
 		}
-	}
-	else
-	{
-		while (s[i] != '\0')
+		else
 		{
-			while (s[i] == c)
+			while (s[i] && s[i] != c)
 				i++;
-			while (s[i] != c && s[i])
-			{
+			while (s[i] && s[i] == c)
 				i++;
-				if (s[i] == '\0' || s[i] == c)
-					counter++;
-			}
+			if (s[i] != c && s[i])
+				counter++;
 		}
 	}
-	//printf ("count words -> %d\n", counter);
+		printf("counter -> %d\n", counter);
 	return (counter);
 }
+*/
 
 int	quote_count(char *str, char type)
 {
@@ -82,12 +131,15 @@ int	quote_count(char *str, char type)
 
 	i = 0;
 	counter = 0;
-	while (str[i])
+	//printf("type -> %c\n", type);
+	while (str[i] == ' ')
+		i++;
+	while (str[i] && str[i] == type)
 	{
-		if (str[i] == type)
-			counter++;
+		counter++;
 		i++;
 	}
+	printf("strchrt count-> %d\n", counter);
 	return (counter);
 }
 
@@ -95,17 +147,23 @@ static int	quoted_len(char *s, char c)
 {
 	char	*aux;
 	int		len;
-	char	*cpy;
+	int		len_aux;
 
-	cpy = s;
 	while (*s == ' ')
 		s++;
-	aux = ft_strchrt(s, c, quote_count(s, c));
-	//printf("aux -> %s\n", aux);
+	printf("s -> %s\n", s);
+	aux = ft_strchrt(s, c, quote_count(s, c) + quote_count(s, c));
 	if (!aux)
-		return (0);
-	len = ft_strlen(cpy) - ft_strlen(aux) + 1;
-	//printf("len -> %d\n", len);
+		return (ft_strlen(s));
+	printf("aux -> %s\n", aux);
+	len_aux = ft_strlen(aux);
+	printf("len_aux -> %d\n", len_aux);
+	printf("s[len_aux] ->  |%c|\n", s[len_aux]);
+	if ((s[len_aux]) == '\0')
+		len = len_aux;
+	else
+		len = ft_strlen(s) - len_aux;
+	printf("len -> %d\n", len);
 	return (len);
 }
 
@@ -145,32 +203,49 @@ static int	is_quoted(char const *s, int *j, char *quote_type)
 	return (0);
 }
 
+static int	handle_quoted_word(t_split *params, char quote_type)
+{
+	int		word_len;
+
+	word_len = quoted_len(&params->s[params->j - 1], quote_type);
+	params->strs[params->i] = ft_substr(params->s, params->j - 1, word_len + 1);
+	if (!params->strs[params->i])
+		return (free_maker(params->strs, params->i), 0);
+	(params->j) += word_len;
+	(params->i)++;
+	return (1);
+}
+
+static int	handle_unquoted_word(t_split *params, char c)
+{
+	int		word_len;
+
+	word_len = len_word(&params->s[params->j], c);
+	params->strs[params->i] = ft_substr(params->s, params->j, word_len);
+	if (!params->strs[params->i])
+		return (free_maker(params->strs, params->i), 0);
+	(params->j) += word_len;
+	(params->i)++;
+	return (1);
+}
+
 static char	**add_word(t_split *params)
 {
 	char	*s;
 	char	c;
 	char	quote_type;
-	int		word_len;
 
 	s = params->s;
 	c = params->c;
 	if (is_quoted(s, &(params->j), &quote_type))
 	{
-		word_len = quoted_len(&s[params->j], quote_type);
-		params->strs[params->i] = ft_substr(s, params->j - 1, word_len + 1);
-		if (!params->strs[params->i])
-			return (free_maker(params->strs, params->i));
-		(params->j) += word_len;
-		(params->i)++;
+		if (!handle_quoted_word(params, quote_type))
+			return (NULL);
 	}
 	else
 	{
-		word_len = len_word(&s[params->j], c);
-		params->strs[params->i] = ft_substr(s, params->j, word_len);
-		if (!params->strs[params->i])
-			return (free_maker(params->strs, params->i));
-		(params->j) += word_len;
-		(params->i)++;
+		if (!handle_unquoted_word(params, c))
+			return (NULL);
 	}
 	return (params->strs);
 }
@@ -181,6 +256,11 @@ char	**echo_split(char *s, char c)
 	t_split	params;
 
 	init_struct(&params, s, c);
+	if (quotes_counter(s))
+	{
+		printf("Syntax ERROR!\n");
+		return (NULL);
+	}
 	if (!s)
 		return (NULL);
 	strs = (char **)malloc(sizeof(char *) * count_words(s, c) + 1);
