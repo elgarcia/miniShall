@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 20:33:03 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:19:40 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void		free_pikes(t_shell **all);
 /* auxiliar_functions.c */
 int			is_builting(t_process *prc);
 int			is_rd(int inout);
+int			is_rdp(char *str);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);

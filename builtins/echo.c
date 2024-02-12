@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/06 19:49:06 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:13:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_variable(char *token)
 
 void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
 {
-	while (argv[i] && ft_strcmp(argv[i], "|"))
+	while (argv[i] && !is_rdp(argv[i]))
 	{
 		if (argv[i][0] == '\'' && argv[i][1] == '$')
 		{

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 15:36:54 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/12 19:19:30 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,27 @@ int	is_builting(t_process *prc)
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "history", 8))
 		return (ft_free(aux, len), 1);
-	else if (!ft_strncmp(aux[0], "echo", 5))
+	else if (!ft_strncmp(aux[0], "echo", 6))
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "cd", 3))
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 		return (ft_free(aux, len), 1);
 	return (ft_free(aux, len), 0);
+}
+int	is_rdp(char *str)
+{
+	if (!ft_strcmp(str, "|"))
+		return (1);
+	else if (!ft_strcmp(str, "<<"))
+		return (1);
+	else if (!ft_strcmp(str, ">>"))
+		return (1);
+	else if (!ft_strcmp(str, "<"))
+		return (1);
+	else if (!ft_strcmp(str, ">"))
+		return (1);
+	return (0);
 }
 
 int	is_rd(int inout)
