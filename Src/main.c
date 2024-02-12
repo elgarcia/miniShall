@@ -27,7 +27,7 @@ char	*ft_strchrt(char *s, char c, int times)
 		}
 		s++;
 	}
-	return (NULL);
+	return (0);
 }
 
 char	*get_prompt(t_shell *shell)

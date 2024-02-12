@@ -45,7 +45,7 @@ void	check_red(char *in, char *in2, t_process **aux, int *i)
 		check_redaux(in, *aux, i);
 }
 
-int	count_quotes(char **argv, int j)
+/*int	count_quotes(char **argv, int j)
 {
 	int	i;
 	int	counter_d;
@@ -71,17 +71,17 @@ int	count_quotes(char **argv, int j)
 		return (0);
 	return (1);
 }
-
+*/
 int	input_parser(char *line, t_shell *new)
 {
 	int			i;
 	t_process	*aux;
-	char		**split;
+	//char		**split;
 
-	split = echo_split(line, ' ');
-	if (count_quotes(split, 0))
-		return (ft_free(split, arg_counter(split)), -1);
-	ft_free(split, arg_counter(split));
+	//split = echo_split(line, ' ');
+	//if (count_quotes(split, 0))
+		//return (ft_free(split, arg_counter(split)), -1);
+	//ft_free(split, arg_counter(split));
 	aux = new->lst_process;
 	i = 0;
 	new->input = ft_split(line, ' ');
