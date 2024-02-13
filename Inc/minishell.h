@@ -130,6 +130,9 @@ int			open_history_file(const char *filename, int flags, int mode);
 void		handle_signal(int signo);
 void		set_signals(int mode);
 
+
+char *expansor(t_shell *shell, char *line);
+
 // G_EXIT_STATUS
 void		change_status(int new_status);
 #endif

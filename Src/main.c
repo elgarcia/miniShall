@@ -44,6 +44,8 @@ char	*get_prompt(t_shell *shell)
 
 void	extend(t_shell *new, char *line)
 {
+	char	*new_line;
+
 	if (line == NULL)
 	{
 		printf("Exit\n");
@@ -56,9 +58,11 @@ void	extend(t_shell *new, char *line)
 			ft_exit(new);
 		if (input_parser(line, new) != -1)
 		{
+			new_line = expansor(new, line);
+			printf("new_line -> %s\n", new_line);
 			add_history(line);
 			init_pikes(&new);
-			exec_process(new, line);
+			exec_process(new, new_line);
 			free_pikes(&new);
 		}
 		else
