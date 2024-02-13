@@ -8,7 +8,17 @@
 # define APND 3
 # define HD 4
 
-extern int	g_exit_status;
+extern int				g_exit_status;
+
+typedef struct s_split
+{
+	char				*s;
+	char				c;
+	char				**strs;
+	int					i;
+	int					j;
+	int					in_quotes;
+}						t_split;
 
 typedef struct s_env_lst
 {
@@ -38,18 +48,18 @@ typedef struct s_process
 
 typedef struct s_shell
 {
-	t_process	*lst_process;
-	int			n_process;
-	int			*pipes;
-	int			fd_in;
-	int			fd_out;
-	int			og_infile;
-	int			og_outfile;
-	pid_t		*sons;
-	char		**exec_args;
-	char		**input;
-	char		*history_path;
-	t_paths		*paths;
-}				t_shell;
+	t_process			*lst_process;
+	int					n_process;
+	int					*pipes;
+	int					fd_in;
+	int					fd_out;
+	int					og_infile;
+	int					og_outfile;
+	pid_t				*sons;
+	char				**exec_args;
+	char				**input;
+	char				*history_path;
+	t_paths				*paths;
+}						t_shell;
 
 #endif

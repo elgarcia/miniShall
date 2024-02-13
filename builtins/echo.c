@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/12 21:16:31 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/13 10:34:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	is_variable(char *token)
 
 void	extend_echo(t_paths *paths, char **argv, int i)
 {
-	while (argv[i] && ft_strcmp(argv[i], "|"))
+	while (argv[++i] && ft_strcmp(argv[i], "|"))
 	{
 		if (argv[i][0] == '\'' && argv[i][1] == '$')
 		{
@@ -65,21 +65,15 @@ void	extend_echo(t_paths *paths, char **argv, int i)
 		if (argv[i][0] == '\'' || argv[i][0] == '\"' || argv[i][0] == '$')
 		{
 			if (argv[i][0] == '\'' || argv[i][0] == '\"')
-			{
 				if (remove_char(argv[i], argv[i][0]) == 1)
 					return ;
-			}
 			if (is_variable(argv[i]))
-			{
 				ft_expand_variable(argv[i], paths);
-				//return ;
-			}
 		}
 		if (!is_variable(argv[i]))
 			ft_putstr_fd(argv[i], 1);
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', 1);
-		i++;
 	}
 }
 
@@ -92,14 +86,14 @@ int	ft_echo(t_paths *paths, char **argv)
 	i = 1;
 	flag = 0;
 	n_flag = 0;
-	for (int j=0; argv[j]; j++)
-		printf("argv[%d]-> |%s|\n", j, argv[j]);
+	//for (int j=0; argv[j]; j++)
+	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
 		n_flag = 1;
 		i++;
 	}
-	extend_echo(paths, argv, i);
+	extend_echo(paths, argv, i - 1);
 	if (n_flag == 0)
 		ft_putchar_fd('\n', 1);
 	g_exit_status = flag;

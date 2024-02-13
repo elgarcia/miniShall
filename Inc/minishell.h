@@ -89,10 +89,10 @@ char		*get_previous_dir(char *str);
 char		*join_paths(const char *path1, const char *path2);
 
 // EXPORT UTILS
-
 void		add_export_node(t_paths *paths, char *name, char *value, int equal);
 void		add_env_variable(t_paths *paths, char *name, char *value,
 				int equal);
+void		update_or_process(t_paths *paths, char *name, char *value);
 int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
@@ -111,10 +111,13 @@ char		*ft_strchrt(char *s, char c, int times);
 // BUILTINS UTILS
 int			arg_counter(char **argv);
 char		**echo_split(char *s, char c);
+char		**add_word(t_split *params);
+int			quoted_len(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
+int			count_words(char const *s, char c, int i, int counter);
 
 // HISTORY
 void		add_to_history(t_shell *shell, const char *line);

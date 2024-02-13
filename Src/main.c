@@ -7,7 +7,7 @@ void	change_shell(t_shell *shell)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(shell->paths->pwd, "/minishall");
+	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
 	add_export_node(shell->paths, "SHELL", tmp, 1);
 	free(tmp);
 }
@@ -71,9 +71,9 @@ void	extend(t_shell *new, char *line)
 
 int	main(int argc, char **argv, char **envp)
 {
-		t_shell *new;
-		char *line;
-		char *prompt;
+	t_shell *new;
+	char *line;
+	char *prompt;
 
 	(void)argv;
 	if (argc == 1)
@@ -89,7 +89,8 @@ int	main(int argc, char **argv, char **envp)
 			prompt = get_prompt(new);
 			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
 			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
-			extend(new, line);
+			if (!quotes_counter(line))
+				extend(new, line);
 			free(prompt);
 			free(line);
 		}
