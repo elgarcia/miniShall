@@ -11,6 +11,7 @@ void	exec_process(t_shell *all, char *line)
 	t_process	*aux;
 	int			i;
 	int			j;
+	int			status;
 
 	i = 0;
 	j = 0;
@@ -22,7 +23,7 @@ void	exec_process(t_shell *all, char *line)
 		set_signals(1);
 		if (all->sons[i] == 0)
 		{
-			//Check process type (|, <, >, <<, >>)
+			// Check process type (|, <, >, <<, >>)
 			close(all->pipes[0]);
 			if (all->n_process > 1)
 				dup2(all->pipes[1], STDOUT_FILENO);
@@ -48,9 +49,9 @@ void	exec_process(t_shell *all, char *line)
 	}
 	while (j != i)
 	{
-		waitpid(all->sons[j++], &g_exit_status, 0);
-		if (WIFEXITED(g_exit_status))    // get exit status from not-builtins
-			g_exit_status = WEXITSTATUS(g_exit_status);
+		waitpid(all->sons[j++], &status, 0);
+		if (WIFEXITED(status)) // get exit status from not-builtins
+			g_exit_status = WEXITSTATUS(status);
 	}
 	dup2(all->og_infile, STDIN_FILENO);
 	dup2(all->og_outfile, STDOUT_FILENO);

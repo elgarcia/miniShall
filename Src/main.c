@@ -56,14 +56,14 @@ void	extend(t_shell *new, char *line)
 		add_to_history(new, line);
 		if (!ft_strncmp(line, "exit", 5))
 			ft_exit(new);
-		if (input_parser(line, new) != -1)
+		new_line = expansor(new, line);
+		if (input_parser(new_line, new) != -1)
 		{
-			new_line = expansor(new, line);
-			printf("new_line -> %s\n", new_line);
 			add_history(line);
 			init_pikes(&new);
 			exec_process(new, new_line);
 			free_pikes(&new);
+			free(new_line);
 		}
 		else
 		{

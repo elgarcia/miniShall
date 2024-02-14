@@ -19,7 +19,7 @@ INCLUDE = Inc/minishell.h
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
 READLINE = -lreadline
 
 OBJS = $(SOURCE:.c=.o)

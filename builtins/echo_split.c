@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 13:03:21 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:12:39 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,6 @@ char	**echo_split(char *s, char c)
 	if (!strs)
 		return (NULL);
 	split_string(&params);
-	strs[params.i] = NULL;
+	strs[params.i] = 0;
 	return (strs);
 }
