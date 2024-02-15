@@ -6,12 +6,12 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 10:34:43 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/15 13:16:31 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
+/*
 void	ft_expand_variable(char *variable_name, t_paths *paths)
 {
 	char	*token;
@@ -31,21 +31,7 @@ void	ft_expand_variable(char *variable_name, t_paths *paths)
 	}
 }
 
-int	check_option_n(char *token)
-{
-	int	i;
 
-	if (ft_strncmp(token, "-n", 2) != 0)
-		return (0);
-	i = 2;
-	while (token[i])
-	{
-		if (token[i] != 'n')
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 int	is_variable(char *token)
 {
@@ -72,12 +58,26 @@ void	extend_echo(t_paths *paths, char **argv, int i)
 		}
 		if (!is_variable(argv[i]))
 			ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1] != NULL)
-			ft_putchar_fd(' ', 1);
 	}
 }
+*/
 
-int	ft_echo(t_paths *paths, char **argv)
+int	check_option_n(char *token)
+{
+	int	i;
+
+	if (ft_strncmp(token, "-n", 2) != 0)
+		return (0);
+	i = 2;
+	while (token[i])
+	{
+		if (token[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+int	ft_echo(char **argv)
 {
 	int	i;
 	int	flag;
@@ -85,16 +85,23 @@ int	ft_echo(t_paths *paths, char **argv)
 
 	i = 1;
 	flag = 0;
-	n_flag = 0;
+	n_flag = 1;
 	//for (int j=0; argv[j]; j++)
 	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
-		n_flag = 1;
+		n_flag = 0;
 		i++;
 	}
-	extend_echo(paths, argv, i - 1);
-	if (n_flag == 0)
+	i = 0;
+	while (argv[++i])
+	{
+		ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1] != NULL)
+			ft_putchar_fd(' ', 1);
+	}
+	//extend_echo(paths, argv, i - 1);
+	if (n_flag)
 		ft_putchar_fd('\n', 1);
 	g_exit_status = flag;
 	return (0);

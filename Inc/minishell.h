@@ -29,6 +29,7 @@ int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
+char		*ft_strjoinfree(char *s1, char const *s2);
 
 /* executor.c */
 void		exec_process(t_shell *all, char *line);
@@ -99,7 +100,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 void		ft_env(t_paths *paths, char **argv);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
-int			ft_echo(t_paths *paths, char **argv);
+int			ft_echo(char **argv);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);

@@ -63,13 +63,13 @@ void	extend(t_shell *new, char *line)
 			init_pikes(&new);
 			exec_process(new, new_line);
 			free_pikes(&new);
-			free(new_line);
 		}
 		else
 		{
 			add_history(line);
-			ft_fprintf(2, "Syntax Error\n");
+			//ft_fprintf(2, "Syntax Error\n");
 		}
+		free(new_line);
 	}
 }
 

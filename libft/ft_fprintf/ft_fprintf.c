@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 20:27:38 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/23 23:03:23 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/15 10:14:53 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,25 @@
 
 int	ft_fprintf(int fd, char const *format, ...)
 {
-	int		i;
-	int		j;
-	va_list	args;
+	va_list		args;
+	t_fprintf	fprintf;
 
-	i = 0;
-	j = -1;
+	fprintf.i = 0;
+	fprintf.j = -1;
 	va_start(args, format);
-	while (format[++j])
+	while (format[++fprintf.j])
 	{
-		if (format[j] == '%')
+		if (format[fprintf.j] == '%')
 		{
-			j++;
-			if (ft_strchr("cspdiuxX%", format[j]))
-				i = check_format(args, format, i, j, fd);
+			fprintf.j++;
+			if (ft_strchr("cspdiuxX%", format[fprintf.j]))
+				fprintf.i = check_format(args, format, fprintf, fd);
 		}
 		else
-			i = ft_putchar(format[j], i, fd);
-		if (i == -1)
+			fprintf.i = ft_putchar(format[fprintf.j], fprintf.i, fd);
+		if (fprintf.i == -1)
 			return (-1);
 	}
 	va_end(args);
-	return (i);
+	return (fprintf.i);
 }

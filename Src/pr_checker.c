@@ -51,7 +51,7 @@ int	check_builtins(t_shell *all, char *line)
 	len = arg_counter(aux);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		ft_echo(all->paths, aux);
+		ft_echo(aux);
 		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
