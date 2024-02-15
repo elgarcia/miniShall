@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/15 14:47:56 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/15 15:15:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,45 +46,46 @@ static char	*find_variable(char **token, t_shell *shell)
 	return (ft_strdup(*token));
 }
 
-char *expand_single_var(char **variable_name, t_shell *shell)
+char	*expand_single_var(char **variable_name, t_shell *shell)
 {
-    char *variable;
-    char *tmp;
-    int i = 0;
+	char	*variable;
+	char	*tmp;
+	int		i;
 
-    variable = malloc(sizeof(char) * ft_strlen(*variable_name));
-    if (!variable)
-        return (NULL);
-    (*variable_name)++;
-    while (**variable_name && **variable_name != '$')
-    {
-        variable[i++] = **variable_name;
-        (*variable_name)++;
-    }
-    variable[i] = '\0';
-    tmp = find_variable(&variable, shell);
-    free(variable);
-    return tmp;
+	i = 0;
+	variable = malloc(sizeof(char) * ft_strlen(*variable_name));
+	if (!variable)
+		return (NULL);
+	(*variable_name)++;
+	while (**variable_name && **variable_name != '$')
+	{
+		variable[i++] = **variable_name;
+		(*variable_name)++;
+	}
+	variable[i] = '\0';
+	tmp = find_variable(&variable, shell);
+	free(variable);
+	return (tmp);
 }
 
-char *ft_expand_var(char *variable_name, t_shell *shell)
+char	*ft_expand_var(char *variable_name, t_shell *shell)
 {
-    char *result;
-    char *tmp;
+	char	*result;
+	char	*tmp;
 
-    result = ft_strdup("");
-    while (*variable_name)
-    {
-        if (*variable_name == '$' && *(variable_name + 1) != '\0')
-        {
-            tmp = expand_single_var(&variable_name, shell);
-            result = ft_strjoinfree(result, tmp);
-            free(tmp);
-        }
-        else
-            variable_name++;
-    }
-    return (result);
+	result = ft_strdup("");
+	while (*variable_name)
+	{
+		if (*variable_name == '$' && *(variable_name + 1) != '\0')
+		{
+			tmp = expand_single_var(&variable_name, shell);
+			result = ft_strjoinfree(result, tmp);
+			free(tmp);
+		}
+		else
+			variable_name++;
+	}
+	return (result);
 }
 
 static int	is_variable(char *token)
@@ -103,11 +104,20 @@ void	remove_quotes(char *arg)
 		remove_char(arg, arg[0]);
 }
 
+char	*get_var_res(t_shell *shell, char *result, char **argv, int i)
+{
+	char	*expanded;
+
+	expanded = ft_expand_var(argv[i], shell);
+	result = ft_strjoinfree(result, expanded);
+	free(expanded);
+	return (result);
+}
+
 char	*expand_and_join_arguments(t_shell *shell, char **argv)
 {
 	char	*result;
 	int		i;
-	char	*expanded;
 
 	result = ft_strdup("");
 	i = 0;
@@ -115,11 +125,7 @@ char	*expand_and_join_arguments(t_shell *shell, char **argv)
 	{
 		remove_quotes(argv[i]);
 		if (is_variable(argv[i]))
-		{
-			expanded = ft_expand_var(argv[i], shell);
-			result = ft_strjoinfree(result, expanded);
-			free(expanded);
-		}
+			result = get_var_res(shell, result, argv, i);
 		else
 		{
 			result = ft_strjoinfree(result, argv[i]);
