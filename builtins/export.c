@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/31 11:57:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:14:05 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,45 +62,6 @@ int	contains_symbols(char *str)
 	return (0);
 }
 
-void	update_existing_node(t_paths *paths, char *name, char *value)
-{
-	char		*tmp_name;
-	t_env_lst	*current;
-	char		*new_value;
-
-	tmp_name = ft_substr(name, 0, ft_strlen(name) - 1);
-	current = find_env_node(paths->export_env_lst, tmp_name);
-	if (current != NULL)
-	{
-		new_value = ft_strjoin(current->value, value);
-		free(current->value);
-		current->value = new_value;
-		add_env_variable(paths, tmp_name, new_value, 1);
-	}
-	else
-		add_export_node(paths, tmp_name, value, 1);
-	free(tmp_name);
-}
-
-void	process_export_variable(t_paths *paths, char *name, char *value)
-{
-	if (name[0] != '\0')
-		add_export_node(paths, name, value, 0);
-	else
-	{
-		g_exit_status = 1;
-		ft_fprintf(2, "Not a valid identifier\n");
-	}
-}
-
-int	is_last_char_plus(const char *str)
-{
-	int	len;
-
-	len = ft_strlen(str);
-	return (len > 0 && str[len - 1] == '+');
-}
-
 void	handle_export_variables(t_paths *paths, char **argv, int i)
 {
 	char	*name;
@@ -118,12 +79,7 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 				value);
 			return ;
 		}
-		if (is_last_char_plus(name))
-			update_existing_node(paths, name, value);
-		else
-			process_export_variable(paths, name, value);
-		free(name);
-		free(value);
+		update_or_process(paths, name, value);
 		i++;
 	}
 	sort_env_list(&(paths->export_env_lst));
@@ -131,36 +87,6 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 	g_exit_status = 0;
 }
 
-/*
-int	count_quotes(char **argv, int j)
-{
-	int	i;
-	int	counter_d;
-	int	counter_s;
-	int	total;
-
-	counter_d = 0;
-	counter_s = 0;
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '\'')
-				counter_s++;
-			if (argv[i][j] == '\"')
-				counter_d++;
-			j++;
-		}
-		i++;
-	}
-	total = counter_d + counter_s;
-	if (total % 2 == 0)
-		return (0);
-	return (1);
-}
-*/
 void	ft_export(t_paths *paths, char **argv, int i)
 {
 	if (!argv[1])

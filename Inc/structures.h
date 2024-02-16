@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/11 16:24:32 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:18:10 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define APND 3
 # define HD 4
 
-extern int	g_exit_status;
+extern int				g_exit_status;
 
 typedef struct s_split
 {
@@ -68,18 +68,18 @@ typedef struct s_process
 
 typedef struct s_shell
 {
-	t_process	*lst_process;
-	int			n_process;
-	int			*pipes;
-	int			fd_in;
-	int			fd_out;
-	int			og_infile;
-	int			og_outfile;
-	pid_t		*sons;
-	char		**exec_args;
-	char		**input;
-	char		*history_path;
-	t_paths		*paths;
-}				t_shell;
+	t_process			*lst_process;
+	int					n_process;
+	int					*pipes;
+	int					fd_in;
+	int					fd_out;
+	int					og_infile;
+	int					og_outfile;
+	pid_t				*sons;
+	char				**exec_args;
+	char				**input;
+	char				*history_path;
+	t_paths				*paths;
+}						t_shell;
 
 #endif

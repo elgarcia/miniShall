@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 22:29:48 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:33:15 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,9 @@ void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
 		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
 		(*aux)->rd = NULL;
+		*red_aux = (*aux)->rd;
 		(*aux)->process = NULL;
-		(*aux)->n_redis = *i;
+		(*aux)->n_redis = *i + 1;
 		(*aux)->next = NULL;
 		*i += 1;
 	}
@@ -140,12 +141,12 @@ int	input_parser(char *line, t_shell *new)
 	int			i;
 	t_process	*aux;
 	t_redir		*red_aux;
-	char		**split;
+	//char		**split;
 
-	split = echo_split(line, ' ');
-	if (count_quotes(split, 0))
-		return (ft_free(split, arg_counter(split)), -1);
-	ft_free(split, arg_counter(split));
+	//split = echo_split(line, ' ');
+	//if (count_quotes(split, 0))
+		//return (ft_free(split, arg_counter(split)), -1);
+	//ft_free(split, arg_counter(split));
 	aux = new->lst_process;
 	i = 0;
 	new->input = ft_split(line, ' ');

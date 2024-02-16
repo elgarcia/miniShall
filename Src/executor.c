@@ -6,11 +6,12 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 22:25:13 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:16:23 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
+#include <sys/wait.h>
 
 void	here_doc(t_shell *all, t_process *aux, int rd)
 {
@@ -82,6 +83,7 @@ void	exec_process(t_shell *all, char *line)
 	t_process	*aux;
 	int			i;
 	int			j;
+	int			status;
 
 	i = 0;
 	j = 0;
@@ -116,7 +118,12 @@ void	exec_process(t_shell *all, char *line)
 		i++;
 	}
 	while (j != i)
-		waitpid(all->sons[j++], NULL, 0);
-	close_pipes(all);
+	{
+		waitpid(all->sons[j++], &status, 0);
+		if (WIFEXITED(status)) // get exit status from not-builtins
+			g_exit_status = WEXITSTATUS(status);
+	}
+	dup2(all->og_infile, STDIN_FILENO);
+	dup2(all->og_outfile, STDOUT_FILENO);
 	free_prcs(all);
 }

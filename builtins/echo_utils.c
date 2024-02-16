@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:24:28 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/29 11:26:56 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/13 13:30:33 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ int	quotes_counter(char *str)
 		i++;
 	}
 	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
+	{
+		printf("Quotes opened!\n");
 		return (1);
+	}
 	return (0);
 }
 

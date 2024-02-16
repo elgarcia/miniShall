@@ -6,12 +6,12 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/12 21:39:20 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:11:07 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
+/*
 void	ft_expand_variable(char *variable_name, t_paths *paths)
 {
 	char	*token;
@@ -31,6 +31,37 @@ void	ft_expand_variable(char *variable_name, t_paths *paths)
 	}
 }
 
+
+
+int	is_variable(char *token)
+{
+	return (token[0] == '$' && token[1] != '\0');
+}
+
+void	extend_echo(t_paths *paths, char **argv, int i)
+{
+	while (argv[++i] && !is_rdp(argv[i]))
+	{
+		if (argv[i][0] == '\'' && argv[i][1] == '$')
+		{
+			remove_char(argv[i], argv[i][0]);
+			ft_putstr_fd(argv[i], 1);
+			return ;
+		}
+		if (argv[i][0] == '\'' || argv[i][0] == '\"' || argv[i][0] == '$')
+		{
+			if (argv[i][0] == '\'' || argv[i][0] == '\"')
+				if (remove_char(argv[i], argv[i][0]) == 1)
+					return ;
+			if (is_variable(argv[i]))
+				ft_expand_variable(argv[i], paths);
+		}
+		if (!is_variable(argv[i]))
+			ft_putstr_fd(argv[i], 1);
+	}
+}
+*/
+
 int	check_option_n(char *token)
 {
 	int	i;
@@ -46,42 +77,7 @@ int	check_option_n(char *token)
 	}
 	return (1);
 }
-
-int	is_variable(char *token)
-{
-	return (token[0] == '$' && token[1] != '\0');
-}
-
-void	extend_echo(t_paths *paths, char **argv, int i, int *flag)
-{
-	while (argv[i] && !is_rdp(argv[i]))
-	{
-		if (argv[i][0] == '\'' && argv[i][1] == '$')
-		{
-			ft_putstr_fd(argv[i], 1);
-			return ;
-		}
-		if (argv[i][0] == '\'' || argv[i][0] == '\"' || argv[i][0] == '$')
-		{
-			if (argv[i][0] == '\'' || argv[i][0] == '\"')
-			{
-				if (remove_char(argv[i], argv[i][0]) == 1)
-					return ;
-			}
-			if (is_variable(argv[i]) && *flag != 1)
-			{
-				ft_expand_variable(argv[i], paths);
-				return ;
-			}
-		}
-		ft_putstr_fd(argv[i], 1);
-		if (argv[i + 1] != NULL)
-			ft_putchar_fd(' ', 1);
-		i++;
-	}
-}
-
-int	ft_echo(t_paths *paths, char **argv)
+int	ft_echo(char **argv)
 {
 	int	i;
 	int	flag;
@@ -89,14 +85,23 @@ int	ft_echo(t_paths *paths, char **argv)
 
 	i = 1;
 	flag = 0;
-	n_flag = 0;
+	n_flag = 1;
+	//for (int j=0; argv[j]; j++)
+	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
-		n_flag = 1;
+		n_flag = 0;
 		i++;
 	}
-	extend_echo(paths, argv, i, &flag);
-	if (n_flag == 0)
+	i = 0;
+	while (argv[++i] && !is_rdp(argv[i]))
+	{
+		ft_putstr_fd(argv[i], 1);
+		if (argv[i + 1] != NULL)
+			ft_putchar_fd(' ', 1);
+	}
+	//extend_echo(paths, argv, i - 1);
+	if (n_flag)
 		ft_putchar_fd('\n', 1);
 	g_exit_status = flag;
 	return (0);

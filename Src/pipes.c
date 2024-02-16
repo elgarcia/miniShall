@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 21:55:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:44:29 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
-	if (prc->n_process == 0 && !is_builting(prc))
+	if (prc->n_process == 0 && !is_builting(prc) && ((prc->rd) && prc->rd->pos > 1))
 		open_file(prc->process, &all->fd_in);
 	if (prc->next || (!ft_strncmp(prc->process, "cat", 4)))
 	{

@@ -43,6 +43,7 @@ int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
+char		*ft_strjoinfree(char *s1, char const *s2);
 
 /* executor.c */
 void		exec_process(t_shell *all, char *line);
@@ -112,17 +113,17 @@ char		*get_previous_dir(char *str);
 char		*join_paths(const char *path1, const char *path2);
 
 // EXPORT UTILS
-
 void		add_export_node(t_paths *paths, char *name, char *value, int equal);
 void		add_env_variable(t_paths *paths, char *name, char *value,
 				int equal);
+void		update_or_process(t_paths *paths, char *name, char *value);
 int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
 void		ft_env(t_paths *paths, char **argv);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
-int			ft_echo(t_paths *paths, char **argv);
+int			ft_echo(char **argv);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
@@ -134,10 +135,13 @@ char		*ft_strchrt(char *s, char c, int times);
 // BUILTINS UTILS
 int			arg_counter(char **argv);
 char		**echo_split(char *s, char c);
+char		**add_word(t_split *params);
+int			quoted_len(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
+int			count_words(char const *s, char c, int i, int counter);
 
 // HISTORY
 void		add_to_history(t_shell *shell, const char *line);
@@ -146,8 +150,12 @@ void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
 // SIGNAL
+
 void		handle_signal(int signo);
 void		set_signals(int mode);
+
+
+char *expansor(t_shell *shell, char *line);
 
 // G_EXIT_STATUS
 void		change_status(int new_status);

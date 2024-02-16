@@ -19,7 +19,7 @@ void	change_shell(t_shell *shell)
 {
 	char	*tmp;
 
-	tmp = ft_strjoin(shell->paths->pwd, "/minishall");
+	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
 	add_export_node(shell->paths, "SHELL", tmp, 1);
 	free(tmp);
 }
@@ -39,7 +39,7 @@ char	*ft_strchrt(char *s, char c, int times)
 		}
 		s++;
 	}
-	return (NULL);
+	return (0);
 }
 
 char	*get_prompt(t_shell *shell)
@@ -56,6 +56,8 @@ char	*get_prompt(t_shell *shell)
 
 void	extend(t_shell *new, char *line)
 {
+	char	*new_line;
+
 	if (line == NULL)
 	{
 		printf("Exit\n");
@@ -66,18 +68,20 @@ void	extend(t_shell *new, char *line)
 		add_to_history(new, line);
 		if (!ft_strncmp(line, "exit", 5))
 			ft_exit(new);
-		if (input_parser(line, new) != -1)
+		new_line = expansor(new, line);
+		if (input_parser(new_line, new) != -1)
 		{
 			add_history(line);
 			init_pikes(&new);
-			exec_process(new, line);
+			exec_process(new, new_line);
 			free_pikes(&new);
 		}
 		else
 		{
 			add_history(line);
-			ft_fprintf(2, "Syntax Error\n");
+			//ft_fprintf(2, "Syntax Error\n");
 		}
+		free(new_line);
 	}
 }
 
@@ -101,7 +105,8 @@ int	main(int argc, char **argv, char **envp)
 			prompt = get_prompt(new);
 			// printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
 			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
-			extend(new, line);
+			if (!quotes_counter(line))
+				extend(new, line);
 			free(prompt);
 			free(line);
 		}

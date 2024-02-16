@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 21:37:53 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:42:42 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,15 +59,17 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len, t_process *prc)
 int	check_builtins(t_shell *all, char *line, t_process *prc)
 {
 	char	**aux;
-
+	int		len;
+	
 	aux = echo_split(line, ' ');
-	if (!aux[0])
-		return (1);
+	if (!aux)
+		return 1;
+	len = arg_counter(aux);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '));
-		ft_echo(all->paths, aux);
-		return (ft_free(aux, arg_counter(aux)), 1);
+		ft_echo(aux);
+		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
