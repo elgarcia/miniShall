@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/16 19:16:23 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/17 13:42:12 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	exec_process(t_shell *all, char *line)
 	while (j != i)
 	{
 		waitpid(all->sons[j++], &status, 0);
-		if (WIFEXITED(status)) // get exit status from not-builtins
+		if (WIFEXITED(status) && !is_builting(all->lst_process)) // get exit status from not-builtins
 			g_exit_status = WEXITSTATUS(status);
 	}
 	dup2(all->og_infile, STDIN_FILENO);
