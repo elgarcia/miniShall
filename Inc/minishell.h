@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 09:52:55 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:46:09 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
 int			ft_echo(char **argv, t_process *prc);
 void		ft_export(t_paths *paths, char **argv, int i);
-void		ft_exit(t_shell *shell);
+void		ft_exit(t_shell *shell, char *line);
 void		ft_unset(t_paths *paths, char **argv);
 
 // PROMPT
