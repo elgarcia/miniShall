@@ -6,64 +6,43 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/16 19:33:15 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:07:52 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	check_redaux(char *in, t_process **aux, int *i, t_redir **red_aux)
+void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
-	if (!ft_strncmp(in, "<<", 3))
+	if (ft_strnstr(*in, "<<", 3))
 	{
-		if ((*red_aux))
-		{
-			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
-			(*red_aux) = (*red_aux)->next;
-		}
+		assign_redir(aux, i, red_aux, HD);
+		if (ft_strlen(*in) > 2)
+			ft_strlcpy(*in, *in + 2, ft_strlen(*in));
 		else
-			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
-		(*red_aux)->type = HD;
-		(*red_aux)->pos = *i - (*aux)->n_redis;
-		(*red_aux)->next = NULL;
-		(*aux)->n_redis += 1;
-		*i += 1;
+			*i += 1;
 	}
-	if (!ft_strncmp(in, "<", 2))
+	else if (ft_strnstr(*in, "<", 2))
 	{
-		if ((*red_aux))
-		{
-			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
-			(*red_aux) = (*red_aux)->next;
-		}
+		assign_redir(aux, i, red_aux, IRD);
+		if (ft_strlen(*in) > 1)
+			ft_strlcpy(*in, *in + 1, ft_strlen(*in));
 		else
-			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
-		(*red_aux)->type = IRD;
-		(*red_aux)->pos = *i - (*aux)->n_redis;
-		(*red_aux)->next = NULL;
-		(*aux)->n_redis += 1;
-		*i += 1;
+			*i += 1;
 	}
-	else if (!ft_strncmp(in, ">", 2))
+	else if (ft_strnstr(*in, ">", 2))
 	{
-		if ((*red_aux))
-		{
-			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
-			(*red_aux) = (*red_aux)->next;
-		}
+		assign_redir(aux, i, red_aux, ORD);
+		if (ft_strlen(*in) > 1)
+			ft_strlcpy(*in, *in + 1, ft_strlen(*in));
 		else
-			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
-		(*red_aux)->type = ORD;
-		(*red_aux)->pos = *i - (*aux)->n_redis;
-		(*red_aux)->next = NULL;
-		(*aux)->n_redis += 1;
-		*i += 1;
+			*i += 1;
 	}
 }
 
-void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
+void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
-	if (!ft_strncmp(in, "|", 2))
+	if (ft_strnstr(*in, "|", 2))
 	{
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;
@@ -73,22 +52,18 @@ void	check_red(char *in, t_process **aux, int *i, t_redir **red_aux)
 		(*aux)->process = NULL;
 		(*aux)->n_redis = *i + 1;
 		(*aux)->next = NULL;
-		*i += 1;
-	}
-	else if (!ft_strncmp(in, ">>", 3))
-	{
-		if ((*red_aux))
-		{
-			(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
-			(*red_aux) = (*red_aux)->next;
-		}
+		if (ft_strlen(*in) > 2)
+			ft_strlcpy(*in, *in + 1, ft_strlen(*in));
 		else
-			(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
-		(*red_aux)->type = APND;
-		(*red_aux)->pos = *i - (*aux)->n_redis;
-		(*red_aux)->next = NULL;
-		(*aux)->n_redis += 1;
-		*i += 1;
+			*i += 1;
+	}
+	else if (ft_strnstr(*in, ">>", 3))
+	{
+		assign_redir(aux, i, red_aux, APND);
+		if (ft_strlen(*in) > 2)
+			ft_strlcpy(*in, *in + 2, ft_strlen(*in));
+		else
+			*i += 1;
 	}
 	else
 		check_redaux(in, aux, i, red_aux);
@@ -141,12 +116,7 @@ int	input_parser(char *line, t_shell *new)
 	int			i;
 	t_process	*aux;
 	t_redir		*red_aux;
-	//char		**split;
-
-	//split = echo_split(line, ' ');
-	//if (count_quotes(split, 0))
-		//return (ft_free(split, arg_counter(split)), -1);
-	//ft_free(split, arg_counter(split));
+	
 	aux = new->lst_process;
 	i = 0;
 	new->input = ft_split(line, ' ');
@@ -156,7 +126,7 @@ int	input_parser(char *line, t_shell *new)
 	{
 		if (i == 0)
 			new_proc(&aux, new, 0, &red_aux);
-		check_red(new->input[i], &aux, &i, &red_aux);
+		check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
 		{
 			if (aux->process != NULL)

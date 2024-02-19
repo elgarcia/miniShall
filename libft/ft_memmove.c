@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 11:56:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2023/09/20 16:05:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:46:36 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

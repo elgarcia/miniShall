@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/16 19:16:23 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:20:44 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 			dup2(all->fd_in, STDIN_FILENO);
 		}
 	}
-	if (all->n_process > 1)
+	else if (aux->next)
 		dup2(all->pipes[1], STDOUT_FILENO);
 }
 
@@ -76,9 +76,14 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 			exec_type_aux(all, aux, i, split);
 		i = i->next;
 	}
+	if (!i)
+	{
+		if (aux->next)
+			dup2(all->pipes[1], STDOUT_FILENO);
+	}
 }
 
-void	exec_process(t_shell *all, char *line)
+void	exec_process(t_shell *all)
 {
 	t_process	*aux;
 	int			i;
@@ -95,9 +100,9 @@ void	exec_process(t_shell *all, char *line)
 		set_signals(1);
 		if (all->sons[i] == 0)
 		{
-			if (check_builtins(all, line, aux))
+			if (check_builtins(all, aux))
 			{
-				if (all->n_process > 1)
+				if (aux->next)
 					exit(EXIT_SUCCESS);
 			}
 			else if (!check_command(all, &aux, &all->exec_args))

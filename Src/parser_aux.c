@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   parser_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 09:24:11 by eliagarc         ###   ########.fr       */
+/*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/02/19 08:37:15 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	ft_exit(t_shell *shell)
+void	assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type)
 {
-	free(shell->paths->pwd);
-	free(shell->paths->old_pwd);
-	free(shell->paths->home);
-	free(shell->history_path);
-	ft_lstclear_env(&shell->paths->env_lst);
-	ft_lstclear_env(&shell->paths->export_env_lst);
-	free(shell->paths);
-	free(shell);
-	exit(EXIT_SUCCESS);
+	if ((*red_aux))
+	{
+		(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux) = (*red_aux)->next;
+	}
+	else
+		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+	(*red_aux)->type = rd_type;
+	(*red_aux)->pos = *i - (*aux)->n_redis;
+	(*red_aux)->next = NULL;
+	(*aux)->n_redis += 1;
 }

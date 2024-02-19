@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/16 19:42:42 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:53:04 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,19 +56,19 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len, t_process *prc)
 	return (ft_free(aux, len), 0);
 }
 
-int	check_builtins(t_shell *all, char *line, t_process *prc)
+int	check_builtins(t_shell *all, t_process *prc)
 {
 	char	**aux;
 	int		len;
 	
-	aux = echo_split(line, ' ');
+	aux = echo_split(prc->process, ' ');
 	if (!aux)
 		return 1;
 	len = arg_counter(aux);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '));
-		ft_echo(aux);
+		ft_echo(aux, prc);
 		return (ft_free(aux, len), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
@@ -116,7 +116,10 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	if ((*prcs)->rd)
 	{
 		split = ft_split((*prcs)->process, ' ');
-		ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);
+		if ((*prcs)->rd->pos == 0)
+			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);
+		else
+			ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);
 		ft_free(split, arg_counter(split));
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/16 19:11:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:57:07 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	check_option_n(char *token)
 	}
 	return (1);
 }
-int	ft_echo(char **argv)
+int	ft_echo(char **argv, t_process *prc)
 {
 	int	i;
 	int	flag;
@@ -86,23 +86,22 @@ int	ft_echo(char **argv)
 	i = 1;
 	flag = 0;
 	n_flag = 1;
-	//for (int j=0; argv[j]; j++)
-	//	printf("argv[%d]-> |%s|\n", j, argv[j]);
 	while (argv[i] && check_option_n(argv[i]))
 	{
 		n_flag = 0;
 		i++;
 	}
 	i = 0;
-	while (argv[++i] && !is_rdp(argv[i]))
+	while (argv[++i])
 	{
-		ft_putstr_fd(argv[i], 1);
+		if (prc->rd && (i == prc->rd->pos))
+				break ;
+		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		if (argv[i + 1] != NULL)
-			ft_putchar_fd(' ', 1);
+			ft_putchar_fd(' ', STDOUT_FILENO);
 	}
-	//extend_echo(paths, argv, i - 1);
 	if (n_flag)
-		ft_putchar_fd('\n', 1);
+		ft_putchar_fd('\n', STDOUT_FILENO);
 	g_exit_status = flag;
 	return (0);
 }

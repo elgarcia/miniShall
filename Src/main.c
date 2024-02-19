@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/07 16:50:17 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 08:19:47 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	extend(t_shell *new, char *line)
 		{
 			add_history(line);
 			init_pikes(&new);
-			exec_process(new, new_line);
+			exec_process(new);
 			free_pikes(&new);
 		}
 		else

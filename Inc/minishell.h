@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 21:34:35 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 09:52:55 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new); //split del input
-void		check_redaux(char *in, t_process **aux, int *i, t_redir **red_aux); //red checks
-void		check_red(char *in, t_process **aux, int *i, t_redir **red_aux); //red checks
+void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux); //red checks
+void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux); //red checks
 void		new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux);
 
 /* utils.c*/
@@ -46,13 +46,13 @@ char		*ft_strjoinup(char **s1, char *s2);
 char		*ft_strjoinfree(char *s1, char const *s2);
 
 /* executor.c */
-void		exec_process(t_shell *all, char *line);
+void		exec_process(t_shell *all);
 void		close_pipes(t_shell *all);
 void		exec_type(t_shell *all, t_process *aux, int split);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 
 /* pr_checker.c */
-int			check_builtins(t_shell *all, char *line, t_process *aux);
+int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, \
 			char ***exec_args);
 void		free_prcs(t_shell *all);
@@ -83,6 +83,9 @@ void		free_pikes(t_shell **all);
 int			is_builting(t_process *prc);
 int			is_rd(int inout);
 int			is_rdp(char *str);
+
+/* parser_aux */
+void		assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);
@@ -123,7 +126,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 void		ft_env(t_paths *paths, char **argv);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(t_paths *paths);
-int			ft_echo(char **argv);
+int			ft_echo(char **argv, t_process *prc);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell);
 void		ft_unset(t_paths *paths, char **argv);
