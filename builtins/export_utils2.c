@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:10:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 13:16:27 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:14:47 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void	add_export_node(t_paths *paths, char *name, char *value, int equal)
 	existing_node_export = find_env_node(paths->export_env_lst, name);
 	if (existing_node_export != NULL)
 	{
-		if (value[0] != '\0')
+		if (value[0] != '\0' || equal >= 0)
 		{
 			free(existing_node_export->value);
 			existing_node_export->value = ft_strdup(value);
+			existing_node_export->equal = 1;
 			add_env_variable(paths, name, value, equal);
 		}
 		else
@@ -59,10 +60,10 @@ void	update_existing_node(t_paths *paths, char *name, char *value)
 	free(tmp_name);
 }
 
-void	process_export_variable(t_paths *paths, char *name, char *value)
+void	process_export_variable(t_paths *paths, char *name, char *value, int equal)
 {
 	if (name[0] != '\0')
-		add_export_node(paths, name, value, 0);
+		add_export_node(paths, name, value, equal);
 	else
 	{
 		g_exit_status = 1;
@@ -78,12 +79,12 @@ int	is_last_char_plus(const char *str)
 	return (len > 0 && str[len - 1] == '+');
 }
 
-void	update_or_process(t_paths *paths, char *name, char *value)
+void	update_or_process(t_paths *paths, char *name, char *value, int equal)
 {
 	if (is_last_char_plus(name))
 		update_existing_node(paths, name, value);
 	else
-		process_export_variable(paths, name, value);
+		process_export_variable(paths, name, value, equal);
 	free(name);
 	free(value);
 }

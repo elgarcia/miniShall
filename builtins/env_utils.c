@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/20 11:13:16 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:44:13 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,8 @@ void	print_env_list(t_env_lst *head)
 	while (current)
 	{
 		printf("%s=", current->name);
-		printf("%s\n", current->value);
+		if (current->value)
+			printf("%s\n", current->value);
 		current = current->next;
 	}
 }

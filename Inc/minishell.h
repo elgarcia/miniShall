@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 12:10:32 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 17:59:03 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ char		*join_paths(const char *path1, const char *path2);
 void		add_export_node(t_paths *paths, char *name, char *value, int equal);
 void		add_env_variable(t_paths *paths, char *name, char *value,
 				int equal);
-void		update_or_process(t_paths *paths, char *name, char *value);
+void		update_or_process(t_paths *paths, char *name, char *value, int equal);
 int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS

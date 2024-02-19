@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/17 17:15:37 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:14:49 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,13 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 {
 	char	*name;
 	char	*value;
+	int		equal;
 
 	while (argv[i] && argv[i][0])
 	{
 		if (check_var(argv[i]))
 			return ;
-		extract_name_value(argv[i], &name, &value);
+		equal = extract_name_value(argv[i], &name, &value);
 		if (contains_symbols(name))
 		{
 			g_exit_status = 1;
@@ -79,7 +80,7 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 				value);
 			return ;
 		}
-		update_or_process(paths, name, value);
+		update_or_process(paths, name, value, equal);
 		i++;
 	}
 	sort_env_list(&(paths->export_env_lst));
