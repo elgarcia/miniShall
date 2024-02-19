@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 10:56:33 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 11:02:42 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_exit(t_shell *shell, char *line)
 		split = ft_split(line, ' ');
 		if (arg_counter(split) > 2)
 		{
-			printf("exit\nexit: too many arguments");
+			printf("exit\nexit: too many arguments\n");
 			return ;
 		}
 		if (arg_counter(split) > 1)

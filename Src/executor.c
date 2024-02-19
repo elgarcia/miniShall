@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 10:11:47 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 12:12:06 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 
 	outword = get_ifile(aux->process, rd);
 	outword = ft_strjoin(outword, "\n");
-	line = get_next_line(all->og_infile);
+	line = get_next_line(STDIN_FILENO);
 	while(ft_strcmp(outword, line))
 	{
+		if (all->fd_out != -1)
+			write(all->fd_out, line, ft_strlen(line));
 		free(line);
-		line = get_next_line(all->og_infile);
+		line = get_next_line(STDIN_FILENO);
 	}
 	free(outword);
-	if (aux->rd->pos == 1)
-		exit(EXIT_SUCCESS);
 }
 
 static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
@@ -59,7 +59,9 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 void	exec_type(t_shell *all, t_process *aux, int split)
 {
 	t_redir	*i;
+	int		hd;
 
+	hd = 0;
 	i = aux->rd;
 	while (i)
 	{
@@ -71,16 +73,15 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 			dup2(all->fd_out, STDOUT_FILENO);
 		}
 		else if (i->type == HD)
-			here_doc(all, aux, i->pos);
+			hd = i->pos;
 		else
 			exec_type_aux(all, aux, i, split);
 		i = i->next;
 	}
-	if (!i)
-	{
-		if (aux->next)
-			dup2(all->pipes[1], STDOUT_FILENO);
-	}
+	if (aux->next)
+		dup2(all->pipes[1], STDOUT_FILENO);
+	if (hd != 0)
+		return (here_doc(all, aux, hd), exit(EXIT_SUCCESS));
 }
 
 void	exec_process(t_shell *all)
@@ -111,7 +112,7 @@ void	exec_process(t_shell *all)
 				execve(all->exec_args[0], all->exec_args, all->paths->envp);
 			}
 			else
-				exit(EXIT_FAILURE);
+				exit(127);
 		}
 		else
 		{
