@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 08:19:47 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:11:38 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	main(int argc, char **argv, char **envp)
 		{
 			set_signals(0);
 			prompt = get_prompt(new);
-			// printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
+			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
 			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
 			if (!quotes_counter(line))
 				extend(new, line);

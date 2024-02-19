@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/16 19:11:41 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:12:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,43 @@ static void	split_string(t_split *params)
 	}
 }
 
+char	*ft_strtrimfree(char *s1, char const *set)
+{
+	char	*str;
+	size_t	j;
+
+	if (!s1)
+		return (NULL);
+	if (!set)
+		return ((char *)s1);
+	while (*s1 && ft_strchr(set, *s1))
+		s1++;
+	j = ft_strlen(s1);
+	while (j && ft_strchr(set, s1[j]))
+		j--;
+	str = ft_substr(s1, 0, j + 1);
+	if (!str)
+		return (NULL);
+	free(s1);
+	return (str);
+}
+
 char	**echo_split(char *s, char c)
 {
 	char	**strs;
 	t_split	params;
+	int		i;
 
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
 	split_string(&params);
 	strs[params.i] = 0;
+	i = 0;
+	while (strs[i]) // last change 17-02 at home
+	{
+		strs[i] = ft_strtrimfree(strs[i], " ");
+		i++;
+	}
 	return (strs);
 }

@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 13:14:05 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/17 17:15:37 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 	char	*name;
 	char	*value;
 
-	while (argv[i])
+	while (argv[i] && argv[i][0])
 	{
 		if (check_var(argv[i]))
 			return ;
@@ -89,6 +89,8 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 
 void	ft_export(t_paths *paths, char **argv, int i)
 {
+	//for (int i = 0; argv[i]; i++)
+	//	printf("|%s|\n", argv[i]);
 	if (!argv[1])
 	{
 		print_export(paths->export_env_lst, 1);

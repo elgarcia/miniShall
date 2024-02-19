@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 09:57:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:11:21 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,9 @@ int	check_option_n(char *token)
 int	ft_echo(char **argv, t_process *prc)
 {
 	int	i;
-	int	flag;
 	int	n_flag;
 
 	i = 1;
-	flag = 0;
 	n_flag = 1;
 	while (argv[i] && check_option_n(argv[i]))
 	{
@@ -102,6 +100,6 @@ int	ft_echo(char **argv, t_process *prc)
 	}
 	if (n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	g_exit_status = flag;
+	g_exit_status = 0;
 	return (0);
 }
