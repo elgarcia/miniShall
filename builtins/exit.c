@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 11:02:42 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:03:52 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exit(t_shell *shell, char *line)
 			return ;
 		}
 		if (arg_counter(split) > 1)
-			ret_value = ft_atoi(split[1]);
+			ret_value = ft_atoi(split[1]) % 256;
 	}
 	free(shell->paths->pwd);
 	free(shell->paths->old_pwd);

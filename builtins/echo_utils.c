@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:24:28 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 13:30:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 16:25:13 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	quotes_counter(char *str)
 	i = 0;
 	single_quotes = 0;
 	double_quotes = 0;
+	if (!str)
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'')
