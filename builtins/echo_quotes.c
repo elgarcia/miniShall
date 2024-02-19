@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/17 17:10:44 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 10:31:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,15 @@ static int	process_quotes(char const *s, int *i)
 
 	type = s[*i];
 	quote_count = 0;
-	while (s[*i] == type && s[*i])
+	while (s[*i] && s[*i] == type)
 	{
 		(*i)++;
 		quote_count++;
 	}
 	while (quote_count)
 	{
+		if ((!s[*i]))
+			return (*i);
 		if (s[*i] == type)
 			quote_count--;
 		(*i)++;
