@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:10:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 18:14:47 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/19 18:28:35 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	add_export_node(t_paths *paths, char *name, char *value, int equal)
 	else
 	{
 		add_env_node(paths->export_env_lst, name, value, equal);
-		if (value[0] != '\0')
+		if (value[0] != '\0' || equal == 1)
 			add_env_variable(paths, name, value, equal);
 	}
 }
