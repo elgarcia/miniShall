@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 10:07:52 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:20:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,33 +71,6 @@ void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 		(*aux)->rd = *red_aux;
 }
 
-int		count_quotes(char **argv, int j)
-{
-	int	i;
-	int	counter_d;
-	int	counter_s;
-
-	counter_d = 0;
-	counter_s = 0;
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '\'')
-				counter_s++;
-			if (argv[i][j] == '\"')
-				counter_d++;
-			j++;
-		}
-		i++;
-	}
-	if (counter_d % 2 == 0 || counter_s % 2 == 0)
-		return (0);
-	return (1);
-}
-
 void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 {
 	*aux = (t_process *)ft_calloc(1, sizeof(t_process));
@@ -119,7 +92,7 @@ int	input_parser(char *line, t_shell *new)
 	
 	aux = new->lst_process;
 	i = 0;
-	new->input = ft_split(line, ' ');
+	new->input = echo_split(line, ' '); // cambie el ft_split por mi echo_split
 	if (!new->input)
 		return (-1);
 	while (new->input[i])
@@ -139,5 +112,5 @@ int	input_parser(char *line, t_shell *new)
 		else
 			break;
 	}
-	return (ft_free(new->input, ft_word_count(line, ' ')), 0);
+	return (ft_free(new->input, arg_counter(new->input)), 0); // cambie ft_word_count por arg_counter
 }

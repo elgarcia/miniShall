@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 10:11:21 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 15:07:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	ft_expand_variable(char *variable_name, t_paths *paths)
 			ft_putchar_fd(*token++, 1);
 	}
 }
-
-
 
 int	is_variable(char *token)
 {
@@ -77,6 +75,7 @@ int	check_option_n(char *token)
 	}
 	return (1);
 }
+
 int	ft_echo(char **argv, t_process *prc)
 {
 	int	i;
@@ -92,6 +91,8 @@ int	ft_echo(char **argv, t_process *prc)
 	i = 0;
 	while (argv[++i])
 	{
+		//if (argv[i][0] == '\'' || argv[i][0] == '\"')
+		//	remove_char(argv[i], argv[i][0]);
 		if (prc->rd && (i == prc->rd->pos))
 				break ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);

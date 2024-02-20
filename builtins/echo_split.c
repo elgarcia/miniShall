@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/17 17:12:02 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 12:37:24 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,9 @@ char	**echo_split(char *s, char c)
 	char	**strs;
 	t_split	params;
 	int		i;
+	static int times = 0;
 
+	//printf("time -> %d string -> %s\n", times, s);
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
@@ -94,7 +96,12 @@ char	**echo_split(char *s, char c)
 	while (strs[i]) // last change 17-02 at home
 	{
 		strs[i] = ft_strtrimfree(strs[i], " ");
+		//if (strs[i][0] == '\'' || strs[i][0] == '\"')
+		//	remove_char(strs[i], strs[i][0]);
 		i++;
 	}
+	//for (int j = 0; strs[j]; j++)
+	//	printf("strs[%d] -> %s\n", j, strs[j]);
+	times++;
 	return (strs);
 }
