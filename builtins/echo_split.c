@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 12:37:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:44:37 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ char	**echo_split(char *s, char c)
 	while (strs[i]) // last change 17-02 at home
 	{
 		strs[i] = ft_strtrimfree(strs[i], " ");
-		//if (strs[i][0] == '\'' || strs[i][0] == '\"')
-		//	remove_char(strs[i], strs[i][0]);
+		if (strs[i][0] == '\'' || strs[i][0] == '\"')
+			remove_char(strs[i], strs[i][0]);
 		i++;
 	}
 	//for (int j = 0; strs[j]; j++)

@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 16:16:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:45:36 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,14 @@ char	*expand_and_join_arguments(t_shell *shell, char **argv)
 	i = 0;
 	while (argv[i])
 	{
-		remove_quotes(argv[i]);
+		//remove_quotes(argv[i]);
 		if (is_variable(argv[i]))
 			result = get_var_res(shell, result, argv, i);
 		else
 		{
 			result = ft_strjoinfree(result, argv[i]);
-			if (result[0] == '\"' || result[0] == '\'')
-				remove_char(result, result[0]);
+			//if (result[0] == '\"' || result[0] == '\'')
+			//	remove_char(result, result[0]);
 		}
 		if (i + 1 < arg_counter(argv))
 			result = ft_strjoinfree(result, " ");

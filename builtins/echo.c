@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 15:07:28 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:44:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,11 +88,13 @@ int	ft_echo(char **argv, t_process *prc)
 		n_flag = 0;
 		i++;
 	}
+	for (int x = 0; argv[x]; x++)
+		printf("argv[%d] -> %s\n", x, argv[x]);
 	i = 0;
 	while (argv[++i])
 	{
-		//if (argv[i][0] == '\'' || argv[i][0] == '\"')
-		//	remove_char(argv[i], argv[i][0]);
+		if (argv[i][0] == '\'' || argv[i][0] == '\"')
+			remove_char(argv[i], argv[i][0]);
 		if (prc->rd && (i == prc->rd->pos))
 				break ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);
