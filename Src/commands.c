@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/06 19:58:27 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:36:08 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 		}
 		aux = aux->next;
 	}
+	printf("%s: No such file or directory\n", command);
 	return (-1);
 }
 
