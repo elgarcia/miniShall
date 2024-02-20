@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/12 19:19:30 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:20:15 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ int	is_builting(t_process *prc)
 int	is_rdp(char *str)
 {
 	if (!ft_strcmp(str, "|"))
+		return (1);
+	else if (!ft_strcmp(str, "||"))
 		return (1);
 	else if (!ft_strcmp(str, "<<"))
 		return (1);

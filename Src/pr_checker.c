@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 09:53:04 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:21:26 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,8 @@ char	*get_ifile(char *process, int inout)
 	char	*ret;
 	int		i;
 
-	aux = ft_split(process, ' ');
+	//aux = ft_split(process, ' '); cambio 20/02
+	aux = echo_split(process, ' ');
 	i = inout;
 	while (aux[i] && !ft_strncmp(aux[i], "-", 2))
 		i++;
@@ -102,7 +103,8 @@ char	*get_ifile(char *process, int inout)
 		ft_free(aux, ft_word_count(process, ' '));
 		return (ret);
 	}
-	ft_free(aux, ft_word_count(process, ' '));
+	//ft_free(aux, ft_word_count(process, ' ')); cambio 20/02
+	ft_free(aux, arg_counter(aux));
 	return (NULL);
 }
 
@@ -115,7 +117,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	ret_val = 0;
 	if ((*prcs)->rd)
 	{
-		split = ft_split((*prcs)->process, ' ');
+		//split = ft_split((*prcs)->process, ' '); cambio 20/02
+		split = echo_split((*prcs)->process, ' ');
 		if ((*prcs)->rd->pos == 0)
 			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);
 		else

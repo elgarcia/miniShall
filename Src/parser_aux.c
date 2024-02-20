@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 08:37:15 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:36:38 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,15 @@ void	assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type)
 	(*red_aux)->pos = *i - (*aux)->n_redis;
 	(*red_aux)->next = NULL;
 	(*aux)->n_redis += 1;
+}
+
+int		is_ao(char *str)
+{
+	if (ft_strnstr(str, "||", 3))
+		return (1);
+	else if (ft_strnstr(str, "&&", 3))
+		return (1);
+	else if (ft_strnstr(str, ";", 2))
+		return (1);
+	return (0);
 }

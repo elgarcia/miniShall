@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 10:07:52 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:27:59 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,8 @@ void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 	}
 	else
 		check_redaux(in, aux, i, red_aux);
-	if (!(*aux)->rd && (*red_aux) && (*aux)->process)
+	if (!(*aux)->rd && (*red_aux))
 		(*aux)->rd = *red_aux;
-}
-
-int		count_quotes(char **argv, int j)
-{
-	int	i;
-	int	counter_d;
-	int	counter_s;
-
-	counter_d = 0;
-	counter_s = 0;
-	i = 1;
-	while (argv[i])
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if (argv[i][j] == '\'')
-				counter_s++;
-			if (argv[i][j] == '\"')
-				counter_d++;
-			j++;
-		}
-		i++;
-	}
-	if (counter_d % 2 == 0 || counter_s % 2 == 0)
-		return (0);
-	return (1);
 }
 
 void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
@@ -119,7 +92,7 @@ int	input_parser(char *line, t_shell *new)
 	
 	aux = new->lst_process;
 	i = 0;
-	new->input = ft_split(line, ' ');
+	new->input = echo_split(line, ' '); // cambie el ft_split por mi echo_split
 	if (!new->input)
 		return (-1);
 	while (new->input[i])
@@ -136,8 +109,13 @@ int	input_parser(char *line, t_shell *new)
 			aux->process = ft_strjoinup(&aux->process, new->input[i]);
 			i++;
 		}
-		else
-			break;
 	}
-	return (ft_free(new->input, ft_word_count(line, ' ')), 0);
+	if ((aux->rd && is_rdp(new->input[i - 1])) || is_ao(new->input[i - 1]))
+	{
+		printf("Syntax error\n");
+		free_prcs(new);
+		g_exit_status = 258;
+		return (ft_free(new->input, arg_counter(new->input)), -1);
+	}
+	return (ft_free(new->input, arg_counter(new->input)), 0); // cambie ft_word_count por arg_counter
 }

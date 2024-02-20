@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/15 15:15:14 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:16:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,6 @@ static int	is_variable(char *token)
 	return (token[0] == '$' && token[1] != '\0');
 }
 
-char	**split_arguments(char *line, char delimiter)
-{
-	return (echo_split(line, delimiter));
-}
-
 void	remove_quotes(char *arg)
 {
 	if (arg[0] == '\"' || (arg[0] == '\'' && arg[1] != '$'))
@@ -144,7 +139,7 @@ char	*expansor(t_shell *shell, char *line)
 	char	**argv;
 	char	*result;
 
-	argv = split_arguments(line, ' ');
+	argv = ft_split(line, ' ');
 	result = expand_and_join_arguments(shell, argv);
 	ft_free(argv, arg_counter(argv));
 	return (result);

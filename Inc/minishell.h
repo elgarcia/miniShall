@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 17:59:03 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 17:24:38 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,13 @@ void		free_pikes(t_shell **all);
 int			is_builting(t_process *prc);
 int			is_rd(int inout);
 int			is_rdp(char *str);
+void		close_pipes(t_shell *all);
+void		close_fds(t_shell *all);
 
 /* parser_aux */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type);
+int			is_ao(char *str);
+
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);
