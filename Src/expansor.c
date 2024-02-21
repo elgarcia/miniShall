@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 16:45:36 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/20 20:25:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,18 +72,22 @@ char	*ft_expand_var(char *variable_name, t_shell *shell)
 {
 	char	*result;
 	char	*tmp;
+	int		i;
 
+	i = 0;
 	result = ft_strdup("");
-	while (*variable_name)
+	while (variable_name[i])
 	{
-		if (*variable_name == '$' && *(variable_name + 1) != '\0')
+		if (variable_name[i] == '$' && variable_name[i + 1] != '\0')
 		{
 			tmp = expand_single_var(&variable_name, shell);
+			printf("tmp: %s\n", tmp);
 			result = ft_strjoinfree(result, tmp);
 			free(tmp);
 		}
 		else
-			variable_name++;
+			result = ft_strjoinfree(result, ft_substr(variable_name, i, 1));
+			i++;
 	}
 	return (result);
 }
@@ -99,11 +103,12 @@ void	remove_quotes(char *arg)
 		remove_char(arg, arg[0]);
 }
 
-char	*get_var_res(t_shell *shell, char *result, char **argv, int i)
+char	*get_var_res(t_shell *shell, char *result, char *argv)
 {
 	char	*expanded;
 
-	expanded = ft_expand_var(argv[i], shell);
+	printf("result: %s\n", result);
+	expanded = ft_expand_var(argv, shell);
 	result = ft_strjoinfree(result, expanded);
 	free(expanded);
 	return (result);
@@ -113,22 +118,30 @@ char	*expand_and_join_arguments(t_shell *shell, char **argv)
 {
 	char	*result;
 	int		i;
+	int		j;
 
 	result = ft_strdup("");
 	i = 0;
 	while (argv[i])
 	{
-		//remove_quotes(argv[i]);
-		if (is_variable(argv[i]))
-			result = get_var_res(shell, result, argv, i);
-		else
+		j = 0;
+		while (argv[i][j])
 		{
-			result = ft_strjoinfree(result, argv[i]);
-			//if (result[0] == '\"' || result[0] == '\'')
-			//	remove_char(result, result[0]);
+			printf("argv[i][j]: %s\n", &argv[i][j]);
+			if (is_variable(&argv[i][j]))
+			{
+				result = get_var_res(shell, result, &argv[i][j]);
+				break;
+			}
+			else
+				result = ft_strdup(argv[i]);
+			j++;
 		}
+		printf("result: -->> %s\n", result);
 		if (i + 1 < arg_counter(argv))
 			result = ft_strjoinfree(result, " ");
+		if (argv[i + 1])
+			result = ft_strjoinfree(ft_strdup(argv[i]), result);
 		i++;
 	}
 	return (result);
@@ -139,8 +152,9 @@ char	*expansor(t_shell *shell, char *line)
 	char	**argv;
 	char	*result;
 
-	argv = ft_split(line, ' ');
+	argv = echo_split(line, ' ');
 	result = expand_and_join_arguments(shell, argv);
 	ft_free(argv, arg_counter(argv));
+	printf("expanded: %s\n", result);
 	return (result);
 }
