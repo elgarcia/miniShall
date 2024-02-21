@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:23:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	extend(t_shell *new, char *line)
 		add_to_history(new, line);
 		if (ft_strnstr(line, "exit", 5))
 			return (ft_exit(new, line));
-		new_line = expansor(new, line);
+		new_line = expansor(new, line, 0, 0);
 		if (input_parser(new_line, new) != -1)
 		{
 			add_history(line);

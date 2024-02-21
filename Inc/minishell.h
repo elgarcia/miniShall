@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/19 17:59:03 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/21 18:59:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,13 +152,13 @@ void		print_history(t_shell *shell);
 void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
-// SIGNAL
 
+// SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);
 
-
-char *expansor(t_shell *shell, char *line);
+// EXPANSOR
+char 	*expansor(t_shell *shell, char *line, int i, int j);
 
 // G_EXIT_STATUS
 void		change_status(int new_status);

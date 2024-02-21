@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 18:55:49 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/21 21:16:57 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static void	split_string(t_split *params)
 	}
 }
 
-char	*ft_strtrimfree(char *s1, char const *set)
+/*char	*ft_strtrimfree(char *s1, char const *set)
 {
 	char	*str;
 	size_t	j;
@@ -75,33 +75,37 @@ char	*ft_strtrimfree(char *s1, char const *set)
 	str = ft_substr(s1, 0, j + 1);
 	if (!str)
 		return (NULL);
-	free(s1);
+	//if (s1[0] != '\0')
+		//free(s1);
 	return (str);
 }
+*/
 
 char	**echo_split(char *s, char c)
 {
 	char	**strs;
 	t_split	params;
 	int		i;
-	//static int times = 0;
 
-	//printf("time -> %d string -> %s\n", times, s);
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
 	split_string(&params);
 	strs[params.i] = 0;
 	i = 0;
-	while (strs[i]) // last change 17-02 at home
+	while (strs[i]) // last change 21-02 at home
 	{
-		strs[i] = ft_strtrimfree(strs[i], " ");
-		if (strs[i][0] == '\'' || strs[i][0] == '\"')
-			remove_char(strs[i], strs[i][0]);
+		char	*tmp;
+		tmp = ft_strtrim(strs[i], " ");
+		free(strs[i]);
+		strs[i] = tmp;
+		//strs[i] = ft_strtrimfree(strs[i], " ");
+		//if (strs[i][0] == '\'' || strs[i][0] == '\"')
+			//remove_char(strs[i], strs[i][0]);
 		i++;
 	}
-	//for (int j = 0; strs[j]; j++)
-	//	printf("strs[%d] -> %s\n", j, strs[j]);
-	//times++;
+	for (int j = 0; strs[j]; j++)
+		printf("strs[%d] -> |%s|\n", j, strs[j]);
+	printf("\n\n");
 	return (strs);
 }
