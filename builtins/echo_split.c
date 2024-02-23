@@ -93,7 +93,7 @@ char	**echo_split(char *s, char c)
 	split_string(&params);
 	strs[params.i] = 0;
 	i = 0;
-	while (strs[i]) // last change 21-02 at home
+    while (strs[i]) // last change 21-02 at home
 	{
 		char	*tmp;
 		tmp = ft_strtrim(strs[i], " ");
@@ -104,8 +104,8 @@ char	**echo_split(char *s, char c)
 			//remove_char(strs[i], strs[i][0]);
 		i++;
 	}
-	for (int j = 0; strs[j]; j++)
-		printf("strs[%d] -> |%s|\n", j, strs[j]);
-	printf("\n\n");
+	//for (int j = 0; strs[j]; j++)
+	//	printf("strs[%d] -> |%s|\n", j, strs[j]);
+	//printf("\n\n");
 	return (strs);
 }
