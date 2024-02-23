@@ -52,30 +52,40 @@ char	*ft_strjoin_char(char *s1, char c)
 	return (new);
 }
 
+char    *extend_expansor(t_shell *shell, char *new, char *tmp)
+{
+    char *env_value;
+
+	env_value = get_env(tmp, shell->paths->env_lst);
+	new = ft_strjoin(new, env_value);
+	free(tmp);
+	tmp = NULL;
+    return (new);
+}
+
 char	*expansor(t_shell *shell, char *str, int i, int j)
 {
 	char	*new;
-	char	*tmp;
-	char	*env_value;
+    int     quotes;
+    char    *tmp;
 
 	new = ft_strdup("");
-	while (str[i])
-	{
-		if (str[i] == '$')
+    quotes = 1;
+	while (str[++i])
+    {
+        if (str[i] == '\'')
+            quotes = !quotes;
+		if (quotes && str[i] == '$')
 		{
 			j = i + 1;
 			while ((str[j] && ft_isalnum(str[j])) || str[j] == '_' || str[j] == '?')
 				j++;
-			tmp = ft_substr(str, i + 1, j - i - 1);
-			env_value = get_env(tmp, shell->paths->env_lst);
-			new = ft_strjoin(new, env_value);
-			free(tmp);
-			tmp = NULL;
+	        tmp = ft_substr(str, i + 1, j - i - 1);
+            new = extend_expansor(shell, new, tmp);
 			i = j - 1;
 		}
 		else
 			new = ft_strjoin_char(new, str[i]);
-		i++;
 	}
 	return (new);
 }

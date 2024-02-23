@@ -158,6 +158,7 @@ void		handle_signal(int signo);
 void		set_signals(int mode);
 
 // EXPANSOR
+char    *ft_strjoin_char(char *s1, char c);
 char 	*expansor(t_shell *shell, char *line, int i, int j);
 
 // G_EXIT_STATUS

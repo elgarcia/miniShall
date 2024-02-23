@@ -29,12 +29,6 @@ static char	**allocate_and_initialize(char *s, char c, t_split *params)
 	return (strs);
 }
 
-static void	skip_spaces(t_split *params)
-{
-	while (params->s[params->j] == ' ')
-		params->j++;
-}
-
 static void	skip_delimiters(t_split *params)
 {
 	while ((params->s[params->j] == params->c || params->in_quotes)
@@ -50,7 +44,8 @@ static void	split_string(t_split *params)
 {
 	while (params->i < count_words(params->s, params->c, 0, 1))
 	{
-		skip_spaces(params);
+	    while (params->s[params->j] == ' ')
+		    params->j++;
 		skip_delimiters(params);
 		add_word(params);
 		if (!params->strs)
@@ -58,54 +53,38 @@ static void	split_string(t_split *params)
 	}
 }
 
-/*char	*ft_strtrimfree(char *s1, char const *set)
-{
-	char	*str;
-	size_t	j;
-
-	if (!s1)
-		return (NULL);
-	if (!set)
-		return ((char *)s1);
-	while (*s1 && ft_strchr(set, *s1))
-		s1++;
-	j = ft_strlen(s1);
-	while (j && ft_strchr(set, s1[j]))
-		j--;
-	str = ft_substr(s1, 0, j + 1);
-	if (!str)
-		return (NULL);
-	//if (s1[0] != '\0')
-		//free(s1);
-	return (str);
-}
-*/
-
 char	**echo_split(char *s, char c)
 {
 	char	**strs;
 	t_split	params;
-	int		i;
+	//int		i;
 
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
 	split_string(&params);
 	strs[params.i] = 0;
-	i = 0;
-    while (strs[i]) // last change 21-02 at home
+	//i = 0;
+/*    while (strs[i]) // to be done
 	{
 		char	*tmp;
 		tmp = ft_strtrim(strs[i], " ");
 		free(strs[i]);
 		strs[i] = tmp;
-		//strs[i] = ft_strtrimfree(strs[i], " ");
-		//if (strs[i][0] == '\'' || strs[i][0] == '\"')
-			//remove_char(strs[i], strs[i][0]);
+        int j = 0;
+        while (strs[i][j] != '\0')
+        {
+            if (strs[i][j] == '\"' && strs[i][j + 1] == '\'')
+                remove_char(strs[i], '\"');
+            else if (strs[i][j] == '\'' && strs[i][j + 1] == '\"')
+                remove_char(strs[i], '\'');
+            else if (strs[i][j] == '\"' && strs[i][j + 1] == '\"')
+                remove_char(strs[i], '\"');
+            else if (strs[i][j] == '\'' && strs[i][j + 1] == '\'')
+                remove_char(strs[i], '\'');
+            j++;
+        }
 		i++;
-	}
-	//for (int j = 0; strs[j]; j++)
-	//	printf("strs[%d] -> |%s|\n", j, strs[j]);
-	//printf("\n\n");
+	}*/
 	return (strs);
 }

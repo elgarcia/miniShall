@@ -32,8 +32,8 @@ void	print(char **argv, int i, t_process *prc)
 {
 	while (argv[++i])
 	{
-		if (argv[i][0] == '\'' || argv[i][0] == '\"')
-			remove_char(argv[i], argv[i][0]);
+		//if (argv[i][0] == '\'' || argv[i][0] == '\"')
+		//	remove_char(argv[i], argv[i][0]);
 		if (prc->rd && (i == prc->rd->pos))
 				break ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);

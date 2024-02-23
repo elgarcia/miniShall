@@ -66,20 +66,16 @@ void	extend(t_shell *new, char *line)
 	if (line[0] != 0)
 	{
 		add_to_history(new, line);
+		add_history(line);
 		if (ft_strnstr(line, "exit", 5))
 			return (ft_exit(new, line));
-		new_line = expansor(new, line, 0, 0);
+		new_line = expansor(new, line, -1, 0);
 		if (input_parser(new_line, new) != -1)
 		{
 			add_history(line);
 			init_pikes(&new);
 			exec_process(new);
 			free_pikes(&new);
-		}
-		else
-		{
-			add_history(line);
-			//ft_fprintf(2, "Syntax Error\n");
 		}
 		free(new_line);
 	}
