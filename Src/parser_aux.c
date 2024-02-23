@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 17:36:38 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:53:29 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,29 @@ int		is_ao(char *str)
 		return (1);
 	else if (ft_strnstr(str, ";", 2))
 		return (1);
+	return (0);
+}
+
+int		check_cats(t_shell *all, t_process *aux)
+{
+	t_process	*p_aux;
+	int			flag;
+
+	flag = 0;
+	p_aux = all->lst_process;
+	while (p_aux)
+	{
+		if (!ft_strncmp(p_aux->process, "cat", 3))
+			flag++;
+		p_aux = p_aux->next;
+	}
+	if (flag == all->n_process)
+		return (0);
+	if (!ft_strncmp(aux->process, "cat", 3))
+	{
+		if (aux->n_process == all->n_process - 1)
+			return (0);
+		return  (1);
+	}
 	return (0);
 }

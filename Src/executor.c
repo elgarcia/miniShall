@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 18:01:55 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:53:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,13 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		outword = get_ifile(aux->process, rd);
 		outword = ft_strjoin(outword, "\n");
 	}
-	line = get_next_line(STDIN_FILENO);
+	line = get_next_line(all->og_infile);
 	while(rd != 0 && ft_strcmp(outword, line))
 	{
 		if (all->fd_out != -1)
 			write(all->fd_out, line, ft_strlen(line));
 		free(line);
-		line = get_next_line(STDIN_FILENO);
+		line = get_next_line(all->og_infile);
 	}
 	if (rd != 0)
 		free(outword);
@@ -84,7 +84,7 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 	}
 	if (aux->next)
 		dup2(all->pipes[1], STDOUT_FILENO);
-	if (hd != 0 || (!ft_strcmp(aux->process, "cat") && all->n_process > 1))
+	if (hd != 0 || check_cats(all, aux) == 1)
 		return (here_doc(all, aux, hd), exit(EXIT_SUCCESS));
 }
 

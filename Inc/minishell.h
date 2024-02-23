@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 17:24:38 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/23 18:23:02 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		close_fds(t_shell *all);
 /* parser_aux */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type);
 int			is_ao(char *str);
+int			check_cats(t_shell *all, t_process *aux);
 
 
 // ENVP LIST
