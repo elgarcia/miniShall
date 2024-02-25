@@ -1,28 +1,43 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/24 09:30:51 by bautrodr         ###   ########.fr       */
+/*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/02/25 17:26:32 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
-void	ft_env(t_paths *paths, char **argv)
+char	*ft_strchrt(char *s, char c, int times)
 {
-	int	argc;
+	int	i;
 
-	argc = arg_counter(argv);
-	if (argc > 1)
+	i = 0;
+	while (*s != '\0')
 	{
-		g_exit_status = 127;
-		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
-		return ;
+		if (*s == c)
+		{
+			i++;
+			if (i == times)
+				return (s);
+		}
+		s++;
 	}
-	print_env_list(paths->env_lst);
-	g_exit_status = 0;
+	return (0);
+}
+
+char	*get_prompt(t_shell *shell)
+{
+	char	*prompt;
+	char	*tmp;
+
+	tmp = ft_strchrt(shell->paths->pwd, '/', 3);
+	if (!tmp)
+		tmp = "/";
+	prompt = ft_strjoin("~", tmp);
+	return (prompt);
 }

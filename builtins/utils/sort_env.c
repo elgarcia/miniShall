@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:15:48 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/20 12:34:52 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:44:52 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
 t_env_lst	*insert_sorted(t_env_lst *head, char *name, char *value, int equal)
 {

@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:20:36 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 18:14:51 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:44:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
 char	*get_result(const char *target_chars, const char *str, size_t new_len,
 		size_t len)

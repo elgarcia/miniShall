@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 11:23:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/12 21:30:45 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:45:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
 int	ft_strcmp(char *s1, char *s2)
 {

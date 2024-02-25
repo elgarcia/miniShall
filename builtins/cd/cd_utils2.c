@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:27:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/23 23:48:05 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:42:44 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
 char	*join_paths(const char *path1, const char *path2)
 {

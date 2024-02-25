@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:24:28 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 15:20:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:43:09 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
 int	quotes_counter(char *str)
 {

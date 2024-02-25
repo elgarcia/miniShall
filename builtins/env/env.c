@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/10 15:14:06 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 17:47:01 by bautrodr         ###   ########.fr       */
+/*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
+/*   Updated: 2024/02/25 17:43:27 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 
-int	ft_pwd(t_paths *paths)
+void	ft_env(t_paths *paths, char **argv)
 {
-	ft_putendl_fd(paths->pwd, 1);
+	int	argc;
+
+	argc = arg_counter(argv);
+	if (argc > 1)
+	{
+		g_exit_status = 127;
+		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
+		return ;
+	}
+	print_env_list(paths->env_lst);
 	g_exit_status = 0;
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:11:54 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:28:46 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,34 +23,22 @@ void	change_shell(t_shell *shell)
 	free(tmp);
 }
 
-char	*ft_strchrt(char *s, char c, int times)
+void print_banner()
 {
-	int	i;
-
-	i = 0;
-	while (*s != '\0')
-	{
-		if (*s == c)
-		{
-			i++;
-			if (i == times)
-				return (s);
-		}
-		s++;
-	}
-	return (0);
-}
-
-char	*get_prompt(t_shell *shell)
-{
-	char	*prompt;
-	char	*tmp;
-
-	tmp = ft_strchrt(shell->paths->pwd, '/', 3);
-	if (!tmp)
-		tmp = "/";
-	prompt = ft_strjoin("~", tmp);
-	return (prompt);
+	printf("\n");
+	printf(GREEN_TEXT "███╗   ███╗██╗███╗   ██╗██╗███████╗" RESET_TEXT);
+	printf(GREEN_TEXT "	██╗  ██╗ █████╗ ██╗     ██╗	  \n" RESET_TEXT);
+	printf(GREEN_TEXT "████╗ ████║██║████╗  ██║██║██╔════╝" RESET_TEXT);
+	printf(GREEN_TEXT "	██║  ██║██╔══██╗██║     ██║     \n" RESET_TEXT);
+	printf(GREEN_TEXT "██╔████╔██║██║██╔██╗ ██║██║███████╗" RESET_TEXT);
+	printf(GREEN_TEXT "	███████║███████║██║     ██║     \n" RESET_TEXT);
+	printf(GREEN_TEXT "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║" RESET_TEXT);
+	printf(GREEN_TEXT "	██╔══██║██╔══██║██║     ██║		\n" RESET_TEXT);
+	printf(GREEN_TEXT "██║ ╚═╝ ██║██║██║ ╚████║██║███████║" RESET_TEXT);
+	printf(GREEN_TEXT " ██║  ██║██║  ██║███████╗███████╗\n" RESET_TEXT);
+	printf(GREEN_TEXT "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝" RESET_TEXT);
+	printf(GREEN_TEXT " ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
+	printf("\n");
 }
 
 void	extend(t_shell *new, char *line)
@@ -90,6 +78,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
+		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
 		while (42)
