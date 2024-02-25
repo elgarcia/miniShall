@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/21 21:16:57 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 09:57:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ char	**echo_split(char *s, char c)
         }
 		i++;
 	}*/
+	for (int j = 0; strs[j]; j++)
+		printf("strs[%d] -> %s\n", j, strs[j]);
 	return (strs);
 }
