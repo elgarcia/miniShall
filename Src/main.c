@@ -6,12 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 16:18:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 14:32:50 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
-
 
 int	g_exit_status = 0;
 
@@ -77,27 +76,21 @@ void	extend(t_shell *new, char *line)
 			free_pikes(&new);
 		}
 		else
-		{
 			add_history(line);
-			//ft_fprintf(2, "Syntax Error\n");
-		}
 		free(new_line);
 	}
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell *new;
-	char *line;
-	char *prompt;
+	t_shell	*new;
+	char	*line;
+	char	*prompt;
 
 	(void)argv;
 	if (argc == 1)
 	{
-		init_minishell(&new);
-		new->paths->envp = envp;
-		fill_init_env_list(new->paths, envp);
-		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
+		init_minishell(&new, envp);
 		change_shell(new);
 		while (42)
 		{

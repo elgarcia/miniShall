@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 16:38:13 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:21:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 int	search_path(char **env_1, char	**actual_path, \
 	char *command, char ***exec_args)

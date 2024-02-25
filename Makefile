@@ -7,15 +7,19 @@ GREEN = \033[92m
 YELLOW = \033[93m
 CYAN = \033[96m
 
-SOURCE = Src/main.c Src/parser.c Src/utils.c Src/executor.c Src/pr_checker.c Src/commands.c \
-Src/command_aux.c Src/pipes.c Src/init.c Src/signals.c builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c \
-builtins/exit.c builtins/export.c builtins/pwd.c builtins/utils.c builtins/cd_utils.c builtins/cd_utils2.c builtins/unset.c \
+SOURCE = Src/main.c Src/init.c \
+Src/Lexer/parser.c Src/Lexer/expansor.c Src/Lexer/expansor_utils.c Src/Lexer/parser_aux.c \
+Src/Executor/executor.c Src/Executor/pr_checker.c Src/Executor/commands.c Src/Executor/command_aux.c Src/Executor/pipes.c \
+Src/Executor/executor_aux.c \
+Src/Utils/utils.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c Src/Utils/auxiliar_functions.c \
+Src/History/history.c Src/History/history_utils.c \
+Src/Signals/signals.c Src/Signals/g_exit_status.c \
+builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c builtins/exit.c builtins/export.c \
+builtins/pwd.c builtins/utils.c builtins/cd_utils.c builtins/cd_utils2.c builtins/unset.c \
 builtins/export_utils.c builtins/export_utils2.c builtins/sort_env.c builtins/echo_split.c builtins/echo_split_utils.c \
-builtins/echo_quotes.c builtins/echo_utils.c Src/history.c Src/history_utils.c get_next_line/get_next_line.c \
-get_next_line/get_next_line_utils.c Src/g_exit_status.c Src/expansor.c Src/expansor_utils.c Src/auxiliar_functions.c \
-Src/parser_aux.c
+builtins/echo_quotes.c builtins/echo_utils.c
 
-INCLUDE = Inc/minishell.h
+INCLUDE = Inc/
 
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
@@ -27,7 +31,7 @@ OBJS = $(SOURCE:.c=.o)
 
 %.o: %.c Makefile $(INCLUDE)
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
-	@${CC} -c ${CFLAGS} -I /$(INCLUDE) $< -o $@
+	@${CC} -c ${CFLAGS} -I ./$(INCLUDE) $< -o $@
 
 all:  sub_make $(NAME)
 

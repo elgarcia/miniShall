@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 10:31:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:19:11 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	count_words(char const *s, char c, int i, int counter)
 {
 	while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'')
+		if ((s[i] == '\"' || s[i] == '\''))
 		{
 			i = process_quotes(s, &i);
 			if (s[i] && (s[i] == '\'' || s[i] == '\"'))

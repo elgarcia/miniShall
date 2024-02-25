@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/23 18:23:02 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:52:25 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,19 @@
 # define BLUE_TEXT	"\e[0;34m"
 
 /* parser.c */
-int			input_parser(char *line, t_shell *new); //split del input
-void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux); //red checks
-void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux); //red checks
-void		new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux);
+int			input_parser(char *line, t_shell *new);
+void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
+void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
+void		new_proc(t_process **aux, t_shell *all, int n_proc, \
+t_redir **red_aux);
+void		parse_arg(t_process *aux, t_shell *new, int *i);
+
+/* parser_aux.c */
+void		assign_redir(t_process **aux, int *i, \
+t_redir **red_aux, int rd_type);
+int			is_ao(char *str);
+int			check_cats(t_shell *all, t_process *aux);
+void		check_exp(char **in, int *i, int j);
 
 /* utils.c*/
 void		ft_free(char **arg, int size);
@@ -43,13 +52,18 @@ int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
-char		*ft_strjoinfree(char *s1, char const *s2);
 
 /* executor.c */
 void		exec_process(t_shell *all);
 void		close_pipes(t_shell *all);
 void		exec_type(t_shell *all, t_process *aux, int split);
 void		here_doc(t_shell *all, t_process *aux, int rd);
+void		exec_son(t_shell *all, t_process *aux);
+
+/* executor_aux.c */
+void		reset_prc(t_shell *all);
+void		pipe_man(t_shell *all);
+void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
@@ -75,7 +89,7 @@ int			open_file(char *file, int *fd);
 int			is_builting(t_process *prc);
 
 /* init.c */
-void		init_minishell(t_shell **all);
+void		init_minishell(t_shell **all, char **envp);
 void		init_pikes(t_shell **all);
 void		free_pikes(t_shell **all);
 
@@ -86,11 +100,25 @@ int			is_rdp(char *str);
 void		close_pipes(t_shell *all);
 void		close_fds(t_shell *all);
 
-/* parser_aux */
-void		assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type);
-int			is_ao(char *str);
-int			check_cats(t_shell *all, t_process *aux);
+/* expansor.c */
+char		*expand_single_var(char **variable_name, t_shell *shell);
+char		*expansor(t_shell *shell, char *line);
 
+/* expansor_utils.c */
+char		*ft_expand_var(char *variable_name, t_shell *shell);
+void		remove_quotes(char *arg);
+int			is_builting_exp(char *argv);
+char		*ft_strjoinfree(char *s1, char const *s2);
+char		*get_var_res(t_shell *shell, char *result, char **argv, int i);
+
+/* signals.c */
+
+void		handle_signal(int signo);
+void		set_signals(int mode);
+void		proc_handle_signal(int sig);
+
+// G_EXIT_STATUS
+void		change_status(int new_status);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);
@@ -124,7 +152,8 @@ char		*join_paths(const char *path1, const char *path2);
 void		add_export_node(t_paths *paths, char *name, char *value, int equal);
 void		add_env_variable(t_paths *paths, char *name, char *value,
 				int equal);
-void		update_or_process(t_paths *paths, char *name, char *value, int equal);
+void		update_or_process(t_paths *paths, char *name, \
+char *value, int equal);
 int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
@@ -157,14 +186,5 @@ void		print_history(t_shell *shell);
 void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
-// SIGNAL
 
-void		handle_signal(int signo);
-void		set_signals(int mode);
-
-
-char *expansor(t_shell *shell, char *line);
-
-// G_EXIT_STATUS
-void		change_status(int new_status);
 #endif

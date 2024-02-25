@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 14:55:12 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:37:47 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ void	set_signals(int mode)
 
 	sa.sa_flags = SA_RESTART;
 	sigemptyset(&sa.sa_mask);
-	tcgetattr(0, &tc); //Guarda los atributos del FD 0 (STDIN) en la estructura
-	tc.c_lflag &= ~ECHOCTL; //Modifica la flag 'local mode' para desactivar el printeo de ctrl+(X) como ^(X)
-	tcsetattr(0, TCSANOW, &tc); //Devuelve los atributos modificados al FD 0 (STDIN)
+	tcgetattr(0, &tc);
+	tc.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &tc);
 	if (mode == 0)
 		sa.sa_handler = &handle_signal;
 	else if (mode == 1)

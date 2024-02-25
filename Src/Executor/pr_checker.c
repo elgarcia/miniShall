@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 16:21:26 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:22:18 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 void	free_prcs(t_shell *all)
 {
@@ -27,7 +27,8 @@ void	free_prcs(t_shell *all)
 	all->lst_process = NULL;
 }
 
-static int	check_builtins_aux(char **aux, t_shell *all, int len, t_process *prc)
+static int	check_builtins_aux(char **aux, t_shell *all, \
+int len, t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
@@ -59,17 +60,15 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len, t_process *prc)
 int	check_builtins(t_shell *all, t_process *prc)
 {
 	char	**aux;
-	int		len;
-	
+
 	aux = echo_split(prc->process, ' ');
 	if (!aux)
-		return 1;
-	len = arg_counter(aux);
+		return (printf("echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '));
 		ft_echo(aux, prc);
-		return (ft_free(aux, len), 1);
+		return (ft_free(aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
@@ -92,7 +91,6 @@ char	*get_ifile(char *process, int inout)
 	char	*ret;
 	int		i;
 
-	//aux = ft_split(process, ' '); cambio 20/02
 	aux = echo_split(process, ' ');
 	i = inout;
 	while (aux[i] && !ft_strncmp(aux[i], "-", 2))
@@ -103,7 +101,6 @@ char	*get_ifile(char *process, int inout)
 		ft_free(aux, ft_word_count(process, ' '));
 		return (ret);
 	}
-	//ft_free(aux, ft_word_count(process, ' ')); cambio 20/02
 	ft_free(aux, arg_counter(aux));
 	return (NULL);
 }
@@ -117,7 +114,6 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	ret_val = 0;
 	if ((*prcs)->rd)
 	{
-		//split = ft_split((*prcs)->process, ' '); cambio 20/02
 		split = echo_split((*prcs)->process, ' ');
 		if ((*prcs)->rd->pos == 0)
 			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);

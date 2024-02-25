@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 17:20:15 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:39:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	is_builting(t_process *prc)
 		return (ft_free(aux, len), 1);
 	return (ft_free(aux, len), 0);
 }
+
 int	is_rdp(char *str)
 {
 	if (!ft_strcmp(str, "|"))

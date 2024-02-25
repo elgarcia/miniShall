@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   history_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 14:46:27 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/05 14:49:37 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:22:29 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 void	error_exit(void)
 {

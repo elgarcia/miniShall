@@ -6,15 +6,16 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/20 17:55:27 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:27:04 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
-	if (prc->n_process == 0 && !is_builting(prc) && ((prc->rd) && prc->rd->pos > 1))
+	if (prc->n_process == 0 && !is_builting(prc) \
+	&& ((prc->rd) && prc->rd->pos > 1))
 		open_file(prc->process, &all->fd_in);
 	if (prc->next)
 	{
@@ -27,12 +28,6 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 	if (prc->next || !is_builting(prc))
 	{
 		*pid = fork();
-		/* int a = 2;
-		printf("%d\n", *pid);
-		while (a == 2)
-		{
-			;
-		} */
 		if (*pid < 0)
 		{
 			perror("Fork failed!");

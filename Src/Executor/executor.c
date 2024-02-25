@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/23 18:53:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:22:09 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 #include <sys/wait.h>
 
 void	here_doc(t_shell *all, t_process *aux, int rd)
@@ -24,7 +24,7 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		outword = ft_strjoin(outword, "\n");
 	}
 	line = get_next_line(all->og_infile);
-	while(rd != 0 && ft_strcmp(outword, line))
+	while (rd != 0 && ft_strcmp(outword, line))
 	{
 		if (all->fd_out != -1)
 			write(all->fd_out, line, ft_strlen(line));
@@ -43,7 +43,8 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
 		if (i->type == ORD)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
+			all->fd_out = open(get_ifile(aux->process, i->pos), \
+			O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
 			if (all->fd_out == -1)
 				exit(EXIT_FAILURE);
 			dup2(all->fd_out, STDOUT_FILENO);
@@ -52,7 +53,8 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 		{
 			all->fd_in = open(get_ifile(aux->process, i->pos), O_RDONLY);
 			if (all->fd_in == -1)
-				return (printf("%s: %s\n", get_ifile(aux->process, i->pos), strerror(errno)), exit(EXIT_FAILURE));
+				return (printf("%s: %s\n", get_ifile(aux->process, i->pos), \
+				strerror(errno)), exit(EXIT_FAILURE));
 			dup2(all->fd_in, STDIN_FILENO);
 		}
 	}
@@ -71,7 +73,8 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 	{
 		if (i->type == APND)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
+			all->fd_out = open(get_ifile(aux->process, i->pos), \
+			O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
 			if (all->fd_out == -1)
 				exit(EXIT_FAILURE);
 			dup2(all->fd_out, STDOUT_FILENO);
@@ -88,6 +91,22 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 		return (here_doc(all, aux, hd), exit(EXIT_SUCCESS));
 }
 
+void	exec_son(t_shell *all, t_process *aux)
+{
+	if (check_builtins(all, aux))
+	{
+		if (aux->next)
+			exit(EXIT_SUCCESS);
+	}
+	else if (!check_command(all, &aux, &all->exec_args))
+	{
+		exec_type(all, aux, ft_word_count(aux->process, ' '));
+		execve(all->exec_args[0], all->exec_args, all->paths->envp);
+	}
+	else
+		exit(127);
+}
+
 void	exec_process(t_shell *all)
 {
 	t_process	*aux;
@@ -95,45 +114,23 @@ void	exec_process(t_shell *all)
 	int			j;
 	int			status;
 
-	i = 0;
-	j = 0;
-	all->exec_args = NULL;
-	aux = all->lst_process;
+	init_executor(all, &aux, &i, &j);
 	while (aux)
 	{
 		init_pipex(all, aux, &all->sons[i]);
 		set_signals(1);
 		if (all->sons[i] == 0)
-		{
-			if (check_builtins(all, aux))
-			{
-				if (aux->next)
-					exit(EXIT_SUCCESS);
-			}
-			else if (!check_command(all, &aux, &all->exec_args))
-			{
-				exec_type(all, aux, ft_word_count(aux->process, ' '));
-				execve(all->exec_args[0], all->exec_args, all->paths->envp);
-			}
-			else
-				exit(127);
-		}
+			exec_son(all, aux);
 		else
-		{
-			close(all->pipes[1]);
-			if (all->n_process > 1)
-				dup2(all->pipes[0], STDIN_FILENO);
-		}
+			pipe_man(all);
 		aux = aux->next;
 		i++;
 	}
 	while (j != i)
 	{
 		waitpid(all->sons[j++], &status, 0);
-		if (WIFEXITED(status) && !is_builting(all->lst_process)) // get exit status from not-builtins
+		if (WIFEXITED(status) && !is_builting(all->lst_process))
 			g_exit_status = WEXITSTATUS(status);
 	}
-	dup2(all->og_infile, STDIN_FILENO);
-	dup2(all->og_outfile, STDOUT_FILENO);
-	free_prcs(all);
+	reset_prc(all);
 }
