@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/13 13:02:15 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:58:59 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*new_path(t_paths *paths, char *arg)
 	char	*result;
 	char	*tmp;
 
-	if (!arg || !ft_strcmp(arg, "~"))
+	if (!arg || arg[0] == '\0' || !ft_strcmp(arg, "~"))
 		return (ft_strdup(paths->home));
 	else if (!ft_strncmp(arg, "~/", 2))
 	{
@@ -34,7 +34,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 	char	*current_dir;
 	char	*resolved_path;
 
-	if (!arg || !ft_strncmp(arg, "~", 1))
+	if (!arg || arg[0] == '\0' || !ft_strncmp(arg, "~", 1))
 		return (new_path(paths, arg));
 	else if (!ft_strncmp(arg, "/", 1))
 		return (ft_strdup(arg));
@@ -87,7 +87,7 @@ void	ft_cd(t_paths *paths, char **dir)
 		return ;
 	}
 	new_dir = resolve_cd_argument(paths, dir[1]);
-	if (!new_dir || chdir(new_dir) != 0)
+	if (!new_dir || chdir(new_dir) == -1)
 	{
 		g_exit_status = 1;
 		perror("cd");
