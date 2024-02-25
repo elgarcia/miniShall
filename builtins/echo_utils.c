@@ -31,12 +31,7 @@ int	quotes_counter(char *str)
 			double_quotes++;
 		i++;
 	}
-	if (single_quotes % 2 != 0 || double_quotes % 2 != 0)
-	{
-		//printf("Quotes opened!\n");
-		return (1);
-	}
-	return (0);
+	return (single_quotes % 2 != 0 || double_quotes % 2 != 0);
 }
 
 int	remove_char(char *str, char c)
@@ -57,10 +52,7 @@ int	remove_char(char *str, char c)
 		str[new] = 0;
 	}
 	else
-	{
-		//ft_fprintf(2, "Syntax Error!");
 		return (1);
-	}
 	return (0);
 }
 

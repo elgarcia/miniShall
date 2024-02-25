@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:16:42 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 16:35:28 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:14:03 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,34 +56,4 @@ void	remove_quotes(char *arg)
 {
 	if (arg[0] == '\"' || (arg[0] == '\'' && arg[1] != '$'))
 		remove_char(arg, arg[0]);
-}
-
-char	*get_var_res(t_shell *shell, char *result, char **argv, int i)
-{
-	char	*expanded;
-
-	expanded = ft_expand_var(argv[i], shell);
-	result = ft_strjoinfree(result, expanded);
-	free(expanded);
-	return (result);
-}
-
-char	*ft_expand_var(char *variable_name, t_shell *shell)
-{
-	char	*result;
-	char	*tmp;
-
-	result = ft_strdup("");
-	while (*variable_name)
-	{
-		if (*variable_name == '$' && *(variable_name + 1) != '\0')
-		{
-			tmp = expand_single_var(&variable_name, shell);
-			result = ft_strjoinfree(result, tmp);
-			free(tmp);
-		}
-		else
-			variable_name++;
-	}
-	return (result);
 }

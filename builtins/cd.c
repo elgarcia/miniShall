@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 16:58:59 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:05:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,8 @@ void	handle_too_many_arguments(void)
 
 void	update_directory(t_paths *paths, char *new_dir)
 {
-	if (chdir(new_dir) != 0)
-	{
-		g_exit_status = 1;
-		perror("cd");
-	}
-	else
-	{
-		update_pwd_variables(paths, new_dir);
-		g_exit_status = 0;
-	}
+	update_pwd_variables(paths, new_dir);
+	g_exit_status = 0;
 }
 
 void	ft_cd(t_paths *paths, char **dir)
@@ -90,9 +82,11 @@ void	ft_cd(t_paths *paths, char **dir)
 	if (!new_dir || chdir(new_dir) == -1)
 	{
 		g_exit_status = 1;
-		perror("cd");
+		ft_fprintf(2, "cd: %s: No such file or directory\n", dir[1]);
 	}
 	else
 		update_directory(paths, new_dir);
+	if (dir[1] && !ft_strcmp(dir[1], "-"))
+		printf("%s\n", paths->pwd);
 	free(new_dir);
 }

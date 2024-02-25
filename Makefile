@@ -12,6 +12,7 @@ Src/Lexer/parser.c Src/Lexer/expansor.c Src/Lexer/expansor_utils.c Src/Lexer/par
 Src/Executor/executor.c Src/Executor/pr_checker.c Src/Executor/commands.c Src/Executor/command_aux.c Src/Executor/pipes.c \
 Src/Executor/executor_aux.c \
 Src/Utils/utils.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c Src/Utils/auxiliar_functions.c \
+Src/Utils/quotes.c \
 Src/History/history.c Src/History/history_utils.c \
 Src/Signals/signals.c Src/Signals/g_exit_status.c \
 builtins/env_utils.c builtins/echo.c builtins/cd.c builtins/env.c builtins/exit.c builtins/export.c \
