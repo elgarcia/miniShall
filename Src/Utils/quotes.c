@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 15:46:16 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:56:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,16 @@ void	remove_quotes_from_string(char *str)
 		}
 	}
 	str[j] = '\0';
+}
+
+void	remove_quotes_from_matrix(char **matrix)
+{
+	int	i;
+
+	i = 0;
+	while (matrix[i] != NULL)
+	{
+		remove_quotes_from_string(matrix[i]);
+		++i;
+	}
 }

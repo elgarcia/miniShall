@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:02:46 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:57:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 
 void	free_prcs(t_shell *all)
 {
@@ -62,6 +62,7 @@ int	check_builtins(t_shell *all, t_process *prc)
 	char	**aux;
 
 	aux = echo_split(prc->process, ' ');
+	remove_quotes_from_matrix(aux);
 	if (!aux)
 		return (printf("echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))

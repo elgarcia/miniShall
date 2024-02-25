@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:12:41 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 17:57:09 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ int			count_words(char const *s, char c, int i, int counter);
 
 char		**echo_split(char *s, char c);
 void		remove_quotes_from_string(char *str);
+void		remove_quotes_from_matrix(char **matrix);
 
 // HISTORY
 void		add_to_history(t_shell *shell, const char *line);
