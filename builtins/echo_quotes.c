@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/19 10:31:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 10:48:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,28 +32,31 @@ static int	process_quotes(char const *s, int *i)
 			quote_count--;
 		(*i)++;
 	}
+	if (s[*i + 1] != type)
+	{
+		while (s[*i] && s[*i] != ' ')
+			(*i)++;
+	}
 	return (*i);
 }
 
 int	count_words(char const *s, char c, int i, int counter)
 {
+	char	sep;
+
+	sep = c;
 	while (s[i])
 	{
-		if (s[i] == '\"' || s[i] == '\'')
-		{
+		if (s[i] == '\'' || s[i] == '\"')
 			i = process_quotes(s, &i);
-			if (s[i] && (s[i] == '\'' || s[i] == '\"'))
-				counter++;
+		if (s[i] == sep)
+		{
+			counter++;
+			while (s[i] == sep)
+				i++;
 		}
 		else
-		{
-			while (s[i] && s[i] != c)
-				i++;
-			while (s[i] && s[i] == c)
-				i++;
-			if (s[i] != c && s[i])
-				counter++;
-		}
+			i++;
 	}
 	return (counter);
 }

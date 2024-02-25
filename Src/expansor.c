@@ -3,144 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/20 16:16:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:22:12 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-t_process	*find_env_process(t_process *process_lst)
+char	*get_env(char *str, t_env_lst *env)
 {
-	t_process	*tmp;
-
-	tmp = process_lst;
-	while (tmp)
-	{
-		if (!ft_strcmp(process_lst->process, tmp->process))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (tmp);
-}
-
-static char	*find_variable(char **token, t_shell *shell)
-{
-	char		*var_name;
 	t_env_lst	*tmp;
 
-	//	char		*start;
-	// start = ++(*token);
-	if (**(token) == '?')
+	tmp = env;
+	if (str[0] == '?')
+		return (ft_itoa(g_exit_status));
+	while (tmp)
 	{
-		var_name = ft_itoa(g_exit_status);
-		return (var_name);
+		if (!ft_strcmp(str, tmp->name))
+			return (ft_strdup(tmp->value));
+		tmp = tmp->next;
 	}
-	else
-		var_name = *token;
-	tmp = find_env_node(shell->paths->env_lst, var_name);
-	if (tmp)
-		return (ft_strdup(tmp->value));
-	return (ft_strdup(*token));
+	return ("");
 }
 
-char	*expand_single_var(char **variable_name, t_shell *shell)
+char	*ft_strjoin_char(char *s1, char c)
 {
-	char	*variable;
-	char	*tmp;
+	char	*new;
 	int		i;
 
 	i = 0;
-	variable = malloc(sizeof(char) * ft_strlen(*variable_name));
-	if (!variable)
-		return (NULL);
-	(*variable_name)++;
-	while (**variable_name && **variable_name != '$')
+	new = malloc(ft_strlen(s1) + 2);
+	if (!new)
 	{
-		variable[i++] = **variable_name;
-		(*variable_name)++;
+		perror("Error al asignar memoria para el nuevo string");
+		exit(EXIT_FAILURE);
 	}
-	variable[i] = '\0';
-	tmp = find_variable(&variable, shell);
-	free(variable);
-	return (tmp);
-}
-
-char	*ft_expand_var(char *variable_name, t_shell *shell)
-{
-	char	*result;
-	char	*tmp;
-
-	result = ft_strdup("");
-	while (*variable_name)
+	while (s1[i])
 	{
-		if (*variable_name == '$' && *(variable_name + 1) != '\0')
-		{
-			tmp = expand_single_var(&variable_name, shell);
-			result = ft_strjoinfree(result, tmp);
-			free(tmp);
-		}
-		else
-			variable_name++;
-	}
-	return (result);
-}
-
-static int	is_variable(char *token)
-{
-	return (token[0] == '$' && token[1] != '\0');
-}
-
-void	remove_quotes(char *arg)
-{
-	if (arg[0] == '\"' || (arg[0] == '\'' && arg[1] != '$'))
-		remove_char(arg, arg[0]);
-}
-
-char	*get_var_res(t_shell *shell, char *result, char **argv, int i)
-{
-	char	*expanded;
-
-	expanded = ft_expand_var(argv[i], shell);
-	result = ft_strjoinfree(result, expanded);
-	free(expanded);
-	return (result);
-}
-
-char	*expand_and_join_arguments(t_shell *shell, char **argv)
-{
-	char	*result;
-	int		i;
-
-	result = ft_strdup("");
-	i = 0;
-	while (argv[i])
-	{
-		remove_quotes(argv[i]);
-		if (is_variable(argv[i]))
-			result = get_var_res(shell, result, argv, i);
-		else
-		{
-			result = ft_strjoinfree(result, argv[i]);
-			if (result[0] == '\"' || result[0] == '\'')
-				remove_char(result, result[0]);
-		}
-		if (i + 1 < arg_counter(argv))
-			result = ft_strjoinfree(result, " ");
+		new[i] = s1[i];
 		i++;
 	}
-	return (result);
+	new[i] = c;
+	new[i + 1] = '\0';
+	free(s1);
+	s1 = NULL;
+	return (new);
 }
 
-char	*expansor(t_shell *shell, char *line)
+char    *extend_expansor(t_shell *shell, char *new, char *tmp)
 {
-	char	**argv;
-	char	*result;
+    char *env_value;
 
-	argv = ft_split(line, ' ');
-	result = expand_and_join_arguments(shell, argv);
-	ft_free(argv, arg_counter(argv));
-	return (result);
+	env_value = get_env(tmp, shell->paths->env_lst);
+	new = ft_strjoin(new, env_value);
+	free(tmp);
+	tmp = NULL;
+    return (new);
+}
+
+char	*expansor(t_shell *shell, char *str, int i, int j)
+{
+	char	*new;
+    int     quotes;
+    char    *tmp;
+
+	new = ft_strdup("");
+    quotes = 1;
+	while (str[++i])
+    {
+        if (str[i] == '\'')
+            quotes = !quotes;
+		if (quotes && str[i] == '$')
+		{
+			j = i + 1;
+			while ((str[j] && ft_isalnum(str[j])) || str[j] == '_' || str[j] == '?')
+				j++;
+	        tmp = ft_substr(str, i + 1, j - i - 1);
+            new = extend_expansor(shell, new, tmp);
+			i = j - 1;
+		}
+		else
+			new = ft_strjoin_char(new, str[i]);
+	}
+	return (new);
 }

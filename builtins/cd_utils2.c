@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:27:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/01/25 12:29:10 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/23 23:48:05 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@ char	*join_paths(const char *path1, const char *path2)
 	char	*result;
 	char	*tmp;
 
-	result = ft_strjoin(path1, "/");
-	tmp = ft_strjoin(result, path2);
-	free(result);
-	return (tmp);
+	tmp = ft_strjoin(path1, "/");
+	result = ft_strjoin(tmp, path2);
+	free(tmp);
+	return (result);
 }
 
 char	*get_previous_dir(char *str)

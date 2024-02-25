@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/23 18:23:02 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:06:26 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void		print_env_list(t_env_lst *head);
 t_env_lst	*insert_sorted(t_env_lst *head, char *name, \
 						char *value, int equal);
 void		sort_env_list(t_env_lst **head);
+
 // CD UTILS
 char		*resolve_parent_references(char *current_dir, char *target);
 char		*resolve_single_component(char *current_path, char *component);
@@ -142,7 +143,6 @@ char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**echo_split(char *s, char c);
 char		**add_word(t_split *params);
 int			quoted_len(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
@@ -151,19 +151,25 @@ int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char const *s, char c, int i, int counter);
 
+// PARSER
+
+char		**echo_split(char *s, char c);
+void		remove_quotes_from_string(char *str);
+
 // HISTORY
 void		add_to_history(t_shell *shell, const char *line);
 void		print_history(t_shell *shell);
 void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
-// SIGNAL
 
+// SIGNAL
 void		handle_signal(int signo);
 void		set_signals(int mode);
 
-
-char *expansor(t_shell *shell, char *line);
+// EXPANSOR
+char    *ft_strjoin_char(char *s1, char c);
+char 	*expansor(t_shell *shell, char *line, int i, int j);
 
 // G_EXIT_STATUS
 void		change_status(int new_status);
