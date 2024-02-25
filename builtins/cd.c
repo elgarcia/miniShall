@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/23 23:43:00 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:56:34 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,7 @@ void	ft_cd(t_paths *paths, char **dir)
 	}
 	else
 		update_directory(paths, new_dir);
+	if (dir[1] && !ft_strcmp(dir[1], "-"))
+		printf("%s\n", paths->pwd);
 	free(new_dir);
 }

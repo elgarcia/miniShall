@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 09:57:38 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:41:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,36 +57,11 @@ char	**echo_split(char *s, char c)
 {
 	char	**strs;
 	t_split	params;
-	//int		i;
 
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
 	split_string(&params);
 	strs[params.i] = 0;
-	//i = 0;
-/*    while (strs[i]) // to be done
-	{
-		char	*tmp;
-		tmp = ft_strtrim(strs[i], " ");
-		free(strs[i]);
-		strs[i] = tmp;
-        int j = 0;
-        while (strs[i][j] != '\0')
-        {
-            if (strs[i][j] == '\"' && strs[i][j + 1] == '\'')
-                remove_char(strs[i], '\"');
-            else if (strs[i][j] == '\'' && strs[i][j + 1] == '\"')
-                remove_char(strs[i], '\'');
-            else if (strs[i][j] == '\"' && strs[i][j + 1] == '\"')
-                remove_char(strs[i], '\"');
-            else if (strs[i][j] == '\'' && strs[i][j + 1] == '\'')
-                remove_char(strs[i], '\'');
-            j++;
-        }
-		i++;
-	}*/
-	for (int j = 0; strs[j]; j++)
-		printf("strs[%d] -> %s\n", j, strs[j]);
 	return (strs);
 }

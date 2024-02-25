@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/24 00:34:16 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:46:35 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void		print_env_list(t_env_lst *head);
 t_env_lst	*insert_sorted(t_env_lst *head, char *name, \
 						char *value, int equal);
 void		sort_env_list(t_env_lst **head);
+
 // CD UTILS
 char		*resolve_parent_references(char *current_dir, char *target);
 char		*resolve_single_component(char *current_path, char *component);
@@ -137,7 +138,6 @@ char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**echo_split(char *s, char c);
 char		**add_word(t_split *params);
 int			quoted_len(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
@@ -145,6 +145,11 @@ void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char const *s, char c, int i, int counter);
+
+// PARSER
+
+char		**echo_split(char *s, char c);
+void		remove_quotes_from_string(char *str);
 
 // HISTORY
 void		add_to_history(t_shell *shell, const char *line);

@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/21 17:23:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:02:18 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void	extend(t_shell *new, char *line)
 		new_line = expansor(new, line, -1, 0);
 		if (input_parser(new_line, new) != -1)
 		{
+			remove_quotes_from_string(new->lst_process->process);
 			add_history(line);
 			init_pikes(&new);
 			exec_process(new);

@@ -13,7 +13,7 @@ builtins/exit.c builtins/export.c builtins/pwd.c builtins/utils.c builtins/cd_ut
 builtins/export_utils.c builtins/export_utils2.c builtins/sort_env.c builtins/echo_split.c builtins/echo_split_utils.c \
 builtins/echo_quotes.c builtins/echo_utils.c Src/history.c Src/history_utils.c get_next_line/get_next_line.c \
 get_next_line/get_next_line_utils.c Src/g_exit_status.c Src/expansor.c Src/expansor_utils.c Src/auxiliar_functions.c \
-Src/parser_aux.c
+Src/parser_aux.c Src/quotes.c
 
 INCLUDE = Inc/minishell.h
 
