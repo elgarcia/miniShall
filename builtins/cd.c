@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 15:56:34 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:19:52 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	ft_cd(t_paths *paths, char **dir)
 		return ;
 	}
 	new_dir = resolve_cd_argument(paths, dir[1]);
-	if (!new_dir)
+	if (!new_dir || chdir(new_dir) == -1)
 	{
 		g_exit_status = 1;
 		ft_fprintf(2, "cd: %s: No such file or directory\n", dir[1]);
