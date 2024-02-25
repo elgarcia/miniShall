@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:54:21 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/25 22:18:07 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,29 @@ void	extend(t_shell *new, char *line)
 	}
 }
 
+void    loop(t_shell *new)
+{
+    char    *line;
+    char    *prompt;
+
+    while (42)
+    {
+        set_signals(0);
+        prompt = get_prompt(new);
+        printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
+        line = readline(GREEN_TEXT " minishell > " RESET_TEXT);
+        if (quotes_counter(line))
+            printf("Quotes opened!\n");
+        else
+            extend(new, line);
+        free(prompt);
+        free(line);
+    }
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*new;
-	char	*line;
-	char	*prompt;
 
 	(void)argv;
 	if (argc == 1)
@@ -80,20 +98,10 @@ int	main(int argc, char **argv, char **envp)
 		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
-		while (42)
-		{
-			set_signals(0);
-			prompt = get_prompt(new);
-			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
-			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
-			if (quotes_counter(line))
-				printf("Quotes opened!\n");
-			else
-				extend(new, line);
-			free(prompt);
-			free(line);
-		}
-	}
+        while (42)
+            loop(new);
+    }
 	else
 		ft_fprintf(2, "Too many arguments\n");
+    return (0);
 }
