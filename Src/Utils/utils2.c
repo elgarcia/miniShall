@@ -30,12 +30,12 @@ char	*ft_strchrt(char *s, char c, int times)
 	return (0);
 }
 
-char	*get_prompt(t_shell *shell)
+char	*get_prompt()
 {
 	char	*prompt;
 	char	*tmp;
 
-	tmp = ft_strchrt(shell->paths->pwd, '/', 3);
+	tmp = ft_strchrt((char*)getcwd(NULL, 0), '/', 3);
 	if (!tmp)
 		tmp = "/";
 	prompt = ft_strjoin("~", tmp);

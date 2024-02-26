@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:57:09 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/26 00:43:27 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		close_fds(t_shell *all);
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
 char		*expansor(t_shell *shell, char *str, int i, int j);
+char		*get_env(char *str, t_env_lst *env);
 
 /* expansor_utils.c */
 char		*ft_expand_var(char *variable_name, t_shell *shell);
@@ -167,7 +168,7 @@ void		ft_exit(t_shell *shell, char *line);
 void		ft_unset(t_paths *paths, char **argv);
 
 // PROMPT
-char		*get_prompt(t_shell *shell);
+char		*get_prompt(void);
 char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
