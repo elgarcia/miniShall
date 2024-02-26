@@ -27,6 +27,7 @@ void	init_minishell(t_shell **all, char **envp)
 	(*all)->og_outfile = dup(STDOUT_FILENO);
 	g_exit_status = 0;
 	(*all)->paths->envp = envp;
+    //create_envp((*all)->paths, envp); in progress
 	fill_init_env_list((*all)->paths, envp);
 	(*all)->paths->export_env_lst = duplicate_lst((*all)->paths->env_lst);
 }

@@ -46,6 +46,7 @@ typedef struct s_paths
 	char				*pwd;
 	char				*old_pwd;
 	char				**envp;
+    char                **envp_new; // in progress
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
 }						t_paths;

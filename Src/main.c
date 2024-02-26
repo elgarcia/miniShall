@@ -14,27 +14,16 @@
 
 int	g_exit_status = 0;
 
-
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
     int     lvl;
     char    *lvl_str;
-    int     i;
 
-    i = 0;
 	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
     lvl = ft_atoi(get_env("SHLVL", shell->paths->env_lst));
     lvl_str = ft_itoa(lvl + 1);
-    while (shell->paths->envp[i])
-    {
-        if (ft_strncmp(shell->paths->envp[i], "SHLVL=", 6) == 0)
-        {
-            ft_memmove(shell->paths->envp[i] + 6, lvl_str, ft_strlen(lvl_str));
-            break ;
-        }
-        i++;
-    }
+    replace_envp("SHLVL=", lvl_str, shell->paths->envp);
     add_export_node(shell->paths, "SHLVL", lvl_str, 1);
 	add_export_node(shell->paths, "SHELL", tmp, 1);
 	free(tmp);

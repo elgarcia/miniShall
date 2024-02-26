@@ -121,6 +121,12 @@ void		proc_handle_signal(int sig);
 // G_EXIT_STATUS
 void		change_status(int new_status);
 
+// ENVP // in progress
+
+void        add_envp(char *name, char *value, t_paths *paths, int flag);
+void        create_envp(t_paths *paths, char **envp);
+void        replace_envp(char *name, char *value, char **envp);
+
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp);
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key);
