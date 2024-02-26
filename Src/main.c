@@ -41,9 +41,9 @@ void print_banner()
 	printf(GREEN_TEXT "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║" RESET_TEXT);
 	printf(GREEN_TEXT "	██╔══██║██╔══██║██║     ██║		\n" RESET_TEXT);
 	printf(GREEN_TEXT "██║ ╚═╝ ██║██║██║ ╚████║██║███████║" RESET_TEXT);
-	printf(GREEN_TEXT " ██║  ██║██║  ██║███████╗███████╗\n" RESET_TEXT);
+	printf(GREEN_TEXT "     ██║  ██║██║  ██║███████╗███████╗\n" RESET_TEXT);
 	printf(GREEN_TEXT "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝" RESET_TEXT);
-	printf(GREEN_TEXT " ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
+	printf(GREEN_TEXT "     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
 	printf("\n");
 }
 
