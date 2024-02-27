@@ -6,28 +6,23 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 16:37:47 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:29:57 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "../../Inc/minishell.h"
 #include <termios.h>
 
 void	handle_signal(int sig)
 {
-    char    *prompt;
-
-    prompt = get_prompt();
 	if (sig == SIGINT)
 	{
 		ft_putchar_fd('\n', 1);
 		rl_replace_line("", 1);
 		rl_on_new_line();
-        printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
 		rl_redisplay();
 		g_exit_status = 1;
 	}
-    free(prompt);
 	return ;
 }
 
@@ -46,7 +41,6 @@ void	proc_handle_signal(int sig)
 	return ;
 }
 
-
 void	set_signals(int mode)
 {
 	struct sigaction	sa;
@@ -58,7 +52,7 @@ void	set_signals(int mode)
 	term.c_lflag &= ~ECHOCTL;
 	tcsetattr(0, TCSANOW, &term);
 	if (mode == 0)
-        sa.sa_handler = &handle_signal;
+		sa.sa_handler = &handle_signal;
 	else if (mode == 1)
 		sa.sa_handler = &proc_handle_signal;
 	sigaction(SIGINT, &sa, NULL);

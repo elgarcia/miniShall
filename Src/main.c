@@ -6,33 +6,33 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/27 20:17:38 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:40:48 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-int	g_exit_status = 0;
+int		g_exit_status = 0;
 
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
-    int     lvl;
-    char    *lvl_str;
+	int		lvl;
+	char	*lvl_str;
 
 	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
-    lvl = ft_atoi(get_env("SHLVL", shell->paths->env_lst));
-    lvl_str = ft_itoa(lvl + 1);
-    replace_envp("SHLVL=", lvl_str, shell->paths->envp);
-    add_export_node(shell->paths, "SHLVL", lvl_str, 1);
+	lvl = ft_atoi(get_env("SHLVL", shell->paths->env_lst));
+	lvl_str = ft_itoa(lvl + 1);
+	replace_envp("SHLVL=", lvl_str, shell->paths->envp);
+	add_export_node(shell->paths, "SHLVL", lvl_str, 1);
 	add_export_node(shell->paths, "SHELL", tmp, 1);
 	free(tmp);
 }
 
-void print_banner()
+void	print_banner(void)
 {
 	printf("\n");
-	printf("███╗   ███╗██╗███╗   ██╗██╗███████╗█");
+	printf(GREEN_TEXT "███╗   ███╗██╗███╗   ██╗██╗███████╗█");
 	printf("█╗  ██╗ █████╗ ██╗     ██╗     \n");
 	printf("████╗ ████║██║████╗  ██║██║██╔════╝█");
 	printf("█║  ██║██╔══██╗██║     ██║     \n");
@@ -43,7 +43,7 @@ void print_banner()
 	printf("██║ ╚═╝ ██║██║██║ ╚████║██║███████║█");
 	printf("█║  ██║██║  ██║███████╗███████╗\n");
 	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═");
-	printf("╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n");
+	printf("╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
 	printf("\n");
 }
 
@@ -60,7 +60,8 @@ void	extend(t_shell *new, char *line)
 	{
 		add_to_history(new, line);
 		add_history(line);
-		if (ft_strnstr(line, "exit", 5))
+		if (ft_strncmp(line, "exit", 4) == 0 && (line[4] == 0
+				|| line[4] == ' '))
 			return (ft_exit(new, line));
 		new_line = expansor(new, line, -1, 0);
 		if (input_parser(new_line, new) != -1)
@@ -74,24 +75,23 @@ void	extend(t_shell *new, char *line)
 	}
 }
 
-void    loop(t_shell *new)
+void	loop(t_shell *new)
 {
-    char    *line;
-    char    *prompt;
+	char	*line;
+	char	*prompt;
 
-    while (42)
-    {
-        set_signals(0);
-        prompt = get_prompt();
-        printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
-        line = readline(GREEN_TEXT " minishell > " RESET_TEXT);
-        if (quotes_counter(line))
-            printf("Quotes opened!\n");
-        else
-            extend(new, line);
-        free(prompt);
-        free(line);
-    }
+	while (42)
+	{
+		set_signals(0);
+		prompt = get_prompt();
+		line = readline(prompt);
+		if (quotes_counter(line))
+			printf("Quotes opened!\n");
+		else
+			extend(new, line);
+		free(prompt);
+		free(line);
+	}
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -104,10 +104,10 @@ int	main(int argc, char **argv, char **envp)
 		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
-        while (42)
-            loop(new);
-    }
+		while (42)
+			loop(new);
+	}
 	else
 		ft_fprintf(2, "Too many arguments\n");
-    return (0);
+	return (0);
 }
