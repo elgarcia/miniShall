@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 22:18:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/27 20:17:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,18 @@ void	change_shell(t_shell *shell)
 void print_banner()
 {
 	printf("\n");
-	printf(GREEN_TEXT "███╗   ███╗██╗███╗   ██╗██╗███████╗" RESET_TEXT);
-	printf(GREEN_TEXT "	██╗  ██╗ █████╗ ██╗     ██╗	  \n" RESET_TEXT);
-	printf(GREEN_TEXT "████╗ ████║██║████╗  ██║██║██╔════╝" RESET_TEXT);
-	printf(GREEN_TEXT "	██║  ██║██╔══██╗██║     ██║     \n" RESET_TEXT);
-	printf(GREEN_TEXT "██╔████╔██║██║██╔██╗ ██║██║███████╗" RESET_TEXT);
-	printf(GREEN_TEXT "	███████║███████║██║     ██║     \n" RESET_TEXT);
-	printf(GREEN_TEXT "██║╚██╔╝██║██║██║╚██╗██║██║╚════██║" RESET_TEXT);
-	printf(GREEN_TEXT "	██╔══██║██╔══██║██║     ██║		\n" RESET_TEXT);
-	printf(GREEN_TEXT "██║ ╚═╝ ██║██║██║ ╚████║██║███████║" RESET_TEXT);
-	printf(GREEN_TEXT "     ██║  ██║██║  ██║███████╗███████╗\n" RESET_TEXT);
-	printf(GREEN_TEXT "╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝" RESET_TEXT);
-	printf(GREEN_TEXT "     ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
+	printf("███╗   ███╗██╗███╗   ██╗██╗███████╗█");
+	printf("█╗  ██╗ █████╗ ██╗     ██╗     \n");
+	printf("████╗ ████║██║████╗  ██║██║██╔════╝█");
+	printf("█║  ██║██╔══██╗██║     ██║     \n");
+	printf("██╔████╔██║██║██╔██╗ ██║██║███████╗█");
+	printf("██████║███████║██║     ██║     \n");
+	printf("██║╚██╔╝██║██║██║╚██╗██║██║╚════██║█");
+	printf("█╔══██║██╔══██║██║     ██║     \n");
+	printf("██║ ╚═╝ ██║██║██║ ╚████║██║███████║█");
+	printf("█║  ██║██║  ██║███████╗███████╗\n");
+	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═");
+	printf("╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n");
 	printf("\n");
 }
 
