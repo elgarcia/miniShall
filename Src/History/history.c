@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 16:22:47 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/28 20:39:23 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 
 void	print_history(t_shell *shell)
 {
@@ -34,14 +34,14 @@ void	print_history(t_shell *shell)
 int	calculate_current_index(int temp_fd)
 {
 	int		current_index;
-	char	buffer[1024];
+	char	buffer[42];
 	ssize_t	bytes_read;
 	ssize_t	i;
 
-	i = 0;
 	current_index = 1;
 	while (1)
 	{
+		i = 0;
 		bytes_read = read(temp_fd, buffer, sizeof(buffer));
 		if (bytes_read <= 0)
 			break ;
