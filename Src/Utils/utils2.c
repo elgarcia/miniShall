@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 01:30:34 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:56:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ char	**list_to_array(t_env_lst *env)
 	int			i;
 
 	tmp = env;
-	i = 0;
-	while (tmp)
-	{
+	i = -1;
+	while (tmp && ++i >= 0)
 		tmp = tmp->next;
-		i++;
-	}
 	array = (char **)malloc(sizeof(char *) * (i + 1));
 	if (!array)
 		return (0);
@@ -78,13 +75,17 @@ char	*get_prompt(void)
 	char	*prompt;
 	char	*tmp;
 	char	*tmp2;
+	char	*path;
 
-	tmp = ft_strchrt((char *)getcwd(NULL, 0), '/', 3);
+	path = malloc(PATH_MAX);
+	if (!path)
+		exit(EXIT_FAILURE);
+	tmp = ft_strchrt((char *)getcwd(path, PATH_MAX), '/', 3);
 	if (!tmp)
 		tmp = (BLUE_TEXT "/" RESET_TEXT);
 	tmp2 = ft_strjoin((BLUE_TEXT "~"), tmp);
-	prompt = ft_strjoin(tmp2,
+	prompt = ft_strjoinfree(tmp2,
 			(RESET_TEXT GREEN_TEXT " minishall > " RESET_TEXT));
-	free(tmp2);
+	free(path);
 	return (prompt);
 }

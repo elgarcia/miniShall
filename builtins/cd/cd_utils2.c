@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:27:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:42:44 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:40:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*join_paths(const char *path1, const char *path2)
 
 	tmp = ft_strjoin(path1, "/");
 	result = ft_strjoin(tmp, path2);
+	if (!result)
+		return (NULL);
 	free(tmp);
 	return (result);
 }

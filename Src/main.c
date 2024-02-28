@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/28 01:32:17 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 13:45:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,6 @@ void	extend(t_shell *new, char *line)
 	{
 		add_to_history(new, line);
 		add_history(line);
-		if (ft_strncmp(line, "exit", 4) == 0 && (line[4] == 0
-				|| line[4] == ' '))
-			return (ft_exit(new, line));
 		new_line = expansor(new, line, -1, 0);
 		if (input_parser(new_line, new) != -1)
 		{
@@ -84,6 +81,7 @@ void	loop(t_shell *new)
 {
 	char	*line;
 	char	*prompt;
+	char	*exit;
 
 	while (42)
 	{
@@ -91,6 +89,15 @@ void	loop(t_shell *new)
 		prompt = get_prompt();
 		line = readline(prompt);
 		free(prompt);
+		if (line)
+		{
+			exit = ft_strtrim(line, " ");
+			if (ft_strncmp(exit, "exit", 4) == 0 && (exit[4] == 0
+					|| exit[4] == ' '))
+				return (free(exit), printf("exit\n"), ft_exit(new, line));
+			else
+				free(exit);
+		}
 		if (quotes_counter(line))
 			printf("Quotes opened!\n");
 		else

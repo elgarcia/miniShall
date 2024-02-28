@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:26:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:42:37 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 15:57:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,14 @@ char	*resolve_single_component(char *current_path, char *component)
 	char	*temp;
 
 	temp = NULL;
-	if (ft_strcmp(component, "..") == 0)
+	if (ft_strncmp(component, "...", 3) == 0)
+		return (NULL);
+	else if (ft_strcmp(component, "..") == 0)
 		temp = get_previous_dir(current_path);
-	else if (ft_strcmp(component, ".") != 0)
-		temp = join_paths(current_path, component);
-	else
+	else if (ft_strcmp(component, ".") == 0)
 		temp = ft_strdup(current_path);
+	else
+		temp = join_paths(current_path, component);
 	return (temp);
 }
 
@@ -96,7 +98,7 @@ char	*resolve_parent_references(char *current_dir, char *target)
 		{
 			free(result);
 			free_str_array(target_components);
-			return (NULL);
+			return (temp);
 		}
 		free(result);
 		result = temp;
