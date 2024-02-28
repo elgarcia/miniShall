@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:41:12 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:47:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ static int	len_word(char const *s, char c)
 	return (counter);
 }
 
-int has_quotes(char *s)
+int	has_quotes(char *s)
 {
-	int 	i;
+	int		i;
 	char	quotes;
 
 	quotes = 0;
@@ -48,23 +48,23 @@ int has_quotes(char *s)
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }
 
-static int word_utils(t_split *params, int type)
+static int	word_utils(t_split *params, int type)
 {
-    char *aux;
+	char	*aux;
 	int		word_len;
 
-    aux = ft_strchrt(&params->s[params->j], type, 2);
-    if (*(aux + 1) != ' ' && *(aux + 1) != '\0')
-        aux = ft_strchr(aux, ' ');
-    if (!aux)
-        word_len = ft_strlen(&params->s[params->j]);
-    else
-    {
-        word_len = ft_strlen(&params->s[params->j]) - ft_strlen(aux) + 1;
-    }
+	aux = ft_strchrt(&params->s[params->j], type, 2);
+	if (*(aux + 1) != ' ' && *(aux + 1) != '\0')
+		aux = ft_strchr(aux, ' ');
+	if (!aux)
+		word_len = ft_strlen(&params->s[params->j]);
+	else
+	{
+		word_len = ft_strlen(&params->s[params->j]) - ft_strlen(aux) + 1;
+	}
 	params->strs[params->i] = ft_substr(&params->s[params->j], 0, word_len);
 	if (!params->strs[params->i])
 		return (ft_free(params->strs, params->i), 0);
@@ -73,26 +73,27 @@ static int word_utils(t_split *params, int type)
 	return (1);
 }
 
-static int handle_quoted_word(t_split *params)
+static int	handle_quoted_word(t_split *params)
 {
-	int		type;
-	int     i;
-	
+	int	type;
+	int	i;
+
 	i = -1;
 	type = 0;
 	while (params->s[params->j + ++i] && params->s[params->j + i] != ' ')
 	{
-		if (params->s[params->j + i] == '\"' || params->s[params->j + i] == '\'')
+		if (params->s[params->j + i] == '\"' || params->s[params->j
+				+ i] == '\'')
 		{
 			type = params->s[params->j + i];
 			break ;
 		}
 	}
 	if (type)
-    {
-        if (word_utils(params, type))
-            return (1);
-    }
+	{
+		if (word_utils(params, type))
+			return (1);
+	}
 	return (0);
 }
 
@@ -107,7 +108,7 @@ char	**add_word(t_split *params)
 		if (has_quotes(&params->s[i]) && params->i)
 		{
 			if (handle_quoted_word(params))
-                return (params->strs);
+				return (params->strs);
 		}
 		i++;
 	}
@@ -117,5 +118,5 @@ char	**add_word(t_split *params)
 		return (ft_free(params->strs, params->i), NULL);
 	(params->j) += word_len;
 	(params->i)++;
-    return (params->strs);
+	return (params->strs);
 }

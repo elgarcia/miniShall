@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:44:03 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:33:18 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,6 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 
 void	ft_export(t_paths *paths, char **argv, int i)
 {
-	//for (int i = 0; argv[i]; i++)
-	//	printf("|%s|\n", argv[i]);
 	if (!argv[1])
 	{
 		print_export(paths->export_env_lst, 1);

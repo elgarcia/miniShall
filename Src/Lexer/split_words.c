@@ -44,8 +44,8 @@ static void	split_string(t_split *params)
 {
 	while (params->i < count_words(params->s, params->c, 0, 1))
 	{
-	    while (params->s[params->j] == ' ')
-		    params->j++;
+		while (params->s[params->j] == ' ')
+			params->j++;
 		skip_delimiters(params);
 		add_word(params);
 		if (!params->strs)

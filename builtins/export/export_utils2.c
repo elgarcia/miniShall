@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:10:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:44:22 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:02:35 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ void	update_existing_node(t_paths *paths, char *name, char *value)
 	free(tmp_name);
 }
 
-void	process_export_variable(t_paths *paths, char *name, char *value, int equal)
+void	process_export_variable(t_paths *paths, char *name, char *value,
+		int equal)
 {
 	if (name[0] != '\0')
 		add_export_node(paths, name, value, equal);

@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:43:39 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/28 00:06:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value, int equal)
 	return (head);
 }
 
-void	fill_init_env_list(t_paths *paths, char **envp)
+void	fill_init_env_list(t_paths *paths, char **envp, int equal)
 {
 	int			i;
 	t_env_lst	*head;
@@ -48,12 +48,15 @@ void	fill_init_env_list(t_paths *paths, char **envp)
 	head = NULL;
 	while (envp[i])
 	{
+		if (ft_strlenchr(envp[i], '='))
+			equal = 1;
+		else
+			equal = 0;
 		name = ft_substr(envp[i], 0, ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')));
 		value = ft_substr(envp[i], ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')) + 1, ft_strlen(envp[i]));
-		head = add_env_node(head, name, value, 0);
-		head->equal = 0;
+		head = add_env_node(head, name, value, equal);
 		free(name);
 		free(value);
 		i++;

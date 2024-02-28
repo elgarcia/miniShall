@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:42:59 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:42:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,8 @@ void	print(char **argv, int i, t_process *prc)
 {
 	while (argv[++i])
 	{
-		//if (argv[i][0] == '\'' || argv[i][0] == '\"')
-		//	remove_char(argv[i], argv[i][0]);
 		if (prc->rd && (i == prc->rd->pos))
-				break ;
+			break ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);

@@ -14,8 +14,8 @@
 
 void	ft_exit(t_shell *shell, char *line)
 {
-	char **split;
-	int ret_value;
+	char	**split;
+	int		ret_value;
 
 	ret_value = 0;
 	if (line)

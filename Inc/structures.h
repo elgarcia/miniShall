@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/21 20:53:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:49:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ extern int				g_exit_status;
 
 typedef struct s_split
 {
-	char	*s;
-	char	c;
-	char	**strs;
-	int		i;
-	int		j;
-	int		in_quotes;
-}			t_split;
+	char				*s;
+	char				c;
+	char				**strs;
+	int					i;
+	int					j;
+	int					in_quotes;
+}						t_split;
 
 typedef struct s_env_lst
 {
@@ -46,7 +46,7 @@ typedef struct s_paths
 	char				*pwd;
 	char				*old_pwd;
 	char				**envp;
-    char                **envp_new; // in progress
+	char				**envp_new; // in progress
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
 }						t_paths;

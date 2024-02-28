@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:02:45 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/02/28 01:08:56 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 
 void	exec_son(t_shell *all, t_process *aux)
 {
+	char	**envp;
+
 	if (check_builtins(all, aux))
 	{
 		if (aux->next)
@@ -100,8 +102,9 @@ void	exec_son(t_shell *all, t_process *aux)
 	}
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
+		envp = list_to_array(all->paths->env_lst);
 		exec_type(all, aux, ft_word_count(aux->process, ' '));
-		execve(all->exec_args[0], all->exec_args, all->paths->envp);
+		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
 		exit(127);
