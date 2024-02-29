@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 13:56:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:05:34 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**list_to_array(t_env_lst *env)
 	i = -1;
 	while (tmp && ++i >= 0)
 		tmp = tmp->next;
-	array = (char **)malloc(sizeof(char *) * (i + 1));
+	array = (char **)malloc(sizeof(char *) * (i + 2));
 	if (!array)
 		return (0);
 	i = 0;

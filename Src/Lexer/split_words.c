@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:58:30 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/02/29 21:03:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	**allocate_and_initialize(char *s, char c, t_split *params)
 {
 	char	**strs;
 
-	strs = (char **)malloc(sizeof(char *) * count_words(s, c, 0, 1) + 1);
+	strs = (char **)malloc(sizeof(char *) * (count_words(s, c, 0, 1) + 1));
 	if (!strs)
 		return (NULL);
 	params->s = s;
