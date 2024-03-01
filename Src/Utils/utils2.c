@@ -70,6 +70,19 @@ int	ft_strlenchr(const char *s, char c)
 	return (-1);
 }
 
+void	check_status(t_shell *all, int status)
+{	
+	if (WIFEXITED(status) && !is_builting(all->lst_process))
+			g_exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			printf("Quit: 3");
+		printf("\n");
+		g_exit_status = 128 + WTERMSIG(status);
+	}
+}
+
 char	*get_prompt(void)
 {
 	char	*prompt;

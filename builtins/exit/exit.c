@@ -6,36 +6,53 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:43:48 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:11:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Inc/minishell.h"
+#include <termios.h>
+
+static int	extend_exit(char *line, int ret_value)
+{
+	char	**split;
+    int     i;
+    int    j;
+
+    i = 1;
+	split = ft_split(line, ' ');
+    while (split[i])
+    {
+        j = -1;
+        while (split[i][++j] != '\0')
+        { 
+            if (!ft_isdigit(split[i][j]))
+                return (printf("exit\nMinishell: exit: %s: numeric argument required\n", split[i]), 255);
+        }
+        i++;
+    }
+	if (arg_counter(split) > 2)
+		return(printf("exit\nbash: exit: too many arguments\n"), 1);
+	if (arg_counter(split) > 1)
+		ret_value = ft_atoi(split[1]) % 256;
+	return (ret_value);
+}
 
 void	ft_exit(t_shell *shell, char *line)
 {
-	char	**split;
-	int		ret_value;
+	int				ret_value;
+	struct termios	term;
 
 	ret_value = 0;
 	if (line)
-	{
-		split = ft_split(line, ' ');
-		if (arg_counter(split) > 2)
-		{
-			printf("exit\nexit: too many arguments\n");
-			return ;
-		}
-		if (arg_counter(split) > 1)
-			ret_value = ft_atoi(split[1]) % 256;
-	}
-	free(shell->paths->pwd);
-	free(shell->paths->old_pwd);
-	free(shell->paths->home);
+		ret_value = extend_exit(line, 0);
 	free(shell->history_path);
 	ft_lstclear_env(&shell->paths->env_lst);
 	ft_lstclear_env(&shell->paths->export_env_lst);
 	free(shell->paths);
 	free(shell);
+	tcgetattr(0, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &term);
 	exit(ret_value);
 }

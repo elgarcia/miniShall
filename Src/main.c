@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/29 21:48:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:31:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,21 @@ void	change_shell(t_shell *shell)
 	int		lvl;
 	char	*lvl_str;
 
-	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
+	tmp = ft_strjoin(getcwd(NULL, 0), "/minishell");
 	lvl_str = get_env("SHLVL", shell->paths->env_lst);
-	lvl = ft_atoi(lvl_str);
-	if (!lvl || lvl < 0 || lvl > 999)
-		lvl = 0;
+	lvl = ft_atoi(lvl_str) + 1;
+	if (!lvl || lvl < 0 || lvl >= 1000)
+	{
+		if (lvl >= 1000)
+		{
+			printf("warning: shell level (%d) too high, resetting to 1\n", lvl);
+			lvl = 1;
+		}
+		else
+			lvl = 0;
+	}
 	free(lvl_str);
-	lvl_str = ft_itoa(lvl + 1);
+	lvl_str = ft_itoa(lvl);
 	replace_envp("SHLVL=", lvl_str, shell->paths->envp);
 	add_export_node(shell->paths, "SHLVL", lvl_str, 1);
 	add_export_node(shell->paths, "SHELL", tmp, 1);
@@ -57,10 +65,7 @@ void	extend(t_shell *new, char *line)
 	char	*new_line;
 
 	if (line == NULL)
-	{
-		printf("Exit\n");
 		ft_exit(new, line);
-	}
 	if (line[0] != 0)
 	{
 		add_to_history(new, line);
@@ -77,24 +82,21 @@ void	extend(t_shell *new, char *line)
 	}
 }
 
-void	loop(t_shell *new)
+void	loop(t_shell *new, char *line, char *prompt, char *exit)
 {
-	char	*line;
-	char	*prompt;
-	char	*exit;
-
 	while (42)
 	{
-		set_signals(0);
 		prompt = get_prompt();
+		set_signals(0);
 		line = readline(prompt);
+		signal(SIGINT, SIG_IGN);
 		free(prompt);
 		if (line)
 		{
 			exit = ft_strtrim(line, " ");
 			if (ft_strncmp(exit, "exit", 4) == 0 && (exit[4] == 0
 					|| exit[4] == ' '))
-				return (free(exit), printf("exit\n"), ft_exit(new, line));
+				return (free(exit), ft_exit(new, line));
 			else
 				free(exit);
 		}
@@ -116,7 +118,7 @@ int	main(int argc, char **argv, char **envp)
 		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
-		loop(new);
+		loop(new, NULL, NULL, NULL);
 	}
 	else
 		ft_fprintf(2, "Too many arguments\n");

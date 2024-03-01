@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/28 13:50:26 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:16:00 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
+void	check_status(t_shell *all, int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);
@@ -121,6 +122,7 @@ char		*ft_strjoin_char(char *s1, char c);
 void		handle_signal(int signo);
 void		set_signals(int mode);
 void		proc_handle_signal(int sig);
+
 
 // G_EXIT_STATUS
 void		change_status(int new_status);

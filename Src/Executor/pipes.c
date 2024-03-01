@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:27:04 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:51:53 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/27 22:29:57 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:01:53 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,21 +26,6 @@ void	handle_signal(int sig)
 	return ;
 }
 
-void	proc_handle_signal(int sig)
-{
-	if (sig == SIGINT)
-	{
-		ft_putchar_fd('\n', 1);
-		g_exit_status = 130;
-	}
-	else if (sig == SIGQUIT)
-	{
-		ft_putstr_fd("Quit: 3\n", 1);
-		g_exit_status = 131;
-	}
-	return ;
-}
-
 void	set_signals(int mode)
 {
 	struct sigaction	sa;
@@ -54,7 +39,11 @@ void	set_signals(int mode)
 	if (mode == 0)
 		sa.sa_handler = &handle_signal;
 	else if (mode == 1)
-		sa.sa_handler = &proc_handle_signal;
+	{
+		term.c_lflag |= ECHOCTL;
+		tcsetattr(0, TCSANOW, &term);
+		sa.sa_handler = SIG_DFL;
+	}
 	sigaction(SIGINT, &sa, NULL);
 	if (!mode)
 	{

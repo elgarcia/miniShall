@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/28 01:08:56 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:14:48 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 #include <sys/wait.h>
 
 void	here_doc(t_shell *all, t_process *aux, int rd)
@@ -121,9 +121,11 @@ void	exec_process(t_shell *all)
 	while (aux)
 	{
 		init_pipex(all, aux, &all->sons[i]);
-		set_signals(1);
 		if (all->sons[i] == 0)
+		{
+			set_signals(1);
 			exec_son(all, aux);
+		}
 		else
 			pipe_man(all);
 		aux = aux->next;
@@ -132,8 +134,8 @@ void	exec_process(t_shell *all)
 	while (j != i)
 	{
 		waitpid(all->sons[j++], &status, 0);
-		if (WIFEXITED(status) && !is_builting(all->lst_process))
-			g_exit_status = WEXITSTATUS(status);
+		check_status(all, status);
+
 	}
 	reset_prc(all);
 }
