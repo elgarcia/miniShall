@@ -75,7 +75,7 @@ void	extend(t_shell *new, char *line)
 		{
 			add_history(line);
 			init_pikes(&new);
-			exec_process(new);
+			exec_process(new, 0, 0, 0);
 			free_pikes(&new);
 		}
 		free(new_line);

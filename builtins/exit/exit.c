@@ -16,23 +16,24 @@
 static int	extend_exit(char *line, int ret_value)
 {
 	char	**split;
-    int     i;
-    int    j;
+	int		i;
+	int		j;
 
-    i = 1;
+	i = 1;
 	split = ft_split(line, ' ');
-    while (split[i])
-    {
-        j = -1;
-        while (split[i][++j] != '\0')
-        { 
-            if (!ft_isdigit(split[i][j]))
-                return (printf("exit\nMinishell: exit: %s: numeric argument required\n", split[i]), 255);
-        }
-        i++;
-    }
+	while (split[i])
+	{
+		j = -1;
+		while (split[i][++j] != '\0')
+		{
+			if (!ft_isdigit(split[i][j]))
+				return (printf("exit\nMinishell: exit:\
+%s: numeric argument required\n", split[i]), 255);
+		}
+		i++;
+	}
 	if (arg_counter(split) > 2)
-		return(printf("exit\nbash: exit: too many arguments\n"), 1);
+		return (printf("exit\nbash: exit: too many arguments\n"), 1);
 	if (arg_counter(split) > 1)
 		ret_value = ft_atoi(split[1]) % 256;
 	return (ret_value);

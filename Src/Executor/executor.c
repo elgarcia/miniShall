@@ -110,12 +110,9 @@ void	exec_son(t_shell *all, t_process *aux)
 		exit(127);
 }
 
-void	exec_process(t_shell *all)
+void	exec_process(t_shell *all, int i, int j, int status)
 {
 	t_process	*aux;
-	int			i;
-	int			j;
-	int			status;
 
 	init_executor(all, &aux, &i, &j);
 	while (aux)
@@ -135,7 +132,6 @@ void	exec_process(t_shell *all)
 	{
 		waitpid(all->sons[j++], &status, 0);
 		check_status(all, status);
-
 	}
 	reset_prc(all);
 }

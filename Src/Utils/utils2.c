@@ -71,9 +71,9 @@ int	ft_strlenchr(const char *s, char c)
 }
 
 void	check_status(t_shell *all, int status)
-{	
+{
 	if (WIFEXITED(status) && !is_builting(all->lst_process))
-			g_exit_status = WEXITSTATUS(status);
+		g_exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
