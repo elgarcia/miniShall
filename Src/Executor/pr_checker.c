@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:02:46 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:14:22 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');
+		if ((*prcs)->rd->type == HD && arg_counter(split) == count_rds(*prcs))
+			return (ret_val);
 		if ((*prcs)->rd->pos == 0)
 			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);
 		else

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:48:49 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/01 20:36:05 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,20 @@ void	check_exp(char **in, int *i, int j)
 		ft_strlcpy(*in, *in + j, ft_strlen(*in));
 	else
 		*i += 1;
+}
+
+int	there_is_rd(t_process *lst)
+{
+	t_process *aux;
+
+	aux = lst;
+	while (aux)
+	{
+		if (aux->rd || !aux->process)
+		{
+			return (1);
+		}
+		aux = aux->next;
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 17:12:41 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/01 22:24:14 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_redir **red_aux, int rd_type);
 int			is_ao(char *str);
 int			check_cats(t_shell *all, t_process *aux);
 void		check_exp(char **in, int *i, int j);
+int			there_is_rd(t_process *lst);
 
 /* utils.c*/
 void		ft_free(char **arg, int size);
@@ -64,6 +65,8 @@ void		exec_son(t_shell *all, t_process *aux);
 void		reset_prc(t_shell *all);
 void		pipe_man(t_shell *all);
 void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
+void		read_file(t_shell *all, int fd, char *line, char *outword);
+int			count_rds(t_process *prcs);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
