@@ -3,55 +3,61 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:02:18 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:31:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-
-int	g_exit_status = 0;
+int		g_exit_status = 0;
 
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
+	int		lvl;
+	char	*lvl_str;
 
-	tmp = ft_strjoin(shell->paths->pwd, "/minishell");
+	tmp = ft_strjoin(getcwd(NULL, 0), "/minishell");
+	lvl_str = get_env("SHLVL", shell->paths->env_lst);
+	lvl = ft_atoi(lvl_str) + 1;
+	if (!lvl || lvl < 0 || lvl >= 1000)
+	{
+		if (lvl >= 1000)
+		{
+			printf("warning: shell level (%d) too high, resetting to 1\n", lvl);
+			lvl = 1;
+		}
+		else
+			lvl = 0;
+	}
+	free(lvl_str);
+	lvl_str = ft_itoa(lvl);
+	replace_envp("SHLVL=", lvl_str, shell->paths->envp);
+	add_export_node(shell->paths, "SHLVL", lvl_str, 1);
 	add_export_node(shell->paths, "SHELL", tmp, 1);
+	free(lvl_str);
 	free(tmp);
 }
 
-char	*ft_strchrt(char *s, char c, int times)
+void	print_banner(void)
 {
-	int	i;
-
-	i = 0;
-	while (*s != '\0')
-	{
-		if (*s == c)
-		{
-			i++;
-			if (i == times)
-				return (s);
-		}
-		s++;
-	}
-	return (0);
-}
-
-char	*get_prompt(t_shell *shell)
-{
-	char	*prompt;
-	char	*tmp;
-
-	tmp = ft_strchrt(shell->paths->pwd, '/', 3);
-	if (!tmp)
-		tmp = "/";
-	prompt = ft_strjoin("~", tmp);
-	return (prompt);
+	printf("\n");
+	printf(GREEN_TEXT "███╗   ███╗██╗███╗   ██╗██╗███████╗█");
+	printf("█╗  ██╗ █████╗ ██╗     ██╗     \n");
+	printf("████╗ ████║██║████╗  ██║██║██╔════╝█");
+	printf("█║  ██║██╔══██╗██║     ██║     \n");
+	printf("██╔████╔██║██║██╔██╗ ██║██║███████╗█");
+	printf("██████║███████║██║     ██║     \n");
+	printf("██║╚██╔╝██║██║██║╚██╗██║██║╚════██║█");
+	printf("█╔══██║██╔══██║██║     ██║     \n");
+	printf("██║ ╚═╝ ██║██║██║ ╚████║██║███████║█");
+	printf("█║  ██║██║  ██║███████╗███████╗\n");
+	printf("╚═╝     ╚═╝╚═╝╚═╝  ╚═══╝╚═╝╚══════╝╚═");
+	printf("╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝\n" RESET_TEXT);
+	printf("\n");
 }
 
 void	extend(t_shell *new, char *line)
@@ -59,57 +65,62 @@ void	extend(t_shell *new, char *line)
 	char	*new_line;
 
 	if (line == NULL)
-	{
-		printf("Exit\n");
 		ft_exit(new, line);
-	}
 	if (line[0] != 0)
 	{
 		add_to_history(new, line);
 		add_history(line);
-		if (ft_strnstr(line, "exit", 5))
-			return (ft_exit(new, line));
 		new_line = expansor(new, line, -1, 0);
 		if (input_parser(new_line, new) != -1)
 		{
-			remove_quotes_from_string(new->lst_process->process);
 			add_history(line);
 			init_pikes(&new);
-			exec_process(new);
+			exec_process(new, 0, 0, 0);
 			free_pikes(&new);
 		}
 		free(new_line);
 	}
 }
 
+void	loop(t_shell *new, char *line, char *prompt, char *exit)
+{
+	while (42)
+	{
+		prompt = get_prompt();
+		set_signals(0);
+		line = readline(prompt);
+		signal(SIGINT, SIG_IGN);
+		free(prompt);
+		if (line)
+		{
+			exit = ft_strtrim(line, " ");
+			if (ft_strncmp(exit, "exit", 4) == 0 && (exit[4] == 0
+					|| exit[4] == ' '))
+				return (free(exit), ft_exit(new, line));
+			else
+				free(exit);
+		}
+		if (quotes_counter(line))
+			printf("Quotes opened!\n");
+		else
+			extend(new, line);
+		free(line);
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_shell *new;
-	char *line;
-	char *prompt;
+	t_shell	*new;
 
 	(void)argv;
 	if (argc == 1)
 	{
-		init_minishell(&new);
-		new->paths->envp = envp;
-		fill_init_env_list(new->paths, envp);
-		new->paths->export_env_lst = duplicate_lst(new->paths->env_lst);
+		print_banner();
+		init_minishell(&new, envp);
 		change_shell(new);
-		while (42)
-		{
-			set_signals(0);
-			prompt = get_prompt(new);
-			printf(BLUE_TEXT "%s" RESET_TEXT, prompt);
-			line = readline(GREEN_TEXT " minishall > " RESET_TEXT);
-			if (quotes_counter(line))
-				printf("Quotes opened!\n");
-			else
-				extend(new, line);
-			free(prompt);
-			free(line);
-		}
+		loop(new, NULL, NULL, NULL);
 	}
 	else
 		ft_fprintf(2, "Too many arguments\n");
+	return (0);
 }
