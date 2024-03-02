@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/01 18:11:30 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:35:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,11 @@ static int	extend_exit(char *line, int ret_value)
 		i++;
 	}
 	if (arg_counter(split) > 2)
-		return (printf("exit\nbash: exit: too many arguments\n"), 1);
+		return (ft_free(split, arg_counter(split)), \
+					printf("exit\nbash: exit: too many arguments\n"), 1);
 	if (arg_counter(split) > 1)
 		ret_value = ft_atoi(split[1]) % 256;
+	ft_free(split, arg_counter(split));
 	return (ret_value);
 }
 

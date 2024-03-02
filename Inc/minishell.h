@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 18:56:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:27:38 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 // BUILTINS
 void		ft_env(t_paths *paths, char **argv);
 void		ft_cd(t_paths *paths, char **dir);
-int			ft_pwd(t_paths *paths);
+int			ft_pwd(void);
 int			ft_echo(char **argv, t_process *prc);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell, char *line);

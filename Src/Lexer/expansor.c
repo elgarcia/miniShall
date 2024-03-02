@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/02 12:07:05 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:29:45 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,22 @@ char	*get_env(char *str, t_env_lst *env)
 char	*ft_strjoin_char(char *s1, char c)
 {
 	char	*new;
+	int		i;
 
+	i = 0;
 	new = malloc(ft_strlen(s1) + 2);
-	new = ft_calloc(ft_strlen(s1) + 2, sizeof(char));
 	if (!new)
 	{
 		perror("Error al asignar memoria para el nuevo string");
 		exit(EXIT_FAILURE);
 	}
-	ft_strlcpy(new, s1, ft_strlen(s1) + 1);
-	new[ft_strlen(s1)] = c;
+	while (s1[i])
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	new[i] = c;
+	new[i + 1] = '\0';
 	free(s1);
 	s1 = NULL;
 	return (new);

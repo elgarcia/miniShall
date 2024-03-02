@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 18:31:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:33:03 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int		g_exit_status = 0;
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
+	char	tmp2[PATH_MAX];
 	int		lvl;
 	char	*lvl_str;
 
-	tmp = ft_strjoin(getcwd(NULL, 0), "/minishell");
+	tmp = ft_strjoin(getcwd(tmp2, PATH_MAX), "/minishell");
 	lvl_str = get_env("SHLVL", shell->paths->env_lst);
 	lvl = ft_atoi(lvl_str) + 1;
 	if (!lvl || lvl < 0 || lvl >= 1000)
