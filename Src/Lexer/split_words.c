@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:03:43 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:07:45 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,21 @@ char	**echo_split(char *s, char c)
 {
 	char	**strs;
 	t_split	params;
+	int		i;
+	char	*tmp;
 
+	i = 0;
 	strs = allocate_and_initialize(s, c, &params);
 	if (!strs)
 		return (NULL);
 	split_string(&params);
 	strs[params.i] = 0;
+	while (strs[i])
+	{
+		tmp = ft_strtrim(strs[i], " ");
+		free(strs[i]);
+		strs[i] = tmp;
+		i++;
+	}
 	return (strs);
 }
