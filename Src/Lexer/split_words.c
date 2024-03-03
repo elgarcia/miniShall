@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/03 13:23:01 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:36:15 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,6 @@ char	**echo_split(char *s, char c)
 		free(strs[i]);
 		strs[i] = tmp;
 		i++;
-	}
-	for (i = 0; strs[i]; i++)
-	{
-		printf("strs[%d] = %s\n", i, strs[i]);
 	}
 	return (strs);
 }
