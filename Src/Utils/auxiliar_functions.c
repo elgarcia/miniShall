@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:39:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/03 11:47:12 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	is_builting(t_process *prc)
 
 	len = ft_word_count(prc->process, ' ');
 	aux = ft_split(prc->process, ' ');
+	if (!aux || !aux[0])
+		return (0);
 	if (!ft_strncmp(aux[0], "export", 7))
 		return (ft_free(aux, len), 1);
 	else if (!ft_strncmp(aux[0], "unset", 6))

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/02 13:07:45 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:23:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static char	**allocate_and_initialize(char *s, char c, t_split *params)
 {
 	char	**strs;
 
-	strs = (char **)malloc(sizeof(char *) * (count_words(s, c, 0, 1) + 1));
+	strs = (char **)malloc(sizeof(char *) * (count_words(s) + 1));
 	if (!strs)
 		return (NULL);
 	params->s = s;
@@ -42,7 +42,7 @@ static void	skip_delimiters(t_split *params)
 
 static void	split_string(t_split *params)
 {
-	while (params->i < count_words(params->s, params->c, 0, 1))
+	while (params->i < count_words(params->s))
 	{
 		while (params->s[params->j] == ' ')
 			params->j++;
@@ -72,6 +72,10 @@ char	**echo_split(char *s, char c)
 		free(strs[i]);
 		strs[i] = tmp;
 		i++;
+	}
+	for (i = 0; strs[i]; i++)
+	{
+		printf("strs[%d] = %s\n", i, strs[i]);
 	}
 	return (strs);
 }

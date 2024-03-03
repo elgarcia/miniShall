@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/27 22:47:28 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:33:22 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,14 +57,12 @@ static int	word_utils(t_split *params, int type)
 	int		word_len;
 
 	aux = ft_strchrt(&params->s[params->j], type, 2);
-	if (*(aux + 1) != ' ' && *(aux + 1) != '\0')
+	if (aux && *(aux + 1) && *(aux + 1) != ' ' && *(aux + 1) != '\0')
 		aux = ft_strchr(aux, ' ');
 	if (!aux)
 		word_len = ft_strlen(&params->s[params->j]);
 	else
-	{
 		word_len = ft_strlen(&params->s[params->j]) - ft_strlen(aux) + 1;
-	}
 	params->strs[params->i] = ft_substr(&params->s[params->j], 0, word_len);
 	if (!params->strs[params->i])
 		return (ft_free(params->strs, params->i), 0);

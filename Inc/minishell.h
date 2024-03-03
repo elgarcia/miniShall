@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/02 13:27:38 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:22:32 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
-int			count_words(char const *s, char c, int i, int counter);
+int			count_words(char const *s);
 
 // PARSER
 
