@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/28 14:57:46 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/04 11:43:29 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,6 @@ typedef struct s_env_lst
 
 typedef struct s_paths
 {
-	char				*home;
-	char				*pwd;
-	char				*old_pwd;
 	char				**envp;
 	char				**envp_new; // in progress
 	t_env_lst			*env_lst;

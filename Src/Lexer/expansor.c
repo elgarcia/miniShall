@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/03 13:04:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/04 16:30:26 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*ft_strjoin_char(char *s1, char c)
 	new = malloc(ft_strlen(s1) + 2);
 	if (!new)
 	{
-		perror("Error al asignar memoria para el nuevo string");
+		perror("Malloc Failed");
 		exit(EXIT_FAILURE);
 	}
 	while (s1[i])
