@@ -105,6 +105,7 @@ void	exec_son(t_shell *all, t_process *aux)
 		envp = list_to_array(all->paths->env_lst);
 		exec_type(all, aux, arg_counter(all->exec_args));
 		execve(all->exec_args[0], all->exec_args, envp);
+		//ft_free(envp, arg_counter(envp));
 	}
 	else
 		exit(127);

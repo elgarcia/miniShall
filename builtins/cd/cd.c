@@ -31,7 +31,7 @@ char	*new_path(t_paths *paths, char *arg)
 
 char	*resolve_cd_argument(t_paths *paths, char *arg)
 {
-	char	*current_dir;
+	char	current_dir[PATH_MAX];
 	char	*resolved_path;
 	char	tmp[PATH_MAX];
 
@@ -47,9 +47,8 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 		return (get_env("OLDPWD", paths->env_lst));
 	else
 	{
-		current_dir = getcwd(NULL, 0);
+		getcwd(current_dir, PATH_MAX);
 		resolved_path = resolve_parent_references(current_dir, arg);
-		free(current_dir);
 		if (!resolved_path)
 			return (NULL);
 		return (resolved_path);

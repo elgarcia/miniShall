@@ -25,7 +25,7 @@ SOURCE = Src/main.c Src/init.c \
 		 get_next_line/get_next_line_utils.c Src/Utils/auxiliar_functions.c \
 		 Src/Utils/quotes.c Src/Utils/utils2.c Src/Utils/envp.c Src/Utils/auxiliar_functions2.c \
 		 Src/History/history.c Src/History/history_utils.c \
-		 Src/Signals/signals.c Src/Signals/g_exit_status.c \
+		 Src/Signals/signals.c
 
 INCLUDE = Inc/
 

@@ -34,7 +34,7 @@ void	print_export(t_env_lst *env_lst, int declare_x)
 
 int	check_var(char *argv)
 {
-	if (argv && !ft_isalpha(argv[0]) && argv[0] != '\"' && argv[0] != '\'')
+	if (argv && !ft_isalpha(argv[0]) && argv[0] != '\"' && argv[0] != '\'' && argv[0] != '_')
 	{
 		g_exit_status = 1;
 		return (ft_fprintf(2, "export: `%s': not a valid identifier\n", argv));
