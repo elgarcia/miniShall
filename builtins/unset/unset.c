@@ -42,7 +42,7 @@ void	remove_node(t_env_lst **head, char *name)
 	}
 }
 
-int is_valid_identifier(char *str)
+int	is_valid_identifier(char *str)
 {
 	int	i;
 
@@ -61,7 +61,7 @@ int is_valid_identifier(char *str)
 void	ft_unset(t_paths *paths, char **argv)
 {
 	int	i;
-	int is_valid;
+	int	is_valid;
 
 	i = 1;
 	is_valid = 0;

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 09:11:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:33:08 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ void	extend(t_shell *new, char *line)
 	char	*new_line;
 
 	if (line == NULL)
+	{
+		printf("exit\n");
 		ft_exit(new, line);
+	}
 	if (line[0] != 0)
 	{
 		add_to_history(new, line);
