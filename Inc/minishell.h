@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 09:18:17 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:38:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define BLUE_TEXT "\e[0;34m"
 
 /* parser.c */
-int			input_parser(char *line, t_shell *new);
+int			input_parser(char *line, t_shell *new, int i);
 void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		new_proc(t_process **aux, t_shell *all, int n_proc,
@@ -107,6 +107,10 @@ int			is_rd(int inout);
 int			is_rdp(char *str);
 void		close_pipes(t_shell *all);
 void		close_fds(t_shell *all);
+
+/* auxiliar_functions2.c */
+
+int			has_quotes2(char *str);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);

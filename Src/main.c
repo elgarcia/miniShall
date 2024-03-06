@@ -75,7 +75,7 @@ void	extend(t_shell *new, char *line)
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1, 0);
-		if (input_parser(new_line, new) != -1)
+		if (input_parser(new_line, new, 0) != -1)
 		{
 			add_history(line);
 			init_pikes(&new);

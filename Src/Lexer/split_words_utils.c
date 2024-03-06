@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/03 13:33:22 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:35:33 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	len_word(char const *s, char c)
 	return (counter);
 }
 
-int	has_quotes(char *s)
+static int	has_quotes(char *s)
 {
 	int		i;
 	char	quotes;

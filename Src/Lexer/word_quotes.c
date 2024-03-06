@@ -12,29 +12,29 @@
 
 #include "../../Inc/minishell.h"
 
+int	ft_isspace(char c)
+{
+	return (c == ' ' || (c >= 9 && c <= 13));
+}
+
 int	count_words(const char *str)
 {
-	int			in_quote;
-	int			word_count;
-	const char	*c;
+	int	word_count;
+	int	in_quote;
 
-	in_quote = 0;
+	if (str == NULL || *str == '\0')
+		return (0);
 	word_count = 0;
-	c = str;
-	while (*c)
+	in_quote = 0;
+	while (*str != '\0')
 	{
-		if (*c == ' ')
-		{
-			if (!in_quote)
-				word_count++;
-		}
-		else if (*c == '"' || *c == '\'')
+		if (*str == '"')
 			in_quote = !in_quote;
-		c++;
+		else if (!in_quote && ft_isspace(*str))
+			word_count++;
+		str++;
 	}
-	if (*str && (str[ft_strlen(str) - 1] != ' ' || in_quote))
-		word_count++;
-	return (word_count);
+	return (word_count + (in_quote || !ft_isspace(*str)));
 }
 
 static int	quote_count(char *str, char type)
