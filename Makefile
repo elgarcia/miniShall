@@ -10,7 +10,7 @@ CYAN = \033[96m
 SOURCE = Src/main.c Src/init.c \
 Src/Lexer/parser.c Src/Lexer/expansor.c Src/Lexer/expansor_utils.c Src/Lexer/parser_aux.c \
 Src/Executor/executor.c Src/Executor/pr_checker.c Src/Executor/commands.c Src/Executor/command_aux.c Src/Executor/pipes.c \
-Src/Executor/executor_aux.c \
+Src/Executor/executor_aux.c Src/Executor/pr_checker_aux.c \
 Src/Utils/utils.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c Src/Utils/auxiliar_functions.c \
 Src/Utils/quotes.c \
 Src/History/history.c Src/History/history_utils.c \

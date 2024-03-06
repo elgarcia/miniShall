@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 22:24:14 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:32:36 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include "../get_next_line/get_next_line.h"
 # include <errno.h>
+# include <sys/stat.h>
 
 # define RED_TEXT    "\033[1;31m"
 # define GREEN_TEXT  "\033[1;32m"
@@ -74,6 +75,9 @@ int			check_command(t_shell *all, t_process **prcs, \
 			char ***exec_args);
 void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
+
+/* pr_checker_aux.c */
+char		*get_commad(t_process *prc, char **split);
 
 /* command_aux.c */
 int			search_path(char **env_1, char	**actual_path, \

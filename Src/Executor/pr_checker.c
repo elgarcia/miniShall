@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 22:14:22 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:43:45 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_ifile(char *process, int inout)
 
 	aux = echo_split(process, ' ');
 	i = inout;
-	while (aux[i] && !ft_strncmp(aux[i], "-", 2))
+	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
 		i++;
 	if (aux[i])
 	{
@@ -107,26 +107,27 @@ char	*get_ifile(char *process, int inout)
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
-	int		ret_val;
-	char	**split;
-
+	char			**split;
+	char			*cmd;
+	struct stat		path_stat;
+	
 	split = NULL;
-	ret_val = 0;
-	if ((*prcs)->rd)
+	cmd = NULL;
+	if (stat((*prcs)->process, &path_stat) == 0)
+		return (printf("%s: is a directory\n", (*prcs)->process), g_exit_status = 126);
+	else if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');
+		cmd = get_commad(*prcs, split);
 		if ((*prcs)->rd->type == HD && arg_counter(split) == count_rds(*prcs))
-			return (ret_val);
-		if ((*prcs)->rd->pos == 0)
-			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);
-		else
-			ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);
+			return (g_exit_status);
+		g_exit_status = prepare_command(cmd, exec_args, all->paths->env_lst);
 		ft_free(split, arg_counter(split));
 	}
 	else
-		ret_val = prepare_command((*prcs)->process, \
+		g_exit_status = prepare_command((*prcs)->process, \
 		exec_args, all->paths->env_lst);
-	if (ret_val == -1 || ret_val == -2)
+	if (g_exit_status == -1 || g_exit_status == -2)
 		g_exit_status = 127;
-	return (ret_val);
+	return (g_exit_status);
 }

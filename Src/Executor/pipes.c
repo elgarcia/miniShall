@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 21:20:15 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/06 18:25:10 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 		*pid = fork();
 		/* int a = 0;
 		printf("%d\n", *pid);
-		while (a == 0 && prc->n_process == 1)
+		while (a == 0)
 		{
 			;
 		} */

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 22:24:10 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/06 19:08:59 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	exec_son(t_shell *all, t_process *aux)
 		execve(all->exec_args[0], all->exec_args, all->paths->envp);
 	}
 	else
-		exit(127);
+		exit(g_exit_status);
 }
 
 void	exec_process(t_shell *all)
@@ -121,11 +121,8 @@ void	exec_process(t_shell *all)
 		aux = aux->next;
 		i++;
 	}
-	while (j != i)
-	{
-		waitpid(all->sons[j++], &status, 0);
-		if (WIFEXITED(status) && !is_builting(all->lst_process))
-			g_exit_status = WEXITSTATUS(status);
-	}
+	wait(&status);
+	if (WIFEXITED(status) && !is_builting(all->lst_process))
+		g_exit_status = WEXITSTATUS(status);
 	reset_prc(all);
 }
