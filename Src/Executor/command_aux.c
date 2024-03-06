@@ -18,17 +18,18 @@ int	init_execargs(char ***ex_argc, char *command)
 	int		i;
 
 	i = 0;
-	aux = ft_split(command, ' ');
+	aux = echo_split(command, ' ');
+    remove_quotes_from_matrix(aux);
 	if (!aux)
 		return (-1);
-	while (++i < ft_word_count(command, ' '))
+	while (++i < arg_counter(aux))
 	{
 		(*ex_argc)[i] = ft_strdup(aux[i]);
 		if (!(*ex_argc)[i])
 			return (ft_free(*ex_argc, i), \
-			ft_free(aux, ft_word_count(command, ' ')), -1);
+			ft_free(aux, arg_counter(aux)), -1);
 	}
-	return (ft_free(aux, ft_word_count(command, ' ')), 0);
+	return (ft_free(aux, arg_counter(aux)), 0);
 }
 
 void	double_free(char **aux, char **actual_path)

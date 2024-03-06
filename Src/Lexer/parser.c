@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 
 void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
@@ -79,6 +79,19 @@ void	parse_arg(t_process *aux, t_shell *new, int *i)
 	*i += 1;
 }
 
+int contain_quotes(char *str)
+{
+    int i;
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] == '\'' || str[i] == '\"')
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 int	input_parser(char *line, t_shell *new)
 {
 	int			i;
@@ -94,7 +107,8 @@ int	input_parser(char *line, t_shell *new)
 	{
 		if (i == 0)
 			new_proc(&aux, new, 0, &red_aux);
-		check_red(&new->input[i], &aux, &i, &red_aux);
+        if (!contain_quotes(new->input[i]))
+		    check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
 			parse_arg(aux, new, &i);
 	}

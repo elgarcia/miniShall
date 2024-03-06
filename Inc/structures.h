@@ -43,7 +43,6 @@ typedef struct s_env_lst
 typedef struct s_paths
 {
 	char				**envp;
-	char				**envp_new; // in progress
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
 }						t_paths;
@@ -74,6 +73,7 @@ typedef struct s_shell
 	int					og_infile;
 	int					og_outfile;
 	pid_t				*sons;
+    char**              word_split;
 	char				**exec_args;
 	char				**input;
 	char				*history_path;

@@ -78,10 +78,10 @@ int	check_cmd(char *command, char ***exec_args)
 
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
-	*cmd_split = ft_split(process, ' ');
+	*cmd_split = echo_split(process, ' ');
 	if (!*cmd_split)
 		return (-1);
-	*aux = ft_word_count(process, ' ') + 1;
+	*aux = arg_counter(*cmd_split) + 1;
 	return (0);
 }
 
@@ -102,11 +102,11 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 		path_rt = assign_path(exec_args, cmd_split[0], envp);
 		if (path_rt == -1 || path_rt == -2)
 		{
-			ft_free(cmd_split, ft_word_count(process, ' '));
+			ft_free(cmd_split, arg_counter(cmd_split));
 			return (free(*exec_args), -1);
 		}
 	}
 	if (aux == -1 || init_execargs(exec_args, process) == -1)
 		return (ft_free(cmd_split, ft_word_count(process, ' ')), -1);
-	return (ft_free(cmd_split, ft_word_count(process, ' ')), 0);
+	return (ft_free(cmd_split, arg_counter(cmd_split)), 0);
 }
