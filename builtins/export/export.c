@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 15:11:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/08 15:47:25 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ void	print_export(t_env_lst *env_lst, int declare_x)
 
 int	check_var(char *argv)
 {
-	if (argv && !ft_isalpha(argv[0]) && argv[0] != '\"' && argv[0] != '\'' && argv[0] != '_')
+	if (argv && !ft_isalpha(argv[0]) && argv[0] != '\"' && argv[0] != '\''
+		&& argv[0] != '_')
 	{
 		g_exit_status = 1;
 		return (ft_fprintf(2, "export: `%s': not a valid identifier\n", argv));
