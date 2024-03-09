@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 14:54:29 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:19:36 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	check_builtins(t_shell *all, t_process *prc)
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '));
-		ft_pwd(all->paths);
+		ft_pwd();
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	return (check_builtins_aux(aux, all, arg_counter(aux), prc));

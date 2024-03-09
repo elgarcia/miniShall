@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:04:34 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:44:44 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/02 13:26:24 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,46 @@ void	remove_node(t_env_lst **head, char *name)
 	}
 }
 
-void	ft_unset(t_paths *paths, char **argv)
+int	is_valid_identifier(char *str)
 {
 	int	i;
 
+	i = 0;
+	if (ft_isdigit(str[0]))
+		return (0);
+	while (str[i] != '\0')
+	{
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+void	ft_unset(t_paths *paths, char **argv)
+{
+	int	i;
+	int	is_valid;
+
 	i = 1;
+	is_valid = 0;
 	while (argv[i] != NULL)
 	{
+		if (!is_valid_identifier(argv[i]))
+		{
+			ft_putstr_fd("minishell: unset: `", 2);
+			ft_putstr_fd(argv[i], 2);
+			ft_putstr_fd("': not a valid identifier\n", 2);
+			is_valid = 1;
+			i++;
+			continue ;
+		}
 		remove_node(&(paths->export_env_lst), argv[i]);
 		remove_node(&(paths->env_lst), argv[i]);
 		i++;
 	}
-	g_exit_status = 0;
+	if (is_valid)
+		g_exit_status = 1;
+	else
+		g_exit_status = 0;
 }

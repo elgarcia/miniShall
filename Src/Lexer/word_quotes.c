@@ -6,59 +6,35 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:41:20 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/03 13:24:35 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Inc/minishell.h"
 
-static int	process_quotes(char const *s, int *i)
+int	count_words(const char *str)
 {
-	char	type;
-	int		quote_count;
+	int			in_quote;
+	int			word_count;
+	const char	*c;
 
-	type = s[*i];
-	quote_count = 0;
-	while (s[*i] && s[*i] == type)
+	in_quote = 0;
+	word_count = 0;
+	c = str;
+	while (*c)
 	{
-		(*i)++;
-		quote_count++;
-	}
-	while (quote_count)
-	{
-		if ((!s[*i]))
-			return (*i);
-		if (s[*i] == type)
-			quote_count--;
-		(*i)++;
-	}
-	if (s[*i + 1] != type)
-	{
-		while (s[*i] && s[*i] != ' ')
-			(*i)++;
-	}
-	return (*i);
-}
-
-int	count_words(char const *s, char c, int i, int counter)
-{
-	char	sep;
-
-	sep = c;
-	while (s[i])
-	{
-		if (s[i] == '\'' || s[i] == '\"')
-			i = process_quotes(s, &i);
-		if (s[i] == sep)
+		if (*c == ' ')
 		{
-			counter++;
-			while (s[i] == sep)
-				i++;
+			if (!in_quote)
+				word_count++;
 		}
-		else
-			i++;
+		else if (*c == '"' || *c == '\'')
+			in_quote = !in_quote;
+		c++;
 	}
-	return (counter);
+	if (*str && (str[ft_strlen(str) - 1] != ' ' || in_quote))
+		word_count++;
+	return (word_count);
 }
 
 static int	quote_count(char *str, char type)
