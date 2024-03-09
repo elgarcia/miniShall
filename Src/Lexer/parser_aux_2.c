@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 15:36:51 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 19:49:41 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ void	ft_reallocate(char ***in, int size, int pos, char *rd)
 			if (position != 0)
 				aux[i++] = ft_substr((*in)[j], 0, position);
 			aux[i++] = ft_strdup(rd);
-			last_cate(&i, &j, *in, &aux);
 			if (position != (int)ft_strlen((*in)[pos]) - 1)
 				aux[i++] = ft_substr((*in)[j], \
 				position + ft_strlen(rd), ft_strlen((*in)[j]));
