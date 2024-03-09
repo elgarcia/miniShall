@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 21:45:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:36:53 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,10 @@ char	**separate_rd(char ***input)
 			&& ft_strcmp((*input)[i], ""))
 				*input = ft_reallocate(input, 2, i, ">>");
 			else if (ft_strnstr((*input)[i], "<", ft_strlen((*input)[i])) \
-			&& ft_strcmp((*input)[i], "<"))
+			&& ft_strncmp((*input)[i], "<", 1))
 				*input = ft_reallocate(input, 2, i, "<");
 			else if (ft_strnstr((*input)[i], ">", ft_strlen((*input)[i])) \
-			&& ft_strcmp((*input)[i], ">"))
+			&& ft_strncmp((*input)[i], ">", 1))
 				*input = ft_reallocate(input, 2, i, ">");
 		}
 	}
