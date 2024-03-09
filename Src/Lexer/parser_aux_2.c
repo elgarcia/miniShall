@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 19:49:41 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:02:30 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,21 +87,24 @@ void	separate_rd(char ***input)
 	i = 0;
 	while ((*input)[i])
 	{
-		if (ft_strnstr((*input)[i], "|", ft_strlen((*input)[i])) \
-		&& ft_strlen((*input)[i]) > 1)
-			return (ft_reallocate(input, 2, i, "|"));
-		else if (ft_strnstr((*input)[i], "<<", ft_strlen((*input)[i])) \
-		&& ft_strlen((*input)[i]) > 2)
-			return (ft_reallocate(input, 2, i, "<<"));
-		else if (ft_strnstr((*input)[i], ">>", ft_strlen((*input)[i])) \
-		&& ft_strlen((*input)[i]) > 2)
-			return (ft_reallocate(input, 2, i, ">>"));
-		else if (ft_strnstr((*input)[i], "<", ft_strlen((*input)[i])) \
-		&& ft_strlen((*input)[i]) > 1)
-			return (ft_reallocate(input, 2, i, "<"));
-		else if (ft_strnstr((*input)[i], ">", ft_strlen((*input)[i])) \
-		&& ft_strlen((*input)[i]) > 1)
-			return (ft_reallocate(input, 2, i, ">"));
+		if ((*input)[i][0] != '\"' && (*input)[i][0] != '\'')
+		{
+			if (ft_strnstr((*input)[i], "|", ft_strlen((*input)[i])) \
+			&& ft_strlen((*input)[i]) > 1)
+				return (ft_reallocate(input, 2, i, "|"));
+			else if (ft_strnstr((*input)[i], "<<", ft_strlen((*input)[i])) \
+			&& ft_strlen((*input)[i]) > 2)
+				return (ft_reallocate(input, 2, i, "<<"));
+			else if (ft_strnstr((*input)[i], ">>", ft_strlen((*input)[i])) \
+			&& ft_strlen((*input)[i]) > 2)
+				return (ft_reallocate(input, 2, i, ">>"));
+			else if (ft_strnstr((*input)[i], "<", ft_strlen((*input)[i])) \
+			&& ft_strlen((*input)[i]) > 1)
+				return (ft_reallocate(input, 2, i, "<"));
+			else if (ft_strnstr((*input)[i], ">", ft_strlen((*input)[i])) \
+			&& ft_strlen((*input)[i]) > 1)
+				return (ft_reallocate(input, 2, i, ">"));
+		}
 		i++;
 	}
 }
