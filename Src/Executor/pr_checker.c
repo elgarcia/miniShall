@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:19:36 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:53:50 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_prcs(t_shell *all)
 	while (aux)
 	{
 		aux = aux->next;
+		free(all->lst_process->process);
+		free(all->lst_process->rd);
 		free(all->lst_process);
 		all->lst_process = aux;
 	}

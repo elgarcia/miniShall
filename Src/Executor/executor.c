@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:18:35 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 21:25:10 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,36 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 
 static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 {
+	char	*file;
+
 	if (i->type == ORD || i->type == IRD)
 	{
 		if ((split - 1) == 0)
 			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
+		file = get_ifile(aux->process, i->pos);
 		if (i->type == ORD)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), \
-			O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
+			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
 			if (all->fd_out == -1)
-				exit(EXIT_FAILURE);
+				return (free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_out, STDOUT_FILENO);
 		}
 		else
 		{
-			all->fd_in = open(get_ifile(aux->process, i->pos), O_RDONLY);
+			all->fd_in = open(file, O_RDONLY);
 			if (all->fd_in == -1)
-				return (printf("%s: %s\n", get_ifile(aux->process, i->pos), \
-				strerror(errno)), exit(EXIT_FAILURE));
+				return (printf("%s: %s\n", file, strerror(errno)), \
+				free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_in, STDIN_FILENO);
 		}
+		free(file);
 	}
-	else if (aux->next)
-		dup2(all->pipes[1], STDOUT_FILENO);
 }
 
 void	exec_type(t_shell *all, t_process *aux, int split)
 {
 	t_redir	*i;
+	char	*file;
 	int		hd;
 
 	hd = -1;
@@ -68,11 +70,12 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 	{
 		if (i->type == APND)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), \
-			O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
+			file = get_ifile(aux->process, i->pos);
+			all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0666);
 			if (all->fd_out == -1)
-				exit(EXIT_FAILURE);
+				return (free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_out, STDOUT_FILENO);
+			free(file);
 		}
 		else if (i->type == HD)
 			hd = i->pos;
