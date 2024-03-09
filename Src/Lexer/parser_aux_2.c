@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 20:39:49 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 21:34:48 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,6 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 
 static void	ft_allocate(int comp, int *size, char ***aux, size_t len)
 {
-	int	position;
-
-	position = 0;
 	if (comp != 0 && comp != (int)len)
 		*aux = ft_calloc(*size + 1, sizeof(char *));
 	else

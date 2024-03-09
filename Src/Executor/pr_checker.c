@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 20:53:50 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 21:48:05 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,25 +34,25 @@ int len, t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_export(all->paths, aux, 1);
 		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 6))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_unset(all->paths, aux);
 		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 4))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_env(all->paths, aux);
 		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		print_history(all);
 		return (ft_free(&aux, len), 1);
 	}
@@ -69,19 +69,19 @@ int	check_builtins(t_shell *all, t_process *prc)
 		return (printf("echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_echo(aux, prc);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_cd(all->paths, aux);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_pwd();
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
