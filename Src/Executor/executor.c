@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 21:58:55 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:13:42 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,11 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 	}
 }
 
-void	exec_type(t_shell *all, t_process *aux)
+void	exec_type(t_shell *all, t_process *aux, int split, int hd)
 {
 	t_redir	*i;
 	char	*file;
-	int		hd;
 
-	hd = -1;
 	i = aux->rd;
 	while (i)
 	{
@@ -99,7 +97,7 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux);
+		exec_type(all, aux, arg_counter(all->exec_args), -1);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 14:54:53 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 21:35:05 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 char	*get_commad(t_process *prc, char **split)
 {
 	char	*ret;
-	int		i;
 
-	i = 0;
 	ret = NULL;
 	if (prc->rd->pos == 0)
 	{

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 22:09:11 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:13:45 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	check_cats(t_shell *all, t_process *aux)
 		return (0);
 	if (!ft_strcmp(aux->process, "cat"))
 	{
-		if (aux->n_process == all->n_process)
+		if (aux->n_process == all->n_process - 1)
 			return (0);
 		return (1);
 	}
