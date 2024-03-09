@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 18:56:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:55:21 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../get_next_line/get_next_line.h"
 # include <errno.h>
 # include <limits.h>
+# include <sys/stat.h>
 
 # define RED_TEXT "\033[1;31m"
 # define GREEN_TEXT "\033[1;32m"
@@ -46,9 +47,14 @@ void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
 int			is_ao(char *str);
 int			check_cats(t_shell *all, t_process *aux);
 void		check_exp(char **in, int *i, int j);
+int			there_is_rd(t_process *lst);
+
+/* parser_aux_2.c */
+void		separate_rd(char ***input);
+void		ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
-void		ft_free(char **arg, int size);
+void		ft_free(char ***arg, int size);
 int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
@@ -73,12 +79,17 @@ void		exec_son(t_shell *all, t_process *aux);
 void		reset_prc(t_shell *all);
 void		pipe_man(t_shell *all);
 void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
+void		read_file(t_shell *all, int fd, char *line, char *outword);
+int			count_rds(t_process *prcs);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
 void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
+
+/* pr_checker_aux.c */
+char		*get_commad(t_process *prc, char **split);
 
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,

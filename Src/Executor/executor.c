@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 18:14:48 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:56:12 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,20 +18,15 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 	char	*line;
 	char	*outword;
 
-	if (rd != 0)
+	line = NULL;
+	outword = NULL;
+	if (rd != -1)
 	{
 		outword = get_ifile(aux->process, rd);
 		outword = ft_strjoin(outword, "\n");
 	}
-	line = get_next_line(all->og_infile);
-	while (rd != 0 && ft_strcmp(outword, line))
-	{
-		if (all->fd_out != -1)
-			write(all->fd_out, line, ft_strlen(line));
-		free(line);
-		line = get_next_line(all->og_infile);
-	}
-	if (rd != 0)
+	read_file(all, all->og_infile, line, outword);
+	if (rd != -1)
 		free(outword);
 }
 
@@ -67,7 +62,7 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 	t_redir	*i;
 	int		hd;
 
-	hd = 0;
+	hd = -1;
 	i = aux->rd;
 	while (i)
 	{
@@ -87,8 +82,8 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 	}
 	if (aux->next)
 		dup2(all->pipes[1], STDOUT_FILENO);
-	if (hd != 0 || check_cats(all, aux) == 1)
-		return (here_doc(all, aux, hd), exit(EXIT_SUCCESS));
+	if (hd != -1 || check_cats(all, aux) == 1)
+		return (here_doc(all, aux, hd));
 }
 
 void	exec_son(t_shell *all, t_process *aux)
@@ -107,7 +102,7 @@ void	exec_son(t_shell *all, t_process *aux)
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
-		exit(127);
+		exit(g_exit_status);
 }
 
 void	exec_process(t_shell *all, int i, int j, int status)
@@ -128,7 +123,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 		aux = aux->next;
 		i++;
 	}
-	while (j != i)
+	while (j < i)
 	{
 		waitpid(all->sons[j++], &status, 0);
 		check_status(all, status);

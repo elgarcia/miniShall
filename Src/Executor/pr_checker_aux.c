@@ -1,38 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command_aux.c                                      :+:      :+:    :+:   */
+/*   pr_checker_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 01:22:29 by eliagarc         ###   ########.fr       */
+/*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/03/09 14:54:53 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_execargs(char ***ex_argc, char *command)
+char	*get_commad(t_process *prc, char **split)
 {
-	char	**aux;
+	char	*ret;
 	int		i;
 
 	i = 0;
-	aux = ft_split(command, ' ');
-	if (!aux)
-		return (-1);
-	while (++i < ft_word_count(command, ' '))
+	ret = NULL;
+	if (prc->rd->pos == 0)
 	{
-		(*ex_argc)[i] = ft_strdup(aux[i]);
-		if (!(*ex_argc)[i])
-			return (ft_free(ex_argc, i), \
-			ft_free(&aux, ft_word_count(command, ' ')), -1);
+		return (ft_substr(prc->process, \
+		ft_strlen(split[0]), ft_strlen(prc->process)));
 	}
-	return (ft_free(&aux, ft_word_count(command, ' ')), 0);
-}
-
-void	double_free(char **aux, char **actual_path)
-{
-	free(*actual_path);
-	free(*aux);
+	else
+	{
+		if (arg_counter(split) > 2)
+		{
+			ret = ft_strjoin(split[0], " ");
+			return (ft_strjoinup(&ret, split[1]));
+		}
+		else
+			return (ft_strdup(split[0]));
+	}
 }
