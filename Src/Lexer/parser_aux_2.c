@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 01:50:30 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:26:23 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ int pos_rd(char **in, int i, char *rd, int *aux)
 	return (0);
 }
 
+static void	ft_allocate(int comp, int *size, char ***aux, int len)
+{
+	int	position;
+
+	position = 0;
+	if (comp != 0 && comp != len)
+		*aux = ft_calloc(*size, sizeof(char *));
+	else
+		*aux = ft_calloc(--(*size), sizeof(char *));
+}
+
 void	ft_reallocate(char ***in, int size, int pos, char *rd)
 {
 	int 	og_size;
@@ -42,22 +53,23 @@ void	ft_reallocate(char ***in, int size, int pos, char *rd)
 	position = 0;
 	i = 0;
 	j = 0;
-	og_size = arg_counter(*in);
-	aux = ft_calloc(og_size + size + 1, sizeof(char *));
-	while (i < (og_size + size))
+	og_size = arg_counter(*in) + size;
+	ft_allocate(pos_rd(*in, pos, rd, &position), &og_size, &aux, (int)ft_strlen((*in)[pos]) - 1);
+	while (i < og_size)
 	{
 		if (i != pos)
 			aux[i++] = ft_strdup((*in)[j++]);
 		else
 		{
-			aux[i++] = ft_substr((*in)[j], 0, pos_rd(*in, j, rd, &position));
+			if (pos_rd(*in, j, rd, &position) != 0)
+				aux[i++] = ft_substr((*in)[j], 0, pos_rd(*in, j, rd, &position));
 			aux[i++] = ft_strdup(rd);
-			aux[i++] = ft_substr((*in)[j], position + ft_strlen(rd), ft_strlen((*in)[j]));
+			if (pos_rd(*in, j, rd, &position) != (int)ft_strlen((*in)[pos]) - 1)
+				aux[i++] = ft_substr((*in)[j], position + ft_strlen(rd), ft_strlen((*in)[j]));
 			j++;
 		}
 	}
-	aux[i] = NULL;
-	ft_free(in, og_size);
+	ft_free(in, arg_counter(*in));
 	*in = aux;
 }
 

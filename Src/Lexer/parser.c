@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 01:21:57 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 11:30:52 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	input_parser(char *line, t_shell *new)
 		if (i == 0)
 			new_proc(&aux, new, 0, &red_aux);
 		check_red(&new->input[i], &aux, &i, &red_aux);
-		if (new->input[i] && !is_rdp(new->input[i]))
+		if (new->input[i])
 			parse_arg(aux, new, &i);
 	}
 	if ((there_is_rd(new->lst_process) && is_rdp(new->input[i - 1])) || is_ao(new->input[i - 1]))
