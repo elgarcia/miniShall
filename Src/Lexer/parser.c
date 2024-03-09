@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../Inc/minishell.h"
 
 void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
@@ -79,21 +79,20 @@ void	parse_arg(t_process *aux, t_shell *new, int *i)
 	*i += 1;
 }
 
-int	input_parser(char *line, t_shell *new)
+int	input_parser(char *line, t_shell *new, int i)
 {
-	int			i;
 	t_process	*aux;
 	t_redir		*red_aux;
 
 	aux = new->lst_process;
-	i = 0;
 	new->input = echo_split(line, ' ');
 	separate_rd(&new->input);
 	while (new->input[i])
 	{
 		if (i == 0)
 			new_proc(&aux, new, 0, &red_aux);
-		check_red(&new->input[i], &aux, &i, &red_aux);
+		if (!has_quotes2(new->input[i]))
+			check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
 			parse_arg(aux, new, &i);
 	}

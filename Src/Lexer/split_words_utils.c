@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/09 14:32:25 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:19:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	len_word(char const *s, char c)
 	return (counter);
 }
 
-int	has_quotes(char *s)
+static int	has_quotes(char *s)
 {
 	int		i;
 	char	quotes;
@@ -57,14 +57,12 @@ static int	word_utils(t_split *params, int type)
 	int		word_len;
 
 	aux = ft_strchrt(&params->s[params->j], type, 2);
-	if (*(aux + 1) != ' ' && *(aux + 1) != '\0')
+	if (aux && *(aux + 1) && *(aux + 1) != ' ' && *(aux + 1) != '\0')
 		aux = ft_strchr(aux, ' ');
 	if (!aux)
 		word_len = ft_strlen(&params->s[params->j]);
 	else
-	{
 		word_len = ft_strlen(&params->s[params->j]) - ft_strlen(aux) + 1;
-	}
 	params->strs[params->i] = ft_substr(&params->s[params->j], 0, word_len);
 	if (!params->strs[params->i])
 		return (ft_free(&params->strs, params->i), 0);

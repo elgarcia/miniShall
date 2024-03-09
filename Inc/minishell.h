@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 14:55:21 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:12:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define BLUE_TEXT "\e[0;34m"
 
 /* parser.c */
-int			input_parser(char *line, t_shell *new);
+int			input_parser(char *line, t_shell *new, int i);
 void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		new_proc(t_process **aux, t_shell *all, int n_proc,
@@ -119,6 +119,10 @@ int			is_rdp(char *str);
 void		close_pipes(t_shell *all);
 void		close_fds(t_shell *all);
 
+/* auxiliar_functions2.c */
+
+int			has_quotes2(char *str);
+
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
 char		*expansor(t_shell *shell, char *str, int i, int j);
@@ -176,7 +180,7 @@ int			extract_name_value(char *arg, char **name, char **value);
 // BUILTINS
 void		ft_env(t_paths *paths, char **argv);
 void		ft_cd(t_paths *paths, char **dir);
-int			ft_pwd(t_paths *paths);
+int			ft_pwd(void);
 int			ft_echo(char **argv, t_process *prc);
 void		ft_export(t_paths *paths, char **argv, int i);
 void		ft_exit(t_shell *shell, char *line);
@@ -194,7 +198,7 @@ void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
-int			count_words(char const *s, char c, int i, int counter);
+int			count_words(char const *s);
 
 // PARSER
 

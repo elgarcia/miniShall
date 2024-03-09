@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 18:31:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/06 12:33:08 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,11 @@ int		g_exit_status = 0;
 void	change_shell(t_shell *shell)
 {
 	char	*tmp;
+	char	tmp2[PATH_MAX];
 	int		lvl;
 	char	*lvl_str;
 
-	tmp = ft_strjoin(getcwd(NULL, 0), "/minishell");
+	tmp = ft_strjoin(getcwd(tmp2, PATH_MAX), "/minishell");
 	lvl_str = get_env("SHLVL", shell->paths->env_lst);
 	lvl = ft_atoi(lvl_str) + 1;
 	if (!lvl || lvl < 0 || lvl >= 1000)
@@ -65,13 +66,16 @@ void	extend(t_shell *new, char *line)
 	char	*new_line;
 
 	if (line == NULL)
+	{
+		printf("exit\n");
 		ft_exit(new, line);
+	}
 	if (line[0] != 0)
 	{
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1, 0);
-		if (input_parser(new_line, new) != -1)
+		if (input_parser(new_line, new, 0) != -1)
 		{
 			add_history(line);
 			init_pikes(&new);
@@ -100,10 +104,7 @@ void	loop(t_shell *new, char *line, char *prompt, char *exit)
 			else
 				free(exit);
 		}
-		if (quotes_counter(line))
-			printf("Quotes opened!\n");
-		else
-			extend(new, line);
+		extend(new, line);
 		free(line);
 	}
 }

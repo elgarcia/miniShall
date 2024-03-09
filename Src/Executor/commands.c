@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 01:21:09 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:17:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	check_cmd(char *command, char ***exec_args)
 
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
-	*cmd_split = ft_split(process, ' ');
+	*cmd_split = echo_split(process, ' ');
 	if (!*cmd_split)
 		return (-1);
-	*aux = ft_word_count(process, ' ') + 1;
+	*aux = arg_counter(*cmd_split) + 1;
 	return (0);
 }
 

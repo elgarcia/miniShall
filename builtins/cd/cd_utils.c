@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:26:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 19:12:32 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/04 12:01:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,22 +49,18 @@ void	update_pwd_variables(t_paths *paths, char *new_pwd)
 	t_env_lst	*pwd_node;
 	t_env_lst	*old_pwd_node;
 
+	old_pwd_node = find_env_node(paths->env_lst, "OLDPWD");
+	if (old_pwd_node)
+	{
+		free(old_pwd_node->value);
+		old_pwd_node->value = get_env("PWD", paths->env_lst);
+	}
 	pwd_node = find_env_node(paths->env_lst, "PWD");
 	if (pwd_node)
 	{
 		free(pwd_node->value);
 		pwd_node->value = ft_strdup(new_pwd);
 	}
-	old_pwd_node = find_env_node(paths->env_lst, "OLDPWD");
-	if (old_pwd_node)
-	{
-		free(old_pwd_node->value);
-		old_pwd_node->value = ft_strdup(paths->pwd);
-	}
-	free(paths->old_pwd);
-	paths->old_pwd = ft_strdup(paths->pwd);
-	free(paths->pwd);
-	paths->pwd = ft_strdup(new_pwd);
 }
 
 char	*resolve_single_component(char *current_path, char *component)
