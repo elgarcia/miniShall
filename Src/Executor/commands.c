@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:21:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:21:09 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	search_path(char **env_1, char	**actual_path, \
 		{
 			(*exec_args)[0] = ft_strdup(*actual_path);
 			if (!(*exec_args)[0])
-				return (ft_free(*exec_args, 1), free(*actual_path), -1);
+				return (ft_free(exec_args, 1), free(*actual_path), -1);
 			return (free(*actual_path), free(aux), 0);
 		}
 		else
@@ -56,7 +56,7 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 			if (!aux2)
 				return (-1);
 			flag = search_path(aux2, &aux_path, command, exec_args);
-			return (ft_free(aux2, ft_word_count(aux->value, ':')), flag);
+			return (ft_free(&aux2, ft_word_count(aux->value, ':')), flag);
 		}
 		aux = aux->next;
 	}
@@ -70,7 +70,7 @@ int	check_cmd(char *command, char ***exec_args)
 	{
 		(*exec_args)[0] = ft_strdup(command);
 		if (!(*exec_args)[0])
-			return (ft_free(*exec_args, 1), -1);
+			return (ft_free(exec_args, 1), -1);
 		return (0);
 	}
 	return (1);
@@ -95,18 +95,18 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 		return (-1);
 	*exec_args = (char **)ft_calloc(aux, sizeof(char *));
 	if (!*exec_args)
-		return (ft_free(cmd_split, aux), -1);
+		return (ft_free(&cmd_split, aux), -1);
 	aux = check_cmd(cmd_split[0], exec_args);
 	if (aux == 1)
 	{
 		path_rt = assign_path(exec_args, cmd_split[0], envp);
 		if (path_rt == -1 || path_rt == -2)
 		{
-			ft_free(cmd_split, ft_word_count(process, ' '));
+			ft_free(&cmd_split, ft_word_count(process, ' '));
 			return (free(*exec_args), -1);
 		}
 	}
 	if (aux == -1 || init_execargs(exec_args, process) == -1)
-		return (ft_free(cmd_split, ft_word_count(process, ' ')), -1);
-	return (ft_free(cmd_split, ft_word_count(process, ' ')), 0);
+		return (ft_free(&cmd_split, ft_word_count(process, ' ')), -1);
+	return (ft_free(&cmd_split, ft_word_count(process, ' ')), 0);
 }

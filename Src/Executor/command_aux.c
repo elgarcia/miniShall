@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/25 16:21:53 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:22:29 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ int	init_execargs(char ***ex_argc, char *command)
 	{
 		(*ex_argc)[i] = ft_strdup(aux[i]);
 		if (!(*ex_argc)[i])
-			return (ft_free(*ex_argc, i), \
-			ft_free(aux, ft_word_count(command, ' ')), -1);
+			return (ft_free(ex_argc, i), \
+			ft_free(&aux, ft_word_count(command, ' ')), -1);
 	}
-	return (ft_free(aux, ft_word_count(command, ' ')), 0);
+	return (ft_free(&aux, ft_word_count(command, ' ')), 0);
 }
 
 void	double_free(char **aux, char **actual_path)

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 18:32:36 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 01:14:00 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,12 @@ int			check_cats(t_shell *all, t_process *aux);
 void		check_exp(char **in, int *i, int j);
 int			there_is_rd(t_process *lst);
 
+/* parser_aux_2.c */
+void		separate_rd(char ***input);
+void		ft_reallocate(char ***in, int size, int pos, char *rd);
+
 /* utils.c*/
-void		ft_free(char **arg, int size);
+void		ft_free(char ***arg, int size);
 int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
