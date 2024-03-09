@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 19:08:59 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:10:28 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,16 +113,21 @@ void	exec_process(t_shell *all)
 	while (aux)
 	{
 		init_pipex(all, aux, &all->sons[i]);
-		set_signals(1);
 		if (all->sons[i] == 0)
+		{
+			set_signals(1);
 			exec_son(all, aux);
+		}
 		else
 			pipe_man(all);
 		aux = aux->next;
 		i++;
 	}
-	wait(&status);
-	if (WIFEXITED(status) && !is_builting(all->lst_process))
-		g_exit_status = WEXITSTATUS(status);
+ 	while (j < i)
+	{
+		waitpid(all->sons[j++], &status, 0);
+		if (WIFEXITED(status) && !is_builting(all->lst_process))
+			g_exit_status = WEXITSTATUS(status);
+	}
 	reset_prc(all);
 }

@@ -6,25 +6,25 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 11:26:23 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:27:12 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int pos_rd(char **in, int i, char *rd, int *aux)
+int	pos_rd(char **in, int i, char *rd, int *aux)
 {
 	int	iter;
 
 	iter = 0;
-	while(in[i][iter])
+	while (in[i][iter])
 	{
 		if (in[i][iter] == rd[0])
 		{
 			*aux = iter;
 			if (iter > 1)
 				return (iter);
-			break;
+			break ;
 		}
 		iter++;
 	}
@@ -37,22 +37,27 @@ static void	ft_allocate(int comp, int *size, char ***aux, int len)
 
 	position = 0;
 	if (comp != 0 && comp != len)
-		*aux = ft_calloc(*size, sizeof(char *));
+		*aux = ft_calloc(*size + 1, sizeof(char *));
 	else
-		*aux = ft_calloc(--(*size), sizeof(char *));
+		*aux = ft_calloc(--(*size) + 1, sizeof(char *));
+}
+
+static void	init_reallocate(int *position, int *i, int *j)
+{
+	*position = 0;
+	*i = 0;
+	*j = 0;
 }
 
 void	ft_reallocate(char ***in, int size, int pos, char *rd)
 {
-	int 	og_size;
+	int		og_size;
 	char	**aux;
 	int		i;
 	int		j;
 	int		position;
 
-	position = 0;
-	i = 0;
-	j = 0;
+	init_reallocate(&position, &i, &j);
 	og_size = arg_counter(*in) + size;
 	ft_allocate(pos_rd(*in, pos, rd, &position), &og_size, &aux, (int)ft_strlen((*in)[pos]) - 1);
 	while (i < og_size)
@@ -78,17 +83,22 @@ void	separate_rd(char ***input)
 	int	i;
 
 	i = 0;
-	while((*input)[i])
+	while ((*input)[i])
 	{
-		if (ft_strnstr((*input)[i], "|", ft_strlen((*input)[i])) && ft_strlen((*input)[i]) > 1)
+		if (ft_strnstr((*input)[i], "|", ft_strlen((*input)[i])) \
+		&& ft_strlen((*input)[i]) > 1)
 			return (ft_reallocate(input, 2, i, "|"));
-		else if (ft_strnstr((*input)[i], "<<", ft_strlen((*input)[i])) && ft_strlen((*input)[i]) > 2)
+		else if (ft_strnstr((*input)[i], "<<", ft_strlen((*input)[i])) \
+		&& ft_strlen((*input)[i]) > 2)
 			return (ft_reallocate(input, 2, i, "<<"));
-		else if (ft_strnstr((*input)[i], ">>", ft_strlen((*input)[i])) && ft_strlen((*input)[i]) > 2)
+		else if (ft_strnstr((*input)[i], ">>", ft_strlen((*input)[i])) \
+		&& ft_strlen((*input)[i]) > 2)
 			return (ft_reallocate(input, 2, i, ">>"));
-		else if (ft_strnstr((*input)[i], "<", ft_strlen((*input)[i])) && ft_strlen((*input)[i]) > 1)
+		else if (ft_strnstr((*input)[i], "<", ft_strlen((*input)[i])) \
+		&& ft_strlen((*input)[i]) > 1)
 			return (ft_reallocate(input, 2, i, "<"));
-		else if (ft_strnstr((*input)[i], ">", ft_strlen((*input)[i])) && ft_strlen((*input)[i]) > 1)
+		else if (ft_strnstr((*input)[i], ">", ft_strlen((*input)[i])) \
+		&& ft_strlen((*input)[i]) > 1)
 			return (ft_reallocate(input, 2, i, ">"));
 		i++;
 	}

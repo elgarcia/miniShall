@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 01:21:41 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:24:07 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,12 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	char			**split;
 	char			*cmd;
 	struct stat		path_stat;
-	
+
 	split = NULL;
 	cmd = NULL;
 	if (stat((*prcs)->process, &path_stat) == 0)
-		return (printf("%s: is a directory\n", (*prcs)->process), g_exit_status = 126);
+		return (printf("%s: is a directory\n", \
+		(*prcs)->process), g_exit_status = 126);
 	else if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');
