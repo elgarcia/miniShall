@@ -6,38 +6,67 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/02 13:35:02 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:27:48 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Inc/minishell.h"
 #include <termios.h>
 
+static void    check_num(char **split)
+{
+    int i;
+    int j;
+
+    i = 1;
+    if (split[i][0] == '\0')
+    {
+        ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", split[i]);
+        ft_free(&split, arg_counter(split));
+        exit(255);
+    }
+    while (split[i])
+    {
+        j = 0;
+        if ((split[i][j] == '-' || split[i][j] == '+') && !ft_isdigit(split[i][j + 1]))
+            j++;
+        while (split[i][j])
+        {
+            if (!ft_isdigit(split[i][j]) || split[i][0] == '\0')
+            {
+                ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n", split[i]);
+                ft_free(&split, arg_counter(split));
+                exit(255);
+            }
+            j++;
+        }
+        i++;
+    }
+}
+
 static int	extend_exit(char *line, int ret_value)
 {
 	char	**split;
-	int		i;
-	int		j;
 
-	i = 1;
-	split = ft_split(line, ' ');
-	while (split[i])
-	{
-		j = -1;
-		while (split[i][++j] != '\0')
-		{
-			if (!ft_isdigit(split[i][j]))
-				return (printf("exit\nMinishell: exit:\
-%s: numeric argument required\n", split[i]), 255);
-		}
-		i++;
-	}
-	if (arg_counter(split) > 2)
-		return (ft_free(split, arg_counter(split)), \
-					printf("exit\nbash: exit: too many arguments\n"), 1);
+    split = echo_split(line, ' ');
+    if (!split)
+        return (ret_value);
+    if (arg_counter(split) == 1)
+    {
+        ft_free(&split, arg_counter(split));
+        return (ret_value);
+    }
+    if (arg_counter(split) > 2)
+    {
+        ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
+        ft_free(&split, arg_counter(split));
+        return (1);
+    }
+    remove_quotes_from_matrix(split);
+    check_num(split);
 	if (arg_counter(split) > 1)
 		ret_value = ft_atoi(split[1]) % 256;
-	ft_free(split, arg_counter(split));
+	ft_free(&split, arg_counter(split));
 	return (ret_value);
 }
 

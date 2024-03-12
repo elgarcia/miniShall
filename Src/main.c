@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 12:33:08 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/12 13:18:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
-		print_banner();
+		//print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
 		loop(new, NULL, NULL, NULL);

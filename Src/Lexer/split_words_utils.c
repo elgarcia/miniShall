@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_words_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/06 12:35:33 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 17:19:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ static int	word_utils(t_split *params, int type)
 		word_len = ft_strlen(&params->s[params->j]) - ft_strlen(aux) + 1;
 	params->strs[params->i] = ft_substr(&params->s[params->j], 0, word_len);
 	if (!params->strs[params->i])
-		return (ft_free(params->strs, params->i), 0);
+		return (ft_free(&params->strs, params->i), 0);
 	(params->j) += word_len;
 	(params->i)++;
 	return (1);
@@ -113,7 +113,7 @@ char	**add_word(t_split *params)
 	word_len = len_word(&params->s[params->j], params->c);
 	params->strs[params->i] = ft_substr(params->s, params->j, word_len);
 	if (!params->strs[params->i])
-		return (ft_free(params->strs, params->i), NULL);
+		return (ft_free(&params->strs, params->i), NULL);
 	(params->j) += word_len;
 	(params->i)++;
 	return (params->strs);

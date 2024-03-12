@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 09:52:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/12 11:51:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,77 +18,72 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 	char	*line;
 	char	*outword;
 
-	if (rd != 0)
+	line = NULL;
+	outword = NULL;
+	if (rd != -1)
 	{
 		outword = get_ifile(aux->process, rd);
 		outword = ft_strjoin(outword, "\n");
 	}
-	line = get_next_line(all->og_infile);
-	while (rd != 0 && ft_strcmp(outword, line))
-	{
-		if (all->fd_out != -1)
-			write(all->fd_out, line, ft_strlen(line));
-		free(line);
-		line = get_next_line(all->og_infile);
-	}
-	if (rd != 0)
+	read_file(all, all->og_infile, line, outword);
+	if (rd != -1)
 		free(outword);
 }
 
-static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
+static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 {
+	char	*file;
+
 	if (i->type == ORD || i->type == IRD)
 	{
-		if ((split - 1) == 0)
-			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
+		file = get_ifile(aux->process, i->pos);
 		if (i->type == ORD)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), \
-			O_RDWR | O_CREAT | O_TRUNC | O_NONBLOCK, 0666);
+			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
 			if (all->fd_out == -1)
-				exit(EXIT_FAILURE);
+				return (free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_out, STDOUT_FILENO);
 		}
 		else
 		{
-			all->fd_in = open(get_ifile(aux->process, i->pos), O_RDONLY);
+			all->fd_in = open(file, O_RDONLY);
 			if (all->fd_in == -1)
-				return (printf("%s: %s\n", get_ifile(aux->process, i->pos), \
-				strerror(errno)), exit(EXIT_FAILURE));
+				return (printf("%s: %s\n", file, strerror(errno)), \
+				free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_in, STDIN_FILENO);
 		}
+		free(file);
 	}
-	else if (aux->next)
-		dup2(all->pipes[1], STDOUT_FILENO);
 }
 
-void	exec_type(t_shell *all, t_process *aux, int split)
+void	exec_type(t_shell *all, t_process *aux, int split, int hd)
 {
 	t_redir	*i;
-	int		hd;
+	char	*file;
 
-	hd = 0;
+	(void)split;
 	i = aux->rd;
 	while (i)
 	{
 		if (i->type == APND)
 		{
-			all->fd_out = open(get_ifile(aux->process, i->pos), \
-			O_WRONLY | O_APPEND | O_CREAT | O_NONBLOCK, 0666);
+			file = get_ifile(aux->process, i->pos);
+			all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0666);
 			if (all->fd_out == -1)
-				exit(EXIT_FAILURE);
+				return (free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_out, STDOUT_FILENO);
+			free(file);
 		}
 		else if (i->type == HD)
 			hd = i->pos;
 		else
-			exec_type_aux(all, aux, i, split);
+			exec_type_aux(all, aux, i);
 		i = i->next;
 	}
 	if (aux->next)
 		dup2(all->pipes[1], STDOUT_FILENO);
-	if (hd != 0 || check_cats(all, aux) == 1)
-		return (here_doc(all, aux, hd), exit(EXIT_SUCCESS));
+	if (hd != -1 || check_cats(all, aux) == 1)
+		return (here_doc(all, aux, hd));
 }
 
 void	exec_son(t_shell *all, t_process *aux)
@@ -103,12 +98,11 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux, arg_counter(all->exec_args));
+		exec_type(all, aux, arg_counter(all->exec_args), -1);
 		execve(all->exec_args[0], all->exec_args, envp);
-		//ft_free(envp, arg_counter(envp));
 	}
 	else
-		exit(127);
+		exit(g_exit_status);
 }
 
 void	exec_process(t_shell *all, int i, int j, int status)
@@ -129,7 +123,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 		aux = aux->next;
 		i++;
 	}
-	while (j != i)
+	while (j < i)
 	{
 		waitpid(all->sons[j++], &status, 0);
 		check_status(all, status);

@@ -3,26 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:33 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/02/29 22:11:52 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 14:32:13 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-void	ft_free(char **arg, int size)
+void	ft_free(char ***arg, int size)
 {
 	int	i;
 
 	i = 0;
 	while (i < size)
 	{
-		free(arg[i]);
+		free((*arg)[i]);
 		i++;
 	}
-	free(arg);
+	free(*arg);
+	*arg = NULL;
 }
 
 void	*free_null(char **s)

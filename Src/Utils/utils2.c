@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/29 21:05:34 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/12 14:08:19 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ char	*ft_strchrt(char *s, char c, int times)
 	int	i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (*s != '\0')
 	{
 		if (*s == c)

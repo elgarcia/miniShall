@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   structures.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/04 11:43:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 20:07:25 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_shell
 	int					og_infile;
 	int					og_outfile;
 	pid_t				*sons;
-    char**              word_split;
+	char				**word_split;
 	char				**exec_args;
 	char				**input;
 	char				*history_path;

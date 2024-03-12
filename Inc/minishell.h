@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 12:38:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:13:35 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include "../get_next_line/get_next_line.h"
 # include <errno.h>
 # include <limits.h>
+# include <sys/stat.h>
 
 # define RED_TEXT "\033[1;31m"
 # define GREEN_TEXT "\033[1;32m"
@@ -46,9 +47,14 @@ void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
 int			is_ao(char *str);
 int			check_cats(t_shell *all, t_process *aux);
 void		check_exp(char **in, int *i, int j);
+int			there_is_rd(t_process *lst);
+
+/* parser_aux_2.c */
+char		**separate_rd(char ***input);
+char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
-void		ft_free(char **arg, int size);
+void		ft_free(char ***arg, int size);
 int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
@@ -57,7 +63,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
-void	check_status(t_shell *all, int status);
+void		check_status(t_shell *all, int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);
@@ -65,7 +71,7 @@ void		replace_envp(char *name, char *value, char **envp);
 /* executor.c */
 void		exec_process(t_shell *all, int i, int j, int status);
 void		close_pipes(t_shell *all);
-void		exec_type(t_shell *all, t_process *aux, int split);
+void		exec_type(t_shell *all, t_process *aux, int split, int hd);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 void		exec_son(t_shell *all, t_process *aux);
 
@@ -73,12 +79,17 @@ void		exec_son(t_shell *all, t_process *aux);
 void		reset_prc(t_shell *all);
 void		pipe_man(t_shell *all);
 void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
+void		read_file(t_shell *all, int fd, char *line, char *outword);
+int			count_rds(t_process *prcs);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
 void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
+
+/* pr_checker_aux.c */
+char		*get_commad(t_process *prc, char **split);
 
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,
@@ -126,7 +137,6 @@ char		*ft_strjoin_char(char *s1, char c);
 void		handle_signal(int signo);
 void		set_signals(int mode);
 void		proc_handle_signal(int sig);
-
 
 // G_EXIT_STATUS
 void		change_status(int new_status);

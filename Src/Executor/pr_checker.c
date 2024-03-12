@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/06 09:26:46 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/09 22:13:47 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	free_prcs(t_shell *all)
 	while (aux)
 	{
 		aux = aux->next;
+		free(all->lst_process->process);
+		free(all->lst_process->rd);
 		free(all->lst_process);
 		all->lst_process = aux;
 	}
@@ -32,29 +34,29 @@ int len, t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_export(all->paths, aux, 1);
-		return (ft_free(aux, len), 1);
+		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "unset", 6))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_unset(all->paths, aux);
-		return (ft_free(aux, len), 1);
+		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "env", 4))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_env(all->paths, aux);
-		return (ft_free(aux, len), 1);
+		return (ft_free(&aux, len), 1);
 	}
 	if (!ft_strncmp(aux[0], "history", 8))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		print_history(all);
-		return (ft_free(aux, len), 1);
+		return (ft_free(&aux, len), 1);
 	}
-	return (ft_free(aux, len), 0);
+	return (ft_free(&aux, len), 0);
 }
 
 int	check_builtins(t_shell *all, t_process *prc)
@@ -67,21 +69,21 @@ int	check_builtins(t_shell *all, t_process *prc)
 		return (printf("echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_echo(aux, prc);
-		return (ft_free(aux, arg_counter(aux)), 1);
+		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_cd(all->paths, aux);
-		return (ft_free(aux, arg_counter(aux)), 1);
+		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '));
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		ft_pwd();
-		return (ft_free(aux, arg_counter(aux)), 1);
+		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	return (check_builtins_aux(aux, all, arg_counter(aux), prc));
 }
@@ -94,38 +96,43 @@ char	*get_ifile(char *process, int inout)
 
 	aux = echo_split(process, ' ');
 	i = inout;
-	while (aux[i] && !ft_strncmp(aux[i], "-", 2))
+	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
 		i++;
 	if (aux[i])
 	{
 		ret = ft_strdup(aux[i]);
-		ft_free(aux, ft_word_count(process, ' '));
+		ft_free(&aux, ft_word_count(process, ' '));
 		return (ret);
 	}
-	ft_free(aux, arg_counter(aux));
+	ft_free(&aux, arg_counter(aux));
 	return (NULL);
 }
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
-	int		ret_val;
-	char	**split;
+	char			**split;
+	char			*cmd;
+	struct stat		path_stat;
 
 	split = NULL;
-	ret_val = 0;
-	if ((*prcs)->rd)
+	cmd = NULL;
+	if (ft_strcmp((*prcs)->process, "./minishell") \
+	&& stat((*prcs)->process, &path_stat) == 0)
+		return (printf("%s: is a directory\n", \
+		(*prcs)->process), g_exit_status = 126);
+	else if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');
-		if ((*prcs)->rd->pos == 0)
-			ret_val = prepare_command(split[1], exec_args, all->paths->env_lst);
-		else
-			ret_val = prepare_command(split[0], exec_args, all->paths->env_lst);
-		ft_free(split, arg_counter(split));
+		cmd = get_commad(*prcs, split);
+		if ((*prcs)->rd->type == HD && arg_counter(split) == count_rds(*prcs))
+			return (g_exit_status);
+		g_exit_status = prepare_command(cmd, exec_args, all->paths->env_lst);
+		ft_free(&split, arg_counter(split));
 	}
 	else
-		ret_val = prepare_command((*prcs)->process, \
+		g_exit_status = prepare_command((*prcs)->process, \
 		exec_args, all->paths->env_lst);
-	if (ret_val == -1 || ret_val == -2)
+	if (g_exit_status == -1 || g_exit_status == -2)
 		g_exit_status = 127;
-	return (ret_val);
+	return (g_exit_status);
 }
