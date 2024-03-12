@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/12 14:18:19 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/12 22:23:29 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,14 @@ void	update_directory(t_paths *paths, char *new_dir)
 void	ft_cd(t_paths *paths, char **dir)
 {
 	char	*new_dir;
-	int		argc;
 	char	tmp[PATH_MAX];
 
-	argc = arg_counter(dir);
 	new_dir = resolve_cd_argument(paths, dir[1]);
+	if (arg_counter(dir) == 2 && dir[1][0] == '\0')
+	{
+		free(new_dir);
+		return ;
+	}
 	if (!new_dir || chdir(new_dir) == -1)
 	{
 		if (new_dir)
