@@ -110,7 +110,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
-		//print_banner();
+		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
 		loop(new, NULL, NULL, NULL);
