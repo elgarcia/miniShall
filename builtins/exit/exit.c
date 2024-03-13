@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/13 11:50:44 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 13:38:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,10 @@ void	ft_exit(t_shell *shell, char *line)
 	char			**split;
 
 	ret_value = 0;
-	split = ft_split(line, ' ');
+	split = echo_split(line, ' ');
+	if (!split)
+		return ;
+	remove_quotes_from_matrix(split);
 	if (arg_counter(split) > 2)
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
