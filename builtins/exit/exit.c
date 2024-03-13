@@ -13,42 +13,7 @@
 #include "../../Inc/minishell.h"
 #include <termios.h>
 
-int	static	ft_atoi_error(int *error)
-{
-	*error = 1;
-	return (-1);
-}
-
-long long	static	ft_atol(const char *str, int *atoi_error)
-{
-	int			i;
-	int			sign;
-	long long	nbr;
-
-	nbr = 0;
-	i = 0;
-	sign = 1;
-	if (ft_strlen(str) == 19
-		&& (ft_strncmp("9223372036854775807", str, 20) < 0))
-		return (ft_atoi_error(atoi_error));
-	if ((ft_strlen(str) == 20 && ft_strncmp
-			("-9223372036854775807", str, 21) < 0) || ft_strlen(str) > 20)
-		return (ft_atoi_error(atoi_error));
-	if (str[i] && (str[i] == '-' || str[i] == '+'))
-	{
-		if (str[i] == '-')
-			sign = -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		nbr = nbr * 10 + str[i] - '0';
-		i++;
-	}
-	return (nbr * sign);
-}
-
-static void    check_num(char **split)
+static int    check_num(char **split)
 {
     int i;
     int j;
@@ -59,7 +24,7 @@ static void    check_num(char **split)
         ft_fprintf(2, "exit\nminishell: exit: %s\
 : numeric argument required\n", split[i]);
         ft_free(&split, arg_counter(split));
-        exit(255);
+        return (1);
     }
     while (split[i])
     {
@@ -73,47 +38,32 @@ static void    check_num(char **split)
                 ft_fprintf(2, "exit\nminishell: exit: %s\
 : numeric argument required\n", split[i]);
                 ft_free(&split, arg_counter(split));
-                exit(255);
+                return (1);
             }
             j++;
         }
         i++;
     }
+    return (0);
 }
 
-static long long	extend_exit(char **split, int ret_value)
+void    clear_everything(t_shell *shell)
 {
-	int		i;
-	long long ret;
+	struct termios	term;
 
-	i = 0;
-    if (!split)
-        return (ret_value);
-    if (arg_counter(split) == 1)
-    {
-        ft_free(&split, arg_counter(split));
-        return (ret_value);
-    }
-    remove_quotes_from_matrix(split);
-    check_num(split);
-	ret = ft_atol(split[1], &i);
-	if (i == 1)
-	{
-		ft_fprintf(2, "exit\nminishell: exit: %s: numeric argument required\n",
-			split[1]);
-		ft_free(&split, arg_counter(split));
-		exit(255);
-	}
-	if (arg_counter(split) == 2)
-		ret_value = ft_atoi(split[1]) % 256;
-	ft_free(&split, arg_counter(split));
-	return (ret);
+    free(shell->history_path);
+    ft_lstclear_env(&shell->paths->env_lst);
+    ft_lstclear_env(&shell->paths->export_env_lst);
+    free(shell->paths);
+    free(shell);
+	tcgetattr(0, &term);
+	term.c_lflag |= ECHOCTL;
+	tcsetattr(0, TCSANOW, &term);
 }
 
 void	ft_exit(t_shell *shell, char *line)
 {
 	int				ret_value;
-	struct termios	term;
 	char			**split;
 
 	ret_value = 0;
@@ -121,18 +71,18 @@ void	ft_exit(t_shell *shell, char *line)
 	if (arg_counter(split) > 2)
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
+        g_exit_status = 1;
 		ft_free(&split, arg_counter(split));
 		return ;
 	}
-	if (line)
-		ret_value = extend_exit(split, 0);
-	free(shell->history_path);
-	ft_lstclear_env(&shell->paths->env_lst);
-	ft_lstclear_env(&shell->paths->export_env_lst);
-	free(shell->paths);
-	free(shell);
-	tcgetattr(0, &term);
-	term.c_lflag |= ECHOCTL;
-	tcsetattr(0, TCSANOW, &term);
+    if (split[1])
+    {
+        ret_value = ft_atoi(split[1]);
+        if (check_num(split))
+            ret_value = 255;
+    }
+    else
+        ft_free(&split, arg_counter(split));
+    clear_everything(shell);
 	exit(ret_value);
 }
