@@ -20,12 +20,7 @@ static int    check_num(char **split)
 
     i = 1;
     if (split[i][0] == '\0')
-    {
-        ft_fprintf(2, "exit\nminishell: exit: %s\
-: numeric argument required\n", split[i]);
-        ft_free(&split, arg_counter(split));
         return (1);
-    }
     while (split[i])
     {
         j = 0;
@@ -34,12 +29,7 @@ static int    check_num(char **split)
         while (split[i][j])
         {
             if (!ft_isdigit(split[i][j]) || split[i][0] == '\0')
-            {
-                ft_fprintf(2, "exit\nminishell: exit: %s\
-: numeric argument required\n", split[i]);
-                ft_free(&split, arg_counter(split));
                 return (1);
-            }
             j++;
         }
         i++;
@@ -72,17 +62,19 @@ void	ft_exit(t_shell *shell, char *line)
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
         g_exit_status = 1;
-		ft_free(&split, arg_counter(split));
-		return ;
+		return ((void)ft_free(&split, arg_counter(split)));
 	}
     if (split[1])
     {
         ret_value = ft_atoi(split[1]);
         if (check_num(split))
-            ret_value = 255;
+        {
+            ft_fprintf(2, "exit\nminishell: exit: %s\
+: numeric argument required\n", split[1]);
+           ret_value = 255;
+        }
     }
-    else
-        ft_free(&split, arg_counter(split));
+    ft_free(&split, arg_counter(split));
     clear_everything(shell);
 	exit(ret_value);
 }
