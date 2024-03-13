@@ -85,11 +85,12 @@ int			count_rds(t_process *prcs);
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
-void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
 
 /* pr_checker_aux.c */
 char		*get_commad(t_process *prc, char **split);
+void		free_prcs(t_shell *all);
+void        execute_builtin(t_shell *all, t_process *prc);
 
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,

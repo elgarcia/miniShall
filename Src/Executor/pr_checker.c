@@ -12,57 +12,45 @@
 
 #include "../../Inc/minishell.h"
 
-void	free_prcs(t_shell *all)
+static int	check_builtins_aux2(char **aux, t_shell *all, int len,
+		t_process *prc)
 {
-	t_process	*aux;
-
-	aux = all->lst_process;
-	while (aux)
+	if (!ft_strncmp(aux[0], "history", 8))
 	{
-		aux = aux->next;
-		free(all->lst_process->process);
-		free(all->lst_process->rd);
-		free(all->lst_process);
-		all->lst_process = aux;
+		execute_builtin(all, prc);
+		return (ft_free(&aux, len), 1);
 	}
-	all->n_process = 0;
-	all->lst_process = NULL;
+	else if (!ft_strncmp(aux[0], "exit", 5))
+	{
+		execute_builtin(all, prc);
+		return (ft_free(&aux, len), 1);
+	}
+	return (0);
 }
 
-static int	check_builtins_aux(char **aux, t_shell *all, \
-int len, t_process *prc)
+static int	check_builtins_aux(char **aux, t_shell *all, int len,
+		t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		ft_export(all->paths, aux, 1);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "unset", 6))
+	else if (!ft_strncmp(aux[0], "unset", 6))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		ft_unset(all->paths, aux);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "env", 4))
+	else if (!ft_strncmp(aux[0], "env", 4))
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		ft_env(all->paths, aux);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "history", 8))
+	else
 	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		print_history(all);
-		return (ft_free(&aux, len), 1);
+		return (check_builtins_aux2(aux, all, len, prc));
 	}
-	if (!ft_strncmp(aux[0], "exit", 5))
-	{
-		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		ft_exit(all, all->lst_process->process);
-		return (ft_free(&aux, len), 1);
-	}
-	return (ft_free(&aux, len), 0);
+	return (0);
 }
 
 int	check_builtins(t_shell *all, t_process *prc)
@@ -72,7 +60,7 @@ int	check_builtins(t_shell *all, t_process *prc)
 	aux = echo_split(prc->process, ' ');
 	remove_quotes_from_matrix(aux);
 	if (!aux)
-		return (printf("echo_split failed!\n"), -1);
+		return (ft_fprintf(2, "echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
@@ -116,16 +104,18 @@ char	*get_ifile(char *process, int inout)
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
-	char			**split;
-	char			*cmd;
-	struct stat		path_stat;
+	char		**split;
+	char		*cmd;
+	struct stat	path_stat;
 
 	split = NULL;
 	cmd = NULL;
-	if (ft_strcmp((*prcs)->process, "./minishell") \
-	&& stat((*prcs)->process, &path_stat) == 0)
-		return (printf("%s: is a directory\n", \
-		(*prcs)->process), g_exit_status = 126);
+	// no funciona si quiero ejecutar otro programa que no seas minishell
+	if (ft_strcmp((*prcs)->process, "./minishell")
+		&& ft_strncmp((*prcs)->process, "./", 2) && stat((*prcs)->process,
+			&path_stat) == 0)
+		return (ft_fprintf(2, "%s: is a directory\n", (*prcs)->process),
+			g_exit_status = 126);
 	else if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');
@@ -136,8 +126,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 		ft_free(&split, arg_counter(split));
 	}
 	else
-		g_exit_status = prepare_command((*prcs)->process, \
-		exec_args, all->paths->env_lst);
+		g_exit_status = prepare_command((*prcs)->process, exec_args,
+				all->paths->env_lst);
 	if (g_exit_status == -1 || g_exit_status == -2)
 		g_exit_status = 127;
 	return (g_exit_status);

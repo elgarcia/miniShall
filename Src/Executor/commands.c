@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:17:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:53:44 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	search_path(char **env_1, char	**actual_path, \
 		else
 			double_free(&aux, actual_path);
 	}
-	return (printf("%s: command not found\n", command), -2);
+	return (ft_fprintf(2, "%s: command not found\n", command), -2);
 }
 
 int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
@@ -60,7 +60,7 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 		}
 		aux = aux->next;
 	}
-	printf("%s: No such file or directory\n", command);
+	ft_fprintf(2, "%s: No such file or directory\n", command);
 	return (-1);
 }
 

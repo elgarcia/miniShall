@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/12 11:51:28 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 14:53:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 		{
 			all->fd_in = open(file, O_RDONLY);
 			if (all->fd_in == -1)
-				return (printf("%s: %s\n", file, strerror(errno)), \
+				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
 				free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_in, STDIN_FILENO);
 		}
