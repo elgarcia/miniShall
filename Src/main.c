@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/12 13:18:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:32:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,13 @@ void	extend(t_shell *new, char *line)
 		printf("exit\n");
 		ft_exit(new, line);
 	}
-	if (line[0] != 0)
+	if (line[0] != '\0')
 	{
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1, 0);
+		if (!new_line || !*new_line || new_line[0] == ' ')
+			return ;
 		if (input_parser(new_line, new, 0) != -1)
 		{
 			add_history(line);
@@ -88,6 +90,7 @@ void	extend(t_shell *new, char *line)
 
 void	loop(t_shell *new, char *line, char *prompt, char *exit)
 {
+	(void)exit;
 	while (42)
 	{
 		prompt = get_prompt();
@@ -95,15 +98,6 @@ void	loop(t_shell *new, char *line, char *prompt, char *exit)
 		line = readline(prompt);
 		signal(SIGINT, SIG_IGN);
 		free(prompt);
-		if (line)
-		{
-			exit = ft_strtrim(line, " ");
-			if (ft_strncmp(exit, "exit", 4) == 0 && (exit[4] == 0
-					|| exit[4] == ' '))
-				return (free(exit), ft_exit(new, line));
-			else
-				free(exit);
-		}
 		extend(new, line);
 		free(line);
 	}

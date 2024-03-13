@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:20:09 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:35:10 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ int	is_builting(t_process *prc)
 	else if (!ft_strncmp(aux[0], "cd", 3))
 		return (ft_free(&aux, len), 1);
 	else if (!ft_strncmp(aux[0], "pwd", 4))
+		return (ft_free(&aux, len), 1);
+	else if (!ft_strncmp(aux[0], "exit", 5))
 		return (ft_free(&aux, len), 1);
 	return (ft_free(&aux, len), 0);
 }

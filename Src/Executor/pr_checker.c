@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 22:13:47 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:36:46 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,12 @@ int len, t_process *prc)
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
 		print_history(all);
+		return (ft_free(&aux, len), 1);
+	}
+	if (!ft_strncmp(aux[0], "exit", 5))
+	{
+		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
+		ft_exit(all, all->lst_process->process);
 		return (ft_free(&aux, len), 1);
 	}
 	return (ft_free(&aux, len), 0);
