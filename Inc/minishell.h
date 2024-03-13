@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 20:24:33 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:40:25 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		replace_envp(char *name, char *value, char **envp);
 /* executor.c */
 void		exec_process(t_shell *all, int i, int j, int status);
 void		close_pipes(t_shell *all);
-void		exec_type(t_shell *all, t_process *aux, int split);
+void		exec_type(t_shell *all, t_process *aux);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 void		exec_son(t_shell *all, t_process *aux);
 

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 21:25:10 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/13 10:45:48 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,18 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 	}
 	read_file(all, all->og_infile, line, outword);
 	if (rd != -1)
+	{
 		free(outword);
+		exit(EXIT_SUCCESS);
+	}
 }
 
-static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
+static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 {
 	char	*file;
 
 	if (i->type == ORD || i->type == IRD)
 	{
-		if ((split - 1) == 0)
-			return (printf("minishell: syntax error\n"), exit(EXIT_FAILURE));
 		file = get_ifile(aux->process, i->pos);
 		if (i->type == ORD)
 		{
@@ -58,7 +59,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int split)
 	}
 }
 
-void	exec_type(t_shell *all, t_process *aux, int split)
+void	exec_type(t_shell *all, t_process *aux)
 {
 	t_redir	*i;
 	char	*file;
@@ -80,7 +81,7 @@ void	exec_type(t_shell *all, t_process *aux, int split)
 		else if (i->type == HD)
 			hd = i->pos;
 		else
-			exec_type_aux(all, aux, i, split);
+			exec_type_aux(all, aux, i);
 		i = i->next;
 	}
 	if (aux->next)
@@ -101,7 +102,7 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux, arg_counter(all->exec_args));
+		exec_type(all, aux);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
