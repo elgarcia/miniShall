@@ -70,7 +70,7 @@ void	extend(t_shell *new, char *line)
 		printf("exit\n");
 		ft_exit(new, line);
 	}
-	if (line[0] != '\0')
+	if (line[0] != 0)
 	{
 		add_to_history(new, line);
 		add_history(line);
