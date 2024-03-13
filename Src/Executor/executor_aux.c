@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/01 22:16:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/13 11:59:02 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,17 +34,30 @@ void	init_executor(t_shell *all, t_process **aux, int *i, int *j)
 	*aux = all->lst_process;
 }
 
-void	read_file(t_shell *all, int fd, char *line, char *outword)
+void	read_file(t_shell *all, int rd, char *line, char *outword)
 {
-	line = get_next_line(fd);
+	int	fd_aux;
+
+	if (all->fd_in == -1 && rd > 0)
+		fd_aux = open(".temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
 	{
 		if (all->fd_out != -1)
 			write(all->fd_out, line, ft_strlen(line));
+		if (all->fd_in == -1 && rd > 0)
+			write(fd_aux, line, ft_strlen(line));
 		free(line);
-		line = get_next_line(fd);
+		line = get_next_line(all->og_infile);
 	}
 	free(line);
+	close(fd_aux);
+	if (all->fd_in == -1 && rd > 0)
+	{
+		write_file(all, fd_aux, line);
+		close(fd_aux);
+		unlink(".temp.txt");
+	}
 }
 
 int	count_rds(t_process *prcs)

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/13 10:40:25 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/13 12:15:14 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		check_exp(char **in, int *i, int j);
 int			there_is_rd(t_process *lst);
 
 /* parser_aux_2.c */
-char		**separate_rd(char ***input);
+void		separate_rd(char ***input);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
@@ -122,6 +122,8 @@ void		close_fds(t_shell *all);
 /* auxiliar_functions2.c */
 
 int			has_quotes2(char *str);
+void		write_file(t_shell *all, int fd, char *line);
+int			skip_quotes(char *str);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
