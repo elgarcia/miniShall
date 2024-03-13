@@ -32,7 +32,7 @@ INCLUDE = Inc/
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = #-Wall -Wextra -Werror -g #-fsanitize=address
 READLINE = -lreadline
 
 OBJS = $(SOURCE:.c=.o) $(BUILTINS:.c=.o)

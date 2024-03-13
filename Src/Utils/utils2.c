@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/12 22:45:04 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:59:32 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ int	ft_strlenchr(const char *s, char c)
 
 void	check_status(t_shell *all, int status)
 {
-	if (WIFEXITED(status) && !is_builting(all->lst_process))
+	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		g_exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
+	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3");

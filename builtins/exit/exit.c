@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/13 13:38:02 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/13 20:04:43 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	clear_everything(t_shell *shell)
 	tcsetattr(0, TCSANOW, &term);
 }
 
-void	print_exit_error(char *arg)
+void	print_exit_error(char *arg, int *return_value)
 {
 	ft_fprintf(2, "exit\nminishell:\
  exit: %s: numeric argument required\n", arg);
-	g_exit_status = 255;
+	*return_value = 255;
 }
 
 void	ft_exit(t_shell *shell, char *line)
@@ -78,7 +78,7 @@ void	ft_exit(t_shell *shell, char *line)
 	{
 		ret_value = ft_atoi(split[1]);
 		if (check_num(split))
-			print_exit_error(split[1]);
+			print_exit_error(split[1], &ret_value);
 	}
 	ft_free(&split, arg_counter(split));
 	clear_everything(shell);
