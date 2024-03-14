@@ -99,7 +99,7 @@ int	input_parser(char *line, t_shell *new, int i)
 	if ((there_is_rd(new->lst_process) && \
 	is_rdp(new->input[i - 1])) || is_ao(new->input[i - 1]))
 	{
-		printf("Syntax error\n");
+		ft_fprintf(2, "Syntax error\n");
 		free_prcs(new);
 		g_exit_status = 258;
 		return (ft_free(&new->input, arg_counter(new->input)), -1);
