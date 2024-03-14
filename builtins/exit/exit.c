@@ -82,5 +82,6 @@ void	ft_exit(t_shell *shell, char *line)
 	}
 	ft_free(&split, arg_counter(split));
 	clear_everything(shell);
+    printf("exit\n");
 	exit(ret_value);
 }

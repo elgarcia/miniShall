@@ -201,6 +201,7 @@ void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char const *s);
+void	    clear_everything(t_shell *shell);
 
 // PARSER
 

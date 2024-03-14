@@ -67,8 +67,9 @@ void	extend(t_shell *new, char *line)
 
 	if (line == NULL)
 	{
-		printf("exit\n");
-		ft_exit(new, line);
+        clear_everything(new);
+        printf("exit\n");
+        exit(0);
 	}
 	if (line[0] != 0)
 	{
@@ -88,9 +89,8 @@ void	extend(t_shell *new, char *line)
 	}
 }
 
-void	loop(t_shell *new, char *line, char *prompt, char *exit)
+void	loop(t_shell *new, char *line, char *prompt)
 {
-	(void)exit;
 	while (42)
 	{
 		prompt = get_prompt();
@@ -113,7 +113,7 @@ int	main(int argc, char **argv, char **envp)
 		//print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
-		loop(new, NULL, NULL, NULL);
+		loop(new, NULL, NULL);
 	}
 	else
 		ft_fprintf(2, "Too many arguments\n");
