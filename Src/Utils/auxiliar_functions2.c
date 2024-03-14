@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 16:23:00 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 17:42:57 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	skip_quotes(char *str)
 	int	i;
 
 	i = 1;
-	if (str[0] == '\'')
+	if (str[i] == '\'')
 	{
 		while (str[i] && (str[i] != '\''))
 			i++;
