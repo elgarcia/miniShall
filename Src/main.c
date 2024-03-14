@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:54:26 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:17:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ void	extend(t_shell *new, char *line)
 	if (line == NULL)
 	{
 		clear_everything(new);
-		printf("exit\n");
 		exit(0);
 	}
 	if (line[0] != 0)

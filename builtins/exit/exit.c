@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/14 18:53:45 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 20:15:34 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	clear_everything(t_shell *shell)
 	free(shell->history_path);
 	ft_lstclear_env(&shell->paths->env_lst);
 	ft_lstclear_env(&shell->paths->export_env_lst);
+	free_pikes(&shell);
 	free(shell->paths);
 	free(shell);
 	tcgetattr(0, &term);
@@ -82,6 +83,5 @@ void	ft_exit(t_shell *shell, char *line)
 	}
 	ft_free(&split, arg_counter(split));
 	clear_everything(shell);
-	printf("exit\n");
 	exit(ret_value);
 }
