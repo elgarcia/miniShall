@@ -46,7 +46,8 @@ static int	has_quotes(char *s)
 			if (s[i] == ' ')
 				return (1);
 		}
-		i++;
+        else
+		    i++;
 	}
 	return (0);
 }

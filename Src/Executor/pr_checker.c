@@ -12,51 +12,43 @@
 
 #include "../../Inc/minishell.h"
 
-void	free_prcs(t_shell *all)
+static int	check_builtins_aux2(char **aux, t_shell *all, int len,
+		t_process *prc)
 {
-	t_process	*aux;
-
-	aux = all->lst_process;
-	while (aux)
+	if (!ft_strncmp(aux[0], "history", 8))
 	{
-		aux = aux->next;
-		free(all->lst_process->process);
-		free(all->lst_process->rd);
-		free(all->lst_process);
-		all->lst_process = aux;
+		execute_builtin(all, prc);
+		return (ft_free(&aux, len), 1);
 	}
-	all->n_process = 0;
-	all->lst_process = NULL;
+	else if (!ft_strncmp(aux[0], "exit", 5))
+	{
+		execute_builtin(all, prc);
+		return (ft_free(&aux, len), 1);
+	}
+	return (0);
 }
 
-static int	check_builtins_aux(char **aux, t_shell *all, \
-int len, t_process *prc)
+static int	check_builtins_aux(char **aux, t_shell *all, int len,
+		t_process *prc)
 {
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
-		exec_type(all, prc);
-		ft_export(all->paths, aux, 1);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "unset", 6))
+	else if (!ft_strncmp(aux[0], "unset", 6))
 	{
-		exec_type(all, prc);
-		ft_unset(all->paths, aux);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "env", 4))
+	else if (!ft_strncmp(aux[0], "env", 4))
 	{
-		exec_type(all, prc);
-		ft_env(all->paths, aux);
+		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-	if (!ft_strncmp(aux[0], "history", 8))
-	{
-		exec_type(all, prc);
-		print_history(all);
-		return (ft_free(&aux, len), 1);
-	}
-	return (ft_free(&aux, len), 0);
+	else
+		return (check_builtins_aux2(aux, all, len, prc));
+	return (0);
 }
 
 int	check_builtins(t_shell *all, t_process *prc)
@@ -66,22 +58,22 @@ int	check_builtins(t_shell *all, t_process *prc)
 	aux = echo_split(prc->process, ' ');
 	remove_quotes_from_matrix(aux);
 	if (!aux)
-		return (printf("echo_split failed!\n"), -1);
+		return (ft_fprintf(2, "echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		exec_type(all, prc);
+		exec_type(all, prc, -1);
 		ft_echo(aux, prc);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
-		exec_type(all, prc);
+		exec_type(all, prc, -1);
 		ft_cd(all->paths, aux);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
-		exec_type(all, prc);
+		exec_type(all, prc, -1);
 		ft_pwd();
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}

@@ -75,6 +75,8 @@ void	extend(t_shell *new, char *line)
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1, 0);
+		if (!new_line || !*new_line || new_line[0] == ' ')
+			return ;
 		if (input_parser(new_line, new, 0) != -1)
 		{
 			add_history(line);
@@ -88,6 +90,7 @@ void	extend(t_shell *new, char *line)
 
 void	loop(t_shell *new, char *line, char *prompt, char *exit)
 {
+	(void)exit;
 	while (42)
 	{
 		prompt = get_prompt();
@@ -95,15 +98,6 @@ void	loop(t_shell *new, char *line, char *prompt, char *exit)
 		line = readline(prompt);
 		signal(SIGINT, SIG_IGN);
 		free(prompt);
-		if (line)
-		{
-			exit = ft_strtrim(line, " ");
-			if (ft_strncmp(exit, "exit", 4) == 0 && (exit[4] == 0
-					|| exit[4] == ' '))
-				return (free(exit), ft_exit(new, line));
-			else
-				free(exit);
-		}
 		extend(new, line);
 		free(line);
 	}
@@ -116,7 +110,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
-		print_banner();
+		//print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
 		loop(new, NULL, NULL, NULL);

@@ -6,7 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2024/03/14 13:04:49 by eliagarc         ###   ########.fr       */
+=======
+/*   Updated: 2024/03/09 22:13:35 by eliagarc         ###   ########.fr       */
+>>>>>>> bauti
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +55,7 @@ int			there_is_rd(t_process *lst);
 
 /* parser_aux_2.c */
 void		separate_rd(char ***input);
+char		**separate_rd(char ***input);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
@@ -63,7 +68,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
-void		check_status(t_shell *all, int status);
+void		check_status(int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);
@@ -85,11 +90,12 @@ int			count_rds(t_process *prcs);
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
-void		free_prcs(t_shell *all);
 char		*get_ifile(char *process, int inout);
 
 /* pr_checker_aux.c */
 char		*get_commad(t_process *prc, char **split);
+void		free_prcs(t_shell *all);
+void        execute_builtin(t_shell *all, t_process *prc);
 
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,

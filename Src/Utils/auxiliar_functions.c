@@ -35,6 +35,8 @@ int	is_builting(t_process *prc)
 		return (ft_free(&aux, len), 1);
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 		return (ft_free(&aux, len), 1);
+	else if (!ft_strncmp(aux[0], "exit", 5))
+		return (ft_free(&aux, len), 1);
 	return (ft_free(&aux, len), 0);
 }
 

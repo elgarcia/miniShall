@@ -50,7 +50,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 		{
 			all->fd_in = open(file, O_RDONLY);
 			if (all->fd_in == -1)
-				return (printf("%s: %s\n", file, strerror(errno)), \
+				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
 				free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_in, STDIN_FILENO);
 		}
@@ -58,7 +58,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 	}
 }
 
-void	exec_type(t_shell *all, t_process *aux)
+void	exec_type(t_shell *all, t_process *aux, int hd)
 {
 	t_redir	*i;
 	char	*file;
@@ -99,7 +99,7 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux);
+		exec_type(all, aux, -1);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
@@ -127,7 +127,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 	while (j < i)
 	{
 		waitpid(all->sons[j++], &status, 0);
-		check_status(all, status);
+		check_status(status);
 	}
 	reset_prc(all);
 }
