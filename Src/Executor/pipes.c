@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:46:14 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:47:22 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 {
-	/* if (!ft_strncmp(prc->process, "exit", 4) && prc->n_process == 0)
-		ft_exit(all, prc->process); */
 	if (prc->n_process == 0 && !is_builting(prc) \
 	&& ((prc->rd) && prc->rd->pos > 1))
 		open_file(prc->process, &all->fd_in);
