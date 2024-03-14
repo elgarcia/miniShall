@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:02:06 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:13:15 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	separate_rd(char ***input)
 	while ((*input)[++i])
 	{
 		aux = 0;
-		if (i != 0 && (*input)[i][1] != '\"' && (*input)[i][1] != '\'')
+		if (i != 0 && ((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
 			aux = skip_quotes((*input)[i]);
 		if (ft_strnstr((*input)[i] + aux, "|", ft_strlen((*input)[i] - aux)) \
 		&& ft_strcmp((*input)[i], "|"))
@@ -94,13 +94,13 @@ void	separate_rd(char ***input)
 		&& ft_strcmp((*input)[i], "<<"))
 			*input = ft_reallocate(input, 2, i, "<<");
 		else if (ft_strnstr((*input)[i] + aux, ">>", ft_strlen((*input)[i] - aux)) \
-		&& ft_strcmp((*input)[i], ""))
+		&& ft_strcmp((*input)[i], ">>"))
 			*input = ft_reallocate(input, 2, i, ">>");
 		else if (ft_strnstr((*input)[i] + aux, "<", ft_strlen((*input)[i] - aux)) \
-		&& ft_strncmp((*input)[i], "<", 1))
+		&& ft_strncmp((*input)[i], "<", 2))
 			*input = ft_reallocate(input, 2, i, "<");
 		else if (ft_strnstr((*input)[i] + aux, ">", ft_strlen((*input)[i] - aux)) \
-		&& ft_strncmp((*input)[i], ">", 1))
+		&& ft_strncmp((*input)[i], ">", 2))
 			*input = ft_reallocate(input, 2, i, ">");
 	}
 }

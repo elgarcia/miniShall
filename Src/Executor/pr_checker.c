@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:02:50 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:39:45 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 
 	split = NULL;
 	cmd = NULL;
-	if (ft_strcmp((*prcs)->process, "./minishell") \
-	&& stat((*prcs)->process, &path_stat) == 0)
-		return (printf("%s: is a directory\n", \
-		(*prcs)->process), g_exit_status = 126);
+	if (stat((*prcs)->process, &path_stat) == 0 \
+	&& (S_ISDIR(path_stat.st_mode)))
+			return (printf("%s: is a directory\n", \
+			(*prcs)->process), g_exit_status = 126);
 	else if ((*prcs)->rd)
 	{
 		split = echo_split((*prcs)->process, ' ');

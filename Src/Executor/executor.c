@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:03:29 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:41:09 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ void	exec_son(t_shell *all, t_process *aux)
 	char	**envp;
 
 	if (check_builtins(all, aux))
-	{
-		if (aux->next)
 			exit(EXIT_SUCCESS);
-	}
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
