@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 22:13:42 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 13:03:29 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,11 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		outword = get_ifile(aux->process, rd);
 		outword = ft_strjoin(outword, "\n");
 	}
-	read_file(all, all->og_infile, line, outword);
+	read_file(all, rd, line, outword);
 	if (rd != -1)
 		free(outword);
+	if (all->fd_in == -1)
+		exit(EXIT_SUCCESS);
 }
 
 static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
@@ -56,7 +58,7 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 	}
 }
 
-void	exec_type(t_shell *all, t_process *aux, int split, int hd)
+void	exec_type(t_shell *all, t_process *aux)
 {
 	t_redir	*i;
 	char	*file;
@@ -97,7 +99,7 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux, arg_counter(all->exec_args), -1);
+		exec_type(all, aux);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
