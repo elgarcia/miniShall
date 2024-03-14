@@ -63,7 +63,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
-void		check_status(t_shell *all, int status);
+void		check_status(int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);

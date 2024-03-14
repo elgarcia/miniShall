@@ -126,7 +126,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 	while (j < i)
 	{
 		waitpid(all->sons[j++], &status, 0);
-		check_status(all, status);
+		check_status(status);
 	}
 	reset_prc(all);
 }

@@ -61,7 +61,7 @@ static void	execute_builtin2(t_shell *all, t_process *prc, char **aux)
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
 		exec_type(all, prc, ft_word_count(prc->process, ' '), -1);
-		ft_exit(all, all->lst_process->process);
+		ft_exit(all, prc->process);
 	}
 }
 

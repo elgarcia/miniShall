@@ -72,11 +72,11 @@ int	ft_strlenchr(const char *s, char c)
 	return (-1);
 }
 
-void	check_status(t_shell *all, int status)
+void	check_status(int status)
 {
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		g_exit_status = WEXITSTATUS(status);
-	if (WIFSIGNALED(status))
+    else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3");

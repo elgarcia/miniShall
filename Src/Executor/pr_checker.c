@@ -47,9 +47,7 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len,
 		return (ft_free(&aux, len), 1);
 	}
 	else
-	{
 		return (check_builtins_aux2(aux, all, len, prc));
-	}
 	return (0);
 }
 
