@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 17:42:57 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:34:14 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,24 @@ int	skip_quotes(char *str)
 			i++;
 	}
 	return (i);
+}
+
+int	check_file(char **file, t_process *aux, t_redir *i)
+{
+	*file = get_ifile(aux->process, i->pos);
+	if (*file && !access(*file, F_OK))
+	{
+		if (access(*file, R_OK))
+			return (printf("%s: Permission denied\n", *file), \
+			free(*file), -1);
+	}
+	return (0);
+}
+
+void	ft_allocate(int comp, int *size, char ***aux, size_t len)
+{
+	if (comp != 0 && comp != (int)len)
+		*aux = ft_calloc(*size + 1, sizeof(char *));
+	else
+		*aux = ft_calloc(--(*size) + 1, sizeof(char *));
 }

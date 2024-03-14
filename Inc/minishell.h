@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:49:51 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:34:31 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void		replace_envp(char *name, char *value, char **envp);
 /* executor.c */
 void		exec_process(t_shell *all, int i, int j, int status);
 void		close_pipes(t_shell *all);
-void		exec_type(t_shell *all, t_process *aux, int hd);
+int			exec_type(t_shell *all, t_process *aux, int hd);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 void		exec_son(t_shell *all, t_process *aux);
 
@@ -125,6 +125,8 @@ void		close_fds(t_shell *all);
 int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
 int			skip_quotes(char *str);
+int			check_file(char **file, t_process *aux, t_redir *i);
+void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);

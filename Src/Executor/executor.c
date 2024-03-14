@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:36:04 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 19:59:01 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,17 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		exit(EXIT_SUCCESS);
 }
 
-static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
+static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int *hd)
 {
 	char	*file;
 
 	if (i->type == ORD || i->type == IRD)
 	{
-		file = get_ifile(aux->process, i->pos);
+		if (check_file(&file, aux, i) == -1)
+			return (g_exit_status = 1);
 		if (i->type == ORD)
 		{
 			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
-			if (all->fd_out == -1)
-				return (free(file), exit(EXIT_FAILURE));
 			dup2(all->fd_out, STDOUT_FILENO);
 		}
 		else
@@ -51,14 +50,17 @@ static void	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 			all->fd_in = open(file, O_RDONLY);
 			if (all->fd_in == -1)
 				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
-				free(file), exit(EXIT_FAILURE));
+				free(file), g_exit_status = 1);
 			dup2(all->fd_in, STDIN_FILENO);
 		}
 		free(file);
 	}
+	else if (i->type == HD)
+		*hd = i->pos;
+	return (0);
 }
 
-void	exec_type(t_shell *all, t_process *aux, int hd)
+int	exec_type(t_shell *all, t_process *aux, int hd)
 {
 	t_redir	*i;
 	char	*file;
@@ -71,20 +73,20 @@ void	exec_type(t_shell *all, t_process *aux, int hd)
 			file = get_ifile(aux->process, i->pos);
 			all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0666);
 			if (all->fd_out == -1)
-				return (free(file), exit(EXIT_FAILURE));
+				return (free(file), g_exit_status = 1);
 			dup2(all->fd_out, STDOUT_FILENO);
 			free(file);
 		}
-		else if (i->type == HD)
-			hd = i->pos;
 		else
-			exec_type_aux(all, aux, i);
+			if (exec_type_aux(all, aux, i, &hd) == 1)
+				return (g_exit_status);
 		i = i->next;
 	}
 	if (aux->next)
 		dup2(all->pipes[1], STDOUT_FILENO);
 	if (hd != -1 || check_cats(all, aux) == 1)
-		return (here_doc(all, aux, hd));
+		return (here_doc(all, aux, hd), 0);
+	return (0);
 }
 
 void	exec_son(t_shell *all, t_process *aux)
@@ -99,7 +101,8 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		exec_type(all, aux, -1);
+		if (exec_type(all, aux, -1) == 1)
+			exit(g_exit_status);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
