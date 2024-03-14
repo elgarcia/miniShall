@@ -12,6 +12,23 @@
 
 #include "minishell.h"
 
+void	free_prcs(t_shell *all)
+{
+	t_process	*aux;
+
+	aux = all->lst_process;
+	while (aux)
+	{
+		aux = aux->next;
+		free(all->lst_process->process);
+		free(all->lst_process->rd);
+		free(all->lst_process);
+		all->lst_process = aux;
+	}
+	all->n_process = 0;
+	all->lst_process = NULL;
+}
+
 char	*get_commad(t_process *prc, char **split)
 {
 	char	*ret;
@@ -45,7 +62,7 @@ static void	execute_builtin2(t_shell *all, t_process *prc, char **aux)
 	}
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
-		exec_type(all, prc), -1);
+		exec_type(all, prc, -1);
 		ft_exit(all, prc->process);
 	}
 }
@@ -68,7 +85,7 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	else if (!ft_strncmp(aux[0], "env", 4))
 	{
 		exec_type(all, prc, -1);
-		ft_env(all->paths, aux);
+		ft_env(all->paths);
 	}
 	else
 		execute_builtin2(all, prc, aux);

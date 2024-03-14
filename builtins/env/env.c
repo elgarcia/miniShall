@@ -12,17 +12,8 @@
 
 #include "../../Inc/minishell.h"
 
-void	ft_env(t_paths *paths, char **argv)
+void	ft_env(t_paths *paths)
 {
-	int	argc;
-
-	argc = arg_counter(argv);
-	if (argc > 1)
-	{
-		g_exit_status = 127;
-		ft_fprintf(2, "env: %s: No such file or directory\n", argv[1]);
-		return ;
-	}
 	print_env_list(paths->env_lst);
 	g_exit_status = 0;
 }

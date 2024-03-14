@@ -6,11 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2024/03/14 13:04:49 by eliagarc         ###   ########.fr       */
-=======
-/*   Updated: 2024/03/09 22:13:35 by eliagarc         ###   ########.fr       */
->>>>>>> bauti
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +51,6 @@ int			there_is_rd(t_process *lst);
 
 /* parser_aux_2.c */
 void		separate_rd(char ***input);
-char		**separate_rd(char ***input);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
@@ -76,7 +71,7 @@ void		replace_envp(char *name, char *value, char **envp);
 /* executor.c */
 void		exec_process(t_shell *all, int i, int j, int status);
 void		close_pipes(t_shell *all);
-void		exec_type(t_shell *all, t_process *aux);
+void		exec_type(t_shell *all, t_process *aux, int hd);
 void		here_doc(t_shell *all, t_process *aux, int rd);
 void		exec_son(t_shell *all, t_process *aux);
 
@@ -185,7 +180,7 @@ void		update_or_process(t_paths *paths, char *name, char *value,
 int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
-void		ft_env(t_paths *paths, char **argv);
+void		ft_env(t_paths *paths);
 void		ft_cd(t_paths *paths, char **dir);
 int			ft_pwd(void);
 int			ft_echo(char **argv, t_process *prc);
