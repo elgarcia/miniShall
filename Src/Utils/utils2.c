@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/13 20:59:32 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:50:30 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	check_status(int status)
 {
 	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
 		g_exit_status = WEXITSTATUS(status);
-    else if (WIFSIGNALED(status))
+	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3");

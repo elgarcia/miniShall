@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 20:49:33 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:54:26 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,9 @@ void	extend(t_shell *new, char *line)
 
 	if (line == NULL)
 	{
-        clear_everything(new);
-        printf("exit\n");
-        exit(0);
+		clear_everything(new);
+		printf("exit\n");
+		exit(0);
 	}
 	if (line[0] != 0)
 	{
@@ -110,7 +110,7 @@ int	main(int argc, char **argv, char **envp)
 	(void)argv;
 	if (argc == 1)
 	{
-		//print_banner();
+		print_banner();
 		init_minishell(&new, envp);
 		change_shell(new);
 		loop(new, NULL, NULL);

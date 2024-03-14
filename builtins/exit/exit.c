@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/13 20:04:43 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:53:45 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,6 @@ void	ft_exit(t_shell *shell, char *line)
 	}
 	ft_free(&split, arg_counter(split));
 	clear_everything(shell);
-    printf("exit\n");
+	printf("exit\n");
 	exit(ret_value);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 13:04:49 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:49:51 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ char		*get_ifile(char *process, int inout);
 /* pr_checker_aux.c */
 char		*get_commad(t_process *prc, char **split);
 void		free_prcs(t_shell *all);
-void        execute_builtin(t_shell *all, t_process *prc);
+void		execute_builtin(t_shell *all, t_process *prc);
 
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,
@@ -201,7 +201,7 @@ void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char const *s);
-void	    clear_everything(t_shell *shell);
+void		clear_everything(t_shell *shell);
 
 // PARSER
 

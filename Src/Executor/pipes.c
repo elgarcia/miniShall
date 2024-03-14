@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:47:22 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:53:00 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_pipex(t_shell *all, t_process *prc, pid_t *pid)
 		}
 	}
 	if (prc->next || !is_builting(prc) || (prc->n_process > 0 \
-	 && prc->n_process == all->n_process - 1))
+	&& prc->n_process == all->n_process - 1))
 	{
 		*pid = fork();
 		if (*pid < 0)

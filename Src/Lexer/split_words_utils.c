@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/09 17:19:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/14 18:50:57 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ static int	has_quotes(char *s)
 			if (s[i] == ' ')
 				return (1);
 		}
-        else
-		    i++;
+		else
+			i++;
 	}
 	return (0);
 }
