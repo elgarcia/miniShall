@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 19:59:01 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:35:38 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 				return (g_exit_status);
 		i = i->next;
 	}
-	if (aux->next)
+	if (aux->next && !search_rd(aux, ORD))
 		dup2(all->pipes[1], STDOUT_FILENO);
 	if (hd != -1 || check_cats(all, aux) == 1)
 		return (here_doc(all, aux, hd), 0);

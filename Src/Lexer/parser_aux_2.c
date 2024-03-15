@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 19:42:17 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:28:07 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 	int	iter;
 
 	iter = 0;
+	*aux = iter;
 	while (in[i][iter])
 	{
 		if (in[i][iter] == rd[0])
-		{
 			*aux = iter;
-			return (iter);
-		}
 		iter++;
 	}
-	return (0);
+	return (*aux);
 }
 
 static int	init_reallocate(int *position, int *i, int *j, int size)
@@ -68,6 +66,8 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 
 static void	separate_rd_aux(char ***input, int i, int aux)
 {
+	if (aux == -1)
+		aux++;
 	if (ft_strnstr((*input)[i] + aux, "|", ft_strlen((*input)[i] + aux)) \
 	&& ft_strcmp((*input)[i], "|"))
 		*input = ft_reallocate(input, 2, i, "|");
@@ -79,17 +79,17 @@ static void	separate_rd_aux(char ***input, int i, int aux)
 		*input = ft_reallocate(input, 2, i, ">");
 }
 
-void	separate_rd(char ***input)
+int	separate_rd(char ***input, int i)
 {
-	int	i;
 	int	aux;
 
-	i = -1;
 	while ((*input)[++i])
 	{
-		aux = 0;
+		aux = -1;
 		if (((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
-			aux = skip_quotes((*input)[i], 0);
+			aux = skip_quotes((*input)[i], 0, 0);
+		if (aux == 0)
+			return (printf("Syntax error\n"), -1);
 		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)))
 		{
 			if (ft_strcmp((*input)[i], "<<"))
@@ -104,4 +104,5 @@ void	separate_rd(char ***input)
 		else
 			separate_rd_aux(input, i, aux);
 	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 23:03:57 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:53:12 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,36 +39,35 @@ void	write_file(t_shell *all, int fd, char *line)
 	free(line);
 }
 
-int	skip_quotes(char *str, int i)
+int	skip_quotes(char *str, int i, int j)
 {
-	int	i;
 	int	flag;
 	
 	flag = -1;
-	i = 1;
-	if (str[i] == '\'')
+	i++;
+	while (str[i] && i != -1)
 	{
-		i++;
-		while (str[i] && (str[i] != '\''))
+		if (j == 0)
 		{
 			if (str[i] == '\"')
-				i += skip_quotes(str + i, 0);
+				i += skip_quotes(str + i, 0, '\"');
+			else if (str[i] == '\'')
+				i += skip_quotes(str + i, 0, '\'');
 			else
 				i++;
+			if (flag == i)
+				break ;
+			flag = i;
 		}
+		else
+			if (str[i] == j)
+				return (i);
 	}
+	if (str[i] && (str[0] == str[i]))
+		flag = i;
 	else
-	{
-		i++;
-		while (str[i] && (str[i] != '\"'))
-		{
-			if (str[i] == '\'')
-				i += skip_quotes(str + i, 0);
-			else
-				i++;
-		}
-	}
-	return (i);
+		flag = -1;
+	return (flag + 1);
 }
 
 int	check_file(char **file, t_process *aux, t_redir *i)

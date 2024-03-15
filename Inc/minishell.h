@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 15:00:59 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/16 00:27:51 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void		check_exp(char **in, int *i, int j);
 int			there_is_rd(t_process *lst);
 
 /* parser_aux_2.c */
-void		separate_rd(char ***input);
+int			separate_rd(char ***input, int i);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/
@@ -81,6 +81,9 @@ void		pipe_man(t_shell *all);
 void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
 void		read_file(t_shell *all, int fd, char *line, char *outword);
 int			count_rds(t_process *prcs);
+
+/* executor_aux2.c */
+int			search_rd(t_process *prc, int rd);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
@@ -124,7 +127,7 @@ void		close_fds(t_shell *all);
 
 int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
-int			skip_quotes(char *str, int i);
+int			skip_quotes(char *str, int i, int j);
 int			check_file(char **file, t_process *aux, t_redir *i);
 void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 
