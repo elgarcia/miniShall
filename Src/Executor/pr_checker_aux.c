@@ -61,7 +61,6 @@ static void	execute_builtin2(t_shell *all, t_process *prc, char **aux)
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
 		exec_type(all, prc, -1);
-		ft_free(&aux, arg_counter(aux));
 		ft_exit(all, prc->process);
 	}
 }

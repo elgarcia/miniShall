@@ -80,7 +80,7 @@ int	arg_counter(char **argv)
 	int	i;
 
 	i = 0;
-	if (!argv[0])
+	if (!argv || !argv[0])
 		return (0);
 	while (argv[i])
 		i++;
