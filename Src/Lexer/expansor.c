@@ -57,7 +57,7 @@ char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 	char	*env_value;
 
 	env_value = get_env(tmp, shell->paths->env_lst);
-	new = ft_strjoin(new, env_value);
+	new = ft_strjoinfree(new, env_value);
 	free(tmp);
 	free(env_value);
 	tmp = NULL;

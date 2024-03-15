@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 20:14:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:30:16 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ char	*get_commad(t_process *prc, char **split)
 	ret = NULL;
 	if (prc->rd->pos == 0)
 	{
-		return (ft_substr(prc->process, \
-		ft_strlen(split[0]), ft_strlen(prc->process)));
+		return (ft_substr(prc->process, ft_strlen(split[0]),
+				ft_strlen(prc->process)));
 	}
 	else
 	{
@@ -61,6 +61,7 @@ static void	execute_builtin2(t_shell *all, t_process *prc, char **aux)
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
 		exec_type(all, prc, -1);
+		ft_free(&aux, arg_counter(aux));
 		ft_exit(all, prc->process);
 	}
 }
@@ -89,5 +90,6 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	}
 	else
 		execute_builtin2(all, prc, aux);
-	ft_free(&aux, arg_counter(aux));
+	if (aux)
+		ft_free(&aux, arg_counter(aux));
 }

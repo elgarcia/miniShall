@@ -6,14 +6,14 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:17:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:30:39 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	search_path(char **env_1, char	**actual_path, \
-	char *command, char ***exec_args)
+int	search_path(char **env_1, char **actual_path, char *command,
+		char ***exec_args)
 {
 	char	*aux;
 	int		i;
@@ -66,6 +66,7 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 
 int	check_cmd(char *command, char ***exec_args)
 {
+	remove_quotes_from_string(command);
 	if (access(command, F_OK | X_OK) == 0)
 	{
 		(*exec_args)[0] = ft_strdup(command);
@@ -102,11 +103,11 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 		path_rt = assign_path(exec_args, cmd_split[0], envp);
 		if (path_rt == -1 || path_rt == -2)
 		{
-			ft_free(&cmd_split, ft_word_count(process, ' '));
+			ft_free(&cmd_split, arg_counter(cmd_split));
 			return (free(*exec_args), -1);
 		}
 	}
 	if (aux == -1 || init_execargs(exec_args, process) == -1)
-		return (ft_free(&cmd_split, ft_word_count(process, ' ')), -1);
-	return (ft_free(&cmd_split, ft_word_count(process, ' ')), 0);
+		return (ft_free(&cmd_split, arg_counter(cmd_split)), -1);
+	return (ft_free(&cmd_split, arg_counter(cmd_split)), 0);
 }

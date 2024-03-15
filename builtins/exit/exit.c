@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/14 20:15:34 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:28:23 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,21 @@ static int	check_num(char **split)
 	return (0);
 }
 
-void	clear_everything(t_shell *shell)
+void	clear_everything(t_shell *shell, int pikes)
 {
 	struct termios	term;
 
-	free(shell->history_path);
+	if (shell->history_path)
+		free(shell->history_path);
 	ft_lstclear_env(&shell->paths->env_lst);
 	ft_lstclear_env(&shell->paths->export_env_lst);
-	free_pikes(&shell);
-	free(shell->paths);
-	free(shell);
+	ft_lstclear_pro(&shell->lst_process);
+	if (pikes)
+		free_pikes(&shell);
+	if (shell->paths)
+		free(shell->paths);
+	if (shell)
+		free(shell);
 	tcgetattr(0, &term);
 	term.c_lflag |= ECHOCTL;
 	tcsetattr(0, TCSANOW, &term);
@@ -82,6 +87,6 @@ void	ft_exit(t_shell *shell, char *line)
 			print_exit_error(split[1], &ret_value);
 	}
 	ft_free(&split, arg_counter(split));
-	clear_everything(shell);
+	clear_everything(shell, 1);
 	exit(ret_value);
 }

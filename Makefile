@@ -10,7 +10,7 @@ CYAN = \033[96m
 BUILTINS = builtins/cd/cd.c builtins/cd/cd_utils.c builtins/cd/cd_utils2.c \
 		   builtins/echo/echo.c builtins/echo/echo_utils.c \
 		   builtins/env/env.c builtins/env/env_utils.c \
-		   builtins/exit/exit.c \
+		   builtins/exit/exit.c builtins/exit/exit_utils.c\
 		   builtins/export/export.c builtins/export/export_utils.c builtins/export/export_utils2.c \
 		   builtins/pwd/pwd.c \
 		   builtins/unset/unset.c \
