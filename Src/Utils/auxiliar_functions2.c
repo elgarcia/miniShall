@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 19:34:14 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 23:02:41 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ void	write_file(t_shell *all, int fd, char *line)
 int	skip_quotes(char *str)
 {
 	int	i;
-
+	int	flag;
+	
+	flag = -1;
 	i = 1;
 	if (str[i] == '\'')
 	{
