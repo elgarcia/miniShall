@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:53:17 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:10:27 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ char	*get_ifile(char *process, int inout)
 	if (aux[i])
 	{
 		ret = ft_strdup(aux[i]);
-		ft_free(&aux, ft_word_count(process, ' '));
+		ft_free(&aux, arg_counter(aux));
 		return (ret);
 	}
 	ft_free(&aux, arg_counter(aux));

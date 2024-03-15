@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:17:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 21:08:54 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,11 +102,11 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 		path_rt = assign_path(exec_args, cmd_split[0], envp);
 		if (path_rt == -1 || path_rt == -2)
 		{
-			ft_free(&cmd_split, ft_word_count(process, ' '));
+			ft_free(&cmd_split, arg_counter(*exec_args));
 			return (free(*exec_args), -1);
 		}
 	}
 	if (aux == -1 || init_execargs(exec_args, process) == -1)
-		return (ft_free(&cmd_split, ft_word_count(process, ' ')), -1);
-	return (ft_free(&cmd_split, ft_word_count(process, ' ')), 0);
+		return (ft_free(&cmd_split, arg_counter(*exec_args)), -1);
+	return (ft_free(&cmd_split, arg_counter(*exec_args)), 0);
 }
