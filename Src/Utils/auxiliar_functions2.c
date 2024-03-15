@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 19:34:14 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:26:46 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,20 +39,29 @@ void	write_file(t_shell *all, int fd, char *line)
 	free(line);
 }
 
-int	skip_quotes(char *str)
+int	skip_quotes(char *str, int i)
 {
-	int	i;
-
-	i = 1;
 	if (str[i] == '\'')
 	{
+		i++;
 		while (str[i] && (str[i] != '\''))
-			i++;
+		{
+			if (str[i] == '\"')
+				i += skip_quotes(str + i, 0);
+			else
+				i++;
+		}
 	}
 	else
 	{
+		i++;
 		while (str[i] && (str[i] != '\"'))
-			i++;
+		{
+			if (str[i] == '\'')
+				i += skip_quotes(str + i, 0);
+			else
+				i++;
+		}
 	}
 	return (i);
 }
@@ -63,8 +72,7 @@ int	check_file(char **file, t_process *aux, t_redir *i)
 	if (*file && !access(*file, F_OK))
 	{
 		if (access(*file, R_OK))
-			return (printf("%s: Permission denied\n", *file), \
-			free(*file), -1);
+			return (printf("%s: Permission denied\n", *file), free(*file), -1);
 	}
 	return (0);
 }

@@ -29,21 +29,23 @@ SOURCE = Src/main.c Src/init.c \
 
 INCLUDE = Inc/
 
+HEADER = $(INCLUDE)structures.h $(INCLUDE)minishell.h
+
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g #-fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 READLINE = -lreadline
 
 OBJS = $(SOURCE:.c=.o) $(BUILTINS:.c=.o)
 
-%.o: %.c Makefile $(INCLUDE)
+%.o: %.c Makefile $(HEADER)
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -c ${CFLAGS} -I ./$(INCLUDE) $< -o $@
 
 all:  sub_make $(NAME)
 
-$(NAME): ${OBJS} $(INCLUDE) Inc/structures.h Makefile
+$(NAME): ${OBJS} $(HEADER) Makefile
 	@echo ""
 	@echo "$(YELLOW)Creating executable...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT_LIB) -o $(NAME) $(READLINE)

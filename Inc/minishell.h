@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 13:29:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:00:59 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void		close_fds(t_shell *all);
 
 int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
-int			skip_quotes(char *str);
+int			skip_quotes(char *str, int i);
 int			check_file(char **file, t_process *aux, t_redir *i);
 void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 

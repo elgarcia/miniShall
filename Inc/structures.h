@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 20:07:25 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:27:55 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define APND 3
 # define HD 4
 
-extern int				g_exit_status;
+int				g_exit_status;
 
 typedef struct s_split
 {
