@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:33 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 14:32:13 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:29:13 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,36 +33,38 @@ void	*free_null(char **s)
 	return (NULL);
 }
 
-static void	check_word(const char **s1)
+static void	check_word(const char *s1, size_t *i)
 {
-	if (**s1 == 39)
+	if (s1[*i] == 39)
 	{
-		while (*(++(*s1)) && *(*s1) != 39)
+		while (*i < ft_strlen(s1) && s1[++(*i)] && s1[*i] != 39)
 		{
 		}
 	}
-	(*s1)++;
+	(*i)++;
 }
 
 int	ft_word_count(const char *s1, char delimiter)
 {
-	int	counter;
-	int	aux;
+	int		counter;
+	int		aux;
+	size_t	i;
 
+	i = 0;
 	aux = 0;
 	counter = 0;
 	if (!s1)
 		return (0);
-	while (*s1)
+	while (i < ft_strlen(s1))
 	{
-		while (*s1 == delimiter && *s1)
+		while (i < ft_strlen(s1) && s1[i] == delimiter)
 		{
-			s1++;
+			i++;
 			aux = 1;
 		}
-		while (*s1 != delimiter && *s1)
+		while (i < ft_strlen(s1) && s1[i] != delimiter)
 		{
-			check_word(&s1);
+			check_word(s1, &i);
 			aux = 2;
 		}
 		if (aux == 2)

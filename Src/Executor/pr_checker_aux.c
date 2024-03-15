@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 21:35:05 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/15 13:30:16 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,12 @@ void	free_prcs(t_shell *all)
 char	*get_commad(t_process *prc, char **split)
 {
 	char	*ret;
-	int		i;
 
-	i = 0;
 	ret = NULL;
 	if (prc->rd->pos == 0)
 	{
-		return (ft_substr(prc->process, \
-		ft_strlen(split[0]), ft_strlen(prc->process)));
+		return (ft_substr(prc->process, ft_strlen(split[0]),
+				ft_strlen(prc->process)));
 	}
 	else
 	{
@@ -72,6 +70,8 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	char	**aux;
 
 	aux = echo_split(prc->process, ' ');
+	if (!aux)
+		return ;
 	if (!ft_strncmp(aux[0], "export", 7))
 	{
 		exec_type(all, prc, -1);
@@ -89,4 +89,6 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	}
 	else
 		execute_builtin2(all, prc, aux);
+	if (aux)
+		ft_free(&aux, arg_counter(aux));
 }

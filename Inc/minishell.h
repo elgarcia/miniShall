@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 19:34:31 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 15:00:59 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void		close_fds(t_shell *all);
 
 int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
-int			skip_quotes(char *str);
+int			skip_quotes(char *str, int i);
 int			check_file(char **file, t_process *aux, t_redir *i);
 void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 
@@ -203,10 +203,11 @@ void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char const *s);
-void		clear_everything(t_shell *shell);
+void		clear_everything(t_shell *shell, int pikes);
+void		ft_lstdelone_proc(t_process *lst);
+void		ft_lstclear_pro(t_process **lst);
 
 // PARSER
-
 char		**echo_split(char *s, char c);
 void		remove_quotes_from_string(char *str);
 void		remove_quotes_from_matrix(char **matrix);

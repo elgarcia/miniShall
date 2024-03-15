@@ -6,13 +6,13 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/14 18:54:26 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/15 17:28:31 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Inc/minishell.h"
 
-int		g_exit_status = 0;
+int	g_exit_status = 0;
 
 void	change_shell(t_shell *shell)
 {
@@ -67,8 +67,8 @@ void	extend(t_shell *new, char *line)
 
 	if (line == NULL)
 	{
-		clear_everything(new);
-		printf("exit\n");
+		g_exit_status = 0;
+		clear_everything(new, 0);
 		exit(0);
 	}
 	if (line[0] != 0)

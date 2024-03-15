@@ -88,8 +88,8 @@ void	separate_rd(char ***input)
 	while ((*input)[++i])
 	{
 		aux = 0;
-		if (i != 0 && ((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
-			aux = skip_quotes((*input)[i]);
+		if (((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
+			aux = skip_quotes((*input)[i], 0);
 		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)))
 		{
 			if (ft_strcmp((*input)[i], "<<"))
