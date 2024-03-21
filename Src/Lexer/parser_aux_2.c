@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:19:49 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/21 18:23:29 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,17 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 	*aux = iter;
 	while (in[i][iter])
 	{
-		if (in[i][iter] == rd[0])
-			*aux = iter;
+		if (ft_strlen(rd) == 1)
+		{
+			if (in[i][iter] == rd[0])
+				*aux = iter;
+		}
+		else
+		{
+			if (in[i][iter] == rd[0] && in[i][iter + 1] && \
+			in[i][iter + 1] == rd[1])
+				*aux = iter;
+		}
 		iter++;
 	}
 	return (*aux);

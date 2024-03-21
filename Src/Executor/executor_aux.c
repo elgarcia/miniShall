@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/13 11:59:02 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/21 18:03:45 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
 	{
-		if (all->fd_out != -1)
+		if (all->fd_out != -1 && \
+		!ft_strncmp(all->lst_process->process, "cat", 3))
 			write(all->fd_out, line, ft_strlen(line));
 		if (all->fd_in == -1 && rd > 0)
 			write(fd_aux, line, ft_strlen(line));
@@ -52,9 +53,11 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 	}
 	free(line);
 	close(fd_aux);
-	if (all->fd_in == -1 && rd > 0)
+	if (all->fd_in == -1  && rd > 0)
 	{
-		write_file(all, fd_aux, line);
+		if (all->fd_in == -1 && \
+		!ft_strncmp(all->lst_process->process, "cat", 3))
+			write_file(all, fd_aux, line);
 		close(fd_aux);
 		unlink(".temp.txt");
 	}
