@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/16 00:27:51 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:02:26 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ int			count_rds(t_process *prcs);
 
 /* executor_aux2.c */
 int			search_rd(t_process *prc, int rd);
+int			is_rd_ch(char ch);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);

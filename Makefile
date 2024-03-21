@@ -42,7 +42,7 @@ OBJS = $(SOURCE:.c=.o) $(BUILTINS:.c=.o)
 %.o: %.c Makefile $(HEADER)
 	@printf "\033[0;33mGenerating minishell objects... %-33.33s\r" $@
 	@${CC} -c ${CFLAGS} -I ./$(INCLUDE) $< -o $@
-
+	
 all:  sub_make $(NAME)
 
 $(NAME): ${OBJS} $(HEADER) Makefile

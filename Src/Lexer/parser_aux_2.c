@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/16 00:28:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:19:49 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,10 @@ int	separate_rd(char ***input, int i)
 
 	while ((*input)[++i])
 	{
-		aux = -1;
+		aux = 0;
 		if (((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
-			aux = skip_quotes((*input)[i], 0, 0);
-		if (aux == 0)
+			aux = skip_quotes((*input)[i], 0, (*input)[i][0]);
+		if (aux == -1)
 			return (printf("Syntax error\n"), -1);
 		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)))
 		{
