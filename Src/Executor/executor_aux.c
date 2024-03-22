@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/21 18:03:45 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/22 18:47:58 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 	}
 	free(line);
 	close(fd_aux);
-	if (all->fd_in == -1  && rd > 0)
+	if (all->fd_in == -1 && rd > 0)
 	{
 		if (all->fd_in == -1 && \
 		!ft_strncmp(all->lst_process->process, "cat", 3))

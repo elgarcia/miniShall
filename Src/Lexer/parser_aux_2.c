@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/21 18:23:29 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/22 18:45:49 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 			in[i][iter + 1] == rd[1])
 				*aux = iter;
 		}
+		if (*aux != 0)
+			return (*aux);
 		iter++;
 	}
 	return (*aux);
@@ -75,10 +77,10 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 
 static void	separate_rd_aux(char ***input, int i, int aux)
 {
-	if (aux == -1)
+	if (aux == 0)
 		aux++;
 	if (ft_strnstr((*input)[i] + aux, "|", ft_strlen((*input)[i] + aux)) \
-	&& ft_strcmp((*input)[i], "|"))
+	&& ft_strncmp((*input)[i], "|", 2))
 		*input = ft_reallocate(input, 2, i, "|");
 	else if (ft_strnstr((*input)[i] + aux, "<", \
 	ft_strlen((*input)[i] + aux)) && ft_strncmp((*input)[i], "<", 2))
