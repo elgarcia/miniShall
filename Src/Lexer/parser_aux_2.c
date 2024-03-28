@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux_2.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/22 18:45:49 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:06:46 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 
 static void	separate_rd_aux(char ***input, int i, int aux)
 {
-	if (aux == 0)
-		aux++;
 	if (ft_strnstr((*input)[i] + aux, "|", ft_strlen((*input)[i] + aux)) \
 	&& ft_strncmp((*input)[i], "|", 2))
 		*input = ft_reallocate(input, 2, i, "|");

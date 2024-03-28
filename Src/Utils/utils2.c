@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/14 18:50:30 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:24:49 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ void	check_status(int status)
 		printf("\n");
 		g_exit_status = 128 + WTERMSIG(status);
 	}
+	else
+		g_exit_status = 0;
 }
 
 char	*get_prompt(void)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliar_functions2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/22 18:47:16 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/29 00:20:08 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,22 +48,21 @@ int	skip_quotes(char *str, int i, int j)
 	dquote = 0;
 	squote = 0;
 	if (j == '\'')
-		squote++;
-	if (j == '\"')
-		dquote++;
-	flag = -1;
-	while (str[++i] && !(is_rd_ch(str[i]) && flag == 1))
+		flag = -1;
+	else
+		flag = -2;
+	while (str[i] && !(is_rd_ch(str[i]) && flag == 1))
 	{
 		if (str[i] == '\"')
 			dquote++;
 		if (str[i] == '\'')
 			squote++;
-		if (dquote % 2 == 0 && squote % 2 == 0)
+		if ((dquote % 2 == 0 && flag == -2) 
+			|| (squote % 2 == 0 && flag == -1))
 			flag = 1;
-		else
-			flag = -1;
+		i++;
 	}
-	if (flag == -1)
+	if (flag < 0)
 		return (-1);
 	return (i);
 }
