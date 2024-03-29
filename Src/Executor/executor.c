@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 00:24:27 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/29 12:44:00 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 	{
 		outword = get_ifile(aux->process, rd);
 		outword = ft_strjoin(outword, "\n");
+		trim_outword(outword);
 	}
 	read_file(all, rd, line, outword);
 	if (rd != -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/22 18:47:58 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/29 12:38:54 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 {
 	int	fd_aux;
 
-	if (all->fd_in == -1 && rd > 0)
+	if (all->fd_in == -1 && rd >= 0)
 		fd_aux = open(".temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
@@ -46,17 +46,17 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 		if (all->fd_out != -1 && \
 		!ft_strncmp(all->lst_process->process, "cat", 3))
 			write(all->fd_out, line, ft_strlen(line));
-		if (all->fd_in == -1 && rd > 0)
+		if (all->fd_in == -1 && rd >= 0)
 			write(fd_aux, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(all->og_infile);
 	}
 	free(line);
-	close(fd_aux);
-	if (all->fd_in == -1 && rd > 0)
+	if (all->fd_in == -1 && rd >= 0)
 	{
-		if (all->fd_in == -1 && \
-		!ft_strncmp(all->lst_process->process, "cat", 3))
+		close(fd_aux);
+		if (all->fd_in == -1 && ft_strnstr(all->lst_process->process,\
+		 "cat", ft_strlen(all->lst_process->process)))
 			write_file(all, fd_aux, line);
 		close(fd_aux);
 		unlink(".temp.txt");

@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/21 14:02:26 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/29 12:43:47 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		new_proc(t_process **aux, t_shell *all, int n_proc,
 				t_redir **red_aux);
-void		parse_arg(t_process *aux, t_shell *new, int *i);
+void		parse_arg(t_process *aux, t_shell *new, int *i, t_redir *red_aux);
 
 /* parser_aux.c */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
@@ -85,6 +85,7 @@ int			count_rds(t_process *prcs);
 /* executor_aux2.c */
 int			search_rd(t_process *prc, int rd);
 int			is_rd_ch(char ch);
+void		trim_outword(char *outword);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);

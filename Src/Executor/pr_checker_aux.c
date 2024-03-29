@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pr_checker_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 13:30:16 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:54:11 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_commad(t_process *prc, char **split)
 	}
 	else
 	{
-		if (arg_counter(split) > 2)
+		if (arg_counter(split) > 2 && split[1][0] == '-')
 		{
 			ret = ft_strjoin(split[0], " ");
 			return (ft_strjoinup(&ret, split[1]));

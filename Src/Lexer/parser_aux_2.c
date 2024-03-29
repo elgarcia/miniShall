@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 00:06:46 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/29 12:19:35 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 	int	iter;
 
 	iter = 0;
+	if ((in[i][0] == '\"' || in[i][0] == '\''))
+		iter = skip_quotes(in[i], 0, in[i][0]);
 	*aux = iter;
 	while (in[i][iter])
 	{
@@ -31,8 +33,6 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 			in[i][iter + 1] == rd[1])
 				*aux = iter;
 		}
-		if (*aux != 0)
-			return (*aux);
 		iter++;
 	}
 	return (*aux);
@@ -75,17 +75,28 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 	return (ft_free(in, arg_counter(*in)), aux);
 }
 
-static void	separate_rd_aux(char ***input, int i, int aux)
+static void	separate_rd_aux(char ***input, int *i, int aux)
 {
-	if (ft_strnstr((*input)[i] + aux, "|", ft_strlen((*input)[i] + aux)) \
-	&& ft_strncmp((*input)[i], "|", 2))
-		*input = ft_reallocate(input, 2, i, "|");
-	else if (ft_strnstr((*input)[i] + aux, "<", \
-	ft_strlen((*input)[i] + aux)) && ft_strncmp((*input)[i], "<", 2))
-		*input = ft_reallocate(input, 2, i, "<");
-	else if (ft_strnstr((*input)[i] + aux, ">", \
-	ft_strlen((*input)[i] + aux)) && ft_strncmp((*input)[i], ">", 2))
-		*input = ft_reallocate(input, 2, i, ">");
+	if (ft_strnstr((*input)[*i] + aux, "|", ft_strlen((*input)[*i] + aux)) \
+	&& ft_strncmp((*input)[*i] + aux, "|", 2))
+	{
+		*input = ft_reallocate(input, 2, *i, "|");
+		(*i)--;
+	}
+	else if (ft_strnstr((*input)[*i] + aux, "<", \
+	ft_strlen((*input)[*i] + aux)) && (ft_strncmp((*input)[*i] + aux, "<", 2) \
+	&& ft_strcmp((*input)[*i] + aux, "<<")))
+	{
+		*input = ft_reallocate(input, 2, *i, "<");
+		(*i)--;
+	}
+	else if (ft_strnstr((*input)[*i] + aux, ">", \
+	ft_strlen((*input)[*i] + aux)) && ft_strncmp((*input)[*i] + aux, ">", 2) \
+	&& ft_strcmp((*input)[*i] + aux, ">>"))
+	{
+		*input = ft_reallocate(input, 2, *i, ">");
+		(*i)--;
+	}
 }
 
 int	separate_rd(char ***input, int i)
@@ -99,19 +110,20 @@ int	separate_rd(char ***input, int i)
 			aux = skip_quotes((*input)[i], 0, (*input)[i][0]);
 		if (aux == -1)
 			return (printf("Syntax error\n"), -1);
-		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)))
+		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)) \
+		&& (ft_strcmp((*input)[i] + aux, "<<")))
 		{
-			if (ft_strcmp((*input)[i], "<<"))
-				*input = ft_reallocate(input, 2, i, "<<");
+			*input = ft_reallocate(input, 2, i, "<<");
+			i--;
 		}
 		else if (ft_strnstr((*input)[i] + aux, ">>", \
-		ft_strlen((*input)[i] + aux)))
+		ft_strlen((*input)[i] + aux)) && (ft_strcmp((*input)[i] + aux, ">>")))
 		{
-			if (ft_strcmp((*input)[i], ">>"))
-				*input = ft_reallocate(input, 2, i, ">>");
+			*input = ft_reallocate(input, 2, i, ">>");
+			i--;
 		}
 		else
-			separate_rd_aux(input, i, aux);
+			separate_rd_aux(input, &i, aux);
 	}
 	return (0);
 }
