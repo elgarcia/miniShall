@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 12:19:35 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/30 12:16:41 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	separate_rd(char ***input, int i)
 		if (((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
 			aux = skip_quotes((*input)[i], 0, (*input)[i][0]);
 		if (aux == -1)
-			return (printf("Syntax error\n"), -1);
+			return (ft_fprintf(2, "Quotes Opened!\n"), -1);
 		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)) \
 		&& (ft_strcmp((*input)[i] + aux, "<<")))
 		{

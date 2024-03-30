@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/13 13:39:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:08:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	count_words(const char *str)
 			if (!in_quote)
 				word_count++;
 		}
-		else if (*c == '"' || *c == '\'')
+		else if (*c == '\"' || *c == '\'')
 			in_quote = !in_quote;
 		c++;
 	}

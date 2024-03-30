@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/21 16:07:39 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/14 18:50:57 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/30 13:09:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	**add_word(t_split *params)
 	i = params->j;
 	while (params->s[i])
 	{
-		if (has_quotes(&params->s[i]) && params->i)
+		if (has_quotes(&params->s[i]))
 		{
 			if (handle_quoted_word(params))
 				return (params->strs);

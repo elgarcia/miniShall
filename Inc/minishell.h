@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 12:43:47 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:35:03 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@
 # include <limits.h>
 # include <sys/stat.h>
 
-# define RED_TEXT "\033[1;31m"
-# define GREEN_TEXT "\033[1;32m"
-# define YELLOW_TEXT "\033[1;33m"
-# define RESET_TEXT "\033[0m"
-# define BLUE_TEXT "\e[0;34m"
+# define RED_TEXT "\001\033[1;31m\002"
+# define GREEN_TEXT "\001\033[1;32m\002"
+# define YELLOW_TEXT "\001\033[1;33m\002"
+# define RESET_TEXT "\001\033[0m\002"
+# define BLUE_TEXT "\001\e[0;34m\002"
 
 /* parser.c */
 int			input_parser(char *line, t_shell *new, int i);

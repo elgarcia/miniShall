@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/15 13:28:23 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/03/30 11:26:47 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	clear_everything(t_shell *shell, int pikes)
 
 void	print_exit_error(char *arg, int *return_value)
 {
-	ft_fprintf(2, "exit\nminishell:\
+	ft_fprintf(2, "minishell:\
  exit: %s: numeric argument required\n", arg);
 	*return_value = 255;
 }
@@ -80,6 +80,7 @@ void	ft_exit(t_shell *shell, char *line)
 		g_exit_status = 1;
 		return ((void)ft_free(&split, arg_counter(split)));
 	}
+	printf("exit\n");
 	if (split[1])
 	{
 		ret_value = ft_atoi(split[1]);
