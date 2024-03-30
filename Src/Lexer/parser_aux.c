@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 22:13:45 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/03/30 10:59:18 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	check_cats(t_shell *all, t_process *aux)
 			flag++;
 		p_aux = p_aux->next;
 	}
-	if (flag == all->n_process)
+	if (flag == all->n_process || ft_strcmp(all->lst_process->process, "cat"))
 		return (0);
 	if (!ft_strcmp(aux->process, "cat"))
 	{
