@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 00:20:08 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:01:06 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	skip_quotes(char *str, int i, int j)
 			dquote++;
 		if (str[i] == '\'')
 			squote++;
-		if ((dquote % 2 == 0 && flag == -2) 
+		if ((dquote % 2 == 0 && flag == -2)
 			|| (squote % 2 == 0 && flag == -1))
 			flag = 1;
 		i++;

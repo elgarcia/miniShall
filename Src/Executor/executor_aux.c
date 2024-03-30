@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 12:38:54 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:01:31 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 	if (all->fd_in == -1 && rd >= 0)
 	{
 		close(fd_aux);
-		if (all->fd_in == -1 && ft_strnstr(all->lst_process->process,\
-		 "cat", ft_strlen(all->lst_process->process)))
+		if (all->fd_in == -1 && ft_strnstr(all->lst_process->process, \
+		"cat", ft_strlen(all->lst_process->process)))
 			write_file(all, fd_aux, line);
 		close(fd_aux);
 		unlink(".temp.txt");

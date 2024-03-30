@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:30:16 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 13:03:03 by elias            ###   ########.fr       */
+/*   Updated: 2024/03/30 11:01:43 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	trim_outword(char *outword)
 	int	i;
 	int	j;
 	int	aux;
-	
+
 	i = 0;
 	j = 0;
 	aux = 0;
