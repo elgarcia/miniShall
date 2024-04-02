@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 11:01:06 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/02 16:53:01 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	has_quotes2(char *str)
 	int	i;
 
 	i = 0;
-    if (!str || !(*str))
-        return (0);
+	if (!str || !(*str))
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -59,8 +59,7 @@ int	skip_quotes(char *str, int i, int j)
 			dquote++;
 		if (str[i] == '\'')
 			squote++;
-		if ((dquote % 2 == 0 && flag == -2)
-			|| (squote % 2 == 0 && flag == -1))
+		if ((dquote % 2 == 0 && flag == -2) || (squote % 2 == 0 && flag == -1))
 			flag = 1;
 		i++;
 	}
@@ -75,7 +74,8 @@ int	check_file(char **file, t_process *aux, t_redir *i)
 	if (*file && !access(*file, F_OK))
 	{
 		if (access(*file, R_OK))
-			return (ft_fprintf(2, "%s: Permission denied\n", *file), free(*file), -1);
+			return (ft_fprintf(2, "%s: Permission denied\n", *file),
+				free(*file), -1);
 	}
 	return (0);
 }

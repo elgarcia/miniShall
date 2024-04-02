@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
+#    By: eliagarc <eliagarc@student.42barcel>     +#+#+#+#+#+   +#+            #
+#    Created: 2024/04/02 16:51:29 by bautrodr          #+#    #+#              #
+#    Updated: 2024/04/02 16:52:18 by bautrodr         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = minishell
 
 RESET = \033[0m
@@ -69,4 +81,4 @@ fclean: clean
 
 re:     fclean all
 
-.PHONY: all clean fclean sub_make
+.PHONY: all clean fclean sub_make re

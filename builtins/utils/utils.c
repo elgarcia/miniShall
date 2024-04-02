@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 11:23:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:45:01 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/02 16:52:50 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ int	ft_strcmp(char *s1, char *s2)
 	int	i;
 
 	i = 0;
-    if (!s1 || !s2)
-        return (0);
+	if (!s1 || !s2)
+		return (0);
 	while (s1[i] != '\0' && s2[i] != '\0' && s1[i] == s2[i])
 		i++;
 	return (s1[i] - s2[i]);
