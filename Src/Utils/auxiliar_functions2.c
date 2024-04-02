@@ -17,6 +17,8 @@ int	has_quotes2(char *str)
 	int	i;
 
 	i = 0;
+    if (!str || !(*str))
+        return (0);
 	while (str[i])
 	{
 		if (str[i] == '\'' || str[i] == '\"')
@@ -73,7 +75,7 @@ int	check_file(char **file, t_process *aux, t_redir *i)
 	if (*file && !access(*file, F_OK))
 	{
 		if (access(*file, R_OK))
-			return (printf("%s: Permission denied\n", *file), free(*file), -1);
+			return (ft_fprintf(2, "%s: Permission denied\n", *file), free(*file), -1);
 	}
 	return (0);
 }

@@ -93,7 +93,7 @@ int	input_parser(char *line, t_shell *new, int i)
 	{
 		if (i == 0)
 			new_proc(&aux, new, 0, &red_aux);
-		if (!has_quotes2(new->input[i]))
+		if (has_quotes2(new->input[i]) == 0)
 			check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
 			parse_arg(aux, new, &i, red_aux);
