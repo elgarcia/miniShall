@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 11:35:03 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:30:35 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		new_proc(t_process **aux, t_shell *all, int n_proc,
 				t_redir **red_aux);
-void		parse_arg(t_process *aux, t_shell *new, int *i, t_redir *red_aux);
+void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
 
 /* parser_aux.c */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 12:09:17 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/05 10:30:15 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,14 @@ void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 		all->lst_process = *aux;
 }
 
-void	parse_arg(t_process *aux, t_shell *new, int *i, t_redir *red_aux)
+void	parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux)
 {
-	check_red(&new->input[*i], &aux, i, &red_aux);
-	if (aux->process != NULL)
-		aux->process = ft_strjoinup(&aux->process, " ");
+	check_red(&new->input[*i], aux, i, &red_aux);
+	if ((*aux)->process != NULL)
+		(*aux)->process = ft_strjoinup(&(*aux)->process, " ");
 	else
 		new->n_process += 1;
-	aux->process = ft_strjoinup(&aux->process, new->input[*i]);
+	(*aux)->process = ft_strjoinup(&(*aux)->process, new->input[*i]);
 	*i += 1;
 }
 
@@ -96,10 +96,9 @@ int	input_parser(char *line, t_shell *new, int i)
 		if (has_quotes2(new->input[i]) == 0)
 			check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
-			parse_arg(aux, new, &i, red_aux);
+			parse_arg(&aux, new, &i, red_aux);
 	}
-	if ((there_is_rd(new->lst_process) && \
-	is_rdp(new->input[i - 1])) || is_ao(new->input[i - 1]))
+	if (there_is_rd(new->lst_process) || is_ao(new->input[i - 1]))
 	{
 		ft_fprintf(2, "Syntax error\n");
 		free_prcs(new);
