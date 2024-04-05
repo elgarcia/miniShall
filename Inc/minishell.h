@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/05 10:30:35 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:12:45 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void		read_file(t_shell *all, int fd, char *line, char *outword);
 int			count_rds(t_process *prcs);
 
 /* executor_aux2.c */
-int			search_rd(t_process *prc, int rd);
+int			search_rd(t_process *prc, int rd, int rd2);
 int			is_rd_ch(char ch);
 void		trim_outword(char *outword);
 

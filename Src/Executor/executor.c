@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 12:16:05 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/05 11:12:32 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 		if (i->type == APND)
 		{
 			file = get_ifile(aux->process, i->pos);
-			all->fd_out = open(file, O_WRONLY | O_APPEND | O_CREAT, 0666);
+			all->fd_out = open(file, O_RDWR | O_APPEND | O_CREAT, 0666);
 			if (all->fd_out == -1)
 				return (free(file), g_exit_status = 1);
 			dup2(all->fd_out, STDOUT_FILENO);
@@ -83,7 +83,7 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 				return (g_exit_status);
 		i = i->next;
 	}
-	if (aux->next && !search_rd(aux, ORD))
+	if (aux->next && !search_rd(aux, ORD, APND))
 		dup2(all->pipes[1], STDOUT_FILENO);
 	if (hd != -1 || check_cats(all, aux) == 1)
 		return (here_doc(all, aux, hd), 0);

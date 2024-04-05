@@ -3,23 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   executor_aux2.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:30:16 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 11:01:43 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/05 11:13:07 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	search_rd(t_process *prc, int rd)
+int	search_rd(t_process *prc, int rd, int rd2)
 {
 	t_redir	*aux;
 
 	aux = prc->rd;
 	while (aux)
 	{
-		if (aux->type == rd)
+		if (aux->type == rd || aux->type == rd2)
 			return (1);
 		aux = aux->next;
 	}
