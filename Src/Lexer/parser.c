@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/08 12:53:14 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/08 14:21:01 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux)
 	else
 		new->n_process += 1;
 	(*aux)->process = ft_strjoinup(&(*aux)->process, new->input[*i]);
-	*i += 1;
+	if (new->input[*i])
+		*i += 1;
 }
 
 int	input_parser(char *line, t_shell *new, int i)

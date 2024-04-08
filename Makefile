@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+         #
-#    By: eliagarc <eliagarc@student.42barcel>     +#+#+#+#+#+   +#+            #
+#    By: elias <elias@student.42.fr>                +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/02 16:51:29 by bautrodr          #+#    #+#              #
-#    Updated: 2024/04/02 16:52:18 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/04/08 14:22:07 by elias            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
