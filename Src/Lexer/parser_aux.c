@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/05 10:23:02 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:05:51 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	there_is_rd(t_process *lst)
 	aux = lst;
 	while (aux)
 	{
-		if (aux->rd && !aux->process)
+		if ((aux->rd && !aux->process) || is_rdp(aux->process))
 			return (1);
 		aux = aux->next;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/05 10:30:15 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/04/08 12:53:14 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 
 void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
-	if (ft_strnstr(*in, "|", 1))
+	if (!ft_strcmp(*in, "|"))
 	{
 		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;

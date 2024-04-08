@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 12:16:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/08 13:01:08 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,13 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 static void	separate_rd_aux(char ***input, int *i, int aux)
 {
 	if (ft_strnstr((*input)[*i] + aux, "|", ft_strlen((*input)[*i] + aux)) \
-	&& ft_strncmp((*input)[*i] + aux, "|", 2))
+	&& ft_strcmp((*input)[*i] + aux, "|"))
 	{
-		*input = ft_reallocate(input, 2, *i, "|");
-		(*i)--;
+		if (ft_strcmp((*input)[*i] + aux, "||"))
+		{
+			*input = ft_reallocate(input, 2, *i, "|");
+			(*i)--;
+		}
 	}
 	else if (ft_strnstr((*input)[*i] + aux, "<", \
 	ft_strlen((*input)[*i] + aux)) && (ft_strncmp((*input)[*i] + aux, "<", 2) \
