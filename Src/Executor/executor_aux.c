@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 11:01:31 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/10 20:42:58 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 		if (all->fd_out != -1 && \
 		!ft_strncmp(all->lst_process->process, "cat", 3))
 			write(all->fd_out, line, ft_strlen(line));
-		if (all->fd_in == -1 && rd >= 0)
+		if (all->fd_in == -1 && all->fd_out == -1 && rd >= 0)
 			write(fd_aux, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(all->og_infile);
@@ -55,8 +55,8 @@ void	read_file(t_shell *all, int rd, char *line, char *outword)
 	if (all->fd_in == -1 && rd >= 0)
 	{
 		close(fd_aux);
-		if (all->fd_in == -1 && ft_strnstr(all->lst_process->process, \
-		"cat", ft_strlen(all->lst_process->process)))
+		if (all->fd_in == -1  && all->fd_out == -1 && \
+		ft_strnstr(all->lst_process->process, "cat", ft_strlen(all->lst_process->process)))
 			write_file(all, fd_aux, line);
 		close(fd_aux);
 		unlink(".temp.txt");
