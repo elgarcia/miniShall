@@ -30,9 +30,9 @@ void	set_signals(int mode)
 {
 	struct termios	term;
 
-	signal(SIGINT, handle_signal);
 	if (mode == 0)
 	{
+	    signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		tcgetattr(0, &term);
 		term.c_lflag &= ~ECHOCTL;
@@ -40,9 +40,15 @@ void	set_signals(int mode)
 	}
 	else if (mode == 1)
 	{
+        signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		tcgetattr(0, &term);
 		term.c_lflag |= ECHOCTL;
 		tcsetattr(0, TCSANOW, &term);
 	}
+    else if (mode == 2)
+    {
+        signal(SIGINT, SIG_DFL);
+        signal(SIGQUIT, SIG_IGN);
+    }
 }

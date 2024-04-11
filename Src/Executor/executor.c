@@ -20,6 +20,7 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 
 	line = NULL;
 	outword = NULL;
+    set_signals(2);
 	if (rd != -1)
 	{
 		outword = get_ifile(aux->process, rd);
@@ -27,6 +28,7 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		trim_outword(outword);
 	}
 	read_file(all, rd, line, outword);
+    set_signals(1);
 	if (rd != -1)
 		free(outword);
 	if (all->fd_in == -1)
