@@ -39,7 +39,10 @@ char	*get_previous_dir(char *str)
 	i = (aux - str);
 	new = ft_substr(str, 0, i);
 	if (!new[0])
+    {
+        free(new);
 		new = ft_strdup("/");
+    }
 	return (new);
 }
 
