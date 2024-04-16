@@ -25,6 +25,7 @@ static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
+    ft_free(&aux, len);
 	return (0);
 }
 
@@ -48,6 +49,7 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len,
 	}
 	else
 		return (check_builtins_aux2(aux, all, len, prc));
+    ft_free(&aux, len);
 	return (0);
 }
 
