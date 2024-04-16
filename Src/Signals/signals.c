@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/30 13:32:00 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:19:52 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	set_signals(int mode)
 
 	if (mode == 0)
 	{
-	    signal(SIGINT, handle_signal);
+		signal(SIGINT, handle_signal);
 		signal(SIGQUIT, SIG_IGN);
 		tcgetattr(0, &term);
 		term.c_lflag &= ~ECHOCTL;
@@ -40,15 +40,15 @@ void	set_signals(int mode)
 	}
 	else if (mode == 1)
 	{
-        signal(SIGINT, SIG_DFL);
+		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
 		tcgetattr(0, &term);
 		term.c_lflag |= ECHOCTL;
 		tcsetattr(0, TCSANOW, &term);
 	}
-    else if (mode == 2)
-    {
-        signal(SIGINT, SIG_DFL);
-        signal(SIGQUIT, SIG_IGN);
-    }
+	else if (mode == 2)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_IGN);
+	}
 }

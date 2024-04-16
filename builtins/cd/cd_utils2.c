@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_utils2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 12:27:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/12 14:12:30 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:17:41 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ char	*get_previous_dir(char *str)
 	i = (aux - str);
 	new = ft_substr(str, 0, i);
 	if (!new[0])
-    {
-        free(new);
+	{
+		free(new);
 		new = ft_strdup("/");
-    }
+	}
 	return (new);
 }
 

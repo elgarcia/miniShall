@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pr_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 21:10:27 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:22:41 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 		execute_builtin(all, prc);
 		return (ft_free(&aux, len), 1);
 	}
-    ft_free(&aux, len);
+	ft_free(&aux, len);
 	return (0);
 }
 
@@ -49,7 +49,7 @@ static int	check_builtins_aux(char **aux, t_shell *all, int len,
 	}
 	else
 		return (check_builtins_aux2(aux, all, len, prc));
-    ft_free(&aux, len);
+	ft_free(&aux, len);
 	return (0);
 }
 
