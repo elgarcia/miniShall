@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 11:46:17 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/16 15:12:45 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,17 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 int	check_cmd(char *command, char ***exec_args)
 {
 	remove_quotes_from_string(command);
+	if (command[0] == '.')
+	{
+		if (access(command, F_OK | X_OK) == 0)
+		{
+			(*exec_args)[0] = ft_strdup(command);
+			if (!(*exec_args)[0])
+				return (ft_free(exec_args, 1), -1);
+			return (0);
+		}
+		return (perror(command), -1);
+	}
 	if (access(command, F_OK | X_OK) == 0)
 	{
 		(*exec_args)[0] = ft_strdup(command);
