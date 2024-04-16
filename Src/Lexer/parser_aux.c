@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/08 13:05:51 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/16 12:01:32 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,22 @@ void	check_exp(char **in, int *i, int j)
 int	there_is_rd(t_process *lst)
 {
 	t_process	*aux;
+	char		**split_aux;
 
 	aux = lst;
+	split_aux = NULL;
 	while (aux)
 	{
-		if ((aux->rd && !aux->process) || is_rdp(aux->process))
+		if (is_rdp(aux->process))
 			return (1);
+		if (aux->rd)
+		{
+			if (!aux->process)
+				return (1);
+			split_aux = echo_split(aux->process, ' ');
+			if (aux->rd->pos == arg_counter(split_aux))
+				return (ft_free(&split_aux, arg_counter(split_aux)), 1);
+		}
 		aux = aux->next;
 	}
 	return (0);
