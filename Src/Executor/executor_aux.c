@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/16 15:26:16 by elias            ###   ########.fr       */
+/*   Updated: 2024/04/24 19:03:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,33 +34,29 @@ void	init_executor(t_shell *all, t_process **aux, int *i, int *j)
 	*aux = all->lst_process;
 }
 
-void	read_file(t_shell *all, int rd, char *line, char *outword)
+void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 {
-	int	fd_aux;
+	int	fd_aux = 0;
+    char **split;
 
-	if (all->fd_in == -1 && rd >= 0)
-		fd_aux = open(".temp.txt", O_WRONLY | O_CREAT | O_TRUNC, 0666);
+    split = ft_split(prc->process, ' ');
+	if (all->fd_in == -1 && arg_counter(split) > 1)
+    {
+        fd_aux = -1;
+		all->fd_in = open(".temp.txt", O_RDWR  | O_CREAT | O_TRUNC, 0666);
+    }
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
 	{
-		if (all->fd_out != -1 && \
-		!ft_strncmp(all->lst_process->process, "cat", 3))
-			write(all->fd_out, line, ft_strlen(line));
-		if (all->fd_in == -1 && all->fd_out == -1 && rd >= 0)
-			write(fd_aux, line, ft_strlen(line));
+		if (fd_aux == -1 && all->fd_out == -1 && arg_counter(split) > 1)
+			write(all->fd_in, line, ft_strlen(line));
 		free(line);
 		line = get_next_line(all->og_infile);
 	}
+    if (fd_aux == -1 && arg_counter(split) > 1)
+        dup2(all->fd_in, STDIN_FILENO);
+	close(all->fd_in);
 	free(line);
-	if (all->fd_in == -1 && rd >= 0)
-	{
-		close(fd_aux);
-		if (ft_strnstr(all->lst_process->process, "cat", ft_strlen(all->\
-		lst_process->process)) && all->fd_out == -1 && all->fd_in == -1)
-			write_file(all, fd_aux, line);
-		close(fd_aux);
-		unlink(".temp.txt");
-	}
 }
 
 int	count_rds(t_process *prcs)

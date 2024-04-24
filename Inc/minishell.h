@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/05 11:12:45 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/04/24 16:28:58 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void		exec_son(t_shell *all, t_process *aux);
 void		reset_prc(t_shell *all);
 void		pipe_man(t_shell *all);
 void		init_executor(t_shell *all, t_process **aux, int *i, int *j);
-void		read_file(t_shell *all, int fd, char *line, char *outword);
+void		read_file(t_shell *all, t_process *prc, char *line, char *outword);
 int			count_rds(t_process *prcs);
 
 /* executor_aux2.c */
@@ -143,7 +143,6 @@ char		*ft_strjoinfree(char *s1, char const *s2);
 char		*ft_strjoin_char(char *s1, char c);
 
 /* signals.c */
-
 void		handle_signal(int signo);
 void		set_signals(int mode);
 void		proc_handle_signal(int sig);
