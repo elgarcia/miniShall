@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/24 19:03:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:29:00 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,16 @@ void	init_executor(t_shell *all, t_process **aux, int *i, int *j)
 
 void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 {
-	int	fd_aux = 0;
-    char **split;
+	int		fd_aux;
+	char	**split;
 
-    split = ft_split(prc->process, ' ');
+	fd_aux = 0;
+	split = ft_split(prc->process, ' ');
 	if (all->fd_in == -1 && arg_counter(split) > 1)
-    {
-        fd_aux = -1;
-		all->fd_in = open(".temp.txt", O_RDWR  | O_CREAT | O_TRUNC, 0666);
-    }
+	{
+		fd_aux = -1;
+		all->fd_in = open(".temp.txt", O_RDWR | O_CREAT | O_TRUNC, 0666);
+	}
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
 	{
@@ -53,10 +54,13 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 		free(line);
 		line = get_next_line(all->og_infile);
 	}
-    if (fd_aux == -1 && arg_counter(split) > 1)
-        dup2(all->fd_in, STDIN_FILENO);
 	close(all->fd_in);
-	free(line);
+	if (fd_aux == -1 && arg_counter(split) > 1)
+	{
+		all->fd_in = open(".temp.txt", O_RDONLY);
+		dup2(all->fd_in, STDIN_FILENO);
+	}
+	return (free(line), ft_free(&split, arg_counter(split)));
 }
 
 int	count_rds(t_process *prcs)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/30 11:26:47 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:31:30 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	clear_everything(t_shell *shell, int pikes)
 	tcgetattr(0, &term);
 	term.c_lflag |= ECHOCTL;
 	tcsetattr(0, TCSANOW, &term);
+	unlink(".temp.txt");
 }
 
 void	print_exit_error(char *arg, int *return_value)

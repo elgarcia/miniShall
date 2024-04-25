@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/24 16:45:47 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/04/26 00:21:47 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int *hd)
 				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
 				free(file), g_exit_status = 1);
 			dup2(all->fd_in, STDIN_FILENO);
-            close(all->fd_in);
+			close(all->fd_in);
 		}
 		free(file);
 	}
