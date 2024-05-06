@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:31:59 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:44:19 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,6 @@ char	*get_commad(t_process *prc, char **split)
 	}
 }
 
-static void	execute_builtin2(t_shell *all, t_process *prc, char **aux)
-{
-	if (!ft_strncmp(aux[0], "history", 8))
-	{
-		exec_type(all, prc, -1);
-		print_history(all);
-	}
-	else if (!ft_strncmp(aux[0], "exit", 5))
-	{
-		exec_type(all, prc, -1);
-		ft_exit(all, prc->process);
-	}
-}
-
 void	execute_builtin(t_shell *all, t_process *prc)
 {
 	char	**aux;
@@ -84,22 +70,15 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	if (!aux)
 		return ;
 	if (!ft_strncmp(aux[0], "export", 7))
-	{
-		exec_type(all, prc, -1);
 		ft_export(all->paths, aux, 1);
-	}
 	else if (!ft_strncmp(aux[0], "unset", 6))
-	{
-		exec_type(all, prc, -1);
 		ft_unset(all->paths, aux);
-	}
 	else if (!ft_strncmp(aux[0], "env", 4))
-	{
-		exec_type(all, prc, -1);
 		ft_env(all->paths);
-	}
-	else
-		execute_builtin2(all, prc, aux);
+	else if (!ft_strncmp(aux[0], "history", 8))
+		print_history(all);
+	else if (!ft_strncmp(aux[0], "exit", 5))
+		ft_exit(all, prc->process);
 	if (aux)
 		ft_free(&aux, arg_counter(aux));
 }

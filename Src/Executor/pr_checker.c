@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pr_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/16 15:22:41 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/06 15:42:35 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,16 @@ int	check_builtins(t_shell *all, t_process *prc)
 		return (ft_fprintf(2, "echo_split failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
-		exec_type(all, prc, -1);
 		ft_echo(aux, prc);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "cd", 3))
 	{
-		exec_type(all, prc, -1);
 		ft_cd(all->paths, aux);
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}
 	else if (!ft_strncmp(aux[0], "pwd", 4))
 	{
-		exec_type(all, prc, -1);
 		ft_pwd();
 		return (ft_free(&aux, arg_counter(aux)), 1);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliar_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/08 13:04:19 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/06 15:52:34 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,14 @@ int	is_rdp(char *str)
 	else if (!ft_strcmp(str, "<"))
 		return (1);
 	else if (!ft_strcmp(str, ">"))
+		return (1);
+	else if (ft_strnstr(str, ">>>", ft_strlen(str)))
+		return (1);
+	else if (ft_strnstr(str, "<<<", ft_strlen(str)))
+		return (1);
+	else if (ft_strnstr(str, "> <", ft_strlen(str)))
+		return (1);
+	else if (ft_strnstr(str, "< >", ft_strlen(str)))
 		return (1);
 	return (0);
 }

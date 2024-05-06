@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 14:12:38 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/06 15:43:05 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,8 @@ void	exec_son(t_shell *all, t_process *aux)
 {
 	char	**envp;
 
+	if (exec_type(all, aux, -1) == 1)
+		exit(g_exit_status);
 	if (check_builtins(all, aux))
 	{
 		if (all->n_process > 1)
@@ -105,8 +107,6 @@ void	exec_son(t_shell *all, t_process *aux)
 	else if (!check_command(all, &aux, &all->exec_args))
 	{
 		envp = list_to_array(all->paths->env_lst);
-		if (exec_type(all, aux, -1) == 1)
-			exit(g_exit_status);
 		execve(all->exec_args[0], all->exec_args, envp);
 	}
 	else
