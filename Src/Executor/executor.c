@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/26 00:21:47 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/06 14:12:38 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		trim_outword(outword);
 	}
 	read_file(all, aux, line, outword);
+	if (rd == -1)
+		exit(g_exit_status);
 	set_signals(1);
 	if (rd != -1)
 		free(outword);

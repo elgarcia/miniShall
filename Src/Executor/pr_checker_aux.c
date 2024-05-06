@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pr_checker_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/29 11:54:11 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/06 15:31:59 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,26 @@
 void	free_prcs(t_shell *all)
 {
 	t_process	*aux;
+	t_process	*tmp;
+	t_redir		*r_aux;
+	t_redir		*tmp_r;
 
 	aux = all->lst_process;
+	tmp = all->lst_process;
+	r_aux = all->lst_process->rd;
+	tmp_r = all->lst_process->rd;
 	while (aux)
 	{
-		aux = aux->next;
-		free(all->lst_process->process);
-		free(all->lst_process->rd);
-		free(all->lst_process);
-		all->lst_process = aux;
+		tmp = tmp->next;
+		while (r_aux)
+		{
+			tmp_r = tmp_r->next;
+			free(r_aux);
+			r_aux = tmp_r;
+		}
+		free(aux->process);
+		free(aux);
+		aux = tmp;
 	}
 	all->n_process = 0;
 	all->lst_process = NULL;

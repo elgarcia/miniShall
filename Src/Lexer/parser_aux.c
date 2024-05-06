@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/16 12:01:32 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/06 15:11:08 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,5 @@ int	there_is_rd(t_process *lst)
 		}
 		aux = aux->next;
 	}
-	return (0);
+	return (ft_free(&split_aux, arg_counter(split_aux)), 0);
 }
