@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:43:05 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:59:17 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	here_doc(t_shell *all, t_process *aux, int rd)
 		free(outword);
 }
 
-static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int *hd)
+static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 {
 	char	*file;
 
@@ -60,7 +60,7 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i, int *hd)
 		free(file);
 	}
 	else if (i->type == HD)
-		*hd = i->pos;
+		here_doc(all, aux, i->pos);
 	return (0);
 }
 
@@ -82,13 +82,13 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 			free(file);
 		}
 		else
-			if (exec_type_aux(all, aux, i, &hd) == 1)
+			if (exec_type_aux(all, aux, i) == 1)
 				return (g_exit_status);
 		i = i->next;
 	}
 	if (aux->next && !search_rd(aux, ORD, APND))
 		dup2(all->pipes[1], STDOUT_FILENO);
-	if (hd != -1 || check_cats(all, aux) == 1)
+	if (check_cats(all, aux) == 1)
 		return (here_doc(all, aux, hd), 0);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:13:09 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:10:48 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,14 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 	}
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
-	{
-		if (fd_aux == -1 && all->fd_out == -1 && arg_counter(split) > 1)
-			write(all->fd_in, line, ft_strlen(line));
-		free(line);
-		line = get_next_line(all->og_infile);
-	}
+		read_loop(all, fd_aux, &line, split);
 	close(all->fd_in);
 	if (fd_aux == -1 && arg_counter(split) > 1)
 	{
 		all->fd_in = open(".temp.txt", O_RDONLY);
 		dup2(all->fd_in, STDIN_FILENO);
+		close(all->fd_in);
+		all->fd_in = -1;
 	}
 	return (free(line), ft_free(&split, arg_counter(split)));
 }

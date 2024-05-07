@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:13:01 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:03:11 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int			count_rds(t_process *prcs);
 int			search_rd(t_process *prc, int rd, int rd2);
 int			is_rd_ch(char ch);
 void		trim_outword(char *outword);
+void		read_loop(t_shell *all, int fd_aux, char **line, char **split);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);

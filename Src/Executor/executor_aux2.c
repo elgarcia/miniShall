@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 23:30:16 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/05 11:13:07 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 14:11:46 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ void	trim_outword(char *outword)
 		else
 			i++;
 	}
+}
+
+void	read_loop(t_shell *all, int fd_aux, char **line, char **split)
+{
+	if (fd_aux == -1 && all->fd_out == -1 && arg_counter(split) > 1)
+		write(all->fd_in, *line, ft_strlen(*line));
+	free(*line);
+	*line = get_next_line(all->og_infile);
 }
