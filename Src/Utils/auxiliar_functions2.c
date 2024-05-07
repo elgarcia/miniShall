@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliar_functions2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/02 16:53:01 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:43:08 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,18 @@ int	check_file(char **file, t_process *aux, t_redir *i)
 	return (0);
 }
 
-void	ft_allocate(int comp, int *size, char ***aux, size_t len)
+int	ft_allocate(int comp, int *size, char ***aux, size_t len)
 {
 	if (comp != 0 && comp != (int)len)
+	{
 		*aux = ft_calloc(*size + 1, sizeof(char *));
+		if (!*aux)
+			return (-1);
+	}
 	else
+	{
 		*aux = ft_calloc(--(*size) + 1, sizeof(char *));
+		if (!*aux)
+			return (-1);
+	}
 }

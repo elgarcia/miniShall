@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 13:12:58 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:56:56 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_shell
 	char				**exec_args;
 	char				**input;
 	char				*history_path;
+	int					exit_status;
 	t_paths				*paths;
 }						t_shell;
 

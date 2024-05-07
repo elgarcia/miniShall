@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 14:03:11 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 19:01:13 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@
 /* parser.c */
 int			input_parser(char *line, t_shell *new, int i);
 void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
-void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
-void		new_proc(t_process **aux, t_shell *all, int n_proc,
+int			check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
+int			new_proc(t_process **aux, t_shell *all, int n_proc,
 				t_redir **red_aux);
-void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
+int			parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
 
 /* parser_aux.c */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
@@ -52,6 +52,9 @@ int			there_is_rd(t_process *lst);
 /* parser_aux_2.c */
 int			separate_rd(char ***input, int i);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
+
+/* parser_aux3.c */
+int			check_synerr(t_shell **all, int i);
 
 /* utils.c*/
 void		ft_free(char ***arg, int size);
@@ -132,7 +135,7 @@ int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
 int			skip_quotes(char *str, int i, int j);
 int			check_file(char **file, t_process *aux, t_redir *i);
-void		ft_allocate(int comp, int *size, char ***aux, size_t len);
+int			ft_allocate(int comp, int *size, char ***aux, size_t len);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);

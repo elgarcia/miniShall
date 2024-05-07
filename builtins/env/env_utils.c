@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 00:06:14 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/07 18:28:35 by eliagarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	fill_init_env_list(t_paths *paths, char **envp, int equal)
 				- ft_strlen(ft_strchr(envp[i], '=')));
 		value = ft_substr(envp[i], ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')) + 1, ft_strlen(envp[i]));
+		if (!name || !value)
+			return (-1);
 		head = add_env_node(head, name, value, equal);
 		free(name);
 		free(value);
