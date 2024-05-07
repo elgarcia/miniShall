@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 14:10:48 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:43:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,16 @@ void	init_executor(t_shell *all, t_process **aux, int *i, int *j)
 void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 {
 	int		fd_aux;
+	int		mypipe[2];
 	char	**split;
 
 	fd_aux = 0;
 	split = ft_split(prc->process, ' ');
+	pipe(mypipe);
 	if (all->fd_in == -1 && arg_counter(split) > 1)
 	{
 		fd_aux = -1;
-		all->fd_in = open(".temp.txt", O_RDWR | O_CREAT | O_TRUNC, 0666);
+		all->fd_in = mypipe[1];
 	}
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
@@ -52,7 +54,7 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 	close(all->fd_in);
 	if (fd_aux == -1 && arg_counter(split) > 1)
 	{
-		all->fd_in = open(".temp.txt", O_RDONLY);
+		all->fd_in = mypipe[0];
 		dup2(all->fd_in, STDIN_FILENO);
 		close(all->fd_in);
 		all->fd_in = -1;
