@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:12:13 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:53:13 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 			set_signals(1);
 			exec_son(all, aux);
 		}
-		else
+		else if (aux->next)
 			pipe_man(all);
 		aux = aux->next;
 		i++;

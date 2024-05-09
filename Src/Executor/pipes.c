@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:16:06 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:45:49 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,6 @@ int	open_file(char *file, int *fd)
         exit_error("dup2 failed");
 	free(aux);
 	if (close(*fd) == -1)
-        exit_error("close failed");
+        exit_error("close failed 4");
 	return (0);
 }

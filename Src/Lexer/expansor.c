@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 19:58:52 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 21:19:58 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*ft_strjoin_char(char *s1, char c)
 	int		i;
 
 	i = 0;
-	new = malloc_safe(ft_strlen(s1) + 2, 1);
+	new = malloc(ft_strlen(s1) + 2);
 	while (s1[i])
 	{
 		new[i] = s1[i];
@@ -97,7 +97,8 @@ char	*expansor(t_shell *shell, char *str, int i)
         exit_error("Malloc failed");
 	quotes = 0;
 	double_quotes = 0;
-	while (str[++i])
+    i = 0;
+	while (str[i])
 	{
         quotes = (quotes + (!double_quotes && str[i] == '\'')) % 2;
 		double_quotes = (double_quotes + (!quotes && str[i] == '\"')) % 2;
@@ -106,6 +107,7 @@ char	*expansor(t_shell *shell, char *str, int i)
 			get_variable(shell, &new, str, &i);
 		else
 			new = ft_strjoin_char(new, str[i]);
+        i++;
 	}
 	return (new);
 }

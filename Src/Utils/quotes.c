@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 20:23:28 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 21:31:39 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 int	check_quote_closure(char *str)
 {
@@ -109,10 +109,10 @@ char	*ft_add_quotes(char *s)
 			break ;
 		}
 	}
-	while (s[++i])
+	while (s[i] && s[++i])
 		res[i + 1] = s[i];
 	res[i + 1] = 34;
 	res[i + 2] = '\0';
-	// free(s);
+	free(s);
 	return (res);
 }

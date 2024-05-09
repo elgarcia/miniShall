@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:13:22 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:45:42 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	close_pipes(t_shell *all)
 void	close_fds(t_shell *all)
 {
 	if (close(all->fd_out) == -1)
-        exit_error("close failed");
+        exit_error("close failed 2");
 	if (close(all->fd_in) == -1)
-        exit_error("close failed");
+        exit_error("close failed 3");
 }

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:10:41 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 21:32:37 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 	}
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
+        ft_free(&aux, len);
 		execute_builtin(all, prc);
-		return (ft_free(&aux, len), 1);
 	}
 	ft_free(&aux, len);
 	return (0);
@@ -59,8 +59,6 @@ int	check_builtins(t_shell *all, t_process *prc)
 
 	aux = split_words(prc->process);
 	remove_quotes_from_matrix(aux);
-	if (!aux)
-		return (ft_fprintf(2, "split_words failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		all->exit_status = ft_echo(aux, prc);
