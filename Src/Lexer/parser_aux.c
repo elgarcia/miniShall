@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:11:08 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:23:01 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	there_is_rd(t_process *lst)
 		{
 			if (!aux->process)
 				return (1);
-			split_aux = echo_split(aux->process, ' ');
+			split_aux = split_words(aux->process);
 			if (aux->rd->pos == arg_counter(split_aux))
 				return (ft_free(&split_aux, arg_counter(split_aux)), 1);
 		}

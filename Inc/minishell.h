@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 14:03:11 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:17:36 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,19 +201,17 @@ char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**add_word(t_split *params);
-int			quoted_len(char *s, char c);
 void		handle_variable(char **token, t_paths *paths);
 void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
-int			count_words(char const *s);
+int			count_words(char *s);
 void		clear_everything(t_shell *shell, int pikes);
 void		ft_lstdelone_proc(t_process *lst);
 void		ft_lstclear_pro(t_process **lst);
 
 // PARSER
-char		**echo_split(char *s, char c);
+char		**split_words(char *s);
 void		remove_quotes_from_string(char *str);
 void		remove_quotes_from_matrix(char **matrix);
 
@@ -224,4 +222,6 @@ void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
 
+int	        find_next_quote(int i, char *str, char c);
+void        exit_error(char *str);
 #endif

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:13:14 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:23:39 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int	input_parser(char *line, t_shell *new, int i)
 	t_redir		*red_aux;
 
 	aux = new->lst_process;
-	new->input = echo_split(line, ' ');
+	new->input = split_words(line);
 	if (separate_rd(&new->input, -1) == -1)
 		return (ft_free(&new->input, arg_counter(new->input)), -1);
 	while (new->input[i])

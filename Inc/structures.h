@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/30 13:12:58 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 11:52:48 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@
 # define HD 4
 
 extern int				g_exit_status;
-
-typedef struct s_split
-{
-	char				*s;
-	char				c;
-	char				**strs;
-	int					i;
-	int					j;
-	int					in_quotes;
-}						t_split;
 
 typedef struct s_env_lst
 {

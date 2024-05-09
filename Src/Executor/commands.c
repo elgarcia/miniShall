@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/16 15:12:45 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/09 12:21:19 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_cmd(char *command, char ***exec_args)
 
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
-	*cmd_split = echo_split(process, ' ');
+	*cmd_split = split_words(process);
 	if (!*cmd_split)
 		return (-1);
 	*aux = arg_counter(*cmd_split) + 1;

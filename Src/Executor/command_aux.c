@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/09 17:16:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:21:37 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	init_execargs(char ***ex_argc, char *command)
 	int		i;
 
 	i = 0;
-	aux = echo_split(command, ' ');
+	aux = split_words(command);
 	if (!aux)
 		return (-1);
 	remove_quotes_from_matrix(aux);

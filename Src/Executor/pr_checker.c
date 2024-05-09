@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:42:35 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:22:04 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int	check_builtins(t_shell *all, t_process *prc)
 {
 	char	**aux;
 
-	aux = echo_split(prc->process, ' ');
+	aux = split_words(prc->process);
 	remove_quotes_from_matrix(aux);
 	if (!aux)
-		return (ft_fprintf(2, "echo_split failed!\n"), -1);
+		return (ft_fprintf(2, "split_words failed!\n"), -1);
 	if (!ft_strncmp(aux[0], "echo", 5))
 	{
 		ft_echo(aux, prc);
@@ -85,7 +85,7 @@ char	*get_ifile(char *process, int inout)
 	char	*ret;
 	int		i;
 
-	aux = echo_split(process, ' ');
+	aux = split_words(process);
 	i = inout;
 	while (aux[i] && !ft_strncmp(aux[i], "-", 1))
 		i++;
@@ -113,7 +113,7 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 		(*prcs)->process), g_exit_status = 126);
 	else if ((*prcs)->rd)
 	{
-		split = echo_split((*prcs)->process, ' ');
+		split = split_words((*prcs)->process);
 		cmd = get_commad(*prcs, split);
 		if ((*prcs)->rd->type == HD && arg_counter(split) == count_rds(*prcs))
 			return (g_exit_status);

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:44:19 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:21:05 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	execute_builtin(t_shell *all, t_process *prc)
 {
 	char	**aux;
 
-	aux = echo_split(prc->process, ' ');
+	aux = split_words(prc->process);
 	if (!aux)
 		return ;
 	if (!ft_strncmp(aux[0], "export", 7))
