@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:17:36 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 13:05:27 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
-char		*expansor(t_shell *shell, char *str, int i, int j);
+char		*expansor(t_shell *shell, char *str, int i);
 char		*get_env(char *str, t_env_lst *env);
 
 /* expansor_utils.c */
@@ -147,9 +147,6 @@ char		*ft_strjoin_char(char *s1, char c);
 void		handle_signal(int signo);
 void		set_signals(int mode);
 void		proc_handle_signal(int sig);
-
-// G_EXIT_STATUS
-void		change_status(int new_status);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp, int equal);
@@ -201,8 +198,6 @@ char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-void		handle_variable(char **token, t_paths *paths);
-void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
 int			count_words(char *s);
@@ -222,6 +217,9 @@ void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
 
+// LAST FIXES
 int	        find_next_quote(int i, char *str, char c);
 void        exit_error(char *str);
+int	        check_opened_quotes(char *s, int simple, int doble);
+int     	check_pair_quotes(char *s, int *i, char c);
 #endif

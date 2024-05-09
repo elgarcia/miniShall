@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	replace_envp(char *name, char *value, char **envp)
 {

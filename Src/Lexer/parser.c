@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 {

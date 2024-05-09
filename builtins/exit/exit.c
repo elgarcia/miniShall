@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 #include <termios.h>
 
 static int	check_num(char **split)

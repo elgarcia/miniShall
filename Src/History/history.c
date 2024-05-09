@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	print_history(t_shell *shell)
 {

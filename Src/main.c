@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 17:28:31 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:01:26 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,14 @@ void	extend(t_shell *new, char *line)
 	{
 		add_to_history(new, line);
 		add_history(line);
-		new_line = expansor(new, line, -1, 0);
+		new_line = expansor(new, line, -1);
 		if (!new_line || !*new_line || new_line[0] == ' ')
 			return ;
+        if (!check_opened_quotes(new_line, 2, 2))
+        {
+            free(new_line);
+            return ;
+        }
 		if (input_parser(new_line, new, 0) != -1)
 		{
 			add_history(line);

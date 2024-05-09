@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	add_export_node(t_paths *paths, char *name, char *value, int equal)
 {

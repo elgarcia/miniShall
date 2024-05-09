@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 char	*get_result(const char *target_chars, const char *str, size_t new_len,
 		size_t len)

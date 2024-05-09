@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 #include <sys/wait.h>
 
 void	here_doc(t_shell *all, t_process *aux, int rd)

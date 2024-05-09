@@ -1,1 +1,3 @@
 mpanic/
+.cache/
+compile_commands.json

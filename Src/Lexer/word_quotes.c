@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 12:23:55 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 12:55:22 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 int	find_next_quote(int i, char *str, char c)
 {
@@ -39,4 +39,37 @@ int	count_words(char *s)
 		}
 	}
 	return (res);
+}
+
+int	check_pair_quotes(char *s, int *i, char c)
+{
+	int	n;
+
+	n = 1;
+	while (s[*i + 1] && s[*i + 1] != c)
+		(*i)++;
+	if (s[*i + 1] == c)
+		n++;
+	(*i)++;
+	return (n);
+}
+
+int	check_opened_quotes(char *s, int simple, int doble)
+{
+	int	i;
+
+	i = -1;
+	while (s[++i])
+	{
+		if (s[i] == 34)
+			doble += check_pair_quotes(s, &i, s[i]);
+		if (s[i] == 39)
+			simple += check_pair_quotes(s, &i, s[i]);
+		if (doble % 2 != 0 || simple % 2 != 0)
+		{
+			ft_fprintf(2,"Quotes opened\n");
+			return (0);
+		}
+	}
+	return (1);
 }

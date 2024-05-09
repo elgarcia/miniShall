@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 #include <sys/stat.h>
 
 char	*new_path(t_paths *paths, char *arg)

@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 12:17:47 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 13:00:02 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 static void	ft_split_words(char *s, char **arg)
 {
@@ -46,7 +46,7 @@ char	**split_words(char *s)
 
     strs = malloc(sizeof(char *) * count_words(s) + 1);
 	if (!strs)
-		return (NULL);
+        exit_error("Malloc failed");
     ft_split_words(s, strs);
 	return (strs);
 }

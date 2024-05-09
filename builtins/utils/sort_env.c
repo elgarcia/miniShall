@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 t_env_lst	*insert_sorted(t_env_lst *head, char *name, char *value, int equal)
 {

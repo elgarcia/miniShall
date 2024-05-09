@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 		t_process *prc)

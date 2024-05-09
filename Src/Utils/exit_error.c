@@ -1,4 +1,4 @@
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void    exit_error(char *str)
 {

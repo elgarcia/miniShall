@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
 {

@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/03 13:50:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 12:49:36 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 int	check_option_n(char *token)
 {
