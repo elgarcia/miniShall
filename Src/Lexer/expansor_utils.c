@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:16:42 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:14:03 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:32:40 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ char	*ft_strjoinfree(char *s1, char const *s2)
 	size_t	j;
 	char	*new;
 
-	new = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!new || !s1 || !s2)
+	new = (char *)malloc_safe(ft_strlen(s1) + ft_strlen(s2) + 1, 1);
+	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
 	while (s1[i] != '\0')

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 17:33:55 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:58:52 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,16 @@
 char	*get_env(t_shell *shell, char *str, t_env_lst *env)
 {
 	t_env_lst	*tmp;
+    char        *exit_status;
 
 	tmp = env;
 	if (str[0] == '?')
-		return (ft_itoa(shell->exit_status));
+    {
+        exit_status = ft_itoa(shell->exit_status);
+        if (!exit_status)
+            exit_error("Malloc failed");
+		return (exit_status);
+    }
 	while (tmp)
 	{
 		if (!ft_strcmp(str, tmp->name))
@@ -34,9 +40,7 @@ char	*ft_strjoin_char(char *s1, char c)
 	int		i;
 
 	i = 0;
-	new = malloc(ft_strlen(s1) + 2);
-	if (!new)
-        exit_error("Malloc failed");
+	new = malloc_safe(ft_strlen(s1) + 2, 1);
 	while (s1[i])
 	{
 		new[i] = s1[i];
@@ -55,7 +59,11 @@ char	*extend_expansor(t_shell *shell, char *new, char *tmp)
     char    *rst;
 
 	env_value = get_env(shell, tmp, shell->paths->env_lst);
+    if (!env_value)
+        exit_error("Malloc failed");
 	new = ft_strjoinfree(new, env_value);
+    if (!new)
+        exit_error("Malloc failed");
 	free(tmp);
 	free(env_value);
 	tmp = NULL;
@@ -72,6 +80,8 @@ void	get_variable(t_shell *shell, char **new, char *str, int *i)
 	while ((str[j] && ft_isalnum(str[j])) || str[j] == '_' || str[j] == '?')
 		j++;
 	tmp = ft_substr(str, *i + 1, j - *i - 1);
+    if (!tmp)
+        exit_error("Malloc failed");
 	*new = extend_expansor(shell, *new, tmp);
 	*i = j - 1;
 }

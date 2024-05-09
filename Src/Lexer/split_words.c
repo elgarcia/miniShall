@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 17:40:07 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:53:04 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,7 @@ char	**split_words(char *s)
 {
 	char	**strs;
 
-    strs = malloc(sizeof(char *) * (count_words(s) + 1));
-	if (!strs)
-        exit_error("Malloc failed");
+    strs = malloc_safe(sizeof(char *) * (count_words(s) + 1), 1);
     ft_split_words(s, strs);
 	return (strs);
 }

@@ -105,7 +105,7 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 
 	if (init_cmd(&aux, &cmd_split, process) == -1)
 		return (-1);
-	*exec_args = (char **)ft_calloc(aux, sizeof(char *));
+	*exec_args = (char **)malloc_safe(aux, sizeof(char *));
 	if (!*exec_args)
 		return (ft_free(&cmd_split, aux), -1);
 	aux = check_cmd(cmd_split[0], exec_args);

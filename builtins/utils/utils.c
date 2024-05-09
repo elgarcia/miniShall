@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 11:23:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/04/02 16:52:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:37:28 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_env_lst	*duplicate_env_node(const t_env_lst *node)
 {
 	t_env_lst	*new_node;
 
-	new_node = malloc(sizeof(t_env_lst));
+	new_node = malloc_safe(sizeof(t_env_lst), 1);
 	if (!new_node)
 	{
 		perror("Error al asignar memoria para el nuevo nodo");

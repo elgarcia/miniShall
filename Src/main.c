@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 17:49:40 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:50:21 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ void	extend(t_shell *new, char *line)
 
 	if (line[0] != 0)
 	{
+        if (!check_opened_quotes(line, 2, 2))
+            return ;
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1);
@@ -95,11 +97,6 @@ void	loop(t_shell *new, char *line, char *prompt)
             free(prompt);
             clear_everything(new, 0);
             exit(0);
-        }
-        if (line[0] != 0 && !check_opened_quotes(line, 2, 2))
-        {
-            free(line);
-            return ;
         }
 		signal(SIGINT, SIG_IGN);
 		free(prompt);

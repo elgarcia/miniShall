@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 18:38:42 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:22:49 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
+void        *malloc_safe(int num_elements, int size);
 
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);

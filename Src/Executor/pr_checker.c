@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 18:02:04 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:10:41 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ char	*get_ifile(char *process, int inout)
 	if (aux[i])
 	{
 		ret = ft_strdup(aux[i]);
+        if (!ret)
+            exit_error("Malloc failed");
 		ft_free(&aux, arg_counter(aux));
 		return (ret);
 	}

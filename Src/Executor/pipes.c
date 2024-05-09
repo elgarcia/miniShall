@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/24 16:56:11 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:16:06 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,9 @@ int	open_file(char *file, int *fd)
 		return (-1);
 	}
 	if (dup2(*fd, STDIN_FILENO) == -1)
-		return (-1);
+        exit_error("dup2 failed");
 	free(aux);
-	close(*fd);
+	if (close(*fd) == -1)
+        exit_error("close failed");
 	return (0);
 }

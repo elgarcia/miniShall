@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 16:56:29 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:12:13 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ void	ft_exit(t_shell *shell, char *line)
 
 	ret_value = 0;
 	split = split_words(line);
-	if (!split)
-        exit_error("Malloc Failed");
 	remove_quotes_from_matrix(split);
 	if (arg_counter(split) > 2)
 	{

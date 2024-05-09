@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 19:08:44 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:12:13 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 		if (i->type == ORD)
 		{
 			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
-			dup2(all->fd_out, STDOUT_FILENO);
+			if (dup2(all->fd_out, STDOUT_FILENO) == -1)
+                exit_error("dup2 failed");
 		}
 		else
 		{
@@ -54,7 +55,8 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 			if (all->fd_in == -1)
 				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
 				free(file), all->exit_status = 1);
-			dup2(all->fd_in, STDIN_FILENO);
+			if (dup2(all->fd_in, STDIN_FILENO) == -1)
+                exit_error("dup2 failed");
 			close(all->fd_in);
 		}
 		free(file);
@@ -78,7 +80,8 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 			all->fd_out = open(file, O_RDWR | O_APPEND | O_CREAT, 0666);
 			if (all->fd_out == -1)
 				return (free(file), all->exit_status = 1);
-			dup2(all->fd_out, STDOUT_FILENO);
+			if (dup2(all->fd_out, STDOUT_FILENO) == -1)
+                exit_error("dup2 failed");
 			free(file);
 		}
 		else

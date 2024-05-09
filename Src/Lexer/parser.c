@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 17:45:05 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:22:41 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
 	if (!ft_strcmp(*in, "|"))
 	{
-		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
+		(*aux)->next = (t_process *)malloc_safe(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
 		(*aux)->rd = NULL;
@@ -58,7 +58,7 @@ void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 
 void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 {
-	*aux = (t_process *)ft_calloc(1, sizeof(t_process));
+	*aux = (t_process *)malloc_safe(1, sizeof(t_process));
 	(*aux)->process = NULL;
 	(*aux)->next = NULL;
 	(*aux)->n_process = n_proc;

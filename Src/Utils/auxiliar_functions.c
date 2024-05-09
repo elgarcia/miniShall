@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:52:34 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:13:22 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,18 @@ int	is_rd(int inout)
 
 void	close_pipes(t_shell *all)
 {
-	dup2(all->og_infile, STDIN_FILENO);
-	dup2(all->og_outfile, STDOUT_FILENO);
+	if (dup2(all->og_infile, STDIN_FILENO) == -1)
+        exit_error("dup2 failed");
+	if (dup2(all->og_outfile, STDOUT_FILENO) == -1)
+        exit_error("dup2 failed");
 	all->fd_in = -1;
 	all->fd_out = -1;
 }
 
 void	close_fds(t_shell *all)
 {
-	close(all->fd_out);
-	close(all->fd_in);
+	if (close(all->fd_out) == -1)
+        exit_error("close failed");
+	if (close(all->fd_in) == -1)
+        exit_error("close failed");
 }

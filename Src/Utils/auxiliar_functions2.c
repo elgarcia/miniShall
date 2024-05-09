@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/02 16:53:01 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:09:01 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	has_quotes2(char *str)
 void	write_file(t_shell *all, int fd, char *line)
 {
 	fd = open(".temp.txt", O_RDONLY);
+    if (fd == -1)
+        exit_error("open failed");
 	line = get_next_line(fd);
 	while (line)
 	{
@@ -83,7 +85,7 @@ int	check_file(char **file, t_process *aux, t_redir *i)
 void	ft_allocate(int comp, int *size, char ***aux, size_t len)
 {
 	if (comp != 0 && comp != (int)len)
-		*aux = ft_calloc(*size + 1, sizeof(char *));
+		*aux = malloc_safe(*size + 1, sizeof(char *));
 	else
-		*aux = ft_calloc(--(*size) + 1, sizeof(char *));
+		*aux = malloc_safe(--(*size) + 1, sizeof(char *));
 }

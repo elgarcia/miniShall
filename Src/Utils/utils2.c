@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 18:44:06 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:51:57 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ char	**list_to_array(t_env_lst *env)
 	i = -1;
 	while (tmp && ++i >= 0)
 		tmp = tmp->next;
-	array = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!array)
-		return (0);
+	array = (char **)malloc_safe(sizeof(char *), (i + 2));
 	i = 0;
 	tmp = env;
 	while (tmp)
@@ -92,9 +90,7 @@ char	*get_prompt(void)
 	char	*tmp2;
 	char	*path;
 
-	path = malloc(PATH_MAX);
-	if (!path)
-		exit(EXIT_FAILURE);
+	path = malloc_safe(PATH_MAX, 1);
 	tmp = ft_strchrt((char *)getcwd(path, PATH_MAX), '/', 3);
 	if (!tmp)
 		tmp = (BLUE_TEXT "/" RESET_TEXT);

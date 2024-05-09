@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 15:09:34 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 20:23:28 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,7 @@ char	*ft_add_quotes(char *s)
 	char	*res;
 
 	i = -1;
-	res = ft_calloc(sizeof(char), ft_strlen(s) + 3);
-	if (!res)
-		exit_error("Error malloc");
+	res = malloc_safe(sizeof(char), ft_strlen(s) + 3);
 	while (s[++i])
 	{
 		res[i] = s[i];
@@ -115,6 +113,6 @@ char	*ft_add_quotes(char *s)
 		res[i + 1] = s[i];
 	res[i + 1] = 34;
 	res[i + 2] = '\0';
-	free(s);
+	// free(s);
 	return (res);
 }

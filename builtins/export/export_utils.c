@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:20:36 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/28 19:39:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:53:09 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,7 @@ char	*get_result(const char *target_chars, const char *str, size_t new_len,
 
 	i = 0;
 	j = 0;
-	result = (char *)malloc(new_len + 1);
-	if (!result)
-		return (NULL);
+	result = (char *)malloc_safe(new_len + 1, 1);
 	j = 0;
 	i = 0;
 	while (i < len)

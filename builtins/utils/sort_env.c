@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:15:48 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:43:27 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 19:37:32 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_env_lst	*insert_sorted(t_env_lst *head, char *name, char *value, int equal)
 	t_env_lst	*new_node;
 	t_env_lst	*current;
 
-	new_node = malloc(sizeof(t_env_lst));
+	new_node = malloc_safe(sizeof(t_env_lst), 1);
 	if (!new_node)
 	{
 		perror("Error allocating memory for the new node");

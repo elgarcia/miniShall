@@ -16,11 +16,11 @@ void	assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type)
 {
 	if ((*red_aux))
 	{
-		(*red_aux)->next = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux)->next = (t_redir *)malloc_safe(1, sizeof(t_redir));
 		(*red_aux) = (*red_aux)->next;
 	}
 	else
-		(*red_aux) = (t_redir *)ft_calloc(1, sizeof(t_redir));
+		(*red_aux) = (t_redir *)malloc_safe(1, sizeof(t_redir));
 	(*red_aux)->type = rd_type;
 	(*red_aux)->pos = *i - (*aux)->n_redis;
 	(*red_aux)->next = NULL;
