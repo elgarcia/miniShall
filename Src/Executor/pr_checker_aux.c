@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:21:05 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 13:23:43 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,11 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	else if (!ft_strncmp(aux[0], "history", 8))
 		print_history(all);
 	else if (!ft_strncmp(aux[0], "exit", 5))
+    {
+	    if (aux)
+	    	ft_free(&aux, arg_counter(aux));
 		ft_exit(all, prc->process);
+    }
 	if (aux)
 		ft_free(&aux, arg_counter(aux));
 }

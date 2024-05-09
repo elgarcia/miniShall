@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 13:05:27 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:01:16 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,4 +222,5 @@ int	        find_next_quote(int i, char *str, char c);
 void        exit_error(char *str);
 int	        check_opened_quotes(char *s, int simple, int doble);
 int     	check_pair_quotes(char *s, int *i, char c);
+char	    *ft_add_quotes(char *s);
 #endif

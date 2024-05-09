@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/08 15:47:25 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 13:44:30 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,12 @@ void	handle_export_variables(t_paths *paths, char **argv, int i)
 		update_or_process(paths, name, value, equal);
 		i++;
 	}
-	sort_env_list(&(paths->export_env_lst));
-	sort_env_list(&(paths->env_lst));
 	g_exit_status = 0;
 }
 
 void	ft_export(t_paths *paths, char **argv, int i)
 {
+	sort_env_list(&(paths->export_env_lst));
 	if (!argv[1])
 	{
 		print_export(paths->export_env_lst, 1);

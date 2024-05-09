@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:03:20 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 14:04:13 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,8 @@ char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 	free(tmp);
 	free(env_value);
 	tmp = NULL;
-	return (new);
+    char *rst = ft_add_quotes(new);
+	return (rst);
 }
 
 void	get_variable(t_shell *shell, char **new, char *str, int *i)
