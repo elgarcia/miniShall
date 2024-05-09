@@ -6,19 +6,19 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 14:04:13 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 17:33:55 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env(char *str, t_env_lst *env)
+char	*get_env(t_shell *shell, char *str, t_env_lst *env)
 {
 	t_env_lst	*tmp;
 
 	tmp = env;
 	if (str[0] == '?')
-		return (ft_itoa(g_exit_status));
+		return (ft_itoa(shell->exit_status));
 	while (tmp)
 	{
 		if (!ft_strcmp(str, tmp->name))
@@ -52,13 +52,14 @@ char	*ft_strjoin_char(char *s1, char c)
 char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 {
 	char	*env_value;
+    char    *rst;
 
-	env_value = get_env(tmp, shell->paths->env_lst);
+	env_value = get_env(shell, tmp, shell->paths->env_lst);
 	new = ft_strjoinfree(new, env_value);
 	free(tmp);
 	free(env_value);
 	tmp = NULL;
-    char *rst = ft_add_quotes(new);
+    rst = ft_add_quotes(new);
 	return (rst);
 }
 
@@ -84,19 +85,15 @@ char	*expansor(t_shell *shell, char *str, int i)
 	new = ft_strdup("");
     if (!new)
         exit_error("Malloc failed");
-	quotes = 1;
-	double_quotes = 1;
+	quotes = 0;
+	double_quotes = 0;
 	while (str[++i])
 	{
-		if (str[i] == '\'')
-			quotes = !quotes;
-		if (str[i] == '\"')
-			double_quotes = !double_quotes;
-		if ((!double_quotes || quotes) && str[i] == '$' && str[i + 1] && str[i
+        quotes = (quotes + (!double_quotes && str[i] == '\'')) % 2;
+		double_quotes = (double_quotes + (!quotes && str[i] == '\"')) % 2;
+		if (!quotes && str[i] == '$' && str[i + 1] && str[i
 				+ 1] != ' ' && str[i + 1] != '$')
-		{
 			get_variable(shell, &new, str, &i);
-		}
 		else
 			new = ft_strjoin_char(new, str[i]);
 	}

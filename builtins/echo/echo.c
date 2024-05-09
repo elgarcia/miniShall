@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 12:49:36 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 17:14:32 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,5 @@ int	ft_echo(char **argv, t_process *prc)
 	print(argv, i, prc);
 	if (n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
-	g_exit_status = 0;
 	return (0);
 }

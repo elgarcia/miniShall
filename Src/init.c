@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:01:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/02 13:36:18 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:07:54 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,11 @@ void	init_minishell(t_shell **all, char **envp)
 	(*all)->history_path = ft_strjoin(getcwd(buffer, PATH_MAX), "/.history");
 	(*all)->og_infile = dup(STDIN_FILENO);
 	(*all)->og_outfile = dup(STDOUT_FILENO);
-	g_exit_status = 0;
 	(*all)->paths->envp = envp;
 	fill_init_env_list((*all)->paths, envp, 0);
 	(*all)->paths->export_env_lst = duplicate_lst((*all)->paths->env_lst);
+    (*all)->exit_status = 0;
+    (*all)->paths->shell = (*all);
 }
 
 void	init_pikes(t_shell **all)

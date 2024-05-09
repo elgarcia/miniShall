@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:28:24 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 16:56:29 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_exit(t_shell *shell, char *line)
 	if (arg_counter(split) > 2)
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return ((void)ft_free(&split, arg_counter(split)));
 	}
 	printf("exit\n");

@@ -6,12 +6,15 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/21 10:59:03 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/04/24 15:53:53 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:48:17 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "structures.h"
 #include <termios.h>
+
+int g_exit_status = 0;
 
 void	handle_signal(int sig)
 {

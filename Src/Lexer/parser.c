@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:23:39 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 17:45:05 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int	input_parser(char *line, t_shell *new, int i)
 	{
 		ft_fprintf(2, "Syntax error\n");
 		free_prcs(new);
-		g_exit_status = 258;
+		new->exit_status = 258;
 		return (ft_free(&new->input, arg_counter(new->input)), -1);
 	}
 	return (ft_free(&new->input, arg_counter(new->input)), 0);

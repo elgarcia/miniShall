@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/29 10:33:20 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/09 18:44:06 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,19 +72,17 @@ int	ft_strlenchr(const char *s, char c)
 	return (-1);
 }
 
-void	check_status(int status)
+void	check_status(t_shell *shell, int status)
 {
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		g_exit_status = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3");
 		printf("\n");
-		g_exit_status = 128 + WTERMSIG(status);
+		shell->exit_status = 128 + WTERMSIG(status);
 	}
-	else
-		g_exit_status = 0;
 }
 
 char	*get_prompt(void)

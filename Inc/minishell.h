@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 14:01:16 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 18:38:42 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char		*ft_strjoinup(char **s1, char *s2);
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
-void		check_status(int status);
+void		check_status(t_shell *shell, int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);
@@ -137,7 +137,7 @@ void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
 char		*expansor(t_shell *shell, char *str, int i);
-char		*get_env(char *str, t_env_lst *env);
+char    	*get_env(t_shell *shell, char *str, t_env_lst *env);
 
 /* expansor_utils.c */
 char		*ft_strjoinfree(char *s1, char const *s2);
@@ -185,10 +185,10 @@ int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
 void		ft_env(t_paths *paths);
-void		ft_cd(t_paths *paths, char **dir);
-int			ft_pwd(void);
+void         ft_cd(t_paths *paths, char **dir);
+int			ft_pwd(t_shell *shell);
 int			ft_echo(char **argv, t_process *prc);
-void		ft_export(t_paths *paths, char **argv, int i);
+int         ft_export(t_paths *paths, char **argv);
 void		ft_exit(t_shell *shell, char *line);
 void		ft_unset(t_paths *paths, char **argv);
 

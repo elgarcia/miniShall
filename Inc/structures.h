@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:55:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 11:52:48 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 16:49:57 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 
 extern int				g_exit_status;
 
+typedef struct s_shell t_shell;
+
 typedef struct s_env_lst
 {
 	char				*name;
@@ -35,6 +37,7 @@ typedef struct s_paths
 	char				**envp;
 	t_env_lst			*env_lst;
 	t_env_lst			*export_env_lst;
+    t_shell             *shell;
 }						t_paths;
 
 typedef struct s_redir
@@ -67,6 +70,7 @@ typedef struct s_shell
 	char				**exec_args;
 	char				**input;
 	char				*history_path;
+    int                 exit_status;
 	t_paths				*paths;
 }						t_shell;
 

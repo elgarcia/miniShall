@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 13:23:43 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/09 18:47:14 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	if (!aux)
 		return ;
 	if (!ft_strncmp(aux[0], "export", 7))
-		ft_export(all->paths, aux, 1);
+		all->exit_status = ft_export(all->paths, aux);
 	else if (!ft_strncmp(aux[0], "unset", 6))
 		ft_unset(all->paths, aux);
 	else if (!ft_strncmp(aux[0], "env", 4))

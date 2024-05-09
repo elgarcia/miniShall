@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 10:19:12 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:43:27 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 16:48:16 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,5 +15,5 @@
 void	ft_env(t_paths *paths)
 {
 	print_env_list(paths->env_lst);
-	g_exit_status = 0;
+	paths->shell->exit_status = 0;
 }
