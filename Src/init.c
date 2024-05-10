@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:01:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 13:36:12 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:47:38 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	init_minishell(t_shell **all, char **envp)
 	(*all)->paths->envp = envp;
 	fill_init_env_list((*all)->paths, envp, 0);
 	(*all)->paths->export_env_lst = duplicate_lst((*all)->paths->env_lst);
-    (*all)->exit_status = 0;
-    (*all)->paths->shell = (*all);
+	(*all)->exit_status = 0;
+	(*all)->paths->shell = (*all);
 }
 
 void	init_pikes(t_shell **all)

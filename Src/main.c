@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 19:50:21 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:51:30 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	extend(t_shell *new, char *line)
 
 	if (line[0] != 0)
 	{
-        if (!check_opened_quotes(line, 2, 2))
-            return ;
+		if (!check_opened_quotes(line, 2, 2))
+			return ;
 		add_to_history(new, line);
 		add_history(line);
 		new_line = expansor(new, line, -1);
@@ -76,12 +76,12 @@ void	extend(t_shell *new, char *line)
 		{
 			add_history(line);
 			init_pikes(&new);
-		    free(new_line);
+			free(new_line);
 			exec_process(new, 0, 0, 0);
 			free_pikes(&new);
 		}
-        else
-		    free(new_line);
+		else
+			free(new_line);
 	}
 }
 
@@ -92,12 +92,12 @@ void	loop(t_shell *new, char *line, char *prompt)
 		prompt = get_prompt();
 		set_signals(0);
 		line = readline(prompt);
-        if (line == NULL)
-        {
-            free(prompt);
-            clear_everything(new, 0);
-            exit(0);
-        }
+		if (line == NULL)
+		{
+			free(prompt);
+			clear_everything(new, 0);
+			exit(0);
+		}
 		signal(SIGINT, SIG_IGN);
 		free(prompt);
 		extend(new, line);

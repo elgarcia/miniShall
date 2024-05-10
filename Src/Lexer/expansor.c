@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 21:19:58 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:56:32 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 char	*get_env(t_shell *shell, char *str, t_env_lst *env)
 {
 	t_env_lst	*tmp;
-    char        *exit_status;
+	char		*exit_status;
 
 	tmp = env;
 	if (str[0] == '?')
-    {
-        exit_status = ft_itoa(shell->exit_status);
-        if (!exit_status)
-            exit_error("Malloc failed");
+	{
+		exit_status = ft_itoa(shell->exit_status);
+		if (!exit_status)
+			exit_error("Malloc failed");
 		return (exit_status);
-    }
+	}
 	while (tmp)
 	{
 		if (!ft_strcmp(str, tmp->name))
@@ -56,18 +56,18 @@ char	*ft_strjoin_char(char *s1, char c)
 char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 {
 	char	*env_value;
-    char    *rst;
+    char	*rst;
 
 	env_value = get_env(shell, tmp, shell->paths->env_lst);
-    if (!env_value)
-        exit_error("Malloc failed");
+	if (!env_value)
+		exit_error("Malloc failed");
 	new = ft_strjoinfree(new, env_value);
-    if (!new)
-        exit_error("Malloc failed");
+	if (!new)
+		exit_error("Malloc failed");
 	free(tmp);
 	free(env_value);
 	tmp = NULL;
-    rst = ft_add_quotes(new);
+	rst = ft_add_quotes(new);
 	return (rst);
 }
 

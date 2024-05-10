@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 19:53:04 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:52:29 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	ft_split_words(char *s, char **arg)
 		{
 			arg[pos] = ft_substr(s, start, i - start + 1);
 			if (arg[pos] == NULL)
-                exit_error("Malloc failed");
+				exit_error("Malloc failed");
 			pos++;
 		}
 	}
@@ -66,7 +66,7 @@ char	**split_words(char *s)
 {
 	char	**strs;
 
-    strs = malloc_safe(sizeof(char *) * (count_words(s) + 1), 1);
-    ft_split_words(s, strs);
+	strs = malloc_safe(sizeof(char *) * (count_words(s) + 1), 1);
+	ft_split_words(s, strs);
 	return (strs);
 }

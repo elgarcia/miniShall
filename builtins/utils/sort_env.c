@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sort_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/20 12:15:48 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 19:37:32 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:42:24 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,21 @@ void	free_env_lst(t_env_lst *head)
 	}
 }
 
-void sort_env_list(t_env_lst **head) {
-  t_env_lst *sorted = NULL;
-  t_env_lst *current = *head;
-  t_env_lst *next;
+void	sort_env_list(t_env_lst **head)
+{
+	t_env_lst	*sorted;
+	t_env_lst	*current;
+	t_env_lst	*next;
 
-  // Iterate through the original list
-  while (current != NULL) {
-    next = current->next;
-
-    // Insert current element into sorted list
-    sorted = insert_sorted(sorted, current->name, current->value, current->equal);
-
-    // Move to the next element in the original list
-    current = next;
-  }
-
-  // Free the original list (optional)
-  free_env_lst(*head);
-
-  // Update the head pointer to point to the sorted list
-  *head = sorted;
+	sorted = NULL;
+	current = *head;
+	while (current != NULL)
+	{
+		next = current->next;
+		sorted = insert_sorted(sorted, current->name, \
+		current->value, current->equal);
+		current = next;
+	}
+	free_env_lst(*head);
+	*head = sorted;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 18:06:17 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 16:46:16 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,14 +61,14 @@ int	contains_symbols(char *str)
 	return (0);
 }
 
-int handle_export_variables(t_paths *paths, char **argv)
+int	handle_export_variables(t_paths *paths, char **argv)
 {
 	char	*name;
 	char	*value;
 	int		equal;
-    int     i;
+	int		i;
 
-    i = 1;
+	i = 1;
 	while (argv[i] && argv[i][0])
 	{
 		if (check_var(argv[i]))
@@ -83,20 +83,20 @@ int handle_export_variables(t_paths *paths, char **argv)
 		update_or_process(paths, name, value, equal);
 		i++;
 	}
-    return (0);
+	return (0);
 }
 
-int ft_export(t_paths *paths, char **argv)
+int	ft_export(t_paths *paths, char **argv)
 {
-    int ret;
+	int	ret;
 
 	sort_env_list(&(paths->export_env_lst));
 	if (!argv[1])
 	{
 		print_export(paths->export_env_lst, 1);
-        ret = 0;
+		ret = 0;
 	}
 	else
-	    ret = handle_export_variables(paths, argv);
-    return (ret);
+		ret = handle_export_variables(paths, argv);
+	return (ret);
 }

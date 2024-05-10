@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_aux3.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 18:36:24 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 18:40:16 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:53:12 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int check_synerr(t_shell **all, int i)
+int	check_synerr(t_shell **all, int i)
 {
 	if (there_is_rd((*all)->lst_process) || is_ao((*all)->input[i - 1]))
 	{
