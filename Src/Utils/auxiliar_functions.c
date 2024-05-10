@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliar_functions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:45:42 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:35:49 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ int	is_rd(int inout)
 void	close_pipes(t_shell *all)
 {
 	if (dup2(all->og_infile, STDIN_FILENO) == -1)
-        exit_error("dup2 failed");
+		exit_error("dup2 failed");
 	if (dup2(all->og_outfile, STDOUT_FILENO) == -1)
-        exit_error("dup2 failed");
+		exit_error("dup2 failed");
 	all->fd_in = -1;
 	all->fd_out = -1;
 }
@@ -85,7 +85,7 @@ void	close_pipes(t_shell *all)
 void	close_fds(t_shell *all)
 {
 	if (close(all->fd_out) == -1)
-        exit_error("close failed 2");
+		exit_error("close failed 2");
 	if (close(all->fd_in) == -1)
-        exit_error("close failed 3");
+		exit_error("close failed 3");
 }

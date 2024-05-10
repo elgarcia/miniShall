@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_error.c                                       :+:      :+:    :+:   */
+/*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/10 17:38:35 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:39:20 by elias            ###   ########.fr       */
+/*   Created: 2024/05/10 18:07:10 by eliagarc          #+#    #+#             */
+/*   Updated: 2024/05/10 18:08:59 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	exit_error(char *str)
+void	*malloc_safe(int num_elements, int size)
 {
-	ft_fprintf(2, RED_TEXT"%s\n"RESET_TEXT, str);
-	exit(-1);
+	void	*mem;
+
+	mem = ft_calloc(num_elements, size);
+	if (!mem)
+		exit_error("malloc_safe failed");
+	return (mem);
 }

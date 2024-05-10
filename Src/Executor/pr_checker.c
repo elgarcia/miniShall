@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pr_checker.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 21:32:37 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:43:58 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 	}
 	else if (!ft_strncmp(aux[0], "exit", 5))
 	{
-        ft_free(&aux, len);
+		ft_free(&aux, len);
 		execute_builtin(all, prc);
 	}
 	ft_free(&aux, len);
@@ -90,8 +90,8 @@ char	*get_ifile(char *process, int inout)
 	if (aux[i])
 	{
 		ret = ft_strdup(aux[i]);
-        if (!ret)
-            exit_error("Malloc failed");
+		if (!ret)
+			exit_error("Malloc failed");
 		ft_free(&aux, arg_counter(aux));
 		return (ret);
 	}

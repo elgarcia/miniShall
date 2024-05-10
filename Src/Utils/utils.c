@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:33 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 19:33:21 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 18:08:44 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void    *malloc_safe(int num_elements, int size)
-{
-    void    *mem;
-
-    mem = ft_calloc(num_elements, size);
-    if (!mem)
-        exit_error("malloc_safe failed");
-    return (mem);
-}
 
 void	ft_free(char ***arg, int size)
 {

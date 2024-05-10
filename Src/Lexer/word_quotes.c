@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   word_quotes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 12:42:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 13:17:48 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:34:42 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	check_opened_quotes(char *s, int simple, int doble)
 			simple += check_pair_quotes(s, &i, s[i]);
 		if (doble % 2 != 0 || simple % 2 != 0)
 		{
-			ft_fprintf(2,"Quotes opened\n");
+			ft_fprintf(2, "Quotes opened\n");
 			return (0);
 		}
 	}

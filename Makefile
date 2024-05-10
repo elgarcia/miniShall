@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+         #
+#    By: elias <elias@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/02 16:51:29 by bautrodr          #+#    #+#              #
-#    Updated: 2024/05/10 13:40:16 by tuta             ###   ########.fr        #
+#    Updated: 2024/05/10 18:10:14 by elias            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,10 +33,11 @@ SOURCE = Src/main.c Src/init.c \
 		 Src/Lexer/split_words.c Src/Lexer/word_quotes.c  \
 		 Src/Executor/executor.c Src/Executor/pr_checker.c Src/Executor/commands.c Src/Executor/executor_aux2.c \
 		 Src/Executor/command_aux.c Src/Executor/pipes.c Src/Executor/executor_aux.c Src/Executor/pr_checker_aux.c \
+		 Src/Executor/executor_aux3.c \
 		 Src/Utils/utils.c get_next_line/get_next_line.c \
 		 get_next_line/get_next_line_utils.c Src/Utils/auxiliar_functions.c \
 		 Src/Utils/quotes.c Src/Utils/utils2.c Src/Utils/envp.c Src/Utils/auxiliar_functions2.c \
-		 Src/Utils/exit_error.c \
+		 Src/Utils/exit_error.c Src/Utils/utils3.c \
 		 Src/History/history.c Src/History/history_utils.c \
 		 Src/Signals/signals.c
 

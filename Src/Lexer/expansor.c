@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/10 16:56:32 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/10 17:33:17 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ char	*ft_strjoin_char(char *s1, char c)
 char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 {
 	char	*env_value;
-    char	*rst;
+	char	*rst;
 
 	env_value = get_env(shell, tmp, shell->paths->env_lst);
 	if (!env_value)
@@ -80,8 +80,8 @@ void	get_variable(t_shell *shell, char **new, char *str, int *i)
 	while ((str[j] && ft_isalnum(str[j])) || str[j] == '_' || str[j] == '?')
 		j++;
 	tmp = ft_substr(str, *i + 1, j - *i - 1);
-    if (!tmp)
-        exit_error("Malloc failed");
+	if (!tmp)
+		exit_error("Malloc failed");
 	*new = extend_expansor(shell, *new, tmp);
 	*i = j - 1;
 }
@@ -93,21 +93,21 @@ char	*expansor(t_shell *shell, char *str, int i)
 	int		double_quotes;
 
 	new = ft_strdup("");
-    if (!new)
-        exit_error("Malloc failed");
+	if (!new)
+		exit_error("Malloc failed");
 	quotes = 0;
 	double_quotes = 0;
-    i = 0;
+	i = 0;
 	while (str[i])
 	{
-        quotes = (quotes + (!double_quotes && str[i] == '\'')) % 2;
+		quotes = (quotes + (!double_quotes && str[i] == '\'')) % 2;
 		double_quotes = (double_quotes + (!quotes && str[i] == '\"')) % 2;
 		if (!quotes && str[i] == '$' && str[i + 1] && str[i
 				+ 1] != ' ' && str[i + 1] != '$')
 			get_variable(shell, &new, str, &i);
 		else
 			new = ft_strjoin_char(new, str[i]);
-        i++;
+		i++;
 	}
 	return (new);
 }

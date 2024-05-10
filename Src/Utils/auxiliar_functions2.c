@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliar_functions2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 13:35:39 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:37:49 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int	has_quotes2(char *str)
 void	write_file(t_shell *all, int fd, char *line)
 {
 	fd = open(".temp.txt", O_RDONLY);
-    if (fd == -1)
-        exit_error("open failed");
+	if (fd == -1)
+		exit_error("open failed");
 	line = get_next_line(fd);
 	while (line)
 	{

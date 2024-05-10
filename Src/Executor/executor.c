@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 20:53:13 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:42:50 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 		{
 			all->fd_out = open(file, O_RDWR | O_CREAT | O_TRUNC, 0666);
 			if (dup2(all->fd_out, STDOUT_FILENO) == -1)
-                exit_error("dup2 failed");
+				exit_error("dup2 failed");
 		}
 		else
 		{
@@ -56,7 +56,7 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
 				free(file), all->exit_status = 1);
 			if (dup2(all->fd_in, STDIN_FILENO) == -1)
-                exit_error("dup2 failed");
+				exit_error("dup2 failed");
 			close(all->fd_in);
 		}
 		free(file);
@@ -81,7 +81,7 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 			if (all->fd_out == -1)
 				return (free(file), all->exit_status = 1);
 			if (dup2(all->fd_out, STDOUT_FILENO) == -1)
-                exit_error("dup2 failed");
+				exit_error("dup2 failed");
 			free(file);
 		}
 		else
@@ -137,7 +137,7 @@ void	exec_process(t_shell *all, int i, int j, int status)
 	while (j < i)
 	{
 		if (waitpid(all->sons[j++], &status, 0) == all->sons[i - 1])
-		    check_status(all, status);
+			check_status(all, status);
 	}
 	reset_prc(all);
 }

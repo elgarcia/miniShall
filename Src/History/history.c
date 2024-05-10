@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   history.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 14:57:55 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 20:45:14 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/10 17:39:44 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	print_history(t_shell *shell)
 	}
 	free(line);
 	if (close(fd) == -1)
-        exit_error("close failed 1");
+		exit_error("close failed 1");
 }
 
 int	calculate_current_index(int temp_fd)
