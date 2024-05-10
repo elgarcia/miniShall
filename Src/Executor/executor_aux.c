@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 15:43:28 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 20:50:47 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,20 @@
 
 void	reset_prc(t_shell *all)
 {
-	dup2(all->og_infile, STDIN_FILENO);
-	dup2(all->og_outfile, STDOUT_FILENO);
+	if (dup2(all->og_infile, STDIN_FILENO) == -1)
+        exit_error("dup2 failed");
+	if (dup2(all->og_outfile, STDOUT_FILENO) == -1)
+        exit_error("dup2 failed");
 	free_prcs(all);
 }
 
 void	pipe_man(t_shell *all)
 {
-	close(all->pipes[1]);
+	if (close(all->pipes[1]) == -1)
+        exit_error("close failed 5");
 	if (all->n_process > 1)
-		dup2(all->pipes[0], STDIN_FILENO);
+		if (dup2(all->pipes[0], STDIN_FILENO) == -1)
+            exit_error("dup2 failed");
 }
 
 void	init_executor(t_shell *all, t_process **aux, int *i, int *j)
@@ -42,7 +46,10 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 
 	fd_aux = 0;
 	split = ft_split(prc->process, ' ');
-	pipe(mypipe);
+    if (!split)
+        exit_error("Malloc failed");
+	if (pipe(mypipe) == -1)
+        exit_error("pipe failed");
 	if (all->fd_in == -1 && arg_counter(split) > 1)
 	{
 		fd_aux = -1;
@@ -51,12 +58,15 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 	line = get_next_line(all->og_infile);
 	while (outword && ft_strcmp(outword, line))
 		read_loop(all, fd_aux, &line, split);
-	close(all->fd_in);
+	if (fd_aux == -1 && close(all->fd_in) == -1)
+        exit_error("close failed 6");
 	if (fd_aux == -1 && arg_counter(split) > 1)
 	{
 		all->fd_in = mypipe[0];
-		dup2(all->fd_in, STDIN_FILENO);
-		close(all->fd_in);
+		if (dup2(all->fd_in, STDIN_FILENO) == -1)
+            exit_error("dup2 failed");
+		if (close(all->fd_in) == -1)
+            exit_error("close failed 7");
 		all->fd_in = -1;
 	}
 	return (free(line), ft_free(&split, arg_counter(split)));

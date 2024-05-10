@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:04:34 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/02 13:26:24 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:05:15 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	free_env_node(t_env_lst *node)
 {
@@ -81,7 +81,7 @@ void	ft_unset(t_paths *paths, char **argv)
 		i++;
 	}
 	if (is_valid)
-		g_exit_status = 1;
+		paths->shell->exit_status = 1;
 	else
-		g_exit_status = 0;
+		paths->shell->exit_status = 0;
 }

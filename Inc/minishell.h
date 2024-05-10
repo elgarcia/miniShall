@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 19:01:13 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:34:31 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@
 /* parser.c */
 int			input_parser(char *line, t_shell *new, int i);
 void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
-int			check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
-int			new_proc(t_process **aux, t_shell *all, int n_proc,
+void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
+void		new_proc(t_process **aux, t_shell *all, int n_proc,
 				t_redir **red_aux);
-int			parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
+void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
 
 /* parser_aux.c */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
@@ -53,20 +53,18 @@ int			there_is_rd(t_process *lst);
 int			separate_rd(char ***input, int i);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
-/* parser_aux3.c */
-int			check_synerr(t_shell **all, int i);
-
 /* utils.c*/
 void		ft_free(char ***arg, int size);
 int			ft_word_count(const char *s1, char delimiter);
 int			ft_strcmp(char *s1, char *s2);
 void		*free_null(char **s);
 char		*ft_strjoinup(char **s1, char *s2);
+void        *malloc_safe(int num_elements, int size);
 
 /* utils_2.c */
 int			ft_strlenchr(const char *s, char c);
 char		**list_to_array(t_env_lst *env);
-void		check_status(int status);
+void		check_status(t_shell *shell, int status);
 
 /* envp.c */
 void		replace_envp(char *name, char *value, char **envp);
@@ -135,12 +133,12 @@ int			has_quotes2(char *str);
 void		write_file(t_shell *all, int fd, char *line);
 int			skip_quotes(char *str, int i, int j);
 int			check_file(char **file, t_process *aux, t_redir *i);
-int			ft_allocate(int comp, int *size, char ***aux, size_t len);
+void		ft_allocate(int comp, int *size, char ***aux, size_t len);
 
 /* expansor.c */
 char		*expand_single_var(char **variable_name, t_shell *shell);
-char		*expansor(t_shell *shell, char *str, int i, int j);
-char		*get_env(char *str, t_env_lst *env);
+char		*expansor(t_shell *shell, char *str, int i);
+char    	*get_env(t_shell *shell, char *str, t_env_lst *env);
 
 /* expansor_utils.c */
 char		*ft_strjoinfree(char *s1, char const *s2);
@@ -150,9 +148,6 @@ char		*ft_strjoin_char(char *s1, char c);
 void		handle_signal(int signo);
 void		set_signals(int mode);
 void		proc_handle_signal(int sig);
-
-// G_EXIT_STATUS
-void		change_status(int new_status);
 
 // ENVP LIST
 void		fill_init_env_list(t_paths *paths, char **envp, int equal);
@@ -191,10 +186,10 @@ int			extract_name_value(char *arg, char **name, char **value);
 
 // BUILTINS
 void		ft_env(t_paths *paths);
-void		ft_cd(t_paths *paths, char **dir);
-int			ft_pwd(void);
+void         ft_cd(t_paths *paths, char **dir);
+int			ft_pwd(t_shell *shell);
 int			ft_echo(char **argv, t_process *prc);
-void		ft_export(t_paths *paths, char **argv, int i);
+int         ft_export(t_paths *paths, char **argv);
 void		ft_exit(t_shell *shell, char *line);
 void		ft_unset(t_paths *paths, char **argv);
 
@@ -204,19 +199,15 @@ char		*ft_strchrt(char *s, char c, int times);
 
 // BUILTINS UTILS
 int			arg_counter(char **argv);
-char		**add_word(t_split *params);
-int			quoted_len(char *s, char c);
-void		handle_variable(char **token, t_paths *paths);
-void		handle_exit_status(char **token);
 int			remove_char(char *str, char c);
 int			quotes_counter(char *str);
-int			count_words(char const *s);
+int			count_words(char *s);
 void		clear_everything(t_shell *shell, int pikes);
 void		ft_lstdelone_proc(t_process *lst);
 void		ft_lstclear_pro(t_process **lst);
 
 // PARSER
-char		**echo_split(char *s, char c);
+char		**split_words(char *s);
 void		remove_quotes_from_string(char *str);
 void		remove_quotes_from_matrix(char **matrix);
 
@@ -227,4 +218,10 @@ void		close_file(int fd);
 void		error_exit(void);
 int			open_history_file(const char *filename, int flags, int mode);
 
+// LAST FIXES
+int	        find_next_quote(int i, char *str, char c);
+void        exit_error(char *str);
+int	        check_opened_quotes(char *s, int simple, int doble);
+int     	check_pair_quotes(char *s, int *i, char c);
+char	    *ft_add_quotes(char *s);
 #endif

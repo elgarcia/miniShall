@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 13:04:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/08 15:47:25 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:06:17 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	print_export(t_env_lst *env_lst, int declare_x)
 {
@@ -37,10 +37,8 @@ int	check_var(char *argv)
 	if (argv && !ft_isalpha(argv[0]) && argv[0] != '\"' && argv[0] != '\''
 		&& argv[0] != '_')
 	{
-		g_exit_status = 1;
 		return (ft_fprintf(2, "export: `%s': not a valid identifier\n", argv));
 	}
-	g_exit_status = 0;
 	return (0);
 }
 
@@ -63,39 +61,42 @@ int	contains_symbols(char *str)
 	return (0);
 }
 
-void	handle_export_variables(t_paths *paths, char **argv, int i)
+int handle_export_variables(t_paths *paths, char **argv)
 {
 	char	*name;
 	char	*value;
 	int		equal;
+    int     i;
 
+    i = 1;
 	while (argv[i] && argv[i][0])
 	{
 		if (check_var(argv[i]))
-			return ;
+			return (1);
 		equal = extract_name_value(argv[i], &name, &value);
 		if (contains_symbols(name))
 		{
-			g_exit_status = 1;
 			ft_fprintf(2, "export: `%s=%s\': not a valid identifier\n", name,
 				value);
-			return ;
+			return (1);
 		}
 		update_or_process(paths, name, value, equal);
 		i++;
 	}
-	sort_env_list(&(paths->export_env_lst));
-	sort_env_list(&(paths->env_lst));
-	g_exit_status = 0;
+    return (0);
 }
 
-void	ft_export(t_paths *paths, char **argv, int i)
+int ft_export(t_paths *paths, char **argv)
 {
+    int ret;
+
+	sort_env_list(&(paths->export_env_lst));
 	if (!argv[1])
 	{
 		print_export(paths->export_env_lst, 1);
-		g_exit_status = 0;
+        ret = 0;
 	}
 	else
-		handle_export_variables(paths, argv, i);
+	    ret = handle_export_variables(paths, argv);
+    return (ret);
 }

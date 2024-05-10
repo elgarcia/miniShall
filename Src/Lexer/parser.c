@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/07 19:02:36 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:34:02 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
@@ -31,13 +31,11 @@ void	check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux)
 	}
 }
 
-int	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
+void	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 {
 	if (!ft_strcmp(*in, "|"))
 	{
-		(*aux)->next = (t_process *)ft_calloc(1, sizeof(t_process));
-		if (!(*aux)->next)
-			return (free_prcs(&aux), -1);
+		(*aux)->next = (t_process *)malloc_safe(1, sizeof(t_process));
 		(*aux)->next->n_process = (*aux)->n_process + 1;
 		*aux = (*aux)->next;
 		(*aux)->rd = NULL;
@@ -58,11 +56,9 @@ int	check_red(char **in, t_process **aux, int *i, t_redir **red_aux)
 		(*aux)->rd = *red_aux;
 }
 
-int	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
+void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 {
-	*aux = (t_process *)ft_calloc(1, sizeof(t_process));
-	if (!*aux)
-		return (-1);
+	*aux = (t_process *)malloc_safe(1, sizeof(t_process));
 	(*aux)->process = NULL;
 	(*aux)->next = NULL;
 	(*aux)->n_process = n_proc;
@@ -71,23 +67,16 @@ int	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 	*red_aux = (*aux)->rd;
 	if (all->lst_process == NULL)
 		all->lst_process = *aux;
-	return (0);
 }
 
-int	parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux)
+void	parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux)
 {
 	check_red(&new->input[*i], aux, i, &red_aux);
 	if ((*aux)->process != NULL)
-	{
 		(*aux)->process = ft_strjoinup(&(*aux)->process, " ");
-		if (!(*aux)->process)
-			return (-1);
-	}
 	else
 		new->n_process += 1;
 	(*aux)->process = ft_strjoinup(&(*aux)->process, new->input[*i]);
-	if (!(*aux)->process)
-			return (-1);
 	if (new->input[*i])
 		*i += 1;
 }
@@ -98,31 +87,24 @@ int	input_parser(char *line, t_shell *new, int i)
 	t_redir		*red_aux;
 
 	aux = new->lst_process;
-	new->input = echo_split(line, ' ');
-	if (!new->input)
-		return (-1);
+	new->input = split_words(line);
 	if (separate_rd(&new->input, -1) == -1)
 		return (ft_free(&new->input, arg_counter(new->input)), -1);
 	while (new->input[i])
 	{
 		if (i == 0)
-		{
-			if (new_proc(&aux, new, 0, &red_aux) == -1)
-				return (ft_free(&new->input, arg_counter(new->input)), -1);
-		}
+			new_proc(&aux, new, 0, &red_aux);
 		if (has_quotes2(new->input[i]) == 0)
-		{
-			if (check_red(&new->input[i], &aux, &i, &red_aux) == -1)
-				return (ft_free(&new->input, arg_counter(new->input)), -1);
-
-		}
+			check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
-		{
-			if (parse_arg(&aux, new, &i, red_aux) == -1)
-				return (ft_free(&new->input, arg_counter(new->input)), -1);
-		}
+			parse_arg(&aux, new, &i, red_aux);
 	}
-	if (check_synerr(&new, i) == -1)
-		return (-1);
+	if (there_is_rd(new->lst_process) || is_ao(new->input[i - 1]))
+	{
+		ft_fprintf(2, "Syntax error\n");
+		free_prcs(new);
+		new->exit_status = 258;
+		return (ft_free(&new->input, arg_counter(new->input)), -1);
+	}
 	return (ft_free(&new->input, arg_counter(new->input)), 0);
 }

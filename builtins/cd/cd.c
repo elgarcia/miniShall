@@ -6,11 +6,11 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 11:59:47 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/12 22:23:29 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:36:11 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 #include <sys/stat.h>
 
 char	*new_path(t_paths *paths, char *arg)
@@ -19,11 +19,11 @@ char	*new_path(t_paths *paths, char *arg)
 	char	*tmp;
 
 	if (!arg || arg[0] == '\0' || !ft_strcmp(arg, "~"))
-		return (get_env("HOME", paths->env_lst));
+		return (get_env(NULL, "HOME", paths->env_lst));
 	else if (!ft_strncmp(arg, "~/", 2))
 	{
 		tmp = ft_strchr(arg, '/');
-		result = ft_strjoinfree(get_env("HOME", paths->env_lst), tmp);
+		result = ft_strjoinfree(get_env(NULL, "HOME", paths->env_lst), tmp);
 		return (result);
 	}
 	return (NULL);
@@ -44,7 +44,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 	else if (!ft_strcmp(arg, "."))
 		return (getcwd(NULL, 0));
 	else if (!ft_strcmp(arg, "-"))
-		return (get_env("OLDPWD", paths->env_lst));
+		return (get_env(NULL, "OLDPWD", paths->env_lst));
 	else
 	{
 		getcwd(current_dir, PATH_MAX);
@@ -58,7 +58,7 @@ char	*resolve_cd_argument(t_paths *paths, char *arg)
 void	update_directory(t_paths *paths, char *new_dir)
 {
 	update_pwd_variables(paths, new_dir);
-	g_exit_status = 0;
+	paths->shell->exit_status = 0;
 }
 
 void	ft_cd(t_paths *paths, char **dir)
@@ -76,7 +76,7 @@ void	ft_cd(t_paths *paths, char **dir)
 	{
 		if (new_dir)
 			free(new_dir);
-		g_exit_status = 1;
+		paths->shell->exit_status = 1;
 		perror("minishell: cd");
 		return ;
 	}

@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/02/25 17:56:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:31:39 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
 
 int	check_quote_closure(char *str)
 {
@@ -91,4 +91,28 @@ void	remove_quotes_from_matrix(char **matrix)
 		remove_quotes_from_string(matrix[i]);
 		++i;
 	}
+}
+
+char	*ft_add_quotes(char *s)
+{
+	int		i;
+	char	*res;
+
+	i = -1;
+	res = malloc_safe(sizeof(char), ft_strlen(s) + 3);
+	while (s[++i])
+	{
+		res[i] = s[i];
+		if (s[i] == '=')
+		{
+			res[i + 1] = 34;
+			break ;
+		}
+	}
+	while (s[i] && s[++i])
+		res[i + 1] = s[i];
+	res[i + 1] = 34;
+	res[i + 2] = '\0';
+	free(s);
+	return (res);
 }

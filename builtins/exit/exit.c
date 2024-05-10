@@ -6,11 +6,11 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 15:45:04 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/04/26 00:31:30 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/09 20:12:13 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 #include <termios.h>
 
 static int	check_num(char **split)
@@ -71,14 +71,12 @@ void	ft_exit(t_shell *shell, char *line)
 	char	**split;
 
 	ret_value = 0;
-	split = echo_split(line, ' ');
-	if (!split)
-		return ;
+	split = split_words(line);
 	remove_quotes_from_matrix(split);
 	if (arg_counter(split) > 2)
 	{
 		ft_fprintf(2, "exit\nminishell: exit: too many arguments\n");
-		g_exit_status = 1;
+		shell->exit_status = 1;
 		return ((void)ft_free(&split, arg_counter(split)));
 	}
 	printf("exit\n");

@@ -6,20 +6,18 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 13:28:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/07 18:28:35 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/10 13:37:55 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 t_env_lst	*add_env_node(t_env_lst *head, char *name, char *value, int equal)
 {
 	t_env_lst	*new_node;
 	t_env_lst	*current;
 
-	new_node = malloc(sizeof(t_env_lst));
-	if (!new_node)
-		exit(EXIT_FAILURE);
+	new_node = malloc_safe(sizeof(t_env_lst), 1);
 	new_node->name = ft_strdup(name);
 	if (!value)
 		new_node->value = ft_strdup("");
@@ -56,8 +54,6 @@ void	fill_init_env_list(t_paths *paths, char **envp, int equal)
 				- ft_strlen(ft_strchr(envp[i], '=')));
 		value = ft_substr(envp[i], ft_strlen(envp[i])
 				- ft_strlen(ft_strchr(envp[i], '=')) + 1, ft_strlen(envp[i]));
-		if (!name || !value)
-			return (-1);
 		head = add_env_node(head, name, value, equal);
 		free(name);
 		free(value);

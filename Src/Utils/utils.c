@@ -6,11 +6,21 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:33 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/03/15 17:29:13 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 19:33:21 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Inc/minishell.h"
+#include "minishell.h"
+
+void    *malloc_safe(int num_elements, int size)
+{
+    void    *mem;
+
+    mem = ft_calloc(num_elements, size);
+    if (!mem)
+        exit_error("malloc_safe failed");
+    return (mem);
+}
 
 void	ft_free(char ***arg, int size)
 {
@@ -80,12 +90,12 @@ char	*ft_strjoinup(char **s1, char *s2)
 
 	if (!(*s1))
 	{
-		*s1 = (char *)ft_calloc(1, 1);
+		*s1 = (char *)malloc_safe(1, 1);
 		if (!(*s1))
 			return (NULL);
 	}
 	size_s1 = ft_strlen(*s1);
-	aux = (char *)ft_calloc(size_s1 + ft_strlen(s2) + 1, 1);
+	aux = (char *)malloc_safe(size_s1 + ft_strlen(s2) + 1, 1);
 	if (!aux)
 		return (free_null(s1));
 	if (!s2)

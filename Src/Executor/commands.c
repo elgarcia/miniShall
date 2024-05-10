@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/04/16 15:12:45 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/09 12:21:19 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	check_cmd(char *command, char ***exec_args)
 
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
-	*cmd_split = echo_split(process, ' ');
+	*cmd_split = split_words(process);
 	if (!*cmd_split)
 		return (-1);
 	*aux = arg_counter(*cmd_split) + 1;
@@ -105,7 +105,7 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 
 	if (init_cmd(&aux, &cmd_split, process) == -1)
 		return (-1);
-	*exec_args = (char **)ft_calloc(aux, sizeof(char *));
+	*exec_args = (char **)malloc_safe(aux, sizeof(char *));
 	if (!*exec_args)
 		return (ft_free(&cmd_split, aux), -1);
 	aux = check_cmd(cmd_split[0], exec_args);

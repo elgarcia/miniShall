@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:26:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/04 12:01:50 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:36:44 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 t_env_lst	*find_env_node(t_env_lst *env_lst, char *key)
 {
@@ -53,7 +53,7 @@ void	update_pwd_variables(t_paths *paths, char *new_pwd)
 	if (old_pwd_node)
 	{
 		free(old_pwd_node->value);
-		old_pwd_node->value = get_env("PWD", paths->env_lst);
+		old_pwd_node->value = get_env(NULL, "PWD", paths->env_lst);
 	}
 	pwd_node = find_env_node(paths->env_lst, "PWD");
 	if (pwd_node)

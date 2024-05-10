@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/06 15:44:19 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/09 18:47:14 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ void	execute_builtin(t_shell *all, t_process *prc)
 {
 	char	**aux;
 
-	aux = echo_split(prc->process, ' ');
+	aux = split_words(prc->process);
 	if (!aux)
 		return ;
 	if (!ft_strncmp(aux[0], "export", 7))
-		ft_export(all->paths, aux, 1);
+		all->exit_status = ft_export(all->paths, aux);
 	else if (!ft_strncmp(aux[0], "unset", 6))
 		ft_unset(all->paths, aux);
 	else if (!ft_strncmp(aux[0], "env", 4))
@@ -78,7 +78,11 @@ void	execute_builtin(t_shell *all, t_process *prc)
 	else if (!ft_strncmp(aux[0], "history", 8))
 		print_history(all);
 	else if (!ft_strncmp(aux[0], "exit", 5))
+    {
+	    if (aux)
+	    	ft_free(&aux, arg_counter(aux));
 		ft_exit(all, prc->process);
+    }
 	if (aux)
 		ft_free(&aux, arg_counter(aux));
 }

@@ -6,19 +6,25 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/06 16:09:07 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 21:19:58 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_env(char *str, t_env_lst *env)
+char	*get_env(t_shell *shell, char *str, t_env_lst *env)
 {
 	t_env_lst	*tmp;
+    char        *exit_status;
 
 	tmp = env;
 	if (str[0] == '?')
-		return (ft_itoa(g_exit_status));
+    {
+        exit_status = ft_itoa(shell->exit_status);
+        if (!exit_status)
+            exit_error("Malloc failed");
+		return (exit_status);
+    }
 	while (tmp)
 	{
 		if (!ft_strcmp(str, tmp->name))
@@ -35,11 +41,6 @@ char	*ft_strjoin_char(char *s1, char c)
 
 	i = 0;
 	new = malloc(ft_strlen(s1) + 2);
-	if (!new)
-	{
-		perror("Malloc Failed");
-		exit(EXIT_FAILURE);
-	}
 	while (s1[i])
 	{
 		new[i] = s1[i];
@@ -55,13 +56,19 @@ char	*ft_strjoin_char(char *s1, char c)
 char	*extend_expansor(t_shell *shell, char *new, char *tmp)
 {
 	char	*env_value;
+    char    *rst;
 
-	env_value = get_env(tmp, shell->paths->env_lst);
+	env_value = get_env(shell, tmp, shell->paths->env_lst);
+    if (!env_value)
+        exit_error("Malloc failed");
 	new = ft_strjoinfree(new, env_value);
+    if (!new)
+        exit_error("Malloc failed");
 	free(tmp);
 	free(env_value);
 	tmp = NULL;
-	return (new);
+    rst = ft_add_quotes(new);
+	return (rst);
 }
 
 void	get_variable(t_shell *shell, char **new, char *str, int *i)
@@ -73,33 +80,34 @@ void	get_variable(t_shell *shell, char **new, char *str, int *i)
 	while ((str[j] && ft_isalnum(str[j])) || str[j] == '_' || str[j] == '?')
 		j++;
 	tmp = ft_substr(str, *i + 1, j - *i - 1);
+    if (!tmp)
+        exit_error("Malloc failed");
 	*new = extend_expansor(shell, *new, tmp);
 	*i = j - 1;
 }
 
-char	*expansor(t_shell *shell, char *str, int i, int j)
+char	*expansor(t_shell *shell, char *str, int i)
 {
 	char	*new;
 	int		quotes;
 	int		double_quotes;
 
-	(void)j;
 	new = ft_strdup("");
-	quotes = 1;
-	double_quotes = 1;
-	while (str[++i])
+    if (!new)
+        exit_error("Malloc failed");
+	quotes = 0;
+	double_quotes = 0;
+    i = 0;
+	while (str[i])
 	{
-		if (str[i] == '\'')
-			quotes = !quotes;
-		if (str[i] == '\"')
-			double_quotes = !double_quotes;
-		if ((!double_quotes || quotes) && str[i] == '$' && str[i + 1] && str[i
+        quotes = (quotes + (!double_quotes && str[i] == '\'')) % 2;
+		double_quotes = (double_quotes + (!quotes && str[i] == '\"')) % 2;
+		if (!quotes && str[i] == '$' && str[i + 1] && str[i
 				+ 1] != ' ' && str[i + 1] != '$')
-		{
 			get_variable(shell, &new, str, &i);
-		}
 		else
 			new = ft_strjoin_char(new, str[i]);
+        i++;
 	}
 	return (new);
 }

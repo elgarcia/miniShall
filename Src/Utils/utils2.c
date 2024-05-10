@@ -6,11 +6,11 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 17:25:57 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/29 10:33:20 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/09 19:51:57 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 char	**list_to_array(t_env_lst *env)
 {
@@ -22,9 +22,7 @@ char	**list_to_array(t_env_lst *env)
 	i = -1;
 	while (tmp && ++i >= 0)
 		tmp = tmp->next;
-	array = (char **)malloc(sizeof(char *) * (i + 2));
-	if (!array)
-		return (0);
+	array = (char **)malloc_safe(sizeof(char *), (i + 2));
 	i = 0;
 	tmp = env;
 	while (tmp)
@@ -72,19 +70,17 @@ int	ft_strlenchr(const char *s, char c)
 	return (-1);
 }
 
-void	check_status(int status)
+void	check_status(t_shell *shell, int status)
 {
-	if (WIFEXITED(status) && WEXITSTATUS(status) != 0)
-		g_exit_status = WEXITSTATUS(status);
+	if (WIFEXITED(status))
+		shell->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			printf("Quit: 3");
 		printf("\n");
-		g_exit_status = 128 + WTERMSIG(status);
+		shell->exit_status = 128 + WTERMSIG(status);
 	}
-	else
-		g_exit_status = 0;
 }
 
 char	*get_prompt(void)
@@ -94,9 +90,7 @@ char	*get_prompt(void)
 	char	*tmp2;
 	char	*path;
 
-	path = malloc(PATH_MAX);
-	if (!path)
-		exit(EXIT_FAILURE);
+	path = malloc_safe(PATH_MAX, 1);
 	tmp = ft_strchrt((char *)getcwd(path, PATH_MAX), '/', 3);
 	if (!tmp)
 		tmp = (BLUE_TEXT "/" RESET_TEXT);

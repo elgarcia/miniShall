@@ -6,11 +6,11 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 13:10:33 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/03/30 13:26:55 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/09 17:47:21 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../Inc/minishell.h"
+#include "minishell.h"
 
 void	add_export_node(t_paths *paths, char *name, char *value, int equal)
 {
@@ -68,7 +68,7 @@ void	process_export_variable(t_paths *paths, char *name, char *value,
 		add_export_node(paths, name, value, equal);
 	else
 	{
-		g_exit_status = 1;
+		paths->shell->exit_status = 1;
 		ft_fprintf(2, "Not a valid identifier\n");
 	}
 }
