@@ -6,11 +6,12 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 16:51:30 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/12 13:36:14 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "structures.h"
 
 void	change_shell(t_shell *shell)
 {
@@ -99,6 +100,8 @@ void	loop(t_shell *new, char *line, char *prompt)
 			exit(0);
 		}
 		signal(SIGINT, SIG_IGN);
+		if (g_exit_status == 1)
+			new->exit_status = g_exit_status;
 		free(prompt);
 		extend(new, line);
 		free(line);
