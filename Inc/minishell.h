@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 16:35:20 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/12 19:24:57 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,11 @@ int			search_rd(t_process *prc, int rd, int rd2);
 int			is_rd_ch(char ch);
 void		trim_outword(char *outword);
 void		read_loop(t_shell *all, int fd_aux, char **line, char **split);
+
+/* executor_aux3.c */
+int			appnd_rd(t_shell *all, char **file);
+int			in_rd(t_shell *all, char **file);
+void		rd_file(t_shell *all, int fd_aux, char **split, int *mypipe);
 
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);

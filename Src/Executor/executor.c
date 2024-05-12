@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:42:50 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/12 19:18:41 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,8 @@ static int	exec_type_aux(t_shell *all, t_process *aux, t_redir *i)
 		else
 		{
 			all->fd_in = open(file, O_RDONLY);
-			if (all->fd_in == -1)
-				return (ft_fprintf(2, "%s: %s\n", file, strerror(errno)), \
-				free(file), all->exit_status = 1);
-			if (dup2(all->fd_in, STDIN_FILENO) == -1)
-				exit_error("dup2 failed");
-			close(all->fd_in);
+			if (in_rd(all, &file) == 1)
+				return (all->exit_status);
 		}
 		free(file);
 	}
@@ -77,12 +73,8 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 		if (i->type == APND)
 		{
 			file = get_ifile(aux->process, i->pos);
-			all->fd_out = open(file, O_RDWR | O_APPEND | O_CREAT, 0666);
-			if (all->fd_out == -1)
-				return (free(file), all->exit_status = 1);
-			if (dup2(all->fd_out, STDOUT_FILENO) == -1)
-				exit_error("dup2 failed");
-			free(file);
+			if (appnd_rd(all, &file) == 1)
+				return (all->exit_status);
 		}
 		else
 			if (exec_type_aux(all, aux, i) == 1)
@@ -90,7 +82,10 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 		i = i->next;
 	}
 	if (aux->next && !search_rd(aux, ORD, APND))
-		dup2(all->pipes[1], STDOUT_FILENO);
+	{
+		if (dup2(all->pipes[1], STDOUT_FILENO) == -1)
+			exit_error("dup2 failed");
+	}
 	if (check_cats(all, aux) == 1)
 		return (here_doc(all, aux, hd), 0);
 	return (0);

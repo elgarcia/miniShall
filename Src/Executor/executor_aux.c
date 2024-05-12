@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:44:15 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:46:54 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/12 19:25:36 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,15 +62,7 @@ void	read_file(t_shell *all, t_process *prc, char *line, char *outword)
 		read_loop(all, fd_aux, &line, split);
 	if (fd_aux == -1 && close(all->fd_in) == -1)
 		exit_error("close failed 6");
-	if (fd_aux == -1 && arg_counter(split) > 1)
-	{
-		all->fd_in = mypipe[0];
-		if (dup2(all->fd_in, STDIN_FILENO) == -1)
-			exit_error("dup2 failed");
-		if (close(all->fd_in) == -1)
-			exit_error("close failed 7");
-		all->fd_in = -1;
-	}
+	rd_file(all, fd_aux, split, mypipe);
 	return (free(line), ft_free(&split, arg_counter(split)));
 }
 
