@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/13 15:24:27 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/13 15:58:41 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,9 @@ char	*ft_add_quotes(char *s)
 			break ;
 		}
 	}
-	while (s[i] && s[++i] && s[i] != ' ')
+	while (s[i] && s[++i])
 		res[i + 1] = s[i];
-	if (res[i + 1] != '\"')
-		res[i + 1] = 34;
+	res[i + 1] = 34;
 	res[i + 2] = '\0';
 	free(s);
 	return (res);
