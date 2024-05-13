@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 15:32:46 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 21:31:39 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/13 15:24:27 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static void	process_quoted_section(int *i, int *j, char *str, char quote)
 
 void	remove_quotes_from_string(char *str)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
@@ -103,15 +103,16 @@ char	*ft_add_quotes(char *s)
 	while (s[++i])
 	{
 		res[i] = s[i];
-		if (s[i] == '=')
+		if (s[i] == '=' && s[i + 1] != '\"')
 		{
 			res[i + 1] = 34;
 			break ;
 		}
 	}
-	while (s[i] && s[++i])
+	while (s[i] && s[++i] && s[i] != ' ')
 		res[i + 1] = s[i];
-	res[i + 1] = 34;
+	if (res[i + 1] != '\"')
+		res[i + 1] = 34;
 	res[i + 2] = '\0';
 	free(s);
 	return (res);

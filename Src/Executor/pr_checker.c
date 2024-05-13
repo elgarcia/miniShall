@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:43:58 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/13 15:25:00 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static int	check_builtins_aux2(char **aux, t_shell *all, int len,
 	{
 		ft_free(&aux, len);
 		execute_builtin(all, prc);
+		return (1);
 	}
-	ft_free(&aux, len);
+	else
+		ft_free(&aux, len);
 	return (0);
 }
 
@@ -101,16 +103,15 @@ char	*get_ifile(char *process, int inout)
 
 int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 {
-	char			**split;
-	char			*cmd;
-	struct stat		path_stat;
+	char		**split;
+	char		*cmd;
+	struct stat	path_stat;
 
 	split = NULL;
 	cmd = NULL;
-	if (stat((*prcs)->process, &path_stat) == 0 \
-	&& (S_ISDIR(path_stat.st_mode)))
-		return (printf("%s: is a directory\n", \
-		(*prcs)->process), all->exit_status = 126);
+	if (stat((*prcs)->process, &path_stat) == 0 && (S_ISDIR(path_stat.st_mode)))
+		return (printf("%s: is a directory\n", (*prcs)->process),
+			all->exit_status = 126);
 	else if ((*prcs)->rd)
 	{
 		split = split_words((*prcs)->process);
@@ -121,8 +122,8 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 		ft_free(&split, arg_counter(split));
 	}
 	else
-		all->exit_status = prepare_command((*prcs)->process, \
-		exec_args, all->paths->env_lst);
+		all->exit_status = prepare_command((*prcs)->process, exec_args,
+				all->paths->env_lst);
 	if (all->exit_status == -1 || all->exit_status == -2)
 		all->exit_status = 127;
 	return (all->exit_status);
