@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/23 15:42:24 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/13 15:31:39 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/15 16:44:44 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,22 +28,27 @@ int	count_words(char *s)
 		if (s[i] == 34 || s[i] == 39)
 		{
 			res++;
-			i = find_next_quote(i + 1, s, s[i]);
+			if (s[i + 1])
+			{
+				i = find_next_quote(i + 1, s, s[i]);
+				if (!s[i])
+					return (res);
+			}
+			else
+				return (res);
 		}
 	}
 	return (res);
 }
 
-static void	ft_split_words(char *s, char **arg)
+static void	ft_split_words(char *s, char **arg, int i)
 {
 	int	pos;
 	int	start;
-	int	i;
 
 	start = 0;
 	pos = 0;
-	i = -1;
-	while (s[++i])
+	while (s[i])
 	{
 		if ((s[i] == ' ' || (s[i] >= 9 && s[i] <= 13))
 			&& s[i + 1] && s[i + 1] != ' ')
@@ -58,6 +63,8 @@ static void	ft_split_words(char *s, char **arg)
 				exit_error("Malloc failed");
 			pos++;
 		}
+		if (s[i])
+			i++;
 	}
 	arg[pos] = NULL;
 }
@@ -67,6 +74,6 @@ char	**split_words(char *s)
 	char	**strs;
 
 	strs = malloc_safe(sizeof(char *) * (count_words(s) + 1), 1);
-	ft_split_words(s, strs);
+	ft_split_words(s, strs, 0);
 	return (strs);
 }

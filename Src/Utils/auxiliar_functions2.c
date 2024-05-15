@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:37:49 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/15 16:45:30 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	skip_quotes(char *str, int i, int j)
 		flag = -1;
 	else
 		flag = -2;
-	while (str[i] && !(is_rd_ch(str[i]) && flag == 1))
+	while (str[i] && flag != 1)
 	{
 		if (str[i] == '\"')
 			dquote++;

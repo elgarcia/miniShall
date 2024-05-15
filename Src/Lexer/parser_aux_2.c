@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 13:39:56 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/15 16:34:32 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ int	pos_rd(char **in, int i, char *rd, int *aux)
 		}
 		else
 		{
-			if (in[i][iter] == rd[0] && in[i][iter + 1] && \
-			in[i][iter + 1] == rd[1])
+			if (in[i][iter] == rd[0] && in[i][iter + 1] && in[i][iter
+				+ 1] == rd[1])
 				*aux = iter;
 		}
 		iter++;
@@ -55,8 +55,8 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 	int		index;
 
 	og_size = init_reallocate(&index, &i, &j, arg_counter(*in) + size);
-	ft_allocate(pos_rd(*in, pos, rd, &index), \
-	&og_size, &aux, ft_strlen((*in)[pos]) - 1);
+	ft_allocate(pos_rd(*in, pos, rd, &index), &og_size, &aux,
+		ft_strlen((*in)[pos]) - 1);
 	while (i < og_size)
 	{
 		if (i != pos)
@@ -67,8 +67,8 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 				aux[i++] = ft_substr((*in)[j], 0, index);
 			aux[i++] = ft_strdup(rd);
 			if (index != (int)ft_strlen((*in)[pos]) - 1)
-				aux[i++] = ft_substr((*in)[j], \
-				index + ft_strlen(rd), ft_strlen((*in)[j]));
+				aux[i++] = ft_substr((*in)[j], index + ft_strlen(rd),
+						ft_strlen((*in)[j]));
 			j++;
 		}
 	}
@@ -77,8 +77,8 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 
 static void	separate_rd_aux(char ***input, int *i, int aux)
 {
-	if (ft_strnstr((*input)[*i] + aux, "|", ft_strlen((*input)[*i] + aux)) \
-	&& ft_strcmp((*input)[*i] + aux, "|"))
+	if (ft_strnstr((*input)[*i] + aux, "|", ft_strlen((*input)[*i] + aux))
+		&& ft_strcmp((*input)[*i] + aux, "|"))
 	{
 		if (ft_strcmp((*input)[*i] + aux, "||"))
 		{
@@ -86,16 +86,16 @@ static void	separate_rd_aux(char ***input, int *i, int aux)
 			(*i)--;
 		}
 	}
-	else if (ft_strnstr((*input)[*i] + aux, "<", \
-	ft_strlen((*input)[*i] + aux)) && (ft_strncmp((*input)[*i] + aux, "<", 2) \
-	&& ft_strcmp((*input)[*i] + aux, "<<")))
+	else if (ft_strnstr((*input)[*i] + aux, "<", ft_strlen((*input)[*i] + aux))
+		&& (ft_strncmp((*input)[*i] + aux, "<", 2) && ft_strcmp((*input)[*i]
+				+ aux, "<<")))
 	{
 		*input = ft_reallocate(input, 2, *i, "<");
 		(*i)--;
 	}
-	else if (ft_strnstr((*input)[*i] + aux, ">", \
-	ft_strlen((*input)[*i] + aux)) && ft_strncmp((*input)[*i] + aux, ">", 2) \
-	&& ft_strcmp((*input)[*i] + aux, ">>"))
+	else if (ft_strnstr((*input)[*i] + aux, ">", ft_strlen((*input)[*i] + aux))
+		&& ft_strncmp((*input)[*i] + aux, ">", 2) && ft_strcmp((*input)[*i]
+			+ aux, ">>"))
 	{
 		*input = ft_reallocate(input, 2, *i, ">");
 		(*i)--;
@@ -106,21 +106,23 @@ int	separate_rd(char ***input, int i)
 {
 	int	aux;
 
+	aux = 0;
 	while ((*input)[++i])
 	{
 		aux = 0;
-		if (((*input)[i][0] == '\"' || (*input)[i][0] == '\''))
-			aux = skip_quotes((*input)[i], 0, (*input)[i][0]);
+		while (aux != -1 && ((*input)[i][aux] == '\"'
+				|| (*input)[i][aux] == '\''))
+			aux = skip_quotes((*input)[i], aux, (*input)[i][aux]);
 		if (aux == -1)
 			return (ft_fprintf(2, "Quotes Opened!\n"), -1);
-		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux)) \
-		&& (ft_strcmp((*input)[i] + aux, "<<")))
+		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux))
+			&& (ft_strcmp((*input)[i] + aux, "<<")))
 		{
 			*input = ft_reallocate(input, 2, i, "<<");
 			i--;
 		}
-		else if (ft_strnstr((*input)[i] + aux, ">>", \
-		ft_strlen((*input)[i] + aux)) && (ft_strcmp((*input)[i] + aux, ">>")))
+		else if (ft_strnstr((*input)[i] + aux, ">>", ft_strlen((*input)[i]
+					+ aux)) && (ft_strcmp((*input)[i] + aux, ">>")))
 		{
 			*input = ft_reallocate(input, 2, i, ">>");
 			i--;
