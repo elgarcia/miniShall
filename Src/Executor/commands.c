@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:21:19 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/17 17:05:26 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,24 @@ int	assign_path(char ***exec_args, char *command, t_env_lst *envp)
 	return (-1);
 }
 
-int	check_cmd(char *command, char ***exec_args)
+int	check_cmd(char **command, char ***exec_args)
 {
-	remove_quotes_from_string(command);
-	if (command[0] == '.')
+	if (check_quoted_string(command) == 0)
+		remove_quotes_from_string(*command);
+	if ((*command)[0] == '.')
 	{
-		if (access(command, F_OK | X_OK) == 0)
+		if (access(*command, F_OK | X_OK) == 0)
 		{
-			(*exec_args)[0] = ft_strdup(command);
+			(*exec_args)[0] = ft_strdup(*command);
 			if (!(*exec_args)[0])
 				return (ft_free(exec_args, 1), -1);
 			return (0);
 		}
-		return (perror(command), -1);
+		return (perror(*command), -1);
 	}
-	if (access(command, F_OK | X_OK) == 0)
+	if (access(*command, F_OK | X_OK) == 0)
 	{
-		(*exec_args)[0] = ft_strdup(command);
+		(*exec_args)[0] = ft_strdup(*command);
 		if (!(*exec_args)[0])
 			return (ft_free(exec_args, 1), -1);
 		return (0);
@@ -108,7 +109,7 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 	*exec_args = (char **)malloc_safe(aux, sizeof(char *));
 	if (!*exec_args)
 		return (ft_free(&cmd_split, aux), -1);
-	aux = check_cmd(cmd_split[0], exec_args);
+	aux = check_cmd(&cmd_split[0], exec_args);
 	if (aux == 1)
 	{
 		path_rt = assign_path(exec_args, cmd_split[0], envp);

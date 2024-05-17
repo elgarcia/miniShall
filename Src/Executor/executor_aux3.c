@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 18:09:52 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/12 19:25:45 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/17 17:08:33 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,20 @@ void	rd_file(t_shell *all, int fd_aux, char **split, int *mypipe)
 			exit_error("close failed 7");
 		all->fd_in = -1;
 	}
+}
+
+int	check_quoted_string(char **command)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ft_strlen(*command))
+	{
+		if ((*command)[i] != '\'' && (*command)[i] != '\"')
+			return (0);
+		i++;
+	}
+	free(*command);
+	*command = ft_strdup(" ");
+	return (1);
 }

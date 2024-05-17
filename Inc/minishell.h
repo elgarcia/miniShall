@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 13:27:53 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/17 17:05:33 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void		read_loop(t_shell *all, int fd_aux, char **line, char **split);
 int			appnd_rd(t_shell *all, char **file);
 int			in_rd(t_shell *all, char **file);
 void		rd_file(t_shell *all, int fd_aux, char **split, int *mypipe);
-
+int			check_quoted_string(char **command);
 /* pr_checker.c */
 int			check_builtins(t_shell *all, t_process *aux);
 int			check_command(t_shell *all, t_process **prcs, char ***exec_args);
@@ -109,7 +109,7 @@ int			search_path(char **env_1, char **actual_path, char *command,
 int			init_execargs(char ***ex_argc, char *command);
 
 /* commands.c */
-int			check_cmd(char *command, char ***exec_args);
+int			check_cmd(char **command, char ***exec_args);
 int			prepare_command(char *process, char ***exec_args, t_env_lst *envp);
 int			assign_path(char ***exec_args, char *command, t_env_lst *envp);
 void		double_free(char **aux, char **actual_path);
