@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 18:07:10 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/13 15:34:30 by eliagarc         ###   ########.fr       */
+/*   Updated: 2024/05/17 03:19:16 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,15 @@ void	*malloc_safe(int num_elements, int size)
 	if (!mem)
 		exit_error("malloc_safe failed");
 	return (mem);
+}
+
+int	ft_isspace(const char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\r'
+		|| str[i] == '\n' || str[i] == '\v' || str[i] == '\f')
+		i++;
+	return (i);
 }

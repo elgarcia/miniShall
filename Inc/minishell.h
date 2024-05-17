@@ -6,26 +6,25 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/12 19:24:57 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/17 03:21:19 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include <stdio.h>
-# include <fcntl.h>
-# include <signal.h>
-# include <sys/wait.h>
+# include "../get_next_line/get_next_line.h"
 # include "../libft/libft.h"
 # include "structures.h"
-# include <sys/wait.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
 # include <readline/readline.h>
-# include "../get_next_line/get_next_line.h"
-# include <errno.h>
-# include <limits.h>
+# include <signal.h>
+# include <stdio.h>
 # include <sys/stat.h>
+# include <sys/wait.h>
 
 # define RED_TEXT "\001\033[1;31m\002"
 # define GREEN_TEXT "\001\033[1;32m\002"
@@ -229,4 +228,5 @@ void		exit_error(char *str);
 int			check_opened_quotes(char *s, int simple, int doble);
 int			check_pair_quotes(char *s, int *i, char c);
 char		*ft_add_quotes(char *s);
+int			ft_isspace(const char *str);
 #endif
