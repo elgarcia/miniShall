@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_aux.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
+/*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 14:41:04 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/17 21:37:29 by elias            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ int	init_execargs(char ***ex_argc, char *command)
 	if (!aux)
 		return (-1);
 	remove_quotes_from_matrix(aux);
-	while (++i < ft_word_count(command, ' '))
+	while (++i < arg_counter(aux))
 	{
-        if (!(*ex_argc)[i])
-			return (ft_free(ex_argc, i), \
-			ft_free(&aux, arg_counter(aux)), -1);
 		(*ex_argc)[i] = ft_strdup(aux[i]);
 		if (!(*ex_argc)[i])
 			return (ft_free(ex_argc, i), \
