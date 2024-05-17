@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:21:37 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/17 14:41:04 by tuta             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ int	init_execargs(char ***ex_argc, char *command)
 	remove_quotes_from_matrix(aux);
 	while (++i < ft_word_count(command, ' '))
 	{
+        if (!(*ex_argc)[i])
+			return (ft_free(ex_argc, i), \
+			ft_free(&aux, arg_counter(aux)), -1);
 		(*ex_argc)[i] = ft_strdup(aux[i]);
 		if (!(*ex_argc)[i])
 			return (ft_free(ex_argc, i), \
