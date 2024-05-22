@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/06 16:24:46 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/13 16:13:52 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/22 15:03:15 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,24 +42,13 @@ void	free_prcs(t_shell *all)
 
 char	*get_commad(t_process *prc, char **split)
 {
-	char	*ret;
-
-	ret = NULL;
-	if (prc->rd->pos == 0)
+	if (prc->rd && prc->rd->pos == 0)
 	{
 		return (ft_substr(prc->process, ft_strlen(split[0]),
 				ft_strlen(prc->process)));
 	}
 	else
-	{
-		if (arg_counter(split) > 2 && split[1][0] == '-')
-		{
-			ret = ft_strjoin(split[0], " ");
-			return (ft_strjoinup(&ret, split[1]));
-		}
-		else
-			return (ft_strdup(split[0]));
-	}
+		return (ft_strdup(prc->process));
 }
 
 void	execute_builtin(t_shell *all, t_process *prc)

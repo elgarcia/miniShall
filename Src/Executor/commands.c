@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 17:05:26 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/22 14:43:13 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ int	check_cmd(char **command, char ***exec_args)
 
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
+	if (!process)
+		return (0);
 	*cmd_split = split_words(process);
 	if (!*cmd_split)
 		return (-1);
@@ -98,13 +100,13 @@ static int	init_cmd(int *aux, char ***cmd_split, char *process)
 	return (0);
 }
 
-int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
+int	prepare_command(t_process *process, char *cmd, char ***exec_args, t_env_lst *envp)
 {
 	int		aux;
 	char	**cmd_split;
 	int		path_rt;
 
-	if (init_cmd(&aux, &cmd_split, process) == -1)
+	if (init_cmd(&aux, &cmd_split, cmd) == -1)
 		return (-1);
 	*exec_args = (char **)malloc_safe(aux, sizeof(char *));
 	if (!*exec_args)
@@ -119,7 +121,7 @@ int	prepare_command(char *process, char ***exec_args, t_env_lst *envp)
 			return (free(*exec_args), -1);
 		}
 	}
-	if (aux == -1 || init_execargs(exec_args, process) == -1)
+	if (aux == -1 || init_execargs(exec_args, process, cmd) == -1)
 		return (ft_free(&cmd_split, arg_counter(cmd_split)), -1);
 	return (ft_free(&cmd_split, arg_counter(cmd_split)), 0);
 }

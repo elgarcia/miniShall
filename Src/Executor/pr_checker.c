@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:04:04 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/13 16:06:14 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/22 14:30:51 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,19 +112,19 @@ int	check_command(t_shell *all, t_process **prcs, char ***exec_args)
 	if (stat((*prcs)->process, &path_stat) == 0 && (S_ISDIR(path_stat.st_mode)))
 		return (printf("%s: is a directory\n", (*prcs)->process),
 			all->exit_status = 126);
-	else if ((*prcs)->rd)
+	split = split_words((*prcs)->process);
+	cmd = get_commad(*prcs, split);
+	if ((*prcs)->rd)
 	{
-		split = split_words((*prcs)->process);
-		cmd = get_commad(*prcs, split);
 		if ((*prcs)->rd->type == HD && arg_counter(split) == count_rds(*prcs))
 			return (all->exit_status);
-		all->exit_status = prepare_command(cmd, exec_args, all->paths->env_lst);
-		ft_free(&split, arg_counter(split));
+		all->exit_status = prepare_command(*prcs, cmd, exec_args, all->paths->env_lst);
 	}
 	else
-		all->exit_status = prepare_command((*prcs)->process, exec_args,
+		all->exit_status = prepare_command(NULL, cmd, exec_args,
 				all->paths->env_lst);
 	if (all->exit_status == -1 || all->exit_status == -2)
 		all->exit_status = 127;
+		ft_free(&split, arg_counter(split));
 	return (all->exit_status);
 }

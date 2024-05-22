@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 11:30:20 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/22 13:54:41 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,11 +106,11 @@ void		execute_builtin(t_shell *all, t_process *prc);
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,
 				char ***exec_args);
-int			init_execargs(char ***ex_argc, char *command);
+int			init_execargs(char ***ex_argc, t_process *command, char *cmd);
 
 /* commands.c */
 int			check_cmd(char **command, char ***exec_args);
-int			prepare_command(char *process, char ***exec_args, t_env_lst *envp);
+int			prepare_command(t_process *process, char *cmd, char ***exec_args, t_env_lst *envp);
 int			assign_path(char ***exec_args, char *command, t_env_lst *envp);
 void		double_free(char **aux, char **actual_path);
 
