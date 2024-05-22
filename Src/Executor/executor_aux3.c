@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 18:09:52 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 21:50:16 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/22 11:10:40 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	appnd_rd(t_shell *all, char **file)
 int	in_rd(t_shell *all, char **file)
 {
 	if (all->fd_in == -1)
-		return (ft_fprintf(2, "%s: %s\n", *file, strerror(errno)), \
-		free(*file), all->exit_status = 1);
+		return (ft_fprintf(2, "%s: %s\n", *file, strerror(errno)), free(*file),
+			all->exit_status = 1);
 	if (dup2(all->fd_in, STDIN_FILENO) == -1)
 		exit_error("dup2 failed");
 	close(all->fd_in);
@@ -63,9 +63,9 @@ int	check_quoted_string(char **command)
 	while (i < ft_strlen(*command))
 	{
 		if (opt == 1 && (*command)[i] != '\'')
-				return (0);
+			return (0);
 		if (opt == 2 && (*command)[i] != '\"')
-				return (0);
+			return (0);
 		i++;
 	}
 	free(*command);

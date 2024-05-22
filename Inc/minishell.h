@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 17:05:33 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/22 11:30:20 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void		check_exp(char **in, int *i, int j);
 int			there_is_rd(t_process *lst);
 
 /* parser_aux_2.c */
-int			separate_rd(char ***input, int i);
+int			separate_rd(char ***input, int i, int aux);
 char		**ft_reallocate(char ***in, int size, int pos, char *rd);
 
 /* utils.c*/

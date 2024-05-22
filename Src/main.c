@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:51:37 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/17 03:20:42 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/21 14:37:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ void	extend(t_shell *new, char *line)
 
 	if (line[0] != 0)
 	{
-		if (!check_opened_quotes(line, 2, 2))
-			return ;
 		add_to_history(new, line);
 		add_history(line);
+		if (!check_opened_quotes(line, 2, 2))
+			return ;
 		new_line = expansor(new, line, -1);
 		if (!new_line || !*new_line || new_line[0] == '\n')
 			return ;
