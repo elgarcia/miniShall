@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/09 20:05:59 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/15 16:45:30 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:07:51 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	skip_quotes(char *str, int i, int j)
 int	check_file(char **file, t_process *aux, t_redir *i)
 {
 	*file = get_ifile(aux->process, i->pos);
+	remove_quotes_from_string(*file);
 	if (*file && !access(*file, F_OK))
 	{
 		if (access(*file, R_OK))

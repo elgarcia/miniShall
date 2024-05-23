@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 13:54:41 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:11:18 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		check_redaux(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		check_red(char **in, t_process **aux, int *i, t_redir **red_aux);
 void		new_proc(t_process **aux, t_shell *all, int n_proc,
 				t_redir **red_aux);
-void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux);
+void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir **red_aux);
 
 /* parser_aux.c */
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
@@ -106,11 +106,11 @@ void		execute_builtin(t_shell *all, t_process *prc);
 /* command_aux.c */
 int			search_path(char **env_1, char **actual_path, char *command,
 				char ***exec_args);
-int			init_execargs(char ***ex_argc, t_process *command, char *cmd);
+int			init_execargs(char ***ex_argc, char *cmd);
 
 /* commands.c */
 int			check_cmd(char **command, char ***exec_args);
-int			prepare_command(t_process *process, char *cmd, char ***exec_args, t_env_lst *envp);
+int			prepare_command(char *cmd, char ***exec_args, t_env_lst *envp);
 int			assign_path(char ***exec_args, char *command, t_env_lst *envp);
 void		double_free(char **aux, char **actual_path);
 
@@ -127,7 +127,7 @@ void		free_pikes(t_shell **all);
 /* auxiliar_functions.c */
 int			is_builting(t_process *prc);
 int			is_rd(int inout);
-int			is_rdp(char *str);
+int			is_rdp(char **split);
 void		close_pipes(t_shell *all);
 void		close_fds(t_shell *all);
 

@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 17:42:06 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/10 17:35:49 by elias            ###   ########.fr       */
+/*   Updated: 2024/05/23 19:08:28 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,27 @@ int	is_builting(t_process *prc)
 	return (ft_free(&aux, len), 0);
 }
 
-int	is_rdp(char *str)
+int	is_rdp(char **split)
 {
-	if (!ft_strcmp(str, "|"))
-		return (1);
-	else if (!ft_strcmp(str, "||"))
-		return (1);
-	else if (!ft_strcmp(str, "<<"))
-		return (1);
-	else if (!ft_strcmp(str, ">>"))
-		return (1);
-	else if (!ft_strcmp(str, "<"))
-		return (1);
-	else if (!ft_strcmp(str, ">"))
-		return (1);
-	else if (ft_strnstr(str, ">>>", ft_strlen(str)))
-		return (1);
-	else if (ft_strnstr(str, "<<<", ft_strlen(str)))
-		return (1);
-	else if (ft_strnstr(str, "> <", ft_strlen(str)))
-		return (1);
-	else if (ft_strnstr(str, "< >", ft_strlen(str)))
-		return (1);
+	int	i;
+
+	i = 0;
+	while (split[i])
+	{
+		if (!ft_strcmp(split[i], "|"))
+			return (1);
+		else if (!ft_strcmp(split[i], "||"))
+			return (1);
+		else if (!ft_strcmp(split[i], "<<"))
+			return (1);
+		else if (!ft_strcmp(split[i], ">>"))
+			return (1);
+		else if (!ft_strcmp(split[i], "<"))
+			return (1);
+		else if (!ft_strcmp(split[i], ">"))
+			return (1);
+		i++;
+	}
 	return (0);
 }
 

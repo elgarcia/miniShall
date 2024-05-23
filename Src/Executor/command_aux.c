@@ -6,13 +6,13 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:07:54 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 14:44:48 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:03:18 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	init_execargs(char ***ex_argc, t_process *command, char *cmd)
+int	init_execargs(char ***ex_argc, char *cmd)
 {
 	char	**aux;
 	int		i;
@@ -24,8 +24,6 @@ int	init_execargs(char ***ex_argc, t_process *command, char *cmd)
 		return (-1);
 	flag = arg_counter(aux);
 	remove_quotes_from_matrix(aux);
-	if (command && command->rd)
-		flag = flag - 1;
 	while (++i < flag)
 	{
 		(*ex_argc)[i] = ft_strdup(aux[i]);

@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:57:51 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 14:43:13 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 19:10:59 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,15 +92,15 @@ int	check_cmd(char **command, char ***exec_args)
 static int	init_cmd(int *aux, char ***cmd_split, char *process)
 {
 	if (!process)
-		return (0);
+		return (-1);
 	*cmd_split = split_words(process);
-	if (!*cmd_split)
+	if (!*cmd_split || !(*cmd_split)[0])
 		return (-1);
 	*aux = arg_counter(*cmd_split) + 1;
 	return (0);
 }
 
-int	prepare_command(t_process *process, char *cmd, char ***exec_args, t_env_lst *envp)
+int	prepare_command(char *cmd, char ***exec_args, t_env_lst *envp)
 {
 	int		aux;
 	char	**cmd_split;
@@ -118,10 +118,10 @@ int	prepare_command(t_process *process, char *cmd, char ***exec_args, t_env_lst 
 		if (path_rt == -1 || path_rt == -2)
 		{
 			ft_free(&cmd_split, arg_counter(cmd_split));
-			return (free(*exec_args), -1);
+			return (path_rt);
 		}
 	}
-	if (aux == -1 || init_execargs(exec_args, process, cmd) == -1)
+	if (aux == -1 || init_execargs(exec_args, cmd) == -1)
 		return (ft_free(&cmd_split, arg_counter(cmd_split)), -1);
 	return (ft_free(&cmd_split, arg_counter(cmd_split)), 0);
 }

@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 10:35:51 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/13 15:05:28 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/23 15:05:27 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*ft_strjoin_char(char *s1, char c)
 
 	i = 0;
 	new = malloc(ft_strlen(s1) + 2);
+	if (!new)
+		exit_error("Malloc failed");
 	while (s1[i])
 	{
 		new[i] = s1[i];

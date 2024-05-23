@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 14:11:02 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:56:02 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,9 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 void	exec_son(t_shell *all, t_process *aux)
 {
 	char	**envp;
+	int		flag;
 
+	flag = 0;
 	if (exec_type(all, aux, -1) == 1)
 		exit(all->exit_status);
 	if (check_builtins(all, aux))
@@ -102,13 +104,16 @@ void	exec_son(t_shell *all, t_process *aux)
 		if (all->n_process > 1)
 			exit(all->exit_status);
 	}
-	else if (!check_command(all, &aux, &all->exec_args))
-	{
-		envp = list_to_array(all->paths->env_lst);
-		execve(all->exec_args[0], all->exec_args, envp);
-	}
 	else
+	{
+		flag = check_command(all, &aux, &all->exec_args);
+		if (flag != -2 && flag != -1)
+		{
+			envp = list_to_array(all->paths->env_lst);
+			execve(all->exec_args[0], all->exec_args, envp);
+		}
 		exit(all->exit_status);
+	}
 }
 
 void	exec_process(t_shell *all, int i, int j, int status)

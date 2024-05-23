@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/09 12:23:01 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/23 20:18:42 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	check_cats(t_shell *all, t_process *aux)
 	p_aux = all->lst_process;
 	while (p_aux)
 	{
+		remove_quotes_from_string(p_aux->process);
 		if (!ft_strncmp(p_aux->process, "cat", 3))
 			flag++;
 		p_aux = p_aux->next;
@@ -79,16 +80,17 @@ int	there_is_rd(t_process *lst)
 	split_aux = NULL;
 	while (aux)
 	{
-		if (is_rdp(aux->process))
-			return (1);
+		if (!aux->process)
+			return (ft_free(&split_aux, arg_counter(split_aux)), 1);
+		split_aux = split_words(aux->process);
+		if (is_rdp(split_aux))
+			return (ft_free(&split_aux, arg_counter(split_aux)), 1);
 		if (aux->rd)
 		{
-			if (!aux->process)
-				return (1);
-			split_aux = split_words(aux->process);
 			if (aux->rd->pos == arg_counter(split_aux))
 				return (ft_free(&split_aux, arg_counter(split_aux)), 1);
 		}
+		ft_free(&split_aux, arg_counter(split_aux));
 		aux = aux->next;
 	}
 	return (ft_free(&split_aux, arg_counter(split_aux)), 0);

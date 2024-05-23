@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:56:07 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 11:23:43 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 18:38:10 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,10 @@ void	new_proc(t_process **aux, t_shell *all, int n_proc, t_redir **red_aux)
 		all->lst_process = *aux;
 }
 
-void	parse_arg(t_process **aux, t_shell *new, int *i, t_redir *red_aux)
+void	parse_arg(t_process **aux, t_shell *new, int *i, t_redir **red_aux)
 {
-	check_red(&new->input[*i], aux, i, &red_aux);
+	if (has_quotes2(new->input[*i]) == 0)
+		check_red(&new->input[*i], aux, i, red_aux);
 	if ((*aux)->process != NULL)
 		(*aux)->process = ft_strjoinup(&(*aux)->process, " ");
 	else
@@ -97,7 +98,7 @@ int	input_parser(char *line, t_shell *new, int i)
 		if (has_quotes2(new->input[i]) == 0)
 			check_red(&new->input[i], &aux, &i, &red_aux);
 		if (new->input[i])
-			parse_arg(&aux, new, &i, red_aux);
+			parse_arg(&aux, new, &i, &red_aux);
 	}
 	if (there_is_rd(new->lst_process) || is_ao(new->input[i - 1]))
 	{

@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/08 16:01:36 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/22 11:27:45 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/23 20:19:14 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ char	**ft_reallocate(char ***in, int size, int pos, char *rd)
 static void	separate_rd_aux(char ***input, int *i, int aux)
 {
 	if (ft_strnstr((*input)[*i] + aux, "|", ft_strlen((*input)[*i] + aux))
-		&& ft_strcmp((*input)[*i] + aux, "|"))
+		&& (ft_strcmp((*input)[*i] + aux, "|") || aux > 0))
 	{
 		if (ft_strcmp((*input)[*i] + aux, "||"))
 		{
@@ -87,14 +87,16 @@ static void	separate_rd_aux(char ***input, int *i, int aux)
 		}
 	}
 	else if (ft_strnstr((*input)[*i] + aux, "<", ft_strlen((*input)[*i] + aux))
-		&& (ft_strncmp((*input)[*i] + aux, "<", 2) && ft_strcmp((*input)[*i]
-				+ aux, "<<")))
+		&& (ft_strncmp((*input)[*i] + aux, "<", 2) || aux > 0)
+		&& ft_strcmp((*input)[*i]
+				+ aux, "<<"))
 	{
 		*input = ft_reallocate(input, 2, *i, "<");
 		(*i)--;
 	}
 	else if (ft_strnstr((*input)[*i] + aux, ">", ft_strlen((*input)[*i] + aux))
-		&& ft_strncmp((*input)[*i] + aux, ">", 2) && ft_strcmp((*input)[*i]
+		&& (ft_strncmp((*input)[*i] + aux, ">", 2) || aux > 0)
+		&& ft_strcmp((*input)[*i]
 			+ aux, ">>"))
 	{
 		*input = ft_reallocate(input, 2, *i, ">");
@@ -113,13 +115,13 @@ int	separate_rd(char ***input, int i, int aux)
 		if (aux == -1)
 			return (ft_fprintf(2, "Quotes Opened!\n"), -1);
 		if (ft_strnstr((*input)[i] + aux, "<<", ft_strlen((*input)[i] + aux))
-			&& (ft_strcmp((*input)[i] + aux, "<<")))
+			&& (ft_strcmp((*input)[i] + aux, "<<") || aux > 0))
 		{
 			*input = ft_reallocate(input, 2, i, "<<");
 			i--;
 		}
 		else if (ft_strnstr((*input)[i] + aux, ">>", ft_strlen((*input)[i]
-			+ aux)) && (ft_strcmp((*input)[i] + aux, ">>")))
+			+ aux)) && (ft_strcmp((*input)[i] + aux, ">>") || aux > 0))
 		{
 			*input = ft_reallocate(input, 2, i, ">>");
 			i--;
