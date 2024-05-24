@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 19:53:39 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/23 19:11:18 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:03:18 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void		parse_arg(t_process **aux, t_shell *new, int *i, t_redir **red_aux);
 void		assign_redir(t_process **aux, int *i, t_redir **red_aux,
 				int rd_type);
 int			is_ao(char *str);
-int			check_cats(t_shell *all, t_process *aux);
+int			check_cats(t_shell *all, t_process *aux, int flag);
 void		check_exp(char **in, int *i, int j);
 int			there_is_rd(t_process *lst);
 

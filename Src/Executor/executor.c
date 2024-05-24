@@ -6,7 +6,7 @@
 /*   By: elias <elias@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 20:02:48 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/23 17:56:02 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/24 10:52:11 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	exec_type(t_shell *all, t_process *aux, int hd)
 		if (dup2(all->pipes[1], STDOUT_FILENO) == -1)
 			exit_error("dup2 failed");
 	}
-	if (check_cats(all, aux) == 1)
+	if (check_cats(all, aux, 0) == 1)
 		return (here_doc(all, aux, hd), 0);
 	return (0);
 }
@@ -98,7 +98,7 @@ void	exec_son(t_shell *all, t_process *aux)
 
 	flag = 0;
 	if (exec_type(all, aux, -1) == 1)
-		exit(all->exit_status);
+		return ;
 	if (check_builtins(all, aux))
 	{
 		if (all->n_process > 1)

@@ -6,7 +6,7 @@
 #    By: elias <elias@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/02 16:51:29 by bautrodr          #+#    #+#              #
-#    Updated: 2024/05/23 20:11:07 by bautrodr         ###   ########.fr        #
+#    Updated: 2024/05/24 11:40:14 by bautrodr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ HEADER = $(INCLUDE)structures.h $(INCLUDE)minishell.h
 LIBFT_LIB =  libft/libft.a
 SILENCE = --no-print-directory
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 
 READLINE = -lreadline
 

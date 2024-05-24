@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/09 17:14:32 by tuta             ###   ########.fr       */
+/*   Updated: 2024/05/24 11:30:54 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,18 @@ int	check_option_n(char *token)
 	return (1);
 }
 
-void	print(char **argv, int i, t_process *prc)
+void	print(char **argv, int i, t_process *prc, int *flag)
 {
+	(void)prc;
 	while (argv[++i])
 	{
+		if (check_option_n(argv[i]))
+		{
+			*flag = 0;
+			continue ;
+		}
 		if (prc->rd && (i == prc->rd->pos))
-			break ;
+			continue ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
@@ -53,7 +59,7 @@ int	ft_echo(char **argv, t_process *prc)
 		i++;
 	}
 	i--;
-	print(argv, i, prc);
+	print(argv, i, prc, &n_flag);
 	if (n_flag)
 		ft_putchar_fd('\n', STDOUT_FILENO);
 	return (0);

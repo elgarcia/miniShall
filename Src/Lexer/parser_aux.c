@@ -6,7 +6,7 @@
 /*   By: eliagarc <eliagarc@student.42barcelona.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 08:25:42 by eliagarc          #+#    #+#             */
-/*   Updated: 2024/05/23 20:18:42 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/24 11:10:15 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	assign_redir(t_process **aux, int *i, t_redir **red_aux, int rd_type)
 
 int	is_ao(char *str)
 {
-	if (ft_strnstr(str, "||", 3))
+	if (!ft_strncmp(str, "||", 3))
 		return (1);
 	else if (ft_strnstr(str, "&&", 3))
 		return (1);
@@ -38,29 +38,32 @@ int	is_ao(char *str)
 	return (0);
 }
 
-int	check_cats(t_shell *all, t_process *aux)
+int	check_cats(t_shell *all, t_process *aux, int flag)
 {
 	t_process	*p_aux;
-	int			flag;
+	char		*tmp;
 
-	flag = 0;
 	p_aux = all->lst_process;
 	while (p_aux)
 	{
-		remove_quotes_from_string(p_aux->process);
-		if (!ft_strncmp(p_aux->process, "cat", 3))
+		tmp = ft_strdup(p_aux->process);
+		remove_quotes_from_string(tmp);
+		if (!ft_strncmp(tmp, "cat", 3))
 			flag++;
+		free(tmp);
 		p_aux = p_aux->next;
 	}
-	if (flag == all->n_process || ft_strcmp(all->lst_process->process, "cat"))
-		return (0);
-	if (!ft_strcmp(aux->process, "cat"))
+	tmp = ft_strdup(aux->process);
+	remove_quotes_from_string(tmp);
+	if (flag == all->n_process || ft_strcmp(tmp, "cat"))
+		return (free(tmp), 0);
+	if (!ft_strcmp(tmp, "cat"))
 	{
 		if (aux->n_process == all->n_process - 1)
-			return (0);
-		return (1);
+			return (free(tmp), 0);
+		return (free(tmp), 1);
 	}
-	return (0);
+	return (free(tmp), 0);
 }
 
 void	check_exp(char **in, int *i, int j)
