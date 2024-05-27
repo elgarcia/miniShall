@@ -6,7 +6,7 @@
 /*   By: bautrodr <bautrodr@student.42barcel.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:55:19 by bautrodr          #+#    #+#             */
-/*   Updated: 2024/05/24 11:30:54 by bautrodr         ###   ########.fr       */
+/*   Updated: 2024/05/27 13:18:06 by bautrodr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,8 @@ void	print(char **argv, int i, t_process *prc, int *flag)
 	(void)prc;
 	while (argv[++i])
 	{
-		if (check_option_n(argv[i]))
-		{
-			*flag = 0;
-			continue ;
-		}
 		if (prc->rd && (i == prc->rd->pos))
-			continue ;
+			break ;
 		ft_putstr_fd(argv[i], STDOUT_FILENO);
 		if (argv[i + 1] != NULL)
 			ft_putchar_fd(' ', STDOUT_FILENO);
